@@ -20,12 +20,12 @@ public class MainController {
    // @Autowired
    // IStudBaseMainService service;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String index() {
 
         System.out.println("log!!");
 
-        return "<h1>index";
+        return "secured/index";
     }
 
 }
