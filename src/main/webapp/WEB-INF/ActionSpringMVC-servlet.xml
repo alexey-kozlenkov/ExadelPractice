@@ -25,19 +25,17 @@
     <mvc:annotation-driven/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="prefix" value="/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <!--<mvc:resources mapping="/app/**" location="/app/" />-->
+    <mvc:resources  mapping="/css/**" location="/css/" />
+    <mvc:resources  mapping="/js/**" location="/js/" />
+    <mvc:resources  mapping="/fonts/**" location="/fonts/" />
+    <mvc:resources  mapping="/images/**" location="/images/" />
 
     <!-- View resolvers -->
-<!--
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
--->
+
 <!--    &lt;!&ndash; Configure to plugin JSON as request and response in method handler &ndash;&gt;
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
