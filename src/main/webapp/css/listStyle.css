@@ -1,0 +1,56 @@
+body{
+    background:#D4EEEE url(../images/pattern.png) repeat top left;
+}
+
+.menu-block{
+    float: left;
+    width: 45pt;
+    height: 100%;
+    border-right: solid #245269 1pt;
+}
+
+.menu-button{
+    width: 40pt;
+    height: 30pt;
+    margin: 0.5pt;
+    border: solid 1pt;
+    border-radius: 3pt;
+
+}
+
+.central-block{
+    float: left;
+    width: 90%;
+}
+
+.search-block{
+    width: 100%;
+    margin: 2pt;
+    text-align: center;
+}
+.search-line{
+    width: 95%;
+    margin: 4pt;
+}
+
+.filter-block{
+    margin: 6pt;
+    border: solid 1pt;
+    border-radius: 4pt;
+    width: 100%;
+    height: 80pt;
+}
+
+
+.table-block{
+    margin: 6pt;
+	border: solid #000000 1pt;
+	width: 100%;
+	height: 400pt;
+	text-align: center;
+	vertical-align: middle;
+}
+.load-image-class{
+	width:320;
+	height:320;
+}

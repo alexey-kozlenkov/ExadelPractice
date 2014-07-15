@@ -22,7 +22,7 @@
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
-
+    
      <!-- Listeners -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
