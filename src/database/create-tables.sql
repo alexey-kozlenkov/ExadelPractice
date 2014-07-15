@@ -11,8 +11,18 @@ CREATE INDEX id_index ON "USER" (id);
 
 CREATE TABLE IF NOT EXISTS "STUDENT"
 (
-  role  CHARACTER VARYING(32) DEFAULT 'stud',
-  state TEXT not null ,
+  role  CHARACTER VARYING(32) NOT NULL DEFAULT 'stud',
+  state TEXT not null,
+  hire_date DATE,
+  university TEXT NOT NULL,
+  faculty TEXT NOT NULL,
+  course INT NOT NULL,
+  s_group INT NOT NULL,
+  hours_number INT NOT NULL,
+  billable DATE,
+  role_current_project TEXT NOT NULL,
+  techs_current_project TEXT NOT NULL,
+  english_level TEXT NOT NULL,
   CONSTRAINT student_pkey PRIMARY KEY (id)
 )
   INHERITS ("USER");
@@ -46,6 +56,13 @@ CREATE TABLE IF NOT EXISTS "FEEDBACK" (
   student_id  BIGINT NOT NULL,
   employee_id BIGINT NOT NULL,
   feedback    TEXT   NOT NULL,
+  prof_competence TEXT NOT NULL,
+  attitude_to_work TEXT NOT NULL,
+  collective_relations TEXT NOT NULL,
+  professional_progress TEXT NOT NULL,
+  need_more_hours BOOLEAN NOT NULL,
+  real_project BOOLEAN NOT NULL,
+  date DATE NOT NULL,
   FOREIGN KEY (student_id) REFERENCES "STUDENT" (id),
   FOREIGN KEY (employee_id) REFERENCES "EMPLOYEE" (id)
 );
@@ -104,7 +121,3 @@ AFTER INSERT OR UPDATE ON "STUDENT" FOR EACH ROW EXECUTE PROCEDURE add_to_log();
 CREATE TRIGGER t_d_student
 before DELETE ON "STUDENT" FOR EACH ROW EXECUTE PROCEDURE remove_from_log();
 
---INSERT INTO "STUDENT"(login, password, name, email, state) 
---VALUES ('firststud1', '123', 'first1', 'first@mail.ru', 'good');
-
---DELETE FROM  "STUDENT";
