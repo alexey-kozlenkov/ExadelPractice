@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS "STUDENT"
   faculty TEXT NOT NULL,
   course INT NOT NULL,
   s_group INT NOT NULL,
+  graduation_date DATE NOT NULL,
   hours_number INT NOT NULL,
   billable DATE,
   role_current_project TEXT NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE IF NOT EXISTS "STUDENT"
 )
   INHERITS ("USER");
 ALTER TABLE "STUDENT" ALTER COLUMN role SET DEFAULT 'stud';
+
 
 CREATE TABLE IF NOT EXISTS "EMPLOYEE"
 (
