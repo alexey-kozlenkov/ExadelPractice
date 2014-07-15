@@ -25,34 +25,30 @@
     <mvc:annotation-driven/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/jsp/" />
-        <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/html/" />
+        <property name="suffix" value=".html" />
     </bean>
 
-    <mvc:resources mapping="/css/**" location="/css/" />
-    <mvc:resources mapping="/fonts/**" location="/fonts/"/>
-    <mvc:resources mapping="/js/**" location="/js/"/>
-    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources  mapping="/css/**" location="/css/" />
+    <mvc:resources  mapping="/js/**" location="/js/" />
+    <mvc:resources  mapping="/fonts/**" location="/fonts/" />
+    <mvc:resources  mapping="/images/**" location="/images/" />
+    <mvc:resources  mapping="/html/**" location="/html/" />
 
     <!-- View resolvers -->
-<!--
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
--->
-<!--    &lt;!&ndash; Configure to plugin JSON as request and response in method handler &ndash;&gt;
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-            	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-                <ref bean="jsonMessageConverter"/>
-            </list>
-        </property>
-    </bean>
 
-    &lt;!&ndash; Configure bean to convert JSON to POJO and vice versa &ndash;&gt;
-    <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-    </bean>-->
+    <!-- Configure to plugin JSON as request and response in method handler -->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+            	<!--<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>-->
+                <!--<ref bean="jsonMessageConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- Configure bean to convert JSON to POJO and vice versa -->
+    <!--<bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+    <!--</bean>&ndash;&gt;-->
 
 </beans>

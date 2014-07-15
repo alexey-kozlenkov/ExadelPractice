@@ -1,0 +1,35 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Student list</title>
+    <link href="../css/listStyle.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="menuBlock" class=" btn-group, btn-group-vertical, menu-block">
+    <button id="addMenuButton" class="btn, btn-mini">+</button>
+    <button id="exportButton" class="btn, btn-mini">Export</button>
+</div>
+
+<div id="centralBlock" class="central-block">
+    <div id="searchBlock" class="search-block">
+        <input type="text" id="searchLine" class="search-line">
+        <button id="startSearchButton" class="search-button">Go!</button>
+    </div>
+    <div id="filterBlock" class="filter-block">
+
+    </div>
+    <button id="start" onClick="load();">Start</button>
+    <div id="tableBlock" class="table-block">
+        <table align="center" id="studentTable" class="student-table"></table>
+        <img src="../images/loading2.gif" align='middle' class="load-image-class" id="loading_image">
+    </div>
+</div>
+
+<script src="../js/jquery-2.1.1.min.js"></script>
+<script src="../js/listController.js"></script>
+</body>
+
+
+</html>
