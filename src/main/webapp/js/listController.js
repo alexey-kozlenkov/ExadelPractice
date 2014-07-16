@@ -2,31 +2,38 @@
  * Created by ala'n on 14.07.2014.
  */
 
-function load() {
-    var divTable = document.getElementById('div');
-    var list = document.getElementById('list');
+window.onload = function(){
+    headerControl();
+};
 
+document.getElementById('checkAll').onclick=function(){
+    alert("Function is not suport");
+};
 
-    console.log("Script!!!");
-
-    $.ajax({
-            url:"/list/data",
-            data:"",
-            success: function(data, textStatus, jqXHR)
-            {
-                alert("----"+data);
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert("Error !!!!");
-            }
-    });
-
-//    $.getJSON("list/data", function(data){
-//        alert(data);
-//    });
-
+function headerControl(){
+   // var tableOffset = $("#studTable").offset().top;
+   // var $header = $("#studTable > thead").clone();
+   // var $fixedHeader = $("#header-fixed").append($header);
 }
-function buildTable(dataArray) {
+
+function addRow(entry, count){
+    console.log("Add "+entry+" count " + count);
+    var content = "<tr> <td><input type='checkbox'></td>";
+    for(var i=0; i<count; i++ ){
+        content += "<td>" + entry[i]+"</td>";
+    };
+
+    content += "</tr>";
+    console.log("Code :"+content);
+
+     $("#studTable").append(content);
+}
+
+function clearTable(){
+    var table = document.getElementById('studTable');
+   // table.removeChild('tbody');
+    for (; table.getElementsByTagName('tr').length > 1; ) {
+        table.deleteRow(1);
+    }
 
 }
