@@ -1,0 +1,42 @@
+@import url('reset.css');
+
+/* General Demo Style */
+body{
+	background:#D4EEEE url(../images/pattern.png) repeat top left;
+	color: black;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+	font-size:13px;
+	min-height:2000px;
+}
+a{
+	color:#000;
+	text-decoration:none;
+}
+.clr{
+	clear:both;
+}
+h1{
+	padding:20px;
+	font-size:35px;
+	color:#333;
+	font-family: 'Josefin Slab',Georgia, serif;
+	font-weight:700;
+    text-shadow:1px 1px 1px #fff;
+}
+h1 span{
+	font-size:18px;
+	color:#1693eb;
+}
+
+/* Header Style */
+.header{
+	line-height:24px;
+	/*font-size:11px;*/
+	/*background:#000;
+	/*opacity:0.9;*/
+	text-transform:uppercase;
+	z-index:4;
+	-moz-box-shadow:1px 0px 2px #000;
+	-webkit-box-shadow:1px 0px 2px #000;
+	box-shadow:1px 0px 2px #000;
+}
