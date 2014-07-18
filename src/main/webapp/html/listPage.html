@@ -10,34 +10,36 @@
 
 <header id="headerBlock" class="header-block" >
     <div class="search-block form-inline" align="center">
+        <div id="menuBlock" class="menu-block">
+            <input type="image" id="addMenuButton" class="btn btn-success menu-button" src="../images/add.png" alt="Add student"
+                 onclick="addRow(['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'],10);">
+            <input type="image" id="exportMenuButton" class="btn btn-info menu-button" src="../images/export.png" alt="Export"
+                 onclick="clearTable();">
+            <input type="image" id="distributionMenyButton" class="btn btn-info menu-button" src="../images/distribution.png" alt="Distribution" >
+        </div>
+
         <input type="text" id="searchLine" class="form-control search-query search-line">
         <input type="image" id="startSearchButton" class="btn btn-primary search-button"
-           src="../images/search-icon.png">
+           src="../images/search-icon.png" alt="Find!" onclick="loadTable();">
     </div>
-    <div id="menuBlock" class="menu-block">
-        <input type="image" id="addMenuButton" class="btn btn-default menu-button add-button" src="../images/add.png"
-               onclick="addRow(['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'],10);">
-
-        <button id="exportButton" class="btn btn-default menu-button" onclick="clearTable();">Export</button>
-        <button id="start" class="btn btn-default menu-button" >Start</button>
-    </div>
+    <!--<label id="infoLabel" class="header-info-label"></label>-->
     <!--div id="filterBlock" class="filter-block">
     </div-->
-    <div class="central-block">
+    <div class="central-block header-table-block">
         <table id="header-fixed" class="table table-striped studtable" align="center">
             <thead>
             <tr>
-                <th style="text-align: center; width: 25px;"><input id="checkAll" type="checkbox"></th>
-                <th style="text-align: center; width: 200px;">Name</th>
-                <th style="text-align: center; width: 90px; ">Date(work)</th>
-                <th style="text-align: center; width: 160px;">Faculty</th>
-                <th style="text-align: center; width: 60px; ">Course/<br>Group</th>
-                <th style="text-align: center; width: 90px; ">Graduated</th>
-                <th style="text-align: center; width: 60px; ">Working<br>hour</th>
-                <th style="text-align: center; width: 80px; ">Billable</th>
-                <th style="text-align: center; width: 120px;">Role on prj.</th>
-                <th style="text-align: center; width: 150px;">Current<br>technology</th>
-                <th style="text-align: center; width: 100px;">English</th>
+                <th class="header-column-0"><input id="checkAll" type="checkbox"></th>
+                <th class="header-column-1">Name</th>
+                <th class="header-column-2">Date(work)</th>
+                <th class="header-column-3">Faculty</th>
+                <th class="header-column-4">Course/<br>Group</th>
+                <th class="header-column-5">Graduated</th>
+                <th class="header-column-6">Working<br>hour</th>
+                <th class="header-column-7">Billable</th>
+                <th class="header-column-8">Role on prj.</th>
+                <th class="header-column-9">Current<br>technology</th>
+                <th class="header-column-10">English</th>
             </tr>
             </thead>
         </table>
@@ -48,31 +50,27 @@
     <div id="emptyField"></div>
     <table id="studTable" class="table table-striped studtable" align="center">
         <thead>
-            <tr>
-                <th style="text-align: center; width: 25px;"><input type="checkbox"></th>
-                <th style="text-align: center; width: 200px;">Name</th>
-                <th style="text-align: center; width: 90px; ">Date(work)</th>
-                <th style="text-align: center; width: 160px;">Faculty</th>
-                <th style="text-align: center; width: 60px; ">Course/<br>Group</th>
-                <th style="text-align: center; width: 90px; ">Graduated</th>
-                <th style="text-align: center; width: 60px; ">Working<br>hour</th>
-                <th style="text-align: center; width: 80px; ">Billable</th>
-                <th style="text-align: center; width: 120px;">Role on prj.</th>
-                <th style="text-align: center; width: 150px;">Current<br>technology</th>
-                <th style="text-align: center; width: 100px;">English</th>
-            </tr>
+        <tr>
+            <th class="header-column-0"><input type="checkbox"></th>
+            <th class="header-column-1">Name</th>
+            <th class="header-column-2">Date(work)</th>
+            <th class="header-column-3">Faculty</th>
+            <th class="header-column-4">Course/<br>Group</th>
+            <th class="header-column-5">Graduated</th>
+            <th class="header-column-6">Working<br>hour</th>
+            <th class="header-column-7">Billable</th>
+            <th class="header-column-8">Role on prj.</th>
+            <th class="header-column-9">Current<br>technology</th>
+            <th class="header-column-10">English</th>
+        </tr>
         </thead>
-
         <tbody>
         </tbody>
     </table>
-
-        <img src="../images/loading.gif" align='middle' class="load-image-class" id="loading_image">
+    <img src="../images/loading.gif" align='middle' class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
 <script src="../js/jquery-2.1.1.min.js"></script>
 <script src="../js/listController.js"></script>
 </body>
-
-
 </html>

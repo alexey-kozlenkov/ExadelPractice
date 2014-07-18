@@ -1,32 +1,31 @@
 body{
-    background:#D4EEEE url(../images/pattern.png) repeat top left;
+    background:url(../images/pattern.png) repeat top left;
+    background-color: #eaf9f9 !important;
 }
 /*******************************************************************/
 
 #header-fixed {
-     background:#D4EEEE url(../images/pattern.png) repeat top left;
+     background: url(../images/pattern.png) repeat top left;
+     background-color: #D4EEEE;
      margin:0;
 }
 
 .menu-block{
+    top: 2pt;
+    left: 0pt;
     position: absolute;
-    float: left;
-    width: 70pt;
-    height: 100%;
+    width: 90pt;
+    height: 28pt;
     text-align: right;
-    /*border-right: solid #245269 1pt;*/
-    /*overflow: hidden;*/
 }
 .menu-button{
-    width: 50pt;
-    height: 30pt;
-    margin: 0.5pt;
-    text-align: center;
-    margin-right: -3;
+    padding: 1pt 1pt !important;
+    width: 26pt;
+    height: 26pt;
+    font-size: 10;
 }
 .add-button{
-    padding-right: 14pt !important;
-    padding-left: 14pt !important;
+    padding: 4pt 4pt !important;
 }
 
 .header-block{
@@ -40,7 +39,7 @@ body{
     margin: 2pt;
 }
 .search-line{
-    width: 75% !important;
+    width: 60% !important;
     margin-right: 0pt;
 }
 .search-button{
@@ -59,26 +58,89 @@ body{
     height: 80pt;
 }
 
+.header-info-label{
+    margin: 2pt;
+    top: 55pt;
+    right: 1pt;
+
+    color: #000000;
+    font-size: 9pt;
+    position: absolute;
+}
+
 #emptyField{
     width: 100%;
     height: 30pt;
 }
 
+.header-table-block{
+    overflow-x: visible;
+}
+
 /*************************************************/
 .central-block{
-    width: 1200pt;
+    width: 900pt;
     margin:0 auto;
-    /*margin-top: 50pt;*/
     top: 40pt;
+    text-align: center;
 }
 
 .studtable{
   text-align: center;
+  background: transparent;
 }
 
-
 .load-image-class{
-	width:320;
-	height:320;
+	width:320pt;
+	height:320pt;
     display: none;
+}
+
+.header-column-0{
+    width: 20px;
+}
+.header-column-1{
+    width: 160px;
+}
+.header-column-2{
+    width: 70px;
+}
+.header-column-3{
+    width: 80px;
+}
+.header-column-4{
+    width: 50px;
+}
+.header-column-5{
+    width: 50px;
+}
+.header-column-6{
+    width: 50px;
+}
+.header-column-7{
+    width: 50px;
+}
+.header-column-8{
+    width: 100px;
+}
+.header-column-9{
+    width: 140px;
+}
+.header-column-10{
+    width: 80px;
+}
+
+.header-column-0,
+.header-column-1,
+.header-column-2
+.header-column-3,
+.header-column-4,
+.header-column-5,
+.header-column-6,
+.header-column-7,
+.header-column-8,
+.header-column-9,
+.header-column-10{
+    text-align: center;
+    vertical-align: middle;
 }
