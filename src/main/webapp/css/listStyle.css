@@ -1,10 +1,12 @@
 body{
-    background:#D4EEEE url(../images/pattern.png) repeat top left;
+    background:url(../images/pattern.png) repeat top left;
+    background-color: #eaf9f9 !important;
 }
 /*******************************************************************/
 
 #header-fixed {
-     background:#D4EEEE url(../images/pattern.png) repeat top left;
+     background: url(../images/pattern.png) repeat top left;
+    background-color: #D4EEEE;
      margin:0;
 }
 
@@ -74,6 +76,7 @@ body{
 
 .studtable{
   text-align: center;
+  background: transparent;
 }
 
 

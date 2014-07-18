@@ -1,134 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Accordion</title>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta name="description" content="Flexible Slide-to-top Accordion" />
-        <meta name="keywords" content="accordion, jquery, flexible, responsive, slide to top, tabs, UI, web design" />
-        <meta name="author" content="Codrops" />
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="shortcut icon" href="../favicon.ico"> 
-        <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css' />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<noscript>
-			<style>
-				.st-accordion ul li{
-					height:auto;
-				}
-				.st-accordion ul li > a span{
-					visibility:hidden;
-				}
-			</style>
-		</noscript>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-            <h1>Cherry and Root-crop</h1>
-			</div>
-            <div class="wrapper">
+<head>
+    <meta charset="utf-8">
+    <title>Information</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">-->
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'/>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../css/user-info.css"/>
 
-                <div id="st-accordion" class="st-accordion">
-                    <ul>
-                         <li>
-                             <a href="#" style="text-decoration:none">Manual information<span class="st-arrow">Open or Close</span></a> 
-                              <div class="st-content">
-                                <!-- type here -->
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <label for="login" class="col-sm-2 control-label">Login</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="login" placeholder="Login" style="width: 60%">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" style="width: 60%">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" style="width: 60%">
-                                        </div>
-                                    </div>
-                                    <!-- Split button -->
-                                    <div class="form-group, btn-group">
-                                        <button type="button" class="btn btn-primary ">Role</button>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" >
-                                            <li><a href="#">Role</a></li>
-                                            <li><a href="#">Another role</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="form-group, btn-group">
-                                        <button type="button" class="btn btn-primary ">State</button>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" >
-                                            <li><a href="#">State</a></li>
-                                            <li><a href="#">Another state</a></li>
-                                            <li><a href="#">Another state</a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </form>
-                              </div>
-                                
-                         </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <a href="#" style="text-decoration:none">Education<span class="st-arrow">Open or Close</span></a>
-                            <div class="st-content">
-                                <p>She packed her seven versalia, put her initial into the belt and made herself on the way.</p>
-                               
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#" style="text-decoration:none">Exadel<span class="st-arrow">Open or Close</span></a>
-                            <div class="st-content">
-                                <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                               
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#" style="text-decoration:none">Technologies and skills<span class="st-arrow">Open or Close</span></a>
-                            <div class="st-content">
-                                <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#" style="text-decoration:none">Feedbacks<span class="st-arrow">Open or Close</span></a>
-                            <div class="st-content">
-                                <p>The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?"</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+</head>
+<body>
+
+<div class="header">
+    <h1>Cherry and Root-crop</h1>
+</div>
+<div class="container">
+    <div class="wrapper">
+        <div class="category-list">
+
+            <div class="category-header"><a href="#" style="text-decoration:none">Manual information<span
+                        class="st-arrow">Open or Close</span></a></div>
+            <div class="category-content">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="login" class="col-sm-2 control-label">Login</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="login" placeholder="Login">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword3"
+                                   placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                        </div>
+                    </div>
+                    <!-- Split button -->
+                    <select class="selectpicker" data-style="btn-primary">
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+
+                    <select class="selectpicker" data-style="btn-primary">
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+
+                </form>
             </div>
+
+
+            <div class="category-header"><a href="#" style="text-decoration:none">Education<span
+                    class="st-arrow">Open or Close</span></a></div>
+            <div class="category-content">
+
+            </div>
+            <!--<h3>Exadel</h3>-->
+            <!--<div class="accordion-content">-->
+            <!--<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>-->
+            <!--<ul>-->
+            <!--<li>List item one</li>-->
+            <!--<li>List item two</li>-->
+            <!--<li>List item three</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--<h3>Technologies and skills</h3>-->
+            <!--<div class="accordion-content">-->
+            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
+            <!--</div>-->
+            <!--<h3>Documents</h3>-->
+            <!--<div class="accordion-content">-->
+            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
+            <!--</div>-->
+            <!--<h3>Feedbacks</h3>-->
+            <!--<div class="accordion-content">-->
+            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
+            <!--</div>-->
+
         </div>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jquery.accordion.js"></script>
-		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-        <script type="text/javascript">
-            $(function() {
-			
-				$('#st-accordion').accordion();
-				
-            });
-        </script>
-    </body>
-</html>	
+    </div>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+<script >
+//    $(function () {
+//        $("#accordion").accordion({
+//
+//            collapsible : true
+//        });
+//
+//    });
+$(document).ready(function(){
+
+    //hide content after manual
+    $(".category-list .category-content:gt(0)").hide();
+
+    //toggle category-content
+    $(".category-header").click(function(){
+        $(this).next(".category-content").slideToggle(500);
+        return false;
+    });
+});
+
+</script>
+
+</body>
+</html>
