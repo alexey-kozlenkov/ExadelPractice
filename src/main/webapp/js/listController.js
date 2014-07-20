@@ -19,14 +19,12 @@ document.getElementById('checkAll').onclick=function(){
 
 /////////////////////////////////////////////////////////////////////////////
 function headerControl(){
-//   var tableOffset = $("#studTable").offset().left;
-//   var $header = $("#studTable > thead").clone();
-//   var $fixedHeader = $("#header-fixed").append($header);
-
-    var studTable= document.getElementById("studTable");
+    var scrolligBlock = document.getElementById("headerScrollingBlock");
     //////// Moving header with table //////////
     $(window).scroll(function () {
-        console.log(studTable.scrollLeft,  " ", $(".header-table-block").offset().left);
+        var offset = $(this).scrollLeft();
+        console.log("Script : ",offset);
+        scrolligBlock.scrollLeft = offset;
     });
 };
 

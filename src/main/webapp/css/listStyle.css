@@ -74,11 +74,14 @@ body{
 }
 
 .header-table-block{
-    overflow-x: visible;
+    margin: 0;
+    padding: 0px, 0px;
+    overflow: hidden;
 }
 
 /*************************************************/
 .central-block{
+    /*display: initial;*/
     width: 900pt;
     margin:0 auto;
     top: 40pt;
@@ -86,6 +89,7 @@ body{
 }
 
 .studtable{
+
   text-align: center;
   background: transparent;
 }
@@ -124,15 +128,15 @@ body{
     width: 100px;
 }
 .header-column-9{
-    width: 140px;
+    width: 130px;
 }
 .header-column-10{
-    width: 80px;
+    width: 90px;
 }
 
 .header-column-0,
 .header-column-1,
-.header-column-2
+.header-column-2,
 .header-column-3,
 .header-column-4,
 .header-column-5,
@@ -143,4 +147,9 @@ body{
 .header-column-10{
     text-align: center;
     vertical-align: middle;
+    /*border-right: solid #000000 1px;*/
+}
+
+.studtable > tbody > tr > td{
+    /*border-right: solid #000000 1px;*/
 }
