@@ -3,46 +3,51 @@ body{
     background-color: #eaf9f9 !important;
 }
 /*******************************************************************/
-
-#header-fixed {
-     background: url(../images/pattern.png) repeat top left;
-     background-color: #D4EEEE;
-     margin:0;
-}
-
-.menu-block{
-    top: 2pt;
-    left: 0pt;
-    position: absolute;
-    width: 90pt;
-    height: 28pt;
-    text-align: right;
-}
-.menu-button{
-    padding: 1pt 1pt !important;
-    width: 26pt;
-    height: 26pt;
-    font-size: 10;
-}
-.add-button{
-    padding: 4pt 4pt !important;
-}
-
 .header-block{
     top: 0;
     width: 100%;
     position: fixed;
     background:#D4EEEE url(../images/pattern.png) repeat top left;
 }
+
+.first-header-block{
+    margin-top: 2pt;
+}
+
+.menu-block{
+    display: inline-block;
+    width: 90pt;
+    /*height: 28pt;*/
+    float: left;
+    margin: 1pt;
+    margin-left: 20pt;
+    text-align: right;
+}
+
+.menu-button{
+    padding: 1pt 1pt !important;
+    width: 26pt;
+    height: 26pt;
+}
+.add-button{
+    padding: 4pt 4pt !important;
+}
+
 .search-block{
+    display: inline-block;
     text-align: center;
     margin: 2pt;
+    width: 50%;
 }
 .search-line{
-    width: 60% !important;
+    /*display: inline;*/
+    width: 50% !important;
+    min-width: 200pt;
     margin-right: 0pt;
 }
 .search-button{
+    /*display: inline;*/
+    /*float: right;*/
     width: 34pt;
     height: 26pt;
     margin-left: -1pt;
@@ -75,10 +80,14 @@ body{
 
 .header-table-block{
     margin: 0;
-    padding: 0px, 0px;
     overflow: hidden;
 }
 
+#header-fixed {
+    background: url(../images/pattern.png) repeat top left;
+    background-color: #D4EEEE;
+    margin:0;
+}
 /*************************************************/
 .central-block{
     /*display: initial;*/

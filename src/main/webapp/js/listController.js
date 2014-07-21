@@ -38,17 +38,14 @@ function upateInfoLabel(){
     }
 }
 
-function addRow(entry, count){
-    //console.log("Add "+entry+" count " + count);
-    var content = "<tr> <td><input type='checkbox' class='item-checkbox'></td>";
+function addRow(entry_id, entry, count){
+    var content = "<tr> <td><input id='cb_"+entry_id+"' type='checkbox' class='item-checkbox'></td>";
     for(var i=0; i<count; i++ ){
         content += "<td>" + entry[i]+"</td>";
     };
-
     content += "</tr>";
- //   console.log("Code :"+content);
 
-     $("#studTable").append(content);
+    $("#studTable").append(content);
 };
 function addStudents(arrStud){
     arrStud.forEach(function (element, index, array) {
@@ -80,7 +77,7 @@ function addStudents(arrStud){
             if (element.englishLevel) {
                 arg[9] = element.englishLevel;
             }
-            addRow(arg, 10);
+            addRow(element.id, arg, 10);
         }
     });
 };
@@ -91,6 +88,7 @@ function clearTable(){
         table.deleteRow(1);
     }
 };
+
 function setTableLoadingState(loading){
     if(loading){
         $("#studTable").hide();
@@ -102,18 +100,32 @@ function setTableLoadingState(loading){
        // $("#infoLabel").show();
     }
 };
+
+function getChecked(){
+    var checkedList = [];
+    var count = 0;
+
+    $('.item-checkbox:checked').each(function(index, element){
+        checkedList[count] = Number(element.id.replace("cb_",""));
+        count++;
+    });
+    return checkedList;
+}
 /////////////////////////////////////////////////////////////////////////////
 
 function loadTable(){
- //   setTableLoadingState(true);
+    setTableLoadingState(true);
 
-    var searchText = $("#searchLine").val();//document.getElementById("searchLine").;
+    var searchName = $("#searchLine").val();//document.getElementById("searchLine").;
 
-    $.get("/list/data",
-        {
-            'name': searchText
+    $.ajax({
+        type: "GET",
+        url: "/list/data",
+        async: true,
+        data: {
+            'name': searchName
         }
-    ).done(function( data ) {
+    }).done(function( data ) {
             var obj = JSON.parse(data);
             if(obj) {
                 clearTable();

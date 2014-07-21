@@ -9,25 +9,27 @@
 <body>
 
 <header id="headerBlock" class="header-block" >
-    <div class="search-block form-inline" align="center">
+    <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
             <input type="image" id="addMenuButton" class="btn btn-success menu-button" src="../images/add.png" alt="Add student"
-                 onclick="addRow(['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'],10);">
+                 onclick="addRow(0,['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'],10);">
             <input type="image" id="exportMenuButton" class="btn btn-info menu-button" src="../images/export.png" alt="Export"
                  onclick="clearTable();">
-            <input type="image" id="distributionMenyButton" class="btn btn-info menu-button" src="../images/distribution.png" alt="Distribution" >
+            <input type="image" id="distributionMenyButton" class="btn btn-info menu-button" src="../images/distribution.png" alt="Distribution"
+                    onclick="alert(getChecked());">
         </div>
-
-        <input type="text" id="searchLine" class="form-control search-query search-line">
-        <input type="image" id="startSearchButton" class="btn btn-primary search-button"
-           src="../images/search-icon.png" alt="Find!" onclick="loadTable();">
+        <!--<div class="form-inline search-block">-->
+            <input type="text" id="searchLine" class="form-control search-query search-line">
+            <input type="image" id="startSearchButton" class="btn btn-primary search-button"
+               src="../images/search-icon.png" alt="Find!" onclick="loadTable();">
+        <!--</div>-->
     </div>
     <!--<label id="infoLabel" class="header-info-label"></label>-->
     <!--div id="filterBlock" class="filter-block">
     </div-->
     <div id="headerScrollingBlock" class="header-table-block">
         <div class="central-block">
-            <table id="header-fixed" class="table table-striped studtable" align="center">
+            <table id="header-fixed" class="table table-striped studtable">
                 <thead>
                 <tr>
                     <th class="header-column-0"><input id="checkAll" type="checkbox"></th>
@@ -50,7 +52,7 @@
 
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
-    <table id="studTable" class="table table-striped studtable" align="center">
+    <table id="studTable" class="table table-striped studtable">
         <thead>
         <tr>
             <th class="header-column-0"><input type="checkbox"></th>
@@ -69,7 +71,7 @@
         <tbody>
         </tbody>
     </table>
-    <img src="../images/loading.gif" align='middle' class="load-image-class" id="loading_image" alt="Loading...">
+    <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
 <script src="../js/jquery-2.1.1.min.js"></script>
