@@ -46,7 +46,7 @@ body{
     /*display: inline;*/
     width: 45% !important;
     min-width: 200pt;
-    margin-right: 0pt;
+    margin-right: 0;
 }
 .search-button{
     /*display: inline;*/
@@ -90,7 +90,7 @@ body{
      height: 30pt;
 }
 /*-------------------Table-----------------------------*/
-.studtable{
+.student-table {
     text-align: center;
     background: transparent;
 }
@@ -102,7 +102,7 @@ body{
     width: 160px;
 }
 .header-column-2{
-    width: 70px;
+    width: 80px;
 }
 .header-column-3{
     width: 80px;
@@ -117,7 +117,7 @@ body{
     width: 50px;
 }
 .header-column-7{
-    width: 50px;
+    width: 80px;
 }
 .header-column-8{
     width: 100px;

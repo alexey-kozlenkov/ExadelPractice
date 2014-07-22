@@ -2,16 +2,39 @@
  * Created by ala'n on 14.07.2014.
  */
 
-window.onload = function(){
+$(document).ready(function () {
+    console.log("initialize page controllers...");
     headerScrollControl();
     checkEmptyFieldSize();
     updateInfoLabel();
-};
+    resizeControl();
+    bindEventControl();
+    console.log("initialize ended.");
+});
+function bindEventControl() {
+    $("#checkAll").click(onCheckedAll);
 
-document.getElementById('checkAll').onclick = onCheckedAll();
-//document.getElementById('headerBlock').onresize = checkEmptyFieldSize(); TODO!!!!
+    $("#addMenuButton").click(function () {
+        addRow(0, ['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 10);
+        updateInfoLabel();
+    });
+    $("#exportMenuButton").click(function () {
+        clearTable();
+        updateInfoLabel();
+    });
+    $("#distributionMenuButton").click(function () {
+        alert(getCheckedRowsId());
+    });
+    $("#showFilterButton").click(function () {
+        showFilter();
+    });
+    $("#startSearchButton").click(function () {
+        loadTable();
+        updateInfoLabel();
+    });
+}
 
-function loadTable(){
+function loadTable() {
     setTableLoadingState(true);
 
     var searchName = $("#searchLine").val();
@@ -23,72 +46,68 @@ function loadTable(){
         data: {
             'name': searchName
         }
-    }).done(function( data ) {
-            var obj = JSON.parse(data);
-            if(obj) {
-                clearTable();
-                addAllStudents(obj);
-                setTableLoadingState(false);
-            }
-    }).fail(function() {
-        alert( "error" );
+    }).done(function (data) {
+        var obj = JSON.parse(data);
+        if (obj) {
+            clearTable();
+            addAllStudents(obj);
+            updateInfoLabel();
+            setTableLoadingState(false);
+        }
+    }).fail(function () {
+        alert("error");
         setTableLoadingState(false);
     });
-    updateInfoLabel();
-};
-
-function showFilter(){
+}
+function showFilter() {
 //    var $popup = $("#filterPopup");
 //    $popup.showPopup();
     checkEmptyFieldSize();
-};
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////    Checker   /////////////////////////////////////////////
-function getCheckedRowsId(){
+function getCheckedRowsId() {
     var checkedList = [];
     var count = 0;
 
-    $('.item-checkbox:checked').each(function(index, element){
-        checkedList[count] = Number(element.id.replace("cb_",""));
+    $('.item-checkbox:checked').each(function (index, element) {
+        checkedList[count] = Number(element.id.replace("cb_", ""));
         count++;
     });
     return checkedList;
 };
-function onCheckedAll(){//TODO! review
-    var globalChecked = document.getElementById('checkAll').checked;
-    var itemCheckBoxes = document.getElementsByClassName("item-checkbox");
-    if(itemCheckBoxes) {
-        for( var i =0 ; i < itemCheckBoxes.length; i++) {
-            itemCheckBoxes[i].checked = globalChecked;
-        }
-    }
-};
+function onCheckedAll() {
+    var globalChecked = $("#checkAll").prop("checked");
+    $('.item-checkbox').each(function(){
+        this.checked = globalChecked;
+    });
+}
 ///////////////////////////////////// Table Utils //////////////////////////////////////////////
-function addAllStudents(arrStudents){
-    arrStudents.forEach(function(student){
+function addAllStudents(arrStudents) {
+    arrStudents.forEach(function (student) {
         addStudent(student);
     });
-};
-function addStudent(student){
+}
+function addStudent(student) {
     var arg = ["", "", "", "", "", "", "", "", "", ""];
 
     if (student.name) {
-        arg[0] = element.name;
+        arg[0] = student.name;
     }
     if (student.hireDate) {
-        arg[1] = element.hireDate;
+        arg[1] = student.hireDate;
     }
     if (student.faculty) {
-        arg[2] = element.faculty;
+        arg[2] = student.faculty;
     }
 
-    arg[3]  = ((student.course) ? student.course : "?");
+    arg[3] = ((student.course) ? student.course : "?");
     arg[3] += "-";
     arg[3] += ((student.studentGroup) ? student.studentGroup : "?");
 
     if (student.graduationDate) {
-        arg[4] = student.graduationDate.getYear();
+        arg[4] = student.graduationDate;
     }
     if (student.wokingHours) {
         arg[5] = student.wokingHours;
@@ -99,59 +118,69 @@ function addStudent(student){
     if (student.roleCurrentProject) {
         arg[7] = student.roleCurrentProject;
     }
-    if (element.technologyCurrentProject) {
+    if (student.technologyCurrentProject) {
         arg[8] = student.technologyCurrentProject;
     }
-    if (element.englishLevel) {
+    if (student.englishLevel) {
         arg[9] = student.englishLevel;
     }
 
     addRow(student.id, arg, 10);
-};
+}
 
-function addRow(rowId, columnValues, count){
+function addRow(rowId, columnValues, count) {
     var content;
-    content = "<tr> <td><input id='cb_"+rowId+"' type='checkbox' class='item-checkbox'></td>";
-    for(var i=0; i < count; i++ ){
-        content += "<td>" + columnValues[i]+"</td>";
-    };
+    content = "<tr> <td><input id='cb_" + rowId + "' type='checkbox' class='item-checkbox'></td>";
+    for (var i = 0; i < count; i++) {
+        content += "<td>" + columnValues[i] + "</td>";
+    }
+
     content += "</tr>";
 
     $("#studTable").append(content);
-};
-function clearTable(){
+}
+function clearTable() {
     $("#studTable > tbody").empty();
-};
+}
 ///////////////////////////////////// Table Subutil ////////////////////////////////////////////
-function headerScrollControl(){
-    var scrolligBlock = document.getElementById("headerScrollingBlock");
+function resizeControl(){
+    var HEIGHT = $("#headerBlock").outerHeight();
+    $(window).resize(function () {
+        var localHeight = $("#headerBlock").outerHeight();
+        if(HEIGHT != localHeight) {
+            HEIGHT = localHeight;
+            checkEmptyFieldSize();
+        }
+    });
+}
+function headerScrollControl() {
+    var $scrolligBlock = $("#headerScrollingBlock");
     //////// Moving header with table //////////
     $(window).scroll(function () {
         var offset = $(this).scrollLeft();
-        console.log("Script : ",offset);
-        scrolligBlock.scrollLeft = offset;
+        $scrolligBlock.scrollLeft(offset);
     });
-};
-function checkEmptyFieldSize(){
+}
+function checkEmptyFieldSize() {
     var headerHeight = $("#headerBlock").height();
-    headerHeight    -= $("#header-fixed").height();
-    $("#emptyField").css("height", headerHeight+"px");
-};
-function setTableLoadingState(loading){
-    if(loading){
+    headerHeight -= $("#header-fixed").height();
+    $("#emptyField").css("height", headerHeight + "px");
+}
+function setTableLoadingState(loading) {
+    if (loading) {
         $("#studTable").hide();
         $("#loading_image").show();
-    }else{
+    } else {
         $("#studTable").show();
         $("#loading_image").hide();
     }
-};
-function updateInfoLabel(){
+}
+function updateInfoLabel() {
     var itCount = document.getElementById("studTable").getElementsByTagName('tr').length;
-    if( itCount > 1 ) {
-        $("#infoLabel").text("-------------------- "+(itCount-1) + " item in list ---------------------");
-    }else {
-        $("#infoLabel").text("---------------------------------------------------------------------");
+    if (itCount > 1) {
+        $("#infoLabel").text("-------------------- " + (itCount - 1) + " item in list ---------------------");
+    } else {
+        $("#infoLabel").text("-------------------- List is empty --------------------");
     }
-};
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////

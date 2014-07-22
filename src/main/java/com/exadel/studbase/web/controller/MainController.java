@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -48,10 +50,11 @@ public class MainController {
     public static List<Student> testList;
     public static List<Student> getTestList(){
         if(testList==null){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             testList = new ArrayList<Student>();
             Student st;
             Random rand  =new Random();
-            for(int id_ = 1; id_<1000; id_++) {
+            for(int id_ = 1; id_<=1000; id_++) {
                 st = new Student();
 
                 st.setId(id_);
@@ -65,11 +68,24 @@ public class MainController {
                 st.setUniversity((id_ < 10) ? "MSU" : "BSU");
                 st.setFaculty((id_ < 10) ? "IP" : "FPM");
                 st.setWokingHours(4 + rand.nextInt(20));
+                try {
+                    st.setHireDate(new Date(sdf.parse("07.07.2014").getTime()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 if(rand.nextBoolean())
-                    st.setBillable(null);//TODO!
+                    try {
+                       st.setBillable(new Date(sdf.parse("02.09.2014").getTime()));
+                    } catch (ParseException e) {
+                       e.printStackTrace();
+                    }
                 else
                     st.setBillable(null);
-                st.setGraduationDate(null);//TODO!
+                try {
+                    st.setGraduationDate(new Date(sdf.parse("01.05.2018").getTime()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 st.setRoleCurrentProject(rand.nextBoolean() ? "developer" : "test");
                 st.setTechnologyCurrentProject(rand.nextBoolean() ? "java" : "php");
                 st.setEnglishLevel("advansed");

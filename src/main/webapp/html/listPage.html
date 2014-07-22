@@ -8,22 +8,22 @@
 </head>
 <body>
 
-<header id="headerBlock" class="header-block" >
+<header id="headerBlock" class="header-block">
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
-            <input type="image" id="addMenuButton" class="btn btn-success menu-button" src="../images/add.png" alt="Add student"
-                 onclick="addRow(0,['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'],10); updateInfoLabel();">
-            <input type="image" id="exportMenuButton" class="btn btn-info menu-button" src="../images/export.png" alt="Export"
-                 onclick="clearTable();updateInfoLabel();">
-            <input type="image" id="distributionMenyButton" class="btn btn-info menu-button" src="../images/distribution.png" alt="Distribution"
-                    onclick="alert(getCheckedRowsId());">
+            <input type="image" id="addMenuButton" class="btn btn-success menu-button" src="../images/add.png"
+                   alt="Add student">
+            <input type="image" id="exportMenuButton" class="btn btn-info menu-button" src="../images/export.png"
+                   alt="Export">
+            <input type="image" id="distributionMenuButton" class="btn btn-info menu-button"
+                   src="../images/distribution.png" alt="Distribution">
         </div>
         <!--<div class="form-inline search-block">-->
-            <input type="image" id="showFilterButton" class="btn btn-info menu-button"
-               src="../images/filter.png" alt="Filter" onclick="showFilter();">
-            <input type="text" id="searchLine" class="form-control search-query search-line">
-            <input type="image" id="startSearchButton" class="btn btn-primary search-button"
-               src="../images/search-icon.png" alt="Find!" onclick="loadTable();updateInfoLabel();">
+        <input type="image" id="showFilterButton" class="btn btn-info menu-button" src="../images/filter.png"
+               alt="Filter">
+        <input type="text" id="searchLine" class="form-control search-query search-line" >
+        <input type="image" id="startSearchButton" class="btn btn-primary search-button" src="../images/search-icon.png"
+               alt="Find!">
         <!--</div>-->
     </div>
 
@@ -31,7 +31,7 @@
 
     <div id="headerScrollingBlock" class="header-table-block">
         <div class="central-block">
-            <table id="header-fixed" class="table table-striped studtable">
+            <table id="header-fixed" class="table table-striped student-table">
                 <thead>
                 <tr>
                     <th class="header-column-0"><input id="checkAll" type="checkbox"></th>
@@ -54,7 +54,7 @@
 
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
-    <table id="studTable" class="table table-striped studtable">
+    <table id="studTable" class="table table-striped student-table">
         <thead>
         <tr>
             <th class="header-column-0"><input type="checkbox"></th>
