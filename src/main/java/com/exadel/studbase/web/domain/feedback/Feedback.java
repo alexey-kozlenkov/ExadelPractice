@@ -25,7 +25,7 @@ public class Feedback implements IEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name="employee_id")
-    private Employee employee;
+    private Employee feedbacker;
 
     @Column(name = "content")
     private String content;
@@ -72,12 +72,12 @@ public class Feedback implements IEntity<Long> {
         this.student = student;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getFeedbacker() {
+        return feedbacker;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setFeedbacker(Employee employee) {
+        this.feedbacker = employee;
     }
 
     public String getContent() {

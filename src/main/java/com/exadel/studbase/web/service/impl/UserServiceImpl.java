@@ -1,14 +1,15 @@
 package com.exadel.studbase.web.service.impl;
 
-import com.exadel.studbase.web.dao.*;
+import com.exadel.studbase.web.dao.IUserDAO;
 import com.exadel.studbase.web.domain.user.User;
-import com.exadel.studbase.web.service.*;
+import com.exadel.studbase.web.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Created by Алексей on 18.07.14.

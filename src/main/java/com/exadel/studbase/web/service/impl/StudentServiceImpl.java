@@ -47,6 +47,6 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Long getUserId(Long studentId) {
-        return studentDAO.getUser(studentId);
+        return studentDAO.getUserId(studentId);
     }
 }

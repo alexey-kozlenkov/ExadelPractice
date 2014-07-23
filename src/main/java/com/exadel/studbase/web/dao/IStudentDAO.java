@@ -7,6 +7,5 @@ import com.exadel.studbase.web.domain.student.Student;
  */
 public interface IStudentDAO extends GenericDAO<Student, Long> {
 
-    Long getUser (Long studentId);
-
+    Long getUserId(Long studentId);
 }

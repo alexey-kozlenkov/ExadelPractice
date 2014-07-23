@@ -2,9 +2,11 @@ package com.exadel.studbase.web.domain.student;
 
 import com.exadel.studbase.web.domain.IEntity;
 import com.exadel.studbase.web.domain.feedback.Feedback;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -62,11 +64,11 @@ public class Student implements IEntity<Long> {
     @Column(name="english_level")
     private String englishLevel;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Feedback> feedbacks;
 
     public Student() {
-
+        feedbacks = new ArrayList<Feedback>();
     }
 
     @Override
@@ -197,6 +199,10 @@ public class Student implements IEntity<Long> {
 
     public void setFeedbacks(Collection<Feedback> feedbacks) {
         this.feedbacks = feedbacks;
+    }
+
+    public void addFeedback (Feedback feedback) {
+        this.feedbacks.add(feedback);
     }
 
     @Override
