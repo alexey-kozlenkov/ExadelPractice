@@ -2,11 +2,12 @@ package com.exadel.studbase.web.domain.employee;
 
 import com.exadel.studbase.web.domain.IEntity;
 import com.exadel.studbase.web.domain.feedback.Feedback;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Алексей on 21.07.14.
@@ -20,10 +21,10 @@ public class Employee implements IEntity<Long> {
     private Long id;
 
     @OneToMany(mappedBy = "feedbacker", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Collection<Feedback> feedbacks;
+    private Set<Feedback> feedbacks;
 
     public Employee() {
-        feedbacks = new ArrayList<Feedback>();
+        feedbacks = new HashSet<Feedback>();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Employee implements IEntity<Long> {
         return feedbacks;
     }
 
-    public void setFeedbacks(Collection<Feedback> feedbacks) {
+    public void setFeedbacks(Set<Feedback> feedbacks) {
         this.feedbacks = feedbacks;
     }
 

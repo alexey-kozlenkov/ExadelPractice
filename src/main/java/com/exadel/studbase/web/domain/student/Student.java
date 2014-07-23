@@ -1,12 +1,15 @@
 package com.exadel.studbase.web.domain.student;
 
 import com.exadel.studbase.web.domain.IEntity;
+import com.exadel.studbase.web.domain.document.Document;
 import com.exadel.studbase.web.domain.feedback.Feedback;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -56,10 +59,14 @@ public class Student implements IEntity<Long> {
     private String englishLevel;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Collection<Feedback> feedbacks;
+    private Set<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Document> documents;
 
     public Student() {
-        feedbacks = new ArrayList<Feedback>();
+        feedbacks = new HashSet<Feedback>();
+        documents = new HashSet<Document>();
     }
 
     @Override
@@ -80,12 +87,12 @@ public class Student implements IEntity<Long> {
         this.state = state;
     }
 
-    public Date getHire_date() {
+    public Date getHireDate() {
         return hire_date;
     }
 
-    public void setHire_date(Date hire_date) {
-        this.hire_date = hire_date;
+    public void setHireDate(Date hireDate) {
+        this.hire_date = hireDate;
     }
 
     public String getUniversity() {
@@ -124,8 +131,8 @@ public class Student implements IEntity<Long> {
         return graduationDate;
     }
 
-    public void setGraduationDate(Date graduation_date) {
-        this.graduationDate = graduation_date;
+    public void setGraduationDate(Date graduationDate) {
+        this.graduationDate = graduationDate;
     }
 
     public int getWorkingHours() {
@@ -172,12 +179,24 @@ public class Student implements IEntity<Long> {
         return feedbacks;
     }
 
-    public void setFeedbacks(Collection<Feedback> feedbacks) {
+    public void setFeedbacks(Set<Feedback> feedbacks) {
         this.feedbacks = feedbacks;
     }
 
     public void addFeedback (Feedback feedback) {
         this.feedbacks.add(feedback);
+    }
+
+    public Collection<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        this.documents = documents;
+    }
+
+    public void addDocument(Document document) {
+        this.documents.add(document);
     }
 
     @Override
