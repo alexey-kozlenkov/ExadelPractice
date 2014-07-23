@@ -73,50 +73,7 @@ public class MainController {
     @RequestMapping(value = "/test/user", method = RequestMethod.GET)
     public String testUser() {
 
-        Student stud = new Student();
-        stud.setName("test_name");
-        stud.setEmail("test_email");
-        stud.setFaculty("BSU");
 
-        System.out.println("Trying to save student: " + stud);
-        studentService.save(stud);
-        System.out.println("Saved success!");
-
-        User user = new User();
-        user.setLogin("test_login");
-        user.setRole("stud");
-        user.setStudentInfo(stud);
-
-        System.out.println("Trying to save user: " + user);
-        userService.save(user);
-        System.out.println("Saved success!");
-
-        user = null;
-
-        Employee empl = new Employee();
-        empl.setName(stud.getName());
-        empl.setEmail(stud.getEmail());
-
-        System.out.println("Trying to save employee: " + empl);
-        employeeService.save(empl);
-        System.out.println("Saved success!");
-
-        System.out.println("trying to get User id by student: ");
-        Long id = studentService.getUserId(stud.getId());
-        System.out.println("Get success!");
-
-        System.out.println("Trying to get user by id:...");
-        User newUser = userService.getById(id);
-        System.out.println("Get success!");
-
-        System.out.println("try to save employee id..");
-        newUser.setEmployeeInfo(empl);
-        System.out.println("Saved success!");
-
-        System.out.println("trying to update user...");
-        newUser.setRole("updated_role");
-        userService.save(newUser);
-        System.out.println("Updated success!");
 
         return "login";
     }
@@ -167,8 +124,6 @@ public class MainController {
     public String testEmployee() {
 
         Employee employee = new Employee();
-        employee.setEmail("email_1");
-        employee.setName("name_1");
         employee.setFeedbacks(null);
 
         System.out.println("Trying to save employee...");
@@ -180,7 +135,6 @@ public class MainController {
         System.out.println("Get success!");
 
         System.out.println("Trying to update: " + employee);
-        employee.setName("update_name_1");
         System.out.println("Updated: " + employee);
         employeeService.save(employee);
         System.out.println("Trying to get all...");
@@ -201,14 +155,12 @@ public class MainController {
     public String testStudent(){
 
         Student student = new Student();
-        student.setName("Alexey Kozlenkov");
-        student.setEmail("nidecker95@gmail.com");
         student.setState("training");
         student.setUniversity("BSU");
         student.setFaculty("FAMCS");
         student.setCourse(3);
         student.setGroup(6);
-        student.setGraduation_date(java.sql.Date.valueOf("2017-07-01"));
+        student.setGraduationDate(java.sql.Date.valueOf("2017-07-01"));
         student.setRoleCurrentProject("Business Analytic");
         student.setTechsCurrentProject("Hibernate, Spring MVC, Java");
 
@@ -231,32 +183,39 @@ public class MainController {
     @RequestMapping(value = "/addMe")
     public String addMe() {
 
+        User me = new User();
+        me.setName("Alexey Kozlenkov");
+        me.setEmail("nidecker95@gmail.com");
+        me.setLogin("a.kozlenkov");
+        me.setRole("stud");
+
+        System.out.println("Trying to save me as user...");
+        userService.save(me);
+        System.out.println("Saved success!");
+
         Student alexeyKozlenkov = new Student();
-        alexeyKozlenkov.setName("Alexey Kozlenkov");
-        alexeyKozlenkov.setEmail("nidecker95@gmail.com");
+        alexeyKozlenkov.setId(me.getId());
         alexeyKozlenkov.setState("training");
         alexeyKozlenkov.setUniversity("BSU");
         alexeyKozlenkov.setFaculty("FAMCS");
         alexeyKozlenkov.setCourse(3);
         alexeyKozlenkov.setGroup(6);
-        alexeyKozlenkov.setGraduation_date(java.sql.Date.valueOf("2017-07-01"));
+        alexeyKozlenkov.setGraduationDate(java.sql.Date.valueOf("2017-07-01"));
         alexeyKozlenkov.setRoleCurrentProject("Business Analytic");
         alexeyKozlenkov.setTechsCurrentProject("Hibernate, Spring MVC, Java");
 
-        System.out.println("Trying to save me....");
-        System.out.println(studentService.save(alexeyKozlenkov));
+        System.out.println("Trying to set property in me as user me as student...");
+        me.setStudentInfo(alexeyKozlenkov);
         System.out.println("Saved success!");
 
-        System.out.println("Creating user for me...");
-        User userKozlenkov = new User();
-        userKozlenkov.setLogin("a.kozlenkov");
-        userKozlenkov.setRole("stud");
-        userKozlenkov.setStudentInfo(alexeyKozlenkov);
-        System.out.println("Created success!");
-
-        System.out.println("trying to save user for me..");
-        System.out.println(userService.save(userKozlenkov));
+        System.out.println("trying to save me as student...");
+        studentService.save(alexeyKozlenkov);
         System.out.println("Saved success!");
+
+        System.out.println("Trying to get student info about me using me as user...");
+        User gettingMe = userService.getById(me.getId());
+        System.out.println(gettingMe.getName() + " studies at " + gettingMe.getStudentInfo().getFaculty());
+        System.out.println("Success!!!!!");
 
         System.out.println("---------------------------------------------------------------------");
 
@@ -266,27 +225,39 @@ public class MainController {
     @RequestMapping(value = "/addSergey")
     public String addSergey() {
 
-        Employee sergeyTereshko = new Employee();
-        sergeyTereshko.setName("Sergey Tereshko");
-        sergeyTereshko.setEmail("tereshko@exadel.com");
-
-        System.out.println("Trying to save Sergey...");
-        System.out.println(employeeService.save(sergeyTereshko));
-        System.out.println("Saved success!");
-
         System.out.println("Creating user for Sergey...");
         User userTereshko = new User();
+        userTereshko.setName("Sergey Tereshko");
+        userTereshko.setEmail("tereshko@exadel.com");
         userTereshko.setRole("developer");
         userTereshko.setLogin("s.tereshko");
-        userTereshko.setEmployeeInfo(sergeyTereshko);
         System.out.println("Created success!");
 
         System.out.println("trying to save user for Segey...");
         System.out.println(userService.save(userTereshko));
         System.out.println("Saved success!");
 
+        Employee sergeyTereshko = new Employee();
+
+        sergeyTereshko.setId(userTereshko.getId());
+
+        System.out.println("Trying to save Sergey...");
+        System.out.println(employeeService.save(sergeyTereshko));
+        System.out.println("Saved success!");
+        userTereshko.setEmployeeInfo(sergeyTereshko);
+
         System.out.println("---------------------------------------------------------------------");
 
+
+        return "login";
+    }
+
+    @RequestMapping(value = "/updateMe")
+    public String updateMe(@RequestParam("stId") Long studentId) {
+
+        Student studentToUpdate = studentService.getById(studentId);
+        studentToUpdate.setRoleCurrentProject(studentToUpdate.getRoleCurrentProject() + ", The King!");
+        studentService.save(studentToUpdate);
 
         return "login";
     }

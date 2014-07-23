@@ -15,6 +15,4 @@ public interface IStudentService {
     void delete(Student student);
 
     Collection<Student> getAll();
-
-    Long getUserId(Long studentId);
 }

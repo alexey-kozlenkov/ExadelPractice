@@ -19,6 +19,12 @@ public class User implements IEntity<Long> {
     @Column(name="id")
     private Long id;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name="email")
+    private String email;
+
     @Column(name="login")
     private String login;
 
@@ -28,15 +34,13 @@ public class User implements IEntity<Long> {
     @Column(name="role")
     private String role;
 
-
     @OneToOne
-    @JoinColumn(name="student_id")
+    @JoinColumn(name="id")
     private Student studentInfo;
 
     @OneToOne
-    @JoinColumn(name="employee_id")
+    @JoinColumn(name="id")
     private Employee employeeInfo;
-
 
     public User() {
         password="pass";
@@ -50,6 +54,22 @@ public class User implements IEntity<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {

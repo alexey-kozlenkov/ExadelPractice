@@ -2,13 +2,11 @@ package com.exadel.studbase.web.domain.student;
 
 import com.exadel.studbase.web.domain.IEntity;
 import com.exadel.studbase.web.domain.feedback.Feedback;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -18,15 +16,8 @@ import java.util.Set;
 public class Student implements IEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-
-    @Column(name="name")
-    private String name;
-
-    @Column(name="email")
-    private String email;
 
     @Column(name="state")
     private String state;
@@ -47,10 +38,10 @@ public class Student implements IEntity<Long> {
     private int group;
 
     @Column(name="graduation_date")
-    private Date graduation_date;
+    private Date graduationDate;
 
     @Column(name="working_hours")
-    private int working_hours;
+    private int workingHours;
 
     @Column(name="billable")
     private Date billable;
@@ -79,22 +70,6 @@ public class Student implements IEntity<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getState() {
@@ -145,20 +120,20 @@ public class Student implements IEntity<Long> {
         this.group = group;
     }
 
-    public Date getGraduation_date() {
-        return graduation_date;
+    public Date getGraduationDate() {
+        return graduationDate;
     }
 
-    public void setGraduation_date(Date graduation_date) {
-        this.graduation_date = graduation_date;
+    public void setGraduationDate(Date graduation_date) {
+        this.graduationDate = graduation_date;
     }
 
-    public int getWorking_hours() {
-        return working_hours;
+    public int getWorkingHours() {
+        return workingHours;
     }
 
-    public void setWorking_hours(int working_hours) {
-        this.working_hours = working_hours;
+    public void setWorkingHours(int working_hours) {
+        this.workingHours = working_hours;
     }
 
     public Date getBillable() {
@@ -226,16 +201,14 @@ public class Student implements IEntity<Long> {
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 ", state='" + state + '\'' +
                 ", hire_date=" + hire_date +
                 ", university='" + university + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", course=" + course +
                 ", group=" + group +
-                ", graduation_date=" + graduation_date +
-                ", working_hours=" + working_hours +
+                ", graduation_date=" + graduationDate +
+                ", working_hours=" + workingHours +
                 ", billable=" + billable +
                 ", roleCurrentProject='" + roleCurrentProject + '\'' +
                 ", techsCurrentProject='" + techsCurrentProject + '\'' +

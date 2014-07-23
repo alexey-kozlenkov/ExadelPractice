@@ -16,15 +16,8 @@ import java.util.Collection;
 public class Employee implements IEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-
-    @Column(name="name")
-    private String name;
-
-    @Column(name="email")
-    private String email;
 
     @OneToMany(mappedBy = "feedbacker", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Feedback> feedbacks;
@@ -35,28 +28,12 @@ public class Employee implements IEntity<Long> {
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     @Override
-    public void setId(Long aLong) {
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id=id;
     }
 
     public Collection<Feedback> getFeedbacks() {
@@ -92,8 +69,6 @@ public class Employee implements IEntity<Long> {
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 '}';
     }
 }

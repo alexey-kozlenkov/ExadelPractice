@@ -43,10 +43,4 @@ public class StudentServiceImpl implements IStudentService {
     public Collection<Student> getAll() {
         return studentDAO.getAll();
     }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Long getUserId(Long studentId) {
-        return studentDAO.getUserId(studentId);
-    }
 }

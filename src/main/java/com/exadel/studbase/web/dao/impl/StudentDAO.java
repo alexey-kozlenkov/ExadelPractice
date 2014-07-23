@@ -13,10 +13,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class StudentDAO extends GenericDAOImpl <Student, Long> implements IStudentDAO {
-    @Override
-    public Long getUserId(Long studentId) {
-
-        Query query = getSession().createQuery("SELECT id FROM User WHERE studentInfo.id=" + studentId);
-        return (Long) query.list().get(0);
-    }
 }
