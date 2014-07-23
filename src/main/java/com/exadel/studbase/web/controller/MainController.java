@@ -1,7 +1,13 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.init.Options;
+import com.exadel.studbase.web.domain.student.Student;
+import com.exadel.studbase.web.service.IEmployeeService;
+import com.exadel.studbase.web.service.IFeedbackService;
+import com.exadel.studbase.web.service.IStudentService;
+import com.exadel.studbase.web.service.IUserService;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,17 +19,23 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by ala'n on 10.07.2014.
- */
 
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/")
 public class MainController {
 
-   // @Autowired
-   // IStudBaseMainService service;
+    @Autowired
+    IUserService userService;
+    @Autowired
+    IStudentService studentService;
+    @Autowired
+    IEmployeeService employeeService;
+    @Autowired
+    IFeedbackService feedbackService;
+
+    // @Autowired
+    // IStudBaseMainService service;
 
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
@@ -80,13 +92,13 @@ public class MainController {
     public void optionsData(HttpServletRequest request, HttpServletResponse response){
         //Object smth = request.getAttribute("id");
         System.out.println("get it3333333333333333333!!!");
-//        try {
+        try {
             Gson gson = new Gson();
-           // Student student = new Student("Cherry", "12345", "Bulllls@yandex.ru","Ruslan Filistovich","employee","working");
-           // response.getWriter().print(gson.toJson(student,Student.class));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+           Student student = new Student();//("Cherry", "12345", "Bulllls@yandex.ru","Ruslan Filistovich","employee","working");
+           response.getWriter().print(gson.toJson(student,Student.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         response.setStatus(200);
     }
 
