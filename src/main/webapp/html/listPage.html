@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Student list</title>
-    <link href="../css/listStyle.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/listStyle.css" rel="stylesheet">
+    <link href="../css/color.css" rel="stylesheet">
 </head>
 <body>
 
 <header id="headerBlock" class="header-block">
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
-            <input type="image" id="addMenuButton" class="btn btn-success menu-button" src="../images/add.png"
+            <input type="image" id="addMenuButton" class="btn btn-primary menu-button" src="../images/add.png"
                    alt="Add student">
-            <input type="image" id="exportMenuButton" class="btn btn-info menu-button" src="../images/export.png"
+            <input type="image" id="exportMenuButton" class="btn btn-primary menu-button" src="../images/export.png"
                    alt="Export">
-            <input type="image" id="distributionMenuButton" class="btn btn-info menu-button"
+            <input type="image" id="distributionMenuButton" class="btn btn-primary menu-button"
                    src="../images/distribution.png" alt="Distribution">
         </div>
+        <span style="width: 20pt; height: 20pt"></span>
         <!--<div class="form-inline search-block">-->
-        <input type="image" id="showFilterButton" class="btn btn-info menu-button" src="../images/filter.png"
+        <input type="image" id="showFilterButton" class="btn btn-primary menu-button" src="../images/filter.png"
                alt="Filter">
         <input type="text" id="searchLine" class="form-control search-query search-line" >
         <input type="image" id="startSearchButton" class="btn btn-primary search-button" src="../images/search-icon.png"
@@ -76,7 +78,8 @@
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
-<div id="filterPopup" class="popover">
+<div id="filterPopup" class="popup-menu filter-popup">
+    <div style="background: #28a4c9; color: #ffffff"> Hallo world!! <span style="float:right; margin-right: 5pt;">X</span>></div>
 </div>
 
 <script src="../js/jquery-2.1.1.min.js"></script>

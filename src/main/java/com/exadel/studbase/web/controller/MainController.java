@@ -124,4 +124,19 @@ public class MainController {
         }
         response.setStatus(200);
     }
+
+    @RequestMapping(value= "/test", method = RequestMethod.POST)
+    public void test(HttpServletRequest request, HttpServletResponse response){
+
+        try {
+            System.out.println("Get post req.!!");
+            response.getWriter().print("good!!!");
+            response.setStatus(200);
+         //   response.flushBuffer();
+            System.out.println("All sended!!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

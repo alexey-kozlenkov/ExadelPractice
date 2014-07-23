@@ -1,131 +1,159 @@
-body{
-    background:url(../images/pattern.png) repeat top left;
-    background-color: #eaf9f9 !important;
+body {
+    background: url(../images/pattern.png) repeat top left;
+    background-color: #eaf9f9;
+}
+
+.header-block {
+    background: #c8c8c8;
+}
+
+.header-info-label {
+    color: #000000;
+    font-size: 9pt;
 }
 
 /**************************** Header ***********************************/
 
-.header-block{
+.header-block {
+    position: fixed;
     top: 0;
     width: 100%;
-    position: fixed;
-    background:#D4EEEE url(../images/pattern.png) repeat top left;
     text-align: center;
 }
 
 /*-------------------------------------*/
-.first-header-block{
+.first-header-block {
     margin: 2pt;
 }
 
-.menu-block{
+.menu-block {
     display: inline-block;
-    width: 90pt;
-    /*height: 28pt;*/
-    /*float: left;*/
+
     margin: 1pt;
+
+    width: 90pt;
+
     text-align: center;
 }
 
-.menu-button{
+.menu-button {
     padding: 1pt 1pt !important;
     width: 26pt;
     height: 26pt;
 }
-.add-button{
+
+.add-button {
     padding: 4pt 4pt !important;
 }
 
-.search-block{
+.search-block {
     display: inline-block;
-    text-align: center;
+
     margin: 2pt;
+
     width: 50%;
+
+    text-align: center;
 }
-.search-line{
+
+.search-line {
     /*display: inline;*/
-    width: 45% !important;
-    min-width: 200pt;
+
+    /*width: 30% !important;*/
     margin-right: 0;
+
+    min-width: 200pt;
 }
-.search-button{
-    /*display: inline;*/
-    /*float: right;*/
+
+.search-button {
+    margin-left: -1pt;
     width: 34pt;
     height: 26pt;
-    margin-left: -1pt;
 }
+
 /*-------------------------------------*/
 
-.header-info-label{
+.header-info-label {
     margin: 2pt;
     text-align: center;
-    color: #000000;
-    font-size: 9pt;
 }
+
 /*-------------------------------------*/
 
-.header-table-block{
-    margin: 0;
+.header-table-block {
     overflow: hidden;
+    margin: 0;
 }
+
 #header-fixed {
-    /*background: url(../images/pattern.png) repeat top left;*/
-    /*background-color: #D4EEEE;*/
-    margin:0;
+    margin: 0;
 }
 
 /***************************** Central *******************************/
-.central-block{
+.central-block {
     /*display: initial;*/
-    width: 900pt;
-    margin:0 auto;
     top: 40pt;
+    margin: 0 auto;
+
+    width: 900pt;
+
     text-align: center;
-}
-/*-----------------------------------------------------*/
-/* Table position fix */
-#emptyField{
-     width: 100%;
-     height: 30pt;
-}
-/*-------------------Table-----------------------------*/
-.student-table {
-    text-align: center;
-    background: transparent;
 }
 
-.header-column-0{
+/*-----------------------------------------------------*/
+/* Table position fix */
+#emptyField {
+    width: 100%;
+    height: 30pt;
+}
+
+/*-------------------Table-----------------------------*/
+.student-table {
+    background: transparent;
+    text-align: center;
+}
+
+.header-column-0 {
     width: 20px;
 }
-.header-column-1{
+
+.header-column-1 {
     width: 160px;
 }
-.header-column-2{
+
+.header-column-2 {
     width: 80px;
 }
-.header-column-3{
+
+.header-column-3 {
     width: 80px;
 }
-.header-column-4{
+
+.header-column-4 {
     width: 50px;
 }
-.header-column-5{
+
+.header-column-5 {
     width: 50px;
 }
-.header-column-6{
+
+.header-column-6 {
     width: 50px;
 }
-.header-column-7{
+
+.header-column-7 {
     width: 80px;
 }
-.header-column-8{
+
+.header-column-8 {
     width: 100px;
 }
-.header-column-9{
+
+.header-column-9 {
     width: 130px;
 }
-.header-column-10{
+
+.header-column-10 {
     width: 90px;
 }
 
@@ -139,16 +167,32 @@ body{
 .header-column-7,
 .header-column-8,
 .header-column-9,
-.header-column-10{
-    text-align: center;
+.header-column-10 {
     vertical-align: middle;
+    text-align: center;
 }
 
 /*----------------------Load Image-----------------------*/
 
-.load-image-class{
-    width:320pt;
-    height:320pt;
+.load-image-class {
     display: none;
+    width: 320pt;
+    height: 320pt;
 }
-/***********************************************************************************/
+
+/***************************** Popups *******************************/
+
+.popup-menu {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    border: solid 2pt #000000;
+    border-radius: 4pt;
+
+}
+
+.filter-popup {
+    width: 200pt;
+    height: 100pt;
+
+}

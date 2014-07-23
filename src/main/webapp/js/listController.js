@@ -60,11 +60,35 @@ function loadTable() {
     });
 }
 function showFilter() {
-//    var $popup = $("#filterPopup");
-//    $popup.showPopup();
-    checkEmptyFieldSize();
-}
+    var $popup = $("#filterPopup");
+    togglePopup($popup);
+    centrePopup($popup, null, 60);
 
+}
+////////////////////////////////////// Toggle popup ////////////////////////////////////////////
+function togglePopup(popup) {
+    if(popup.is(':visible')){
+        popup.hide();
+    }else{
+        popup.show();
+    }
+}
+function centrePopup(popup,x, y){
+    var WIDTH = $(window).width();
+    var HEIGHT = $(window).height();
+    var popupWidth = popup.width();
+    var popupHeight = popup.height();
+    if(x == undefined || x == null){
+        x = (WIDTH - popupWidth)/2;
+    }
+    if(y == undefined || y == null){
+        y = (HEIGHT - popupHeight)/2;
+    }
+    popup.css({
+        left: x,
+        top: y
+    });
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////    Checker   /////////////////////////////////////////////
 function getCheckedRowsId() {
