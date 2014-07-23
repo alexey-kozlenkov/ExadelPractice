@@ -4,26 +4,30 @@
     <meta charset="utf-8">
     <title>Information</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">-->
     <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'/>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <link rel="stylesheet" href="../css/user-info.css"/>
 
 </head>
 <body>
 
 <div class="header">
-    <h1>Cherry and Root-crop</h1>
+    <h1 id="headerName">some student name</h1>
 </div>
 <div class="container">
     <div class="wrapper">
         <div class="category-list">
 
-            <div class="category-header"><a href="#" style="text-decoration:none">Manual information<span
-                        class="st-arrow">Open or Close</span></a></div>
+            <div class="category-header"><a href="#">Manual information<span
+                    class="st-arrow">Open or Close</span></a></div>
             <div class="category-content">
                 <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" placeholder="First & second name">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="login" class="col-sm-2 control-label">Login</label>
 
@@ -32,92 +36,138 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                        <label for="password" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword3"
+                            <input type="password" class="form-control" id="password"
                                    placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                        <label for="email" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                            <input type="email" class="form-control" id="email" placeholder="Email">
                         </div>
                     </div>
-                    <!-- Split button -->
-                    <select class="selectpicker" data-style="btn-primary">
-                        <option>Mustard</option>
-                        <option>Ketchup</option>
-                        <option>Relish</option>
-                    </select>
 
-                    <select class="selectpicker" data-style="btn-primary">
-                        <option>Mustard</option>
-                        <option>Ketchup</option>
-                        <option>Relish</option>
-                    </select>
+                    <select class="select btn-primary" id="role"></select>
+
+                    <select class="select" id="state"></select>
+
+                    <button id="saveManualInformation" type="button" class="btn btn-primary">Save</button>
 
                 </form>
             </div>
 
 
-            <div class="category-header"><a href="#" style="text-decoration:none">Education<span
+            <div class="category-header"><a href="#">Education<span
                     class="st-arrow">Open or Close</span></a></div>
             <div class="category-content">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="institution" class="col-sm-2 control-label">Educational institution</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="institution"
+                                   placeholder="Educational institution">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="faculty" class="col-sm-2 control-label">Faculty</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="faculty" placeholder="Faculty">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="speciality" class="col-sm-2 control-label">Speciality</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="speciality" placeholder="Speciality">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="course" class="col-sm-2 control-label">Course</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="course" placeholder="Course graduated">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="group" class="col-sm-2 control-label">Group</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="group" placeholder="Group number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="graduationYear" class="col-sm-2 control-label">Year of graduation</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="graduationYear"
+                                   placeholder="Year of graduation this institution">
+                        </div>
+                    </div>
+                    <button id="saveEducationInformation" type="button" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+
+
+            <div class="category-header"><a href="#">Exadel<span
+            class="st-arrow">Open or Close</span></a></div>
+            <div class="category-content">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="workingHours" class="col-sm-2 control-label">Working hours</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="workingHours"
+                                   placeholder="Working hours (now)">
+                        </div>
+                    </div>
+                    <div class="checkbox-inline">
+                        <label class="col-sm-2 control-label">
+                            <input type="checkbox" value="">
+                            Billable/No billable
+                        </label>
+                    </div>
+
+
+
+                    <button id="saveExadelInformation" type="button" class="btn btn-primary">Save</button>
+                </form>
 
             </div>
-            <!--<h3>Exadel</h3>-->
-            <!--<div class="accordion-content">-->
-            <!--<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>-->
-            <!--<ul>-->
-            <!--<li>List item one</li>-->
-            <!--<li>List item two</li>-->
-            <!--<li>List item three</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--<h3>Technologies and skills</h3>-->
-            <!--<div class="accordion-content">-->
-            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
-            <!--</div>-->
-            <!--<h3>Documents</h3>-->
-            <!--<div class="accordion-content">-->
-            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
-            <!--</div>-->
-            <!--<h3>Feedbacks</h3>-->
-            <!--<div class="accordion-content">-->
-            <!--<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>-->
+
+            <!--<div class="category-header"><a href="#">Technologies and skills<span-->
+            <!--class="st-arrow">Open or Close</span></a></div>-->
+            <!--<div class="category-content">-->
+            <!--<p>BSU</p>-->
             <!--</div>-->
 
+
+            <!--<div class="category-header"><a href="#">Documents<span-->
+            <!--class="st-arrow">Open or Close</span></a></div>-->
+            <!--<div class="category-content">-->
+            <!--<p>BSU</p>-->
+            <!--</div>-->
+
+
+            <!--<div class="category-header"><a href="#">Feedbacks<span-->
+            <!--class="st-arrow">Open or Close</span></a></div>-->
+            <!--<div class="category-content">-->
+            <!--<p>BSU</p>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
-<script src="../js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-
-
-<script >
-//    $(function () {
-//        $("#accordion").accordion({
-//
-//            collapsible : true
-//        });
-//
-//    });
-$(document).ready(function(){
-
-    //hide content after manual
-    $(".category-list .category-content:gt(0)").hide();
-
-    //toggle category-content
-    $(".category-header").click(function(){
-        $(this).next(".category-content").slideToggle(500);
-        return false;
-    });
-});
-
-</script>
-
+<script src="../js/studentInfo.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
