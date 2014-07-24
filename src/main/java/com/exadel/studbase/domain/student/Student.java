@@ -26,7 +26,7 @@ public class Student implements IEntity<Long> {
     private String state;
 
     @Column(name="hire_date")
-    private Date hire_date;
+    private Date hireDate;
 
     @Column(name="university")
     private String university;
@@ -88,11 +88,11 @@ public class Student implements IEntity<Long> {
     }
 
     public Date getHireDate() {
-        return hire_date;
+        return hireDate;
     }
 
     public void setHireDate(Date hireDate) {
-        this.hire_date = hireDate;
+        this.hireDate = hireDate;
     }
 
     public String getUniversity() {
@@ -221,7 +221,7 @@ public class Student implements IEntity<Long> {
         return "Student{" +
                 "id=" + id +
                 ", state='" + state + '\'' +
-                ", hire_date=" + hire_date +
+                ", hire_date=" + hireDate +
                 ", university='" + university + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", course=" + course +

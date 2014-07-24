@@ -122,34 +122,34 @@ function addStudent(student) {
     if (student.name) {
         arg[0] = student.name;
     }
-    if (student.hireDate) {
-        arg[1] = student.hireDate;
+    if (student.studentInfo.hireDate) {
+        arg[1] = student.studentInfo.hireDate;
     }
-    if (student.faculty) {
-        arg[2] = student.faculty;
+    if (student.studentInfo.faculty) {
+        arg[2] = student.studentInfo.faculty;
     }
 
-    arg[3] = ((student.course) ? student.course : "?");
+    arg[3] = ((student.studentInfo.course) ? student.studentInfo.course : "?");
     arg[3] += "-";
-    arg[3] += ((student.studentGroup) ? student.studentGroup : "?");
+    arg[3] += ((student.studentInfo.studentGroup) ? student.studentInfo.studentGroup : "?");
 
-    if (student.graduationDate) {
-        arg[4] = student.graduationDate;
+    if (student.studentInfo.graduationDate) {
+        arg[4] = student.studentInfo.graduationDate;
     }
-    if (student.wokingHours) {
-        arg[5] = student.wokingHours;
+    if (student.studentInfo.workingHours) {
+        arg[5] = student.studentInfo.workingHours;
     }
 
-    arg[6] = (student.billable ? student.billable : "-");
+    arg[6] = (student.studentInfo.billable ? student.studentInfo.billable : "-");
 
-    if (student.roleCurrentProject) {
-        arg[7] = student.roleCurrentProject;
+    if (student.studentInfo.roleCurrentProject) {
+        arg[7] = student.studentInfo.roleCurrentProject;
     }
-    if (student.technologyCurrentProject) {
-        arg[8] = student.technologyCurrentProject;
+    if (student.studentInfo.techsCurrentProject) {
+        arg[8] = student.studentInfo.techsCurrentProject;
     }
-    if (student.englishLevel) {
-        arg[9] = student.englishLevel;
+    if (student.studentInfo.englishLevel) {
+        arg[9] = student.studentInfo.englishLevel;
     }
 
     addRow(student.id, arg, 10);
