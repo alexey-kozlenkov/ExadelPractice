@@ -1,11 +1,11 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.web.domain.document.Document;
-import com.exadel.studbase.web.domain.employee.Employee;
-import com.exadel.studbase.web.domain.feedback.Feedback;
-import com.exadel.studbase.web.domain.student.Student;
-import com.exadel.studbase.web.domain.user.User;
-import com.exadel.studbase.web.service.*;
+import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.student.Student;
+import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -29,10 +31,6 @@ public class MainController {
     IFeedbackService feedbackService;
     @Autowired
     IDocumentService documentService;
-
-    // @Autowired
-    // IStudBaseMainService service;
-
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String secIndex() {
@@ -116,7 +114,7 @@ public class MainController {
     @RequestMapping(value = "/updateEmployee")
     public String updateEmployee(@RequestParam("empId") Long employeeId) {
         User userToUpdate = userService.getById(employeeId);
-        userToUpdate.setRole("developer");
+        userToUpdate.setRole("superadmin");
         userService.save(userToUpdate);
         return "login";
     }
@@ -158,15 +156,36 @@ public class MainController {
     }
 
     @RequestMapping(value = "/addDocument")
-    public String addDocument(@RequestParam("stId") Long studentId) {
+    public String addDocument(@RequestParam("stId") Long studentId) throws ParseException {
 
         Document document = new Document();
         document.setStudent(studentService.getById((studentId)));
-        document.setDoctype("Certificate from school of kings");
-        document.setIssueDate(new Date(20140723));
+        document.setDoctype("Certificate from Belhard");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        document.setIssueDate(new Date(dateFormat.parse("2014").getTime()));
 
         documentService.save(document);
 
         return "login";
     }
+
+    @RequestMapping(value = "/updateDocument")
+    public String updateDocument(@RequestParam("docId") Long documentId) throws ParseException {
+        Document document = documentService.getById(documentId);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        java.util.Date date = dateFormat.parse("2014-07-22");
+        document.setIssueDate(new Date (date.getTime()));
+
+        documentService.save(document);
+
+        return "login";
+    }
+    @RequestMapping(value = "/deleteDocument")
+    public String deleteDocument(@RequestParam("docId") Long documentId) throws ParseException {
+
+        documentService.delete(documentService.getById(documentId));
+        return "login";
+    }
+
 }
