@@ -12,6 +12,11 @@
 
     <context:component-scan base-package="com.exadel.studbase"/>
 
+    <context:annotation-config/>
+
+    <tx:annotation-driven/>
+    <!--<context:annotation-config/>-->
+
     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! JDBS PROP PATH !!!!!!!!!!!!!!!!!!!!!!!!!!!!1!!!-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}"/>
@@ -20,30 +25,22 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-   <!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-    -->
-        <!--property name="annotatedClasses">
-            <list>
-                <value>edu.exadel.application.domain.User</value>
-                <value>edu.exadel.application.domain.UserView</value>
-            </list>
-        </property-->
-<!--
+        <property name="packagesToScan"
+                value="com.exadel.studbase.domain"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
             </props>
         </property>
     </bean>
 
-    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <context:annotation-config/>
-
-    <tx:annotation-driven transaction-manager="txManager"/>
--->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
