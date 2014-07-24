@@ -3,6 +3,8 @@ package com.exadel.studbase.web.controller;
 import com.exadel.studbase.domain.document.Document;
 import com.exadel.studbase.domain.employee.Employee;
 import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.skills.SkillSet;
+import com.exadel.studbase.domain.skills.SkillType;
 import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -31,6 +37,11 @@ public class MainController {
     IFeedbackService feedbackService;
     @Autowired
     IDocumentService documentService;
+    @Autowired
+    ISkillTypeService skillTypeService;
+    @Autowired
+    ISkillSetService skillSetService;
+
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String secIndex() {
@@ -181,6 +192,7 @@ public class MainController {
 
         return "login";
     }
+
     @RequestMapping(value = "/deleteDocument")
     public String deleteDocument(@RequestParam("docId") Long documentId) throws ParseException {
 
@@ -188,4 +200,49 @@ public class MainController {
         return "login";
     }
 
+    @RequestMapping(value = "/addSkillType")
+    public String addSkillType(@RequestParam("name") String skillName) {
+        SkillType skillType = new SkillType();
+        skillType.setName(skillName);
+        skillTypeService.save(skillType);
+        return "login";
+    }
+
+    @RequestMapping(value = "/updateSkillType")
+    public String updateSkillType(@RequestParam("id") Long skillTypeId, @RequestParam("newName") String newName) {
+        SkillType skillType = skillTypeService.getById(skillTypeId);
+        skillType.setName(newName);
+        skillTypeService.save(skillType);
+        return "login";
+    }
+
+    @RequestMapping(value = "/deleteSkillType")
+    public String deleteSkillType(@RequestParam("id") Long skillTypeId) {
+        skillTypeService.delete(skillTypeService.getById(skillTypeId));
+        return "login";
+    }
+
+    @RequestMapping (value = "/addSkillSet")
+    public String addSkillSet(@RequestParam("usId") Long usertId, @RequestParam("skTId") Long skillTypeId) {
+        SkillSet skillSet = new SkillSet();
+        skillSet.setUser(userService.getById(usertId));
+        skillSet.setSkillType(skillTypeService.getById(skillTypeId));
+        skillSet.setLevel(5);
+
+        skillSetService.save(skillSet);
+
+        return "login";
+    }
+
+    @RequestMapping(value="/updateUser")
+    public String updateUser(@RequestParam("usId") Long userId) {
+        User userToUpdate = userService.getById(userId);
+        return "login";
+    }
+
+    @RequestMapping(value="/getUsers")
+    public String getUsers(@RequestParam("skTId")  Long skillTypeId) {
+        ArrayList<User> users = (ArrayList<User>) skillSetService.getAllWithSkill(skillTypeId);
+        return "login";
+    }
 }

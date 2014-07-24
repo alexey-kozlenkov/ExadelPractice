@@ -2,9 +2,12 @@ package com.exadel.studbase.domain.user;
 
 import com.exadel.studbase.domain.IEntity;
 import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.skills.SkillSet;
 import com.exadel.studbase.domain.student.Student;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -42,8 +45,12 @@ public class User implements IEntity<Long> {
     @JoinColumn(name="id")
     private Employee employeeInfo;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<SkillSet> skills;
+
     public User() {
         password="pass";
+        skills = new HashSet<SkillSet>();
     }
 
     @Override
@@ -110,6 +117,14 @@ public class User implements IEntity<Long> {
 
     public void setEmployeeInfo(Employee employeeInfo) {
         this.employeeInfo = employeeInfo;
+    }
+
+    public Set<SkillSet> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<SkillSet> skills) {
+        this.skills = skills;
     }
 
     @Override
