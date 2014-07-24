@@ -1,22 +1,23 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.init.Options;
-import com.exadel.studbase.web.domain.student.Student;
-import com.exadel.studbase.web.domain.user.User;
-import com.exadel.studbase.web.service.IEmployeeService;
-import com.exadel.studbase.web.service.IFeedbackService;
-import com.exadel.studbase.web.service.IStudentService;
-import com.exadel.studbase.web.service.IUserService;
-import com.google.gson.Gson;
+import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.student.Student;
+import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +35,8 @@ public class MainController {
     IEmployeeService employeeService;
     @Autowired
     IFeedbackService feedbackService;
-
+    @Autowired
+    IDocumentService documentService;
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String secIndex() {
@@ -93,7 +95,34 @@ public class MainController {
         try {
             Gson gson = new Gson();
             User user = new User();
+        User user = new User();
+        user.setName("Julia Malyshko");
+        user.setEmail("julia@gmail.com");
+        user.setLogin("jul.malyshko");
+        user.setRole("stud");
 
+        System.out.println("Trying to student me as user...");
+        userService.save(user);
+        System.out.println("Saved success!");
+
+        Student student = new Student();
+        student.setId(user.getId());
+        student.setState("training");
+        student.setUniversity("BSU");
+        student.setFaculty("FAMCS");
+        student.setCourse(3);
+        student.setGroup(7);
+        student.setGraduationDate(java.sql.Date.valueOf("2017-07-01"));
+        student.setRoleCurrentProject("Junior developer");
+        student.setTechsCurrentProject("CSS, JS, JSON");
+
+        System.out.println("trying to save student as student...");
+        studentService.save(student);
+        System.out.println("Saved success!");
+
+        System.out.println("---------------------------------------------------------------------");
+
+       
             response.getWriter().print(gson.toJson(user, User.class));
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,23 +154,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/testTest")
-    public String test() {
+    
 
-        Student student = new Student();
-        student.setName("Julia");
-        student.setUniversity("BSU");
-        student.setState("training");
-
-        studentService.save(student);
-
-        User user = new User();
-        user.setLogin("julia");
-        user.setRole("stud");
-        user.setStudentInfo(student);
-
-        userService.save(user);
-
-        return "login";
-    }
+   
 }
