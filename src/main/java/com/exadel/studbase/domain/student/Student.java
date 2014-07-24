@@ -3,6 +3,7 @@ package com.exadel.studbase.domain.student;
 import com.exadel.studbase.domain.IEntity;
 import com.exadel.studbase.domain.document.Document;
 import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.skills.SkillSet;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -225,8 +226,8 @@ public class Student implements IEntity<Long> {
                 ", faculty='" + faculty + '\'' +
                 ", course=" + course +
                 ", group=" + group +
-                ", graduation_date=" + graduationDate +
-                ", working_hours=" + workingHours +
+                ", graduationDate=" + graduationDate +
+                ", workingHours=" + workingHours +
                 ", billable=" + billable +
                 ", roleCurrentProject='" + roleCurrentProject + '\'' +
                 ", techsCurrentProject='" + techsCurrentProject + '\'' +
