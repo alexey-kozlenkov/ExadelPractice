@@ -1,6 +1,8 @@
 var studentId;
 
 window.onload = function () {
+    // alert(window.location.search);
+    parseRequestForId(window.location.search)
     fillOptions();
     fill();
 };
@@ -32,6 +34,14 @@ $(document).ready(function () {
     });
 });
 
+function parseRequestForId(string) {
+    var gottenId;
+    var regExpForId = /id=[0-9]+/;
+    gottenId = string.match(regExpForId);
+    var regExp = /[0-9]+/;
+    studentId = (gottenId[0].match(regExp))[0];
+};
+
 function fillOptions() {
     $.ajax({
         type: "GET",
@@ -39,19 +49,19 @@ function fillOptions() {
         async: true,
         success: function (data) {
             // alert("" + data);
-            //clear options ??????????????????????
+
             $("#role").empty();
             $("#state").empty();
             //filling
             var options = JSON.parse(data);
             var roleOptions = options.roles;
-           roleOptions.forEach(function(element,index,array){
-             $("#role").append( $("<option value="+element+ ">" + element + "</option>"));
+            roleOptions.forEach(function (element, index, array) {
+                $("#role").append($("<option value=" + element + ">" + element + "</option>"));
             })
 
             var stateOptions = options.states;
-            stateOptions.forEach(function(element,index,array){
-                $("#state").append( $("<option value="+element+ ">" + element + "</option>"));
+            stateOptions.forEach(function (element, index, array) {
+                $("#state").append($("<option value=" + element + ">" + element + "</option>"));
             })
         }
     });
@@ -62,47 +72,45 @@ function fill() {
     ({
         type: "GET",
         //SEND TO CONTROLLER
-        url: "/info/get",
+        url: "/info/getInformation",
 //        dataType: 'json',
         async: true,
-        data: '{"id": "' + 1 + '"}',
+        data: studentId,
         success: function (data) {
-           // alert("" + data);
-            studentId = 1;
+            // alert("" + data);
             var gottenStudent = JSON.parse(data);
             $("#headerName").text(gottenStudent.name);
             $("#name").val(gottenStudent.name);
             $("#login").val(gottenStudent.login);
             $("#password").val(gottenStudent.password);
             $("#email").val(gottenStudent.email);
-            $("#role").find("option:contains("+"\'" +gottenStudent.role + "\')").attr("selected","selected");
-            $("#state").find("option:contains("+"\'" +gottenStudent.state + "\')").attr("selected","selected");
+            $("#role").find("option:contains(" + "\'" + gottenStudent.role + "\')").attr("selected", "selected");
+            $("#state").find("option:contains(" + "\'" + gottenStudent.studentInfo.state + "\')").attr("selected", "selected");
         }
     });
 }
 
-function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState){
-    console.log("enter post");
+function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState) {
     $.ajax
     ({
-            type: "POST",
-            //SEND
-            url: "/info/post",
-            dataType: 'json', // from the server!
-            data: {
-                'studentName': editedName,
-               'studentLogin' :  editedLogin,
-               'studentPassword': editedPassword,
-                'studentEmail':  editedEmail,
-                'studentRole' :  editedRole,
-                'studentState' : editedState
-                },
+        type: "POST",
+        //SEND
+        url: "/info/postManualInformation",
+        dataType: 'json', // from the server!
+        data: {
+            'studentId': studentId,
+            'studentName': editedName,
+            'studentLogin': editedLogin,
+            'studentPassword': editedPassword,
+            'studentEmail': editedEmail,
+            'studentRole': editedRole,
+            'studentState': editedState
+        },
         success: function () {
             //alert("success");
             $("#headerName").text(editedName);
-
         },
-        error : function(){
+        error: function () {
             alert("error");
         }
     });

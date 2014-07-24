@@ -5,6 +5,7 @@ import com.exadel.studbase.domain.IEntity;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.io.Serializable;
@@ -20,7 +21,9 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
 
     public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
+
     @Autowired
+    @Qualifier("sessionFactory")
     public void init(SessionFactory sessionFactory){
         setSessionFactory(sessionFactory);
     };
