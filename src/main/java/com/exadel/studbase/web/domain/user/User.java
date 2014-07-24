@@ -28,7 +28,6 @@ public class User implements IEntity<Long> {
     @Column(name="role")
     private String role;
 
-
     @OneToOne
     @JoinColumn(name="student_id")
     private Student studentInfo;
@@ -36,7 +35,6 @@ public class User implements IEntity<Long> {
     @OneToOne
     @JoinColumn(name="employee_id")
     private Employee employeeInfo;
-
 
     public User() {
         password="pass";

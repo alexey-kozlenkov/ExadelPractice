@@ -1,14 +1,7 @@
-body {
-    background-color: #d8d8d8;
-
-}
-
 h1 {
     margin:0;
     padding: 20px;
     font-size: 30px;
-    color: #ffffff;
-    /*font-family: 'Josefin Slab', Georgia, serif;*/
     font-weight: 300;
     -webkit-margin-after: 0.67em;
     -webkit-margin-start: 0px;
@@ -43,33 +36,18 @@ h1 {
     padding: 0.3em;
 }
 
-.header {
-
-    /*background: -webkit-gradient(linear, 0 0, 0 100%,*/
-    /*from(rgba(0, 0, 0, .2)),*/
-    /*color-stop(0.05, rgba(0, 0, 0, 0)),*/
-    /*color-stop(0.97, rgba(0, 0, 0, 0)),*/
-    /*to(rgba(0, 0, 0, .45))),*/
-    /*-webkit-gradient(linear, 0 0, 100% 0,*/
-        /*from(rgba(0, 0, 0, .2)),*/
-        /*color-stop(0.002, rgba(0, 0, 0, 0)),*/
-        /*color-stop(0.998, rgba(0, 0, 0, 0)),*/
-        /*to(rgba(0, 0, 0, .2))),*/
-    /*-webkit-gradient(linear, 0 100%, 0 0,*/
-        /*from(#666),*/
-        /*color-stop(0.5, #5e5e5e),*/
-        /*color-stop(0.51, #707070), to(#808080));*/
+div ::selection {
+    background-color: transparent !important;
 }
 
 
 .category-header a {
-    /*font-family: 'Josefin Slab', Georgia, serif;*/
     text-shadow: 0.3px 0.3px 0.3px #fff;
     text-decoration: none;
     font-size: 26px;
     display: block;
     position: relative;
-    /*line-height: 100px;*/
+    color : #5b32ff;
     outline: none;
     -webkit-transition: color 0.2s ease-in-out;
     -moz-transition: color 0.2s ease-in-out;
@@ -77,6 +55,10 @@ h1 {
     -ms-transition: color 0.2s ease-in-out;
     transition: color 0.2s ease-in-out;
 }
+.category-header a:hover{
+    color : #428bca;
+}
+
 
 .category-header > a span {
 
@@ -97,27 +79,28 @@ h1 {
     transition: all 0.2s ease-in-out;
 }
 
-.category-header a:hover {
-    color: #1693eb;
-}
+
 
 .category-header a:hover span {
     opacity: 1;
     right: 10px;
 }
+.category-content{
+    margin-bottom: 10pt;
+}
+.category-content-button {
+    margin-left:35%;
 
-.category-content button[type="button"] {
-    float: right;
-    padding: 2px 8px;
 }
 
-.select {
-    border: 0.4px solid #31708f;
+.category-content-select {
     border-radius: 4px;
     font-size: 17px;
-    background-color: #428bca;
-    color: white;
+
+    color: #333;
 }
+
+
 
 .form-control{
     width : auto;

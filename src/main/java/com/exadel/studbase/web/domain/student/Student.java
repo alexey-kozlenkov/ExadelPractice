@@ -144,11 +144,11 @@ public class Student implements IEntity<Long> {
     }
 
     public Date getGraduation_date() {
-        return graduation_date;
+        return  graduation_date;
     }
 
     public void setGraduation_date(Date graduation_date) {
-        this.graduation_date = graduation_date;
+        this. graduation_date = graduation_date;
     }
 
     public int getWorking_hours() {
@@ -232,7 +232,7 @@ public class Student implements IEntity<Long> {
                 ", faculty='" + faculty + '\'' +
                 ", course=" + course +
                 ", group=" + group +
-                ", graduation_date=" + graduation_date +
+                ", graduation_date=" +  graduation_date +
                 ", working_hours=" + working_hours +
                 ", billable=" + billable +
                 ", roleCurrentProject='" + roleCurrentProject + '\'' +

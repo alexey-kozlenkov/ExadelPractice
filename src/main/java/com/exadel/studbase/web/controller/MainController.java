@@ -2,6 +2,7 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.web.domain.student.Student;
+import com.exadel.studbase.web.domain.user.User;
 import com.exadel.studbase.web.service.IEmployeeService;
 import com.exadel.studbase.web.service.IFeedbackService;
 import com.exadel.studbase.web.service.IStudentService;
@@ -34,9 +35,6 @@ public class MainController {
     @Autowired
     IFeedbackService feedbackService;
 
-    // @Autowired
-    // IStudBaseMainService service;
-
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String secIndex() {
@@ -57,7 +55,7 @@ public class MainController {
 
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response){
+    public void listData(HttpServletRequest request, HttpServletResponse response) {
         Object smth = request.getAttribute("item");
         System.out.println("get it!!!");
         try {
@@ -74,13 +72,13 @@ public class MainController {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
-    public void studentData(HttpServletRequest request, HttpServletResponse response){
+    public void studentData(HttpServletRequest request, HttpServletResponse response) {
         //Object smth = request.getAttribute("id");
         System.out.println("get it2q222222222222222222222222222!!!");
         try {
             Gson gson = new Gson();
             Options options = new Options();
-            response.getWriter().print(gson.toJson(options,Options.class));
+            response.getWriter().print(gson.toJson(options, Options.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,13 +87,14 @@ public class MainController {
 
 
     @RequestMapping(value = "/info/get", method = RequestMethod.GET)
-    public void optionsData(HttpServletRequest request, HttpServletResponse response){
+    public void optionsData(HttpServletRequest request, HttpServletResponse response) {
         //Object smth = request.getAttribute("id");
         System.out.println("get it3333333333333333333!!!");
         try {
             Gson gson = new Gson();
-           Student student = new Student();//("Cherry", "12345", "Bulllls@yandex.ru","Ruslan Filistovich","employee","working");
-           response.getWriter().print(gson.toJson(student,Student.class));
+            User user = new User();
+
+            response.getWriter().print(gson.toJson(user, User.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,22 +102,19 @@ public class MainController {
     }
 
 
-
-    @RequestMapping(value="/info", method = RequestMethod.GET)
-    public String infoPage(){
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public String infoPage() {
         return "studentInfo";
     }
 
 
-
-
-    @RequestMapping(value="/info/post",method = RequestMethod.POST)
-    public void editInformation(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/info/post", method = RequestMethod.POST)
+    public void editInformation(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("post it44444!");
         try {
 
-            Map<String,String[]> params =  request.getParameterMap();
-            Set<Map.Entry<String,String[]>> entry = params.entrySet();
+            Map<String, String[]> params = request.getParameterMap();
+            Set<Map.Entry<String, String[]>> entry = params.entrySet();
             for (Map.Entry<String, String[]> element : params.entrySet()) {
                 System.out.println("Key = " + element.getKey() + ", Value = " + element.getValue()[0]);
             }
@@ -127,5 +123,25 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/testTest")
+    public String test() {
+
+        Student student = new Student();
+        student.setName("Julia");
+        student.setUniversity("BSU");
+        student.setState("training");
+
+        studentService.save(student);
+
+        User user = new User();
+        user.setLogin("julia");
+        user.setRole("stud");
+        user.setStudentInfo(student);
+
+        userService.save(user);
+
+        return "login";
     }
 }

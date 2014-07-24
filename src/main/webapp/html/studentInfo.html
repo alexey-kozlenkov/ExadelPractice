@@ -3,17 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>Information</title>
+
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="../css/user-info.css"/>
-
+    <link href="../css/color.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="header">
+<div class="prj-header header">
     <h1 id="headerName">some student name</h1>
 </div>
-<div class="container">
+<div class="container prj-content">
     <div class="wrapper">
         <div class="category-list">
 
@@ -50,12 +51,13 @@
                             <input type="email" class="form-control" id="email" placeholder="Email">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <select class="category-content-select" id="role"></select>
 
-                    <select class="select btn-primary" id="role"></select>
-
-                    <select class="select" id="state"></select>
-
-                    <button id="saveManualInformation" type="button" class="btn btn-primary">Save</button>
+                        <select class="category-content-select" id="state"></select>
+                    </div>
+                    <button id="saveManualInformation" type="button" class="category-content-button prj-btn">Save
+                    </button>
 
                 </form>
             </div>
@@ -107,16 +109,17 @@
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="graduationYear"
-                                   placeholder="Year of graduation this institution">
+                                   placeholder="Year of graduation">
                         </div>
                     </div>
-                    <button id="saveEducationInformation" type="button" class="btn btn-primary">Save</button>
+                    <button id="saveEducationInformation" type="button" class="category-content-button prj-btn">Save
+                    </button>
                 </form>
             </div>
 
 
             <div class="category-header"><a href="#">Exadel<span
-            class="st-arrow">Open or Close</span></a></div>
+                    class="st-arrow">Open or Close</span></a></div>
             <div class="category-content">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
@@ -127,16 +130,9 @@
                                    placeholder="Working hours (now)">
                         </div>
                     </div>
-                    <div class="checkbox-inline">
-                        <label class="col-sm-2 control-label">
-                            <input type="checkbox" value="">
-                            Billable/No billable
-                        </label>
-                    </div>
 
-
-
-                    <button id="saveExadelInformation" type="button" class="btn btn-primary">Save</button>
+                    <button id="saveExadelInformation" type="button" class="category-content-button  prj-btn">Save
+                    </button>
                 </form>
 
             </div>
