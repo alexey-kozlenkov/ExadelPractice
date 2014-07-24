@@ -1,0 +1,86 @@
+/*******************************************************************************/
+/****        For all global stylesheet used prefix 'prj-'                  ****/
+/*******************************************************************************/
+
+/****************************** Main *******************************************/
+header,
+.prj-header {
+    background: #f1f1f1;
+}
+
+body,
+.prj-content {
+    background: #ffffff;
+    font-family: 'Arial', Arial, sans-serif;
+}
+
+footer,
+.prj-footer {
+    background: #f1f1f1;
+}
+
+.prj-popup-dark {
+    background: #f1f1f1;
+}
+
+/****************************** Select *****************************************/
+select {
+
+}
+
+/****************************** Input ******************************************/
+input,
+.team-text-input {
+    color: #333;
+}
+
+/****************************** Label ******************************************/
+label,
+.team-label-default {
+    background: transparent;
+    color: #333;
+}
+
+/****************************** Buttons ****************************************/
+
+.prj-btn {
+    border-color: #3808eb;
+    background-color: #5b32ff;
+    color: #ffffff;
+}
+
+.prj-btn:hover,
+.prj-btn:focus,
+.prj-btn:active {
+    /*color: #ffffff;*/
+    /*background-color: #5b32ff;*/
+    /*border-color: #3808eb;*/
+    opacity: 0.5;
+}
+
+.prj-btn.disabled,
+.prj-btn[disabled],
+.prj-btn.disabled:hover,
+.prj-btn[disabled]:hover,
+.prj-btn.disabled:focus,
+.prj-btn[disabled]:focus,
+.prj-btn.disabled:active,
+.prj-btn[disabled]:active {
+    color: gray;
+}
+
+/****************************** Links ******************************************/
+.prj-link {
+    background: transparent;
+    color: #333;
+}
+
+.prj-link:hover {
+    color: #5b32ff;
+}
+
+/****************************** Table ******************************************/
+.prj-table-striped > tbody > tr:nth-child(odd) > td,
+.prj-table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #f1f1f1;
+}

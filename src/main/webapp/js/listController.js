@@ -1,13 +1,15 @@
 /**
  * Created by ala'n on 14.07.2014.
  */
-
+$(window).ready(function(){
+    checkEmptyFieldSize();
+});
 $(document).ready(function () {
     console.log("initialize page controllers...");
     headerScrollControl();
-    checkEmptyFieldSize();
     updateInfoLabel();
     resizeControl();
+    checkEmptyFieldSize();
     bindEventControl();
     console.log("initialize ended.");
 });
@@ -44,7 +46,8 @@ function loadTable() {
         url: "/list/data",
         async: true,
         data: {
-            'name': searchName
+            'name': searchName,
+            'filter': null
         }
     }).done(function (data) {
         var obj = JSON.parse(data);

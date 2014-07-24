@@ -10,21 +10,22 @@
 <body>
 
 <header id="headerBlock" class="header-block">
+    <!--<div class="header-content  center-block">-->
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
-            <input type="image" id="addMenuButton" class="btn btn-primary menu-button" src="../images/add.png"
+            <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
                    alt="Add student">
-            <input type="image" id="exportMenuButton" class="btn btn-primary menu-button" src="../images/export.png"
+            <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
                    alt="Export">
-            <input type="image" id="distributionMenuButton" class="btn btn-primary menu-button"
+            <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
                    src="../images/distribution.png" alt="Distribution">
         </div>
         <span style="width: 20pt; height: 20pt"></span>
         <!--<div class="form-inline search-block">-->
-        <input type="image" id="showFilterButton" class="btn btn-primary menu-button" src="../images/filter.png"
+        <input type="image" id="showFilterButton" class="btn prj-btn menu-button" src="../images/filter.png"
                alt="Filter">
-        <input type="text" id="searchLine" class="form-control search-query search-line" >
-        <input type="image" id="startSearchButton" class="btn btn-primary search-button" src="../images/search-icon.png"
+        <input type="text" id="searchLine" class="form-control search-query search-line">
+        <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
                alt="Find!">
         <!--</div>-->
     </div>
@@ -33,7 +34,7 @@
 
     <div id="headerScrollingBlock" class="header-table-block">
         <div class="central-block">
-            <table id="header-fixed" class="table table-striped student-table">
+            <table id="header-fixed" class="table prj-table-striped student-table">
                 <thead>
                 <tr>
                     <th class="header-column-0"><input id="checkAll" type="checkbox"></th>
@@ -52,11 +53,12 @@
             </table>
         </div>
     </div>
+    <!--</div>-->
 </header>
 
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
-    <table id="studTable" class="table table-striped student-table">
+    <table id="studTable" class="table prj-table-striped student-table">
         <thead>
         <tr>
             <th class="header-column-0"><input type="checkbox"></th>
@@ -78,8 +80,8 @@
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
-<div id="filterPopup" class="popup-menu filter-popup">
-    <div style="background: #28a4c9; color: #ffffff"> Hallo world!! <span style="float:right; margin-right: 5pt;">X</span>></div>
+<div id="filterPopup" class="popup-menu filter-popup prj-popup-dark">
+    <input type="image" id="addButton" class="btn add-filter-button" src="../images/filter_add.png">
 </div>
 
 <script src="../js/jquery-2.1.1.min.js"></script>
