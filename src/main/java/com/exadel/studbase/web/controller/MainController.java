@@ -1,6 +1,14 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.init.Options;
+
+import com.google.gson.Gson;
+import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.skills.SkillSet;
+import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
@@ -14,6 +22,24 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+
+import java.util.List;
+import java.util.Random;
 
 
 @Controller
@@ -31,6 +57,11 @@ public class MainController {
     IFeedbackService feedbackService;
     @Autowired
     IDocumentService documentService;
+    @Autowired
+    ISkillTypeService skillTypeService;
+    @Autowired
+    ISkillSetService skillSetService;
+
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
     public String secIndex() {
@@ -40,28 +71,65 @@ public class MainController {
         return "secured/index";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String index() {
 
-        System.out.println("log!!");
+    @RequestMapping(value = "/addStudent")
+    public String addStudent() {
 
-        return "listPage";
+        User user = new User();
+        user.setName("Julia Malyshko");
+        user.setEmail("julia@gmail.com");
+        user.setLogin("jul.malyshko");
+        user.setRole("stud");
+
+        System.out.println("Trying to student me as user...");
+        userService.save(user);
+        System.out.println("Saved success!");
+
+        Student student = new Student();
+        student.setId(user.getId());
+        student.setState("training");
+        student.setUniversity("BSU");
+        student.setFaculty("FAMCS");
+        student.setCourse(3);
+        student.setGroup(7);
+        student.setGraduationDate(java.sql.Date.valueOf("2017-07-01"));
+        student.setRoleCurrentProject("Junior developer");
+        student.setTechsCurrentProject("CSS, JS, JSON");
+
+        System.out.println("trying to save student as student...");
+        studentService.save(student);
+        System.out.println("Saved success!");
+
+        System.out.println("---------------------------------------------------------------------");
+
+        return "login";
     }
 
+    @RequestMapping(value = "/addEmployee")
+    public String addEmployee() {
 
-    // Provide sanding list data
-    @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response) {
-        Object smth = request.getAttribute("item");
-        System.out.println("get it!!!");
-        try {
-            Gson gson = new Gson();
+        System.out.println("Creating user for Employee...");
+        User user = new User();
+        user.setName("Timofej Sakharchuk");
+        user.setEmail("tim.sakharchuk@exadel.com");
+        user.setRole("developer");
+        user.setLogin("tim.sakharchuk");
+        System.out.println("Created success!");
 
-            response.getWriter().print(gson.toJson(new Object[]{new String("Smth"), 123}));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
+        System.out.println("trying to save user as user...");
+        System.out.println(userService.save(user));
+        System.out.println("Saved success!");
+
+        Employee employee = new Employee();
+        employee.setId(user.getId());
+
+        System.out.println("Trying to save employee...");
+        System.out.println(employeeService.save(employee));
+        System.out.println("Saved success!");
+
+        System.out.println("---------------------------------------------------------------------");
+
+        return "login";
     }
 
 

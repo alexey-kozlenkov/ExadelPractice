@@ -8,6 +8,7 @@ header,
     background: #f1f1f1;
     color : #333;
 }
+
 body,
 .prj-content {
     background: #ffffff;
@@ -16,6 +17,10 @@ body,
 
 footer,
 .prj-footer {
+    background: #f1f1f1;
+}
+
+.prj-popup-dark {
     background: #f1f1f1;
 }
 
@@ -68,10 +73,9 @@ label,
 /****************************** Links ******************************************/
 
 .prj-link {
-    color: #333;
     background: transparent;
+    color: #333;
 }
-
 
 .prj-link:hover {
     color: #5b32ff;
