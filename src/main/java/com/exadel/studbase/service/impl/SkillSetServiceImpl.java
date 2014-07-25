@@ -2,6 +2,7 @@ package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.ISkillSetDAO;
 import com.exadel.studbase.domain.skills.SkillSet;
+import com.exadel.studbase.domain.skills.SkillType;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.ISkillSetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,11 @@ public class SkillSetServiceImpl implements ISkillSetService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Collection<User> getAllWithSkill(Long skillTypeId) {
         return skillSetDAO.getAllWithSkill(skillTypeId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<SkillType> getAllForUser(Long userId) {
+        return skillSetDAO.getAllForUser(userId);
     }
 }

@@ -45,12 +45,9 @@ public class User implements IEntity<Long> {
     @JoinColumn(name="id")
     private Employee employeeInfo;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SkillSet> skills;
 
     public User() {
         password="pass";
-        skills = new HashSet<SkillSet>();
     }
 
     @Override
@@ -119,13 +116,13 @@ public class User implements IEntity<Long> {
         this.employeeInfo = employeeInfo;
     }
 
-    public Set<SkillSet> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<SkillSet> skills) {
-        this.skills = skills;
-    }
+//    public Set<SkillSet> getSkills() {
+//        return skills;
+//    }
+//
+//    public void setSkills(Set<SkillSet> skills) {
+//        this.skills = skills;
+//    }
 
     @Override
     public boolean equals(Object o) {

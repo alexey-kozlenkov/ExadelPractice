@@ -19,11 +19,7 @@ public class Employee implements IEntity<Long> {
     @Column(name="id")
     private Long id;
 
-    @OneToMany(mappedBy = "feedbacker", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Feedback> feedbacks;
-
     public Employee() {
-        feedbacks = new HashSet<Feedback>();
     }
 
     @Override
@@ -34,18 +30,6 @@ public class Employee implements IEntity<Long> {
     @Override
     public void setId(Long id) {
         this.id=id;
-    }
-
-    public Collection<Feedback> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(Set<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
-    }
-
-    public void addFeedback (Feedback feedback) {
-        this.feedbacks.add(feedback);
     }
 
     @Override

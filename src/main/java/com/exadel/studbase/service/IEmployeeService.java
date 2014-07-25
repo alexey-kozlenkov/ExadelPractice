@@ -15,5 +15,4 @@ public interface IEmployeeService {
     void delete(Employee employee);
 
     Collection<Employee> getAll();
-
 }

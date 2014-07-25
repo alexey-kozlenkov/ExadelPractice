@@ -1,17 +1,12 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.init.Options;
-
-import com.google.gson.Gson;
-import com.exadel.studbase.domain.document.Document;
 import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.feedback.Feedback;
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,24 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
-
-import java.util.List;
-import java.util.Random;
 
 
 @Controller
@@ -161,10 +138,13 @@ public class MainController {
         // System.out.println("get it3333333333333333333!!!");
         try {
             Gson gson = new Gson();
-            //System.out.println(request.getQueryString());
+            System.out.println(request.getQueryString());
             User user = userService.getById(Long.parseLong(request.getQueryString()));
             System.out.println(user);
-            response.getWriter().print(gson.toJson(user, User.class));
+            String str = gson.toJson(user, User.class);
+            response.getWriter().print(str);
+            System.out.println("fucking shit");
+            System.out.println(feedbackService.getAllAboutStudent(Long.parseLong(request.getQueryString())));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.ISkillSetDAO;
 import com.exadel.studbase.domain.skills.SkillSet;
+import com.exadel.studbase.domain.skills.SkillType;
 import com.exadel.studbase.domain.user.User;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,12 @@ public class SkillSetDAO extends GenericDAOImpl<SkillSet, Long> implements ISkil
     @Override
     public Collection<User> getAllWithSkill(Long skillTypeId) {
         Query query = getSession().createQuery("FROM User WHERE id in (SELECT user.id FROM SkillSet WHERE skillType.id="+skillTypeId+")");
+        return query.list();
+    }
+
+    @Override
+    public Collection<SkillType> getAllForUser(Long userId) {
+        Query query = getSession().createQuery("FROM SkillType WHERE id IN (SELECT skillType.id FROM SkillSet WHERE user.id="+userId+")");
         return query.list();
     }
 }
