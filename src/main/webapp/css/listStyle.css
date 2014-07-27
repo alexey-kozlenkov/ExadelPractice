@@ -10,6 +10,7 @@
 /*-------------------------------------*/
 .first-header-block {
     margin: 2pt;
+    margin-bottom: 1pt;
 }
 
 .menu-block {
@@ -24,8 +25,8 @@
 
 .menu-button {
     padding: 1pt 1pt !important;
-    width: 26pt;
-    height: 26pt;
+    width: 24pt;
+    height: 24pt;
 }
 
 .add-button {
@@ -42,24 +43,23 @@
     text-align: center;
 }
 
-.search-line {
-    /*display: inline;*/
 
-    /*width: 30% !important;*/
+#searchLine {
+    height: 24pt;
     margin-right: 0;
-
-    min-width: 200pt;
+    min-width: 150pt;
+    width: 150pt;
 }
 
 .search-button {
     margin-left: -1pt;
     width: 34pt;
-    height: 26pt;
+    height: 24pt;
 }
 
 /*-------------------------------------*/
 
-.header-info-label {
+.info-label {
     margin: 2pt;
     text-align: center;
 }
@@ -72,6 +72,7 @@
 }
 
 #header-fixed {
+    /*height: 30pt;*/
     margin: 0;
 }
 
@@ -97,6 +98,13 @@
 .student-table {
     background: transparent;
     text-align: center;
+}
+.student-table > thead {
+    padding-top: 1pt;
+    font-size: 12px;
+}
+.student-table > thead > tr > th{
+    padding-top: 1pt;
 }
 
 .header-column-0 {
@@ -177,18 +185,60 @@
 
 }
 
-.filter-popup {
-    width: 400pt;
-    height: 100pt;
-
-    border: solid darkblue 2pt;
-    border-radius: 5pt;
+#filterBlock{
+    max-height: 42pt;
 }
 
 .add-filter-button {
     position: relative !important;
     margin: 3pt;
     padding: 0pt;
-    width: 24pt;
-    height: 24pt;
+    width: 18pt;
+    height: 18pt;
+}
+
+.item-btn-attr{
+    position: relative !important;
+    white-space: nowrap;
+    padding: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+
+    width: 40% !important;
+}
+.item-btm-toggle{
+    padding-left: 3pt;
+    padding-right: 3pt;
+    width: 16pt;
+}
+
+.btn-gray {
+    border-color: #aaa;
+    background-color: #ccc;
+    color: #222
+}
+.btn-gray:hover,
+.btn-gray:focus,
+.btn-gray:active
+{
+    border-color: #aaa;
+    background-color: #efefef;
+    color: red;
+    text-decoration:line-through
+}
+.item-btn-group{
+    height: 18pt;
+    margin: 2pt;
+    padding: 0;
+    display: inline-flex;
+    position: relative;
+    width: 100pt;
+    border: solid 1pt;
+    border-color: #5b32ff;
+    border-radius: 4pt;
+}
+
+.value-field{
+    width: 60% !important;
+    height: 100%;
 }

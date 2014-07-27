@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<header id="headerBlock" class="header-block">
+<header id="headerBlock" class="header-block navbar">
     <!--<div class="header-content  center-block">-->
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
@@ -22,15 +22,19 @@
         </div>
         <span style="width: 20pt; height: 20pt"></span>
         <!--<div class="form-inline search-block">-->
-        <input type="image" id="showFilterButton" class="btn prj-btn menu-button" src="../images/filter.png"
-               alt="Filter">
-        <input type="text" id="searchLine" class="form-control search-query search-line">
-        <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
-               alt="Find!">
+        <!--<input type="image" id="showFilterButton" class="btn prj-btn menu-button" src="../images/filter.png"-->
+               <!--alt="Filter">-->
+        <span class="btn-group input-group">
+            <input type="text" id="searchLine" class="form-control search-query search-line">
+            <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
+                   alt="Find!">
+        </span>
         <!--</div>-->
     </div>
 
-    <label id="infoLabel" class="header-info-label"></label>
+    <span id="filterBlock">
+             <input type="image" id="addFilterButton" class="btn add-filter-button" src="../images/filter_add.png">
+    </span>
 
     <div id="headerScrollingBlock" class="header-table-block">
         <div class="central-block">
@@ -56,6 +60,8 @@
     <!--</div>-->
 </header>
 
+<label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
+
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
     <table id="studTable" class="table prj-table-striped student-table">
@@ -80,9 +86,8 @@
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
-<div id="filterPopup" class="popup-menu filter-popup prj-popup-dark">
-    <input type="image" id="addButton" class="btn add-filter-button" src="../images/filter_add.png">
-</div>
+<ul class="dropdown-menu" role="menu" id="menu">
+</ul>
 
 <script src="../js/jquery-2.1.1.min.js"></script>
 <script src="../js/listController.js"></script>

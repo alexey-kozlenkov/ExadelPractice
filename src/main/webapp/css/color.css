@@ -80,7 +80,8 @@ label,
 }
 
 /****************************** Table ******************************************/
-.prj-table-striped > tbody > tr:nth-child(odd) > td,
-.prj-table-striped > tbody > tr:nth-child(odd) > th {
+
+.prj-table-striped > tbody > tr:nth-child(even) > td,
+.prj-table-striped > tbody > tr:nth-child(even) > th {
     background-color: #f1f1f1;
 }
