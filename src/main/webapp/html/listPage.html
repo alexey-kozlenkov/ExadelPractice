@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<header id="headerBlock" class="header-block navbar">
+<header id="headerBlock" class="header-block">
     <!--<div class="header-content  center-block">-->
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
@@ -33,7 +33,9 @@
     </div>
 
     <span id="filterBlock">
-             <input type="image" id="addFilterButton" class="btn add-filter-button" src="../images/filter_add.png">
+             <button id="addFilterButton" class="btn prj-btn add-filter-button">
+                 <span class="glyphicon glyphicon-filter"></span>
+             </button>
     </span>
 
     <div id="headerScrollingBlock" class="header-table-block">
@@ -60,8 +62,6 @@
     <!--</div>-->
 </header>
 
-<label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
-
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
     <table id="studTable" class="table prj-table-striped student-table">
@@ -85,6 +85,9 @@
     </table>
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
+
+
+<label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
 
 <ul class="dropdown-menu" role="menu" id="menu">
 </ul>

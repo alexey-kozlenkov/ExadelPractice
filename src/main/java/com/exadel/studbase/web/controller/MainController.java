@@ -1,7 +1,6 @@
 package com.exadel.studbase.web.controller;
 
 
-import com.google.gson.Gson;
 import com.exadel.studbase.domain.document.Document;
 import com.exadel.studbase.domain.employee.Employee;
 import com.exadel.studbase.domain.feedback.Feedback;
@@ -10,29 +9,20 @@ import com.exadel.studbase.domain.skills.SkillType;
 import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 @Controller
@@ -123,21 +113,19 @@ public class MainController {
     }
 
 
-    class SearchParam{
-        public String name;
-    }
-
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
     public void listData(HttpServletRequest request, HttpServletResponse response){
         Gson gson = new Gson();
-        Object smth = request.getParameter("name");
+        String searchName = (String) request.getParameter("name");
+        Object filter = request.getParameter("filter");
 
-        if(smth!=null){
-            //gson.fromJson((String)smth, SearchParam.class).name
-        }
+        Map<String, String[]> map = new HashMap<String, String[]>();
+        System.out.println(searchName);
+        System.out.println(gson.fromJson((String) filter, map.getClass()));
 
-        System.out.println("get it!!!  "+smth);
+
+        //System.out.println("get it!!!  "+smth);
 
 
         List<User> someStudentList  = getTestList();

@@ -212,21 +212,16 @@
     width: 16pt;
 }
 
-.btn-gray {
-    border-color: #aaa;
-    background-color: #ccc;
-    color: #222
-}
-.btn-gray:hover,
-.btn-gray:focus,
-.btn-gray:active
+.remove-btn:hover,
+.remove-btn:focus,
+.remove-btn:active
 {
-    border-color: #aaa;
-    background-color: #efefef;
+    background-color: #FF8f8f;
+    border-color: red;
     color: red;
     text-decoration:line-through
 }
-.item-btn-group{
+.filter-itm{
     height: 18pt;
     margin: 2pt;
     padding: 0;
@@ -234,7 +229,7 @@
     position: relative;
     width: 100pt;
     border: solid 1pt;
-    border-color: #5b32ff;
+    border-color: #3808eb;
     border-radius: 4pt;
 }
 

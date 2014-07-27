@@ -1,6 +1,19 @@
 /**
  * Created by ala'n on 14.07.2014.
  */
+////////////////////////////////////////////////////////////////////////////////////////////////
+var counter;
+var filterTypes = {
+    changed: true,
+    keys: ['age', 'enum', 'role', 'name'],
+    keyMap: {
+        'age': null,
+        'enum': ['first', 'second', 'third'],
+        'role': ['admin', 'user', 'guest'],
+        'name': null
+    }
+};
+////////////////////////////////////////////////////////////////////////////////////////////////
 $(window).ready(function () {
     checkEmptyFieldSize();
 });
@@ -26,9 +39,6 @@ function bindEventControl() {
     });
     $("#distributionMenuButton").click(function () {
         alert(getCheckedRowsId());
-    });
-    $("#showFilterButton").click(function () {
-        showFilter();
     });
     $("#startSearchButton").click(function () {
         loadTable();
@@ -56,15 +66,18 @@ function bindEventControl() {
 function loadTable() {
     setTableLoadingState(true);
 
-    var searchName = $("#searchLine").val();
+    var search = $("#searchLine").val();
+    var filter = pickFilters();
+
+    var filterPack = JSON.stringify(filter);
 
     $.ajax({
         type: "GET",
         url: "/list/data",
         async: true,
         data: {
-            'name': searchName,
-            'filter': null
+            'name': search,
+            'filter': filterPack
         }
     }).done(function (data) {
         var obj = JSON.parse(data);
@@ -78,12 +91,6 @@ function loadTable() {
         alert("error");
         setTableLoadingState(false);
     });
-}
-function showFilter() {
-    var $popup = $("#filterPopup");
-    togglePopup($popup);
-    centrePopup($popup, null, 60);
-
 }
 ////////////////////////////////////// Toggle popup ////////////////////////////////////////////
 function togglePopup(popup) {
@@ -231,24 +238,23 @@ function updateInfoLabel() {
 }
 
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
-var counter = 1;
-var filterTypes = {
-    changed: true,
-    keys: ['age', 'enum', 'role', 'name'],
-    keyMap: {
-        'age': null,
-        'enum': ['first', 'second', 'third'],
-        'role': ['admin', 'user', 'guest'],
-        'name': null
-    }
-};
+
 
 //Menu Listener body
 function menuEvent(name) {
     $("#menu").hide();
-    addFilterAttribute(counter++, name, filterTypes.keyMap[name]);
+    addFilterAttribute(nextId(), name, filterTypes.keyMap[name]);
+    checkFilterCount();
 }
 
+function checkFilterCount(){
+    var count = $(".filter-itm").length;
+    if(count<6){
+        $("#addFilterButton").show();
+    }else{
+        $("#addFilterButton").hide();
+    }
+}
 function addFilterAction() {
     var $menu = $("#menu");
     if ($menu.is(':visible')) {
@@ -265,16 +271,14 @@ function addFilterAction() {
 }
 function addFilterAttribute(id, name, values) {
     var htmContent = "";
-    htmContent += "<div id = 'filter_" + id + "' class='btn-group input-group item-btn-group filter-itm'>";
+    htmContent += "<div class='btn-group input-group filter-itm'>";
 
-    htmContent += "<button class='btn btn-gray item-btn-attr' onclick='";
-    htmContent += "deleteFilter(" + id + ");";
-    htmContent += "'>";
+    htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' onclick='removeFilterAttribute(this);'>";
     htmContent += name;
     htmContent += "</button>";
 
     if (values) {
-        htmContent += "<select class='selectpicker' id='filter_" + id + "_select' style='width:60%'>";
+        htmContent += "<select class='selectpicker value-field' style='width:60%'>";
         values.forEach(function (value) {
             htmContent += "<option>";
             htmContent += value;
@@ -286,12 +290,23 @@ function addFilterAttribute(id, name, values) {
     }
     htmContent += "</div>";
 
-    $("#filterBlock").prepend(htmContent);
+    $("#addFilterButton").before(htmContent);
 }
-
-function deleteFilter(id) {
-    var el = $("#filter_" + id);
-    el.remove();
+function removeFilterAttribute(btn){
+    $(btn).parent().get(0).remove();
+    checkFilterCount();
+}
+function pickFilters(){
+    var returnStatement={};
+    $(".filter-itm").each(function(id, element){
+        var itm = $(element);
+        var atr_name = $(itm.find(".item-btn-attr")).text();
+        var atr_value = $(itm.find(".value-field")).val();
+        if(returnStatement[atr_name] == undefined)
+            returnStatement[atr_name]=[];
+        returnStatement[atr_name].push(atr_value);
+    });
+    return returnStatement;
 }
 
 function clearMenu(menu) {
@@ -320,3 +335,9 @@ function setPositionrevilTo(element, parent) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+function nextId(){
+    if(!counter) {
+        counter = 1;
+    }
+    return counter++;
+}
