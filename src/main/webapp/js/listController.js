@@ -3,7 +3,6 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////
 var MAX_FILTER_COUNT = 10;
-var counter;
 var filterTypes = {
     changed: true,
     keys: ['age','working hour','billable','skill','english','date'],
@@ -23,6 +22,7 @@ var filterTypes = {
         'skill':true
     }
 };
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 $(window).ready(function () {
     checkEmptyFieldSize();
@@ -255,63 +255,45 @@ function updateInfoLabel() {
 }
 
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
-function checkFilterCount(){
-    var count = $(".filter-itm").length;
-    if(count<MAX_FILTER_COUNT){
-        $("#addFilterButton").show();
-        checkEmptyFieldSize();
-    }else{
-        $("#addFilterButton").hide();
-        checkEmptyFieldSize();
-    }
-}
+const STATIC_SEPARATOR =
+    "<span class='static-separator'>,</span>";
+const LOGIC_SEPARATOR  =
+    "<button class='btn btn-success filter-separator' onclick='switchSeparator(this)'>or</button>";
 
-//Menu Listener body
-function menuEvent(name) {
-    $("#filterMenu").hide();
-    addFilterAttribute(name);
-    checkFilterCount();
-}
-function addFilterAction() {
-    var $menu = $("#filterMenu");
-    if ($menu.is(':visible')) {
-        $menu.hide(300);
-    } else {
-        setPositionrevilTo($menu, $("#addFilterButton"));
-        if (filterTypes.changed) {
-            filterTypes.changed = false;
-            clearMenu($menu);
-            fillMenu($menu, filterTypes.keys,'filter_');
-        }
-        $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
-    }
-}
-
+//---------------------------------
 function addFilterAttribute(name) {
-    var multiple = filterTypes.multyType[name];
-    var id;
-    if(multiple)
-        id = nextId();
+    var filterElementContent  = createFilterAttributeContent(name);
+    if(filterTypes.multyType[name]) {
+        var filtersExist = existFilterAttribute(name);
+        if(filtersExist && filtersExist.length > 0){
+            filtersExist.last().after(LOGIC_SEPARATOR + filterElementContent);
+        }else{
+            $("#addFilterButton").before( filterElementContent + STATIC_SEPARATOR);
+        }
+    }else {
+        $("#addFilterButton").before( filterElementContent + STATIC_SEPARATOR);
+        $("#filterMenu > li[name='filter_" + name + "']").hide();
+    }
+}
 
+function createFilterAttributeContent(name){
     var htmContent = "";
-    var filterName = name +(multiple?id:'');
-    htmContent += "<div name ='filter_"+filterName+"' class='btn-group input-group filter-itm'";
-    htmContent += ">";
 
-    htmContent += "<button class='btn prj-btn remove-btn item-btn-attr'" +
-        " onclick=\"removeFilterAttribute('"+filterName+"');\">";
+    htmContent += "<div name ='filter_"+name+"' class='btn-group input-group filter-itm'>";
+    htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' ";
+    htmContent += "onclick=\"removeFilterAttribute( '"+name+"', this );\">";
     htmContent += name;
     htmContent += "</button>";
 
     switch (filterTypes.keyType[name]){
         case 'number':
-            htmContent += "<input type='text' class='form-control value-field' placeholder='?'>";
+            htmContent += "<input type='text' class='form-control value-field' placeholder='??'>";
             break;
         case 'date':
-            htmContent += "<input type='text' class='form-control value-field' value='some'>";
+            htmContent += "<input type='text' class='form-control value-field' placeholder='date'>";
             break;
         case 'list':
-            htmContent += "<select multiple class='selectpicker value-field' style='width:60%'>";
+            htmContent += "<select class='selectpicker value-field' style='width:60%'>";
             filterTypes.keyMap[name].forEach(function (value) {
                 htmContent += "<option>";
                 htmContent += value;
@@ -339,30 +321,87 @@ function addFilterAttribute(name) {
             console.error("Not defined filter type");
     }
     htmContent += "</div>";
-
-    $("#addFilterButton").before(htmContent);
-    if(!filterTypes.multyType[name])
-        $("#filterMenu > li[name='filter_"+name+"']").hide();
+    return htmContent;
 }
-function removeFilterAttribute(name){
-    $(".filter-itm[name='filter_"+name+"']").remove();
+function switchSeparator(separator){
+    var $element = $(separator);
+    var text = $element.text();
+    if( text == "or")
+        $element.text("and");
+    else
+        $element.text("or");
+}
+
+function existFilterAttribute(name){
+    return $(".filter-itm[name='filter_"+name+"']");
+}
+function removeFilterAttribute(name, element){
+    var selfItem = $($(element).parent().get(0));
+    var prevItem = selfItem.prev();
+    var nextItem = selfItem.next();
+    if(prevItem.is('.filter-separator')){
+        prevItem.remove();
+    }else
+    if(nextItem.is('.filter-separator')){
+        nextItem.remove();
+    }else
+    if(nextItem.is('.static-separator')){
+        nextItem.remove();
+    }
+
+    selfItem.remove();
     $("#filterMenu > li[name='filter_"+name+"']").show();
     checkFilterCount();
 }
 
-function pickFilters(){
-    var returnStatement={};
-    $(".filter-itm").each(function(id, element){
-        var itm = $(element);
-        var atr_name = $(itm.find(".item-btn-attr")).text();
-        var atr_value = $(itm.find(".value-field")).val();
-        if(returnStatement[atr_name] == undefined)
-            returnStatement[atr_name]=[];
-        returnStatement[atr_name].push(atr_value);
-    });
-    return returnStatement;
+function checkFilterCount(){
+    var count = $(".filter-itm").length;
+    var filterBtn = $("#addFilterButton");
+    if(count<MAX_FILTER_COUNT){
+        filterBtn.prev().show();
+        filterBtn.show();
+    }else{
+        filterBtn.prev().hide();
+        filterBtn.hide();
+    }
+    checkEmptyFieldSize();
 }
 
+//TODO! rewrite
+function pickFilters(){
+    var returnStatement={};
+//    $(".filter-itm").each(function(id, element){
+//        var itm = $(element);
+//        var atr_name = $(itm.find(".item-btn-attr")).text();
+//        var atr_value = $(itm.find(".value-field")).val();
+//        if(returnStatement[atr_name] == undefined)
+//            returnStatement[atr_name]=[];
+//        returnStatement[atr_name].push(atr_value);
+//    });
+    return returnStatement;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Menu Listener body
+function menuEvent(name) {
+    $("#filterMenu").hide();
+    addFilterAttribute(name);
+    checkFilterCount();
+}
+function addFilterAction() {
+    var $menu = $("#filterMenu");
+    if ($menu.is(':visible')) {
+        $menu.hide(300);
+    } else {
+        setPositionrevilTo($menu, $("#addFilterButton"));
+        if (filterTypes.changed) {
+            filterTypes.changed = false;
+            clearMenu($menu);
+            fillMenu($menu, filterTypes.keys,'filter_');
+        }
+        $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
+    }
+}
 function clearMenu(menu) {
     menu.empty();
 }
@@ -375,7 +414,6 @@ function fillMenu(menu, data, name_pref) {
     }
     menu.append(liCont);
 }
-
 function setPositionrevilTo(element, parent) {
     var winOffsetW = $(window).width();
 
@@ -395,10 +433,3 @@ function setPositionrevilTo(element, parent) {
     );
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
-
-function nextId(){
-    if(!counter) {
-        counter = 1;
-    }
-    return counter++;
-}

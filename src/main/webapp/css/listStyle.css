@@ -189,12 +189,26 @@
     max-height: 42pt;
 }
 
-.add-filter-button {
+.static-separator{
+    font-size: 12pt;
+    font-weight: 600;
+    padding: 2pt;
+    padding-left: 0;
+    padding-bottom: 0;
+    vertical-align: bottom;
+}
+
+.filter-separator,
+.filter-button {
     position: relative !important;
     margin: 3pt;
     padding: 0pt;
     width: 18pt;
     height: 18pt;
+}
+
+.filter-separator{
+    width: 22pt;
 }
 
 .item-btn-attr {
@@ -207,10 +221,17 @@
     white-space: nowrap;
 }
 
-.item-btm-toggle {
-    padding-right: 3pt;
-    padding-left: 3pt;
-    width: 16pt;
+
+.filter-itm {
+    position: relative;
+    display: inline-flex;
+    margin: 1pt;
+    padding: 0;
+    width: 100pt;
+    height: 18pt;
+    border: solid 1pt;
+    border-color: #3808eb;
+    border-radius: 4pt;
 }
 
 .remove-btn:hover,
@@ -220,18 +241,6 @@
     background-color: #FF8f8f;
     color: red;
     text-decoration: line-through
-}
-
-.filter-itm {
-    position: relative;
-    display: inline-flex;
-    margin: 2pt;
-    padding: 0;
-    width: 100pt;
-    height: 18pt;
-    border: solid 1pt;
-    border-color: #3808eb;
-    border-radius: 4pt;
 }
 
 .value-field {
