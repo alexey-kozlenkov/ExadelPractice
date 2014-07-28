@@ -1,12 +1,8 @@
-package com.exadel.studbase.domain.employee;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.feedback.Feedback;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Алексей on 21.07.14.

@@ -1,7 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.ISkillTypeDAO;
-import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.impl.SkillType;
 import org.springframework.stereotype.Repository;
 
 /**

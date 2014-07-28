@@ -1,8 +1,6 @@
-package com.exadel.studbase.domain.feedback;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.student.Student;
 
 import javax.persistence.*;
 import java.sql.Date;

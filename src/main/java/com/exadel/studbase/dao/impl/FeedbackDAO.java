@@ -1,7 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IFeedbackDAO;
-import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.impl.Feedback;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

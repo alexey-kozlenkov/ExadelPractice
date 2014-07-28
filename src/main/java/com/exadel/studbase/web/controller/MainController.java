@@ -1,12 +1,11 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.init.Options;
-import com.exadel.studbase.domain.student.Student;
-import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,9 +108,6 @@ public class MainController {
         return "login";
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String infoPage() {
         return "studentInfo";
@@ -121,7 +117,6 @@ public class MainController {
     @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
     public void studentData(HttpServletRequest request, HttpServletResponse response) {
         //Object smth = request.getAttribute("id");
-        System.out.println("get it2q222222222222222222222222222!!!");
         try {
             Gson gson = new Gson();
             Options options = new Options();

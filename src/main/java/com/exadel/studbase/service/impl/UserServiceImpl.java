@@ -1,7 +1,7 @@
 package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.IUserDAO;
-import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

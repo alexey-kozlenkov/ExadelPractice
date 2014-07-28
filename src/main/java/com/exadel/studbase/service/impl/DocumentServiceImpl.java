@@ -1,7 +1,7 @@
 package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.IDocumentDAO;
-import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.impl.Document;
 import com.exadel.studbase.service.IDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
-package com.exadel.studbase.domain.skills;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.user.User;
 
 import javax.persistence.*;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="\"SKILL_SET\"")
-public class SkillSet implements IEntity<Long>{
+public class SkillSet implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

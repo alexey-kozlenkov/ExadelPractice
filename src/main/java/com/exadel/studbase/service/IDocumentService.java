@@ -1,6 +1,6 @@
 package com.exadel.studbase.service;
 
-import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.impl.Document;
 
 import java.util.Collection;
 

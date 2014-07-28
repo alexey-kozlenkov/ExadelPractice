@@ -1,9 +1,9 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.ISkillSetDAO;
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.skills.SkillType;
-import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.domain.impl.SkillSet;
+import com.exadel.studbase.domain.impl.SkillType;
+import com.exadel.studbase.domain.impl.User;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

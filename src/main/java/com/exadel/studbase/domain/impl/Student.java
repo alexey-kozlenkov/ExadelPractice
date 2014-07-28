@@ -1,15 +1,9 @@
-package com.exadel.studbase.domain.student;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.document.Document;
-import com.exadel.studbase.domain.feedback.Feedback;
-import com.exadel.studbase.domain.skills.SkillSet;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.

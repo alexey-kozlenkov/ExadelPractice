@@ -1,7 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IDocumentDAO;
-import com.exadel.studbase.domain.document.Document;
+import com.exadel.studbase.domain.impl.Document;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

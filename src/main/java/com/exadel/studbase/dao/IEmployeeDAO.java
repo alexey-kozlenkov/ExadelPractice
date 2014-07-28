@@ -1,6 +1,6 @@
 package com.exadel.studbase.dao;
 
-import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.impl.Employee;
 
 /**
  * Created by Алексей on 21.07.14.

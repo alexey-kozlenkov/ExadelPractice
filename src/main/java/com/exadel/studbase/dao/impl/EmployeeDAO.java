@@ -1,7 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IEmployeeDAO;
-import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.impl.Employee;
 import org.springframework.stereotype.Repository;
 
 /**

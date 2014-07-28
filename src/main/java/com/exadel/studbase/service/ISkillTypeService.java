@@ -1,6 +1,6 @@
 package com.exadel.studbase.service;
 
-import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.impl.SkillType;
 
 import java.util.Collection;
 

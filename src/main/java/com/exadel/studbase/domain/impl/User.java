@@ -1,13 +1,8 @@
-package com.exadel.studbase.domain.user;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.student.Student;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.

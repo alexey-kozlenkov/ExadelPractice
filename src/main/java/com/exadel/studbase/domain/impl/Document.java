@@ -1,7 +1,6 @@
-package com.exadel.studbase.domain.document;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.user.User;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,7 +10,7 @@ import java.sql.Date;
  */
 @Entity
 @Table(name="\"DOCUMENT\"")
-public class Document implements IEntity<Long>{
+public class Document implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
