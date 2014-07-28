@@ -2,15 +2,25 @@
  * Created by ala'n on 14.07.2014.
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////
+var MAX_FILTER_COUNT = 10;
 var counter;
 var filterTypes = {
     changed: true,
-    keys: ['age', 'enum', 'role', 'name'],
+    keys: ['age','working hour','billable','skill','english','date'],
+    keyType: {
+        'age': 'number',
+        'working hour': 'number',
+        'billable': 'date',
+        'skill': 'leveled-list',
+        'english': 'list',
+        'date': 'date'
+    },
     keyMap: {
-        'age': null,
-        'enum': ['first', 'second', 'third'],
-        'role': ['admin', 'user', 'guest'],
-        'name': null
+        'skill': ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
+        'english':['1','2','3','4','5']
+    },
+    multyType: {
+        'skill':true
     }
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,9 +55,9 @@ function bindEventControl() {
         updateInfoLabel();
     });
 
-    $("#menu").mouseleave(
+    $("#filterMenu").mouseleave(
         function () {
-            $('#menu').hide(400);
+            $('#filterMenu').hide(400);
         }
     );
 
@@ -60,6 +70,10 @@ function bindEventControl() {
         $(this).animate({ width: "250pt"}, 1000);
     }).blur(function () {
         $(this).animate({ width: "150pt"}, 500);
+    });
+
+    $("#studTable").click(function(){
+        updateInfoLabel();
     });
 }
 
@@ -135,6 +149,7 @@ function onCheckedAll() {
     $('.item-checkbox').each(function () {
         this.checked = globalChecked;
     });
+    updateInfoLabel();
 }
 ///////////////////////////////////// Table Utils //////////////////////////////////////////////
 function addAllStudents(arrStudents) {
@@ -229,34 +244,36 @@ function setTableLoadingState(loading) {
     }
 }
 function updateInfoLabel() {
-    var itCount = document.getElementById("studTable").getElementsByTagName('tr').length;
+    var itCount = $("#studTable > tbody > tr").length;
     if (itCount > 1) {
-        $("#infoLabel").text("-------------------- " + (itCount - 1) + " item in list ---------------------");
+        var selCount = $(".item-checkbox:checked").length;
+        $("#infoLabel").text("-------------------- " + itCount + " item in list "+selCount+" selected ---------------------");
+
     } else {
         $("#infoLabel").text("-------------------- List is empty --------------------");
     }
 }
 
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
-
+function checkFilterCount(){
+    var count = $(".filter-itm").length;
+    if(count<MAX_FILTER_COUNT){
+        $("#addFilterButton").show();
+        checkEmptyFieldSize();
+    }else{
+        $("#addFilterButton").hide();
+        checkEmptyFieldSize();
+    }
+}
 
 //Menu Listener body
 function menuEvent(name) {
-    $("#menu").hide();
-    addFilterAttribute(nextId(), name, filterTypes.keyMap[name]);
+    $("#filterMenu").hide();
+    addFilterAttribute(name);
     checkFilterCount();
 }
-
-function checkFilterCount(){
-    var count = $(".filter-itm").length;
-    if(count<6){
-        $("#addFilterButton").show();
-    }else{
-        $("#addFilterButton").hide();
-    }
-}
 function addFilterAction() {
-    var $menu = $("#menu");
+    var $menu = $("#filterMenu");
     if ($menu.is(':visible')) {
         $menu.hide(300);
     } else {
@@ -264,38 +281,75 @@ function addFilterAction() {
         if (filterTypes.changed) {
             filterTypes.changed = false;
             clearMenu($menu);
-            fillMenu($menu, filterTypes.keys);
+            fillMenu($menu, filterTypes.keys,'filter_');
         }
-        $('#menu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
+        $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
     }
 }
-function addFilterAttribute(id, name, values) {
-    var htmContent = "";
-    htmContent += "<div class='btn-group input-group filter-itm'>";
 
-    htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' onclick='removeFilterAttribute(this);'>";
+function addFilterAttribute(name) {
+    var multiple = filterTypes.multyType[name];
+    var id;
+    if(multiple)
+        id = nextId();
+
+    var htmContent = "";
+    var filterName = name +(multiple?id:'');
+    htmContent += "<div name ='filter_"+filterName+"' class='btn-group input-group filter-itm'";
+    htmContent += ">";
+
+    htmContent += "<button class='btn prj-btn remove-btn item-btn-attr'" +
+        " onclick=\"removeFilterAttribute('"+filterName+"');\">";
     htmContent += name;
     htmContent += "</button>";
 
-    if (values) {
-        htmContent += "<select class='selectpicker value-field' style='width:60%'>";
-        values.forEach(function (value) {
-            htmContent += "<option>";
-            htmContent += value;
-            htmContent += "</option>";
-        });
-        htmContent += "</select>";
-    } else {
-        htmContent += "<input type='text' class='form-control value-field' value='some'>";
+    switch (filterTypes.keyType[name]){
+        case 'number':
+            htmContent += "<input type='text' class='form-control value-field' placeholder='?'>";
+            break;
+        case 'date':
+            htmContent += "<input type='text' class='form-control value-field' value='some'>";
+            break;
+        case 'list':
+            htmContent += "<select multiple class='selectpicker value-field' style='width:60%'>";
+            filterTypes.keyMap[name].forEach(function (value) {
+                htmContent += "<option>";
+                htmContent += value;
+                htmContent += "</option>";
+            });
+            htmContent += "</select>";
+            break;
+        case 'leveled-list':
+            htmContent += "<select class='selectpicker value-field' style='width:50%'>";
+            filterTypes.keyMap[name].forEach(function (value) {
+                htmContent += "<option>";
+                htmContent += value;
+                htmContent += "</option>";
+            });
+            htmContent += "</select>";
+            htmContent += "<select class='selectpicker sub-value-field' style='width:40pt'>";
+            for(var level = 1; level<=5; level++){
+                htmContent += "<option>";
+                htmContent += level;
+                htmContent += "</option>";
+            };
+            htmContent += "</select>";
+            break;
+        default :
+            console.error("Not defined filter type");
     }
     htmContent += "</div>";
 
     $("#addFilterButton").before(htmContent);
+    if(!filterTypes.multyType[name])
+        $("#filterMenu > li[name='filter_"+name+"']").hide();
 }
-function removeFilterAttribute(btn){
-    $(btn).parent().get(0).remove();
+function removeFilterAttribute(name){
+    $(".filter-itm[name='filter_"+name+"']").remove();
+    $("#filterMenu > li[name='filter_"+name+"']").show();
     checkFilterCount();
 }
+
 function pickFilters(){
     var returnStatement={};
     $(".filter-itm").each(function(id, element){
@@ -312,20 +366,27 @@ function pickFilters(){
 function clearMenu(menu) {
     menu.empty();
 }
-function fillMenu(menu, data) {
+function fillMenu(menu, data, name_pref) {
     var liCont = "";
     for (var i = 0; i < data.length; i++) {
-        liCont += "<li class='menu-item' role='presentation'>" +
-            "<a onclick='menuEvent(\"" + data[i] + "\");' " +
-            "name='menu_itm' role='menuitem'>" + data[i] + "</a></li>";
+        liCont += "<li class='menu-item' name='"+name_pref+data[i]+"'>" +
+            "<a onclick='menuEvent(\"" + data[i] + "\");' role='menuitem'>" +
+             data[i] + "</a></li>";
     }
     menu.append(liCont);
 }
 
 function setPositionrevilTo(element, parent) {
+    var winOffsetW = $(window).width();
+
     var pos = parent.offset();
+
     var x = pos.left;
+    var space =  pos.left + element.width() - winOffsetW + 4;
+    if(space > 0)
+        x -= space;
     var y = pos.top + parent.height();
+
     element.css(
         {
             left: x,

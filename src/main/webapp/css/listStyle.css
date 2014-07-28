@@ -43,12 +43,11 @@
     text-align: center;
 }
 
-
 #searchLine {
-    height: 24pt;
     margin-right: 0;
     min-width: 150pt;
     width: 150pt;
+    height: 24pt;
 }
 
 .search-button {
@@ -69,6 +68,11 @@
 .header-table-block {
     overflow: hidden;
     margin: 0;
+
+    background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -ms-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -o-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -webkit-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
 }
 
 #header-fixed {
@@ -99,12 +103,23 @@
     background: transparent;
     text-align: center;
 }
+
 .student-table > thead {
     padding-top: 1pt;
-    font-size: 12px;
+    font-size: 12px
 }
-.student-table > thead > tr > th{
-    padding-top: 1pt;
+
+.student-table > thead > tr > th {
+    margin: 1pt;
+    padding-top: 4pt;
+    padding-bottom: 2pt;
+
+    vertical-align: middle;
+    text-align: center;
+}
+
+.student-table > tbody > tr > td {
+    vertical-align: middle;
 }
 
 .header-column-0 {
@@ -151,21 +166,6 @@
     width: 90px;
 }
 
-.header-column-0,
-.header-column-1,
-.header-column-2,
-.header-column-3,
-.header-column-4,
-.header-column-5,
-.header-column-6,
-.header-column-7,
-.header-column-8,
-.header-column-9,
-.header-column-10 {
-    vertical-align: middle;
-    text-align: center;
-}
-
 /*----------------------Load Image-----------------------*/
 
 .load-image-class {
@@ -185,7 +185,7 @@
 
 }
 
-#filterBlock{
+#filterBlock {
     max-height: 42pt;
 }
 
@@ -197,43 +197,44 @@
     height: 18pt;
 }
 
-.item-btn-attr{
+.item-btn-attr {
     position: relative !important;
-    white-space: nowrap;
     padding: 1pt;
-    padding-left: 1pt;
     padding-right: 1pt;
-
+    padding-left: 1pt;
     width: 40% !important;
+
+    white-space: nowrap;
 }
-.item-btm-toggle{
-    padding-left: 3pt;
+
+.item-btm-toggle {
     padding-right: 3pt;
+    padding-left: 3pt;
     width: 16pt;
 }
 
 .remove-btn:hover,
 .remove-btn:focus,
-.remove-btn:active
-{
-    background-color: #FF8f8f;
+.remove-btn:active {
     border-color: red;
+    background-color: #FF8f8f;
     color: red;
-    text-decoration:line-through
+    text-decoration: line-through
 }
-.filter-itm{
-    height: 18pt;
+
+.filter-itm {
+    position: relative;
+    display: inline-flex;
     margin: 2pt;
     padding: 0;
-    display: inline-flex;
-    position: relative;
     width: 100pt;
+    height: 18pt;
     border: solid 1pt;
     border-color: #3808eb;
     border-radius: 4pt;
 }
 
-.value-field{
+.value-field {
     width: 60% !important;
     height: 100%;
 }

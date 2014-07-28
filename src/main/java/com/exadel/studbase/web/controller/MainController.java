@@ -131,8 +131,6 @@ public class MainController {
         List<User> someStudentList  = getTestList();
 
         try {
-
-
             response.getWriter().print(gson.toJson(someStudentList));
         } catch (IOException e) {
             e.printStackTrace();
