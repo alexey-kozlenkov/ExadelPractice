@@ -6,6 +6,7 @@
 header,
 .prj-header {
     background: #f1f1f1;
+    color: #333;
 }
 
 body,
@@ -37,16 +38,18 @@ input,
 /****************************** Label ******************************************/
 label,
 .team-label-default {
-    background: transparent;
     color: #333;
+    background: transparent;
 }
 
 /****************************** Buttons ****************************************/
 
 .prj-btn {
     border-color: #2D3E5C;
+    border-radius: 4px;
     background-color: #4A5D80;
     color: #ffffff;
+   
 }
 
 .prj-btn:hover,
@@ -83,7 +86,7 @@ label,
 }
 
 .prj-link:hover {
-    color: #5b32ff;
+    color: #4A5D80;
 }
 
 /****************************** Table ******************************************/
