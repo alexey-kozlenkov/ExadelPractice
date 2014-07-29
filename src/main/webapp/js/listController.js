@@ -40,7 +40,7 @@ function bindEventControl() {
     $("#checkAll").click(onCheckedAll);
 
     $("#addMenuButton").click(function () {
-        addRow(0, ['Vasya Pupkin', '16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 10);
+        addRow(0, 'Vasya Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 9);
         updateInfoLabel();
     });
     $("#exportMenuButton").click(function () {
@@ -243,7 +243,7 @@ function setTableLoadingState(loading) {
 }
 function updateInfoLabel() {
     var itCount = $("#studTable > tbody > tr").length;
-    if (itCount > 1) {
+    if (itCount > 0) {
         var selCount = $(".item-checkbox:checked").length;
         $("#infoLabel").text("-------------------- " + itCount + " item in list " + selCount + " selected ---------------------");
 
