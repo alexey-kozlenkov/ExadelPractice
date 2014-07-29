@@ -106,9 +106,9 @@ public class TestController {
     public String addStudent() {
 
         User user = new User();
-        user.setName("Julia Malyshko");
-        user.setEmail("julia@gmail.com");
-        user.setLogin("jul.malyshko");
+        user.setName("Alexey Kozlenkov");
+        user.setEmail("alexey@gmail.com");
+        user.setLogin("al.ov");
         user.setPassword("122345");
         user.setRole("student");
 
