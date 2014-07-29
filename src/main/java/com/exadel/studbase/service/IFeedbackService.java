@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface IFeedbackService {
     Feedback save(Feedback feedback);
 
-    Feedback getById (Long id);
+    Feedback getById(Long id);
 
     void delete(Feedback feedback);
 

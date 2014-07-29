@@ -1,9 +1,9 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.Employee;
-import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,8 +151,8 @@ public class MainController {
     public ModelAndView test(@PathVariable long id) {
         ModelAndView mv = new ModelAndView("studentInfo");
         User user_ = new User();
-  //      mv.addObject("user", user_);
-        mv.addObject("id",id);
+        //      mv.addObject("user", user_);
+        mv.addObject("id", id);
 //        ${user.name}
         return mv;
     }
@@ -188,5 +188,10 @@ public class MainController {
         }
     }
 
+    @RequestMapping(value="/html/login", method = RequestMethod.POST)
+    public void authenticate() {
 
+        System.out.println("GET");
+        //return "listPage";
+    }
 }

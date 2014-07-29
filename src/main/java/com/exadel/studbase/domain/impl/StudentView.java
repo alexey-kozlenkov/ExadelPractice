@@ -1,56 +1,58 @@
 package com.exadel.studbase.domain.impl;
 
-import com.exadel.studbase.dao.IEmployeeDAO;
 import com.exadel.studbase.domain.IEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
 /**
  * Created by Алексей on 28.07.2014.
  */
 @Entity
-@Table(name="\"STUDENT_VIEW\"")
-public class StudentView implements IEntity<Long>{
+@Table(name = "\"STUDENT_VIEW\"")
+public class StudentView implements IEntity<Long> {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="hire_date")
+    @Column(name = "hire_date")
     private Date hireDate;
 
-    @Column(name="university")
+    @Column(name = "university")
     private String university;
 
-    @Column(name="faculty")
+    @Column(name = "faculty")
     private String faculty;
 
-    @Column(name="course")
+    @Column(name = "course")
     private int course;
 
-    @Column(name="s_group")
+    @Column(name = "s_group")
     private int group;
 
-    @Column(name="graduation_date")
+    @Column(name = "graduation_date")
     private Date graduationDate;
 
-    @Column(name="working_hours")
+    @Column(name = "working_hours")
     private int workingHours;
 
-    @Column(name="billable")
+    @Column(name = "billable")
     private Date billable;
 
-    @Column(name="role_current_project")
+    @Column(name = "role_current_project")
     private String roleCurrentProject;
 
-    @Column(name="techs_current_project")
+    @Column(name = "techs_current_project")
     private String techsCurrentProject;
 
-    @Column(name="english_level")
+    @Column(name = "english_level")
     private String englishLevel;
 
     public StudentView() {

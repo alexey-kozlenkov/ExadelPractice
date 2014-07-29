@@ -9,27 +9,27 @@ import java.sql.Date;
  * Created by Алексей on 23.07.14.
  */
 @Entity
-@Table(name="\"DOCUMENT\"")
+@Table(name = "\"DOCUMENT\"")
 public class Document implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @JoinColumn(name="student_id")
+    @JoinColumn(name = "student_id")
     private Long studentId;
 
-    @Column(name="doctype")
+    @Column(name = "doctype")
     private String doctype;
 
-    @Column(name="issue_date")
+    @Column(name = "issue_date")
     private Date issueDate;
 
-    @Column(name="expiration_date")
+    @Column(name = "expiration_date")
     private Date expirationDate;
 
-    @Column(name="info")
+    @Column(name = "info")
     private String info;
 
     public Document() {

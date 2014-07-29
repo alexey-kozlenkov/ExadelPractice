@@ -14,7 +14,7 @@ import java.util.Collection;
 public class DocumentDAO extends GenericDAOImpl<Document, Long> implements IDocumentDAO {
     @Override
     public Collection<Document> getAllForUser(Long id) {
-        Query query = getSession().createQuery("FROM Document WHERE studentId="+id);
+        Query query = getSession().createQuery("FROM Document WHERE studentId=" + id);
         return query.list();
     }
 }

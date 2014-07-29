@@ -24,14 +24,16 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
 
     @Autowired
     @Qualifier("sessionFactory")
-    public void init(SessionFactory sessionFactory){
+    public void init(SessionFactory sessionFactory) {
         setSessionFactory(sessionFactory);
-    };
+    }
+
+    ;
 
     @Override
     public Collection<CONTENT> getAll() {
-         Collection<CONTENT> result =
-                 getSession().createCriteria(contentClass).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        Collection<CONTENT> result =
+                getSession().createCriteria(contentClass).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return result;
     }
 

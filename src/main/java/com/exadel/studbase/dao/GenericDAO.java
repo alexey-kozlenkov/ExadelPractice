@@ -12,9 +12,9 @@ public interface GenericDAO<CONTENT extends IEntity, ID extends Serializable> {
 
     public Collection<CONTENT> getAll();
 
-    public CONTENT find (ID id);
+    public CONTENT find(ID id);
 
-    public CONTENT saveOrUpdate (CONTENT content);
+    public CONTENT saveOrUpdate(CONTENT content);
 
     public void delete(CONTENT content);
 }
