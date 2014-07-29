@@ -94,7 +94,7 @@ function fillManualInfo() {
         async: true,
         data: studentId,
         success: function (data) {
-             alert("" + data);
+           //  alert("" + data);
             var gottenStudent = JSON.parse(data);
             $("#headerName").text(gottenStudent.name);
             $("#name").val(gottenStudent.name);
