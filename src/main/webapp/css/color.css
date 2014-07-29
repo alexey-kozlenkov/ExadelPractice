@@ -44,16 +44,13 @@ label,
 /****************************** Buttons ****************************************/
 
 .prj-btn {
-    border-color: #3808eb;
-    background-color: #5b32ff;
+    border-color: #2D3E5C;
+    background-color: #4A5D80;
     color: #ffffff;
 }
 
 .prj-btn:hover,
 .prj-btn:active {
-    /*color: #ffffff;*/
-    /*background-color: #5b32ff;*/
-    /*border-color: #3808eb;*/
     opacity: 0.5;
 }
 
@@ -66,6 +63,17 @@ label,
 .prj-btn.disabled:active,
 .prj-btn[disabled]:active {
     color: gray;
+}
+
+.static-green{
+    border-color: #4b954b;
+    background-color: #5cb85c;
+    color: #fff;
+
+    border-radius: 4px;
+
+    font-weight: 400;
+    font-size: 14px;
 }
 
 /****************************** Links ******************************************/

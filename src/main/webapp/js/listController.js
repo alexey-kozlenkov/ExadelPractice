@@ -5,7 +5,7 @@
 var MAX_FILTER_COUNT = 10;
 var filterTypes = {
     changed: true,
-    keys: ['age','working hour','billable','skill','english','date'],
+    keys: ['age', 'working hour', 'billable', 'skill', 'english', 'date'],
     keyType: {
         'age': 'number',
         'working hour': 'number',
@@ -16,10 +16,10 @@ var filterTypes = {
     },
     keyMap: {
         'skill': ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-        'english':['1','2','3','4','5']
+        'english': ['1', '2', '3', '4', '5']
     },
     multyType: {
-        'skill':true
+        'skill': true
     }
 };
 
@@ -72,7 +72,7 @@ function bindEventControl() {
         $(this).animate({ width: "150pt"}, 500);
     });
 
-    $("#studTable").click(function(){
+    $("#studTable").click(function () {
         updateInfoLabel();
     });
 }
@@ -160,45 +160,43 @@ function addAllStudents(arrStudents) {
 function addStudent(student) {
     var arg = ["", "", "", "", "", "", "", "", "", ""];
 
-    if (student.name) {
-        arg[0] = student.name;
-    }
     if (student.studentInfo.hireDate) {
-        arg[1] = student.studentInfo.hireDate;
+        arg[0] = student.studentInfo.hireDate;
     }
     if (student.studentInfo.faculty) {
-        arg[2] = student.studentInfo.faculty;
+        arg[1] = student.studentInfo.faculty;
     }
 
-    arg[3] = ((student.studentInfo.course) ? student.studentInfo.course : "?");
-    arg[3] += "-";
-    arg[3] += ((student.studentInfo.studentGroup) ? student.studentInfo.studentGroup : "?");
+    arg[2] = ((student.studentInfo.course) ? student.studentInfo.course : "?");
+    arg[2] += "-";
+    arg[2] += ((student.studentInfo.group) ? student.studentInfo.group : "?");
 
     if (student.studentInfo.graduationDate) {
-        arg[4] = student.studentInfo.graduationDate;
+        arg[3] = student.studentInfo.graduationDate;
     }
     if (student.studentInfo.workingHours) {
-        arg[5] = student.studentInfo.workingHours;
+        arg[4] = student.studentInfo.workingHours;
     }
 
-    arg[6] = (student.studentInfo.billable ? student.studentInfo.billable : "-");
+    arg[5] = (student.studentInfo.billable ? student.studentInfo.billable : "-");
 
     if (student.studentInfo.roleCurrentProject) {
-        arg[7] = student.studentInfo.roleCurrentProject;
+        arg[6] = student.studentInfo.roleCurrentProject;
     }
     if (student.studentInfo.techsCurrentProject) {
-        arg[8] = student.studentInfo.techsCurrentProject;
+        arg[7] = student.studentInfo.techsCurrentProject;
     }
     if (student.studentInfo.englishLevel) {
-        arg[9] = student.studentInfo.englishLevel;
+        arg[8] = student.studentInfo.englishLevel;
     }
 
-    addRow(student.id, arg, 10);
+    addRow(student.id, student.name, arg, 9);
 }
 
-function addRow(rowId, columnValues, count) {
+function addRow(rowId, name, columnValues, count) {
     var content;
     content = "<tr> <td><input id='cb_" + rowId + "' type='checkbox' class='item-checkbox'></td>";
+    content += "<td><a href = '/info?id="+rowId+"'>" + name + "</td>";
     for (var i = 0; i < count; i++) {
         content += "<td>" + columnValues[i] + "</td>";
     }
@@ -247,7 +245,7 @@ function updateInfoLabel() {
     var itCount = $("#studTable > tbody > tr").length;
     if (itCount > 1) {
         var selCount = $(".item-checkbox:checked").length;
-        $("#infoLabel").text("-------------------- " + itCount + " item in list "+selCount+" selected ---------------------");
+        $("#infoLabel").text("-------------------- " + itCount + " item in list " + selCount + " selected ---------------------");
 
     } else {
         $("#infoLabel").text("-------------------- List is empty --------------------");
@@ -257,35 +255,35 @@ function updateInfoLabel() {
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
 const STATIC_SEPARATOR =
     "<span class='static-separator'>,</span>";
-const LOGIC_SEPARATOR  =
-    "<button class='btn btn-success filter-separator' onclick='switchSeparator(this)'>or</button>";
+const LOGIC_SEPARATOR =
+    "<span class='static-green filter-separator'>and</span>";
 
 //---------------------------------
 function addFilterAttribute(name) {
-    var filterElementContent  = createFilterAttributeContent(name);
-    if(filterTypes.multyType[name]) {
+    var filterElementContent = createFilterAttributeContent(name);
+    if (filterTypes.multyType[name]) {
         var filtersExist = existFilterAttribute(name);
-        if(filtersExist && filtersExist.length > 0){
+        if (filtersExist && filtersExist.length > 0) {
             filtersExist.last().after(LOGIC_SEPARATOR + filterElementContent);
-        }else{
-            $("#addFilterButton").before( filterElementContent + STATIC_SEPARATOR);
+        } else {
+            $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
         }
-    }else {
-        $("#addFilterButton").before( filterElementContent + STATIC_SEPARATOR);
+    } else {
+        $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
         $("#filterMenu > li[name='filter_" + name + "']").hide();
     }
 }
 
-function createFilterAttributeContent(name){
+function createFilterAttributeContent(name) {
     var htmContent = "";
 
-    htmContent += "<div name ='filter_"+name+"' class='btn-group input-group filter-itm'>";
+    htmContent += "<div name ='filter_" + name + "' class='btn-group input-group filter-item'>";
     htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' ";
-    htmContent += "onclick=\"removeFilterAttribute( '"+name+"', this );\">";
+    htmContent += "onclick=\"removeFilterAttribute( '" + name + "', this );\">";
     htmContent += name;
     htmContent += "</button>";
 
-    switch (filterTypes.keyType[name]){
+    switch (filterTypes.keyType[name]) {
         case 'number':
             htmContent += "<input type='text' class='form-control value-field' placeholder='??'>";
             break;
@@ -310,11 +308,12 @@ function createFilterAttributeContent(name){
             });
             htmContent += "</select>";
             htmContent += "<select class='selectpicker sub-value-field' style='width:40pt'>";
-            for(var level = 1; level<=5; level++){
+            for (var level = 1; level <= 5; level++) {
                 htmContent += "<option>";
                 htmContent += level;
                 htmContent += "</option>";
-            };
+            }
+            ;
             htmContent += "</select>";
             break;
         default :
@@ -323,44 +322,34 @@ function createFilterAttributeContent(name){
     htmContent += "</div>";
     return htmContent;
 }
-function switchSeparator(separator){
-    var $element = $(separator);
-    var text = $element.text();
-    if( text == "or")
-        $element.text("and");
-    else
-        $element.text("or");
-}
 
-function existFilterAttribute(name){
-    return $(".filter-itm[name='filter_"+name+"']");
+function existFilterAttribute(name) {
+    return $(".filter-item[name='filter_" + name + "']");
 }
-function removeFilterAttribute(name, element){
+function removeFilterAttribute(name, element) {
     var selfItem = $($(element).parent().get(0));
     var prevItem = selfItem.prev();
     var nextItem = selfItem.next();
-    if(prevItem.is('.filter-separator')){
+    if (prevItem.is('.filter-separator')) {
         prevItem.remove();
-    }else
-    if(nextItem.is('.filter-separator')){
+    } else if (nextItem.is('.filter-separator')) {
         nextItem.remove();
-    }else
-    if(nextItem.is('.static-separator')){
+    } else if (nextItem.is('.static-separator')) {
         nextItem.remove();
     }
 
     selfItem.remove();
-    $("#filterMenu > li[name='filter_"+name+"']").show();
+    $("#filterMenu > li[name='filter_" + name + "']").show();
     checkFilterCount();
 }
 
-function checkFilterCount(){
-    var count = $(".filter-itm").length;
+function checkFilterCount() {
+    var count = $(".filter-item").length;
     var filterBtn = $("#addFilterButton");
-    if(count<MAX_FILTER_COUNT){
+    if (count < MAX_FILTER_COUNT) {
         filterBtn.prev().show();
         filterBtn.show();
-    }else{
+    } else {
         filterBtn.prev().hide();
         filterBtn.hide();
     }
@@ -368,16 +357,39 @@ function checkFilterCount(){
 }
 
 //TODO! rewrite
-function pickFilters(){
-    var returnStatement={};
-//    $(".filter-itm").each(function(id, element){
-//        var itm = $(element);
-//        var atr_name = $(itm.find(".item-btn-attr")).text();
-//        var atr_value = $(itm.find(".value-field")).val();
-//        if(returnStatement[atr_name] == undefined)
-//            returnStatement[atr_name]=[];
-//        returnStatement[atr_name].push(atr_value);
-//    });
+function pickFilters() {
+    var returnStatement = {};
+    var lastAtrName = "";
+
+    var itms = $("#filterBlock").find(".filter-item");
+
+    for (var i = 0; i < itms.length; i++) {
+        var element = $(itms[i]);
+
+        var atr_name = $(element.find(".item-btn-attr")).text();
+        var atr_value = $(element.find(".value-field")).val();
+
+        if (!returnStatement[atr_name])
+            returnStatement[atr_name] = '';
+        else
+            returnStatement[atr_name] += '&';
+        switch (filterTypes.keyType[atr_name]) {
+            case 'number':
+            case 'date':
+            case 'list':
+                returnStatement[atr_name] += atr_value;
+                break;
+            case 'leveled-list':
+                var atr_sub_value = $(element.find(".sub-value-field")).val();
+                returnStatement[atr_name] += atr_value + '=' + atr_sub_value;
+                break;
+            default :
+                console.error("Not defined filter type");
+                break;
+        }
+        lastAtrName = atr_name;
+    }
+    ;
     return returnStatement;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,7 +409,7 @@ function addFilterAction() {
         if (filterTypes.changed) {
             filterTypes.changed = false;
             clearMenu($menu);
-            fillMenu($menu, filterTypes.keys,'filter_');
+            fillMenu($menu, filterTypes.keys, 'filter_');
         }
         $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
     }
@@ -408,9 +420,9 @@ function clearMenu(menu) {
 function fillMenu(menu, data, name_pref) {
     var liCont = "";
     for (var i = 0; i < data.length; i++) {
-        liCont += "<li class='menu-item' name='"+name_pref+data[i]+"'>" +
+        liCont += "<li class='menu-item' name='" + name_pref + data[i] + "'>" +
             "<a onclick='menuEvent(\"" + data[i] + "\");' role='menuitem'>" +
-             data[i] + "</a></li>";
+            data[i] + "</a></li>";
     }
     menu.append(liCont);
 }
@@ -420,8 +432,8 @@ function setPositionrevilTo(element, parent) {
     var pos = parent.offset();
 
     var x = pos.left;
-    var space =  pos.left + element.width() - winOffsetW + 4;
-    if(space > 0)
+    var space = pos.left + element.width() - winOffsetW + 4;
+    if (space > 0)
         x -= space;
     var y = pos.top + parent.height();
 

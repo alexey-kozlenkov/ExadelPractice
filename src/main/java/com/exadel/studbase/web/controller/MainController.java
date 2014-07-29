@@ -10,6 +10,7 @@ import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,7 +117,7 @@ public class MainController {
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
     public void listData(HttpServletRequest request, HttpServletResponse response){
-        Gson gson = new Gson();
+        Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
         String searchName = (String) request.getParameter("name");
         Object filter = request.getParameter("filter");
 
