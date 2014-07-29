@@ -109,7 +109,8 @@ public class TestController {
         user.setName("Julia Malyshko");
         user.setEmail("julia@gmail.com");
         user.setLogin("jul.malyshko");
-        user.setRole("stud");
+        user.setPassword("122345");
+        user.setRole("student");
 
         System.out.println("Trying to student me as user...");
         userService.save(user);
