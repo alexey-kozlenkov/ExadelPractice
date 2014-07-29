@@ -37,12 +37,10 @@
         <!--<security:user name="user" password="user" authorities="ROLE_USER"/>-->
     <!--</security:user-service>-->
 
-    <security:jdbc-user-service id="userService" data-source-ref="dataSource"
-            users-by-username-query="SELECT login, password FROM  ">
-    </security:jdbc-user-service>
-
     <security:authentication-manager>
-        <security:authentication-provider user-service-ref="userService"/>
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="dataSource"/>
+        </security:authentication-provider>
     </security:authentication-manager>
 
 </beans>
