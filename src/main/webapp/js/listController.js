@@ -160,34 +160,34 @@ function addAllStudents(arrStudents) {
 function addStudent(student) {
     var arg = ["", "", "", "", "", "", "", "", "", ""];
 
-    if (student.studentInfo.hireDate) {
-        arg[0] = student.studentInfo.hireDate;
+    if (student.hireDate) {
+        arg[0] = student.hireDate;
     }
-    if (student.studentInfo.faculty) {
-        arg[1] = student.studentInfo.faculty;
+    if (student.faculty) {
+        arg[1] = student.faculty;
     }
 
-    arg[2] = ((student.studentInfo.course) ? student.studentInfo.course : "?");
+    arg[2] = ((student.course) ? student.course : "?");
     arg[2] += "-";
-    arg[2] += ((student.studentInfo.group) ? student.studentInfo.group : "?");
+    arg[2] += ((student.group) ? student.group : "?");
 
-    if (student.studentInfo.graduationDate) {
-        arg[3] = student.studentInfo.graduationDate;
+    if (student.graduationDate) {
+        arg[3] = student.graduationDate;
     }
-    if (student.studentInfo.workingHours) {
-        arg[4] = student.studentInfo.workingHours;
+    if (student.workingHours) {
+        arg[4] = student.workingHours;
     }
 
-    arg[5] = (student.studentInfo.billable ? student.studentInfo.billable : "-");
+    arg[5] = (student.billable ? student.billable : "-");
 
-    if (student.studentInfo.roleCurrentProject) {
-        arg[6] = student.studentInfo.roleCurrentProject;
+    if (student.roleCurrentProject) {
+        arg[6] = student.roleCurrentProject;
     }
-    if (student.studentInfo.techsCurrentProject) {
-        arg[7] = student.studentInfo.techsCurrentProject;
+    if (student.techsCurrentProject) {
+        arg[7] = student.techsCurrentProject;
     }
-    if (student.studentInfo.englishLevel) {
-        arg[8] = student.studentInfo.englishLevel;
+    if (student.englishLevel) {
+        arg[8] = student.englishLevel;
     }
 
     addRow(student.id, student.name, arg, 9);
