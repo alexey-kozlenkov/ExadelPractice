@@ -1,7 +1,6 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.service.*;
@@ -16,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +22,7 @@ import java.util.Set;
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/")
-public class MainController {
+public class InfoPageController {
 
     @Autowired
     IUserService userService;
@@ -42,10 +39,7 @@ public class MainController {
     @Autowired
     ISkillSetService skillSetService;
 
-    @Autowired
-    IStudentViewService studentViewService;
 
-////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String infoPage() {
         return "studentInfo";
@@ -68,7 +62,6 @@ public class MainController {
 
     @RequestMapping(value = "/info/getManualInformation", method = RequestMethod.GET)
     public void manualData(HttpServletRequest request, HttpServletResponse response) {
-        // System.out.println("get it3333333333333333333!!!");
         try {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             System.out.println(request.getQueryString());
@@ -140,35 +133,6 @@ public class MainController {
             e.printStackTrace();
         }
 
-    }
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String index() {
-        System.out.println("List page redirect");
-        return "listPage";
-    }
-
-    // Provide sanding list data
-    @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response){
-        Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String searchName = (String) request.getParameter("name");
-        Object filter = request.getParameter("filter");
-
-        Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(searchName);
-        System.out.println(gson.fromJson((String) filter, map.getClass()));
-
-        Collection<StudentView> studList  = studentViewService.getAll();
-
-
-        try {
-            response.getWriter().print(gson.toJson(studList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
     }
 
 }
