@@ -35,6 +35,8 @@ $(document).ready(function () {
     checkEmptyFieldSize();
     bindEventControl();
     console.log("initialize ended.");
+    if(window.location.search == '?loaded')
+        loadTable();
 });
 function bindEventControl() {
     $("#checkAll").click(onCheckedAll);
@@ -356,7 +358,6 @@ function checkFilterCount() {
     checkEmptyFieldSize();
 }
 
-//TODO! rewrite
 function pickFilters() {
     var returnStatement = {};
     var lastAtrName = "";
