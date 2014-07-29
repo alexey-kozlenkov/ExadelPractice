@@ -1,17 +1,12 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.init.Options;
-
-import com.google.gson.Gson;
-import com.exadel.studbase.domain.document.Document;
 import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.feedback.Feedback;
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.domain.student.Student;
 import com.exadel.studbase.domain.user.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,23 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
-
-import java.util.List;
-import java.util.Random;
+import java.util.Map;
+import java.util.Set;
 
 
 @Controller
@@ -132,7 +112,7 @@ public class MainController {
         return "login";
     }
 
-
+    /////////       Julia         ///////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -144,7 +124,7 @@ public class MainController {
     @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
     public void studentData(HttpServletRequest request, HttpServletResponse response) {
         //Object smth = request.getAttribute("id");
-        System.out.println("get it2q222222222222222222222222222!!!");
+        //System.out.println("get it2q222222222222222222222222222!!!");
         try {
             Gson gson = new Gson();
             Options options = new Options();
@@ -156,21 +136,20 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/info/getInformation", method = RequestMethod.GET)
-    public void optionsData(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/info/getManualInformation", method = RequestMethod.GET)
+    public void manualData(HttpServletRequest request, HttpServletResponse response) {
         // System.out.println("get it3333333333333333333!!!");
         try {
-            Gson gson = new Gson();
-            //System.out.println(request.getQueryString());
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            System.out.println(request.getQueryString());
             User user = userService.getById(Long.parseLong(request.getQueryString()));
-            System.out.println(user);
+            System.out.println(user.getStudentInfo().toString());
             response.getWriter().print(gson.toJson(user, User.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
         response.setStatus(200);
     }
-
 
     @RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
     public ModelAndView test(@PathVariable long id) {
@@ -184,18 +163,18 @@ public class MainController {
 
 
     @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
-    public void editInformation(HttpServletRequest request, HttpServletResponse response) {
+    public void editManualInformation(HttpServletRequest request, HttpServletResponse response) {
         //System.out.println("post it44444!");
         try {
 
-//            Map<String, String[]> params = request.getParameterMap();
-//            Set<Map.Entry<String, String[]>> entry = params.entrySet();
-//            for (Map.Entry<String, String[]> element : params.entrySet()) {
-//                System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
-//                for(String s : element.getValue())
-//                    System.out.print("\t" + s);
-//                System.out.println();
-//            }
+            Map<String, String[]> params = request.getParameterMap();
+            Set<Map.Entry<String, String[]>> entry = params.entrySet();
+            for (Map.Entry<String, String[]> element : params.entrySet()) {
+                System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
+                for(String s : element.getValue())
+                    System.out.print("\t" + s);
+                System.out.println();
+            }
             User editedUser = userService.getById(Long.parseLong(request.getParameter("studentId")));
             editedUser.setName(request.getParameter("studentName"));
             editedUser.setLogin(request.getParameter("studentLogin"));
@@ -211,6 +190,35 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value="/info/postEducation", method = RequestMethod.POST)
+    public void editEducation(HttpServletRequest request, HttpServletResponse response){
+        try {
+            Map<String, String[]> params = request.getParameterMap();
+            Set<Map.Entry<String, String[]>> entry = params.entrySet();
+            for (Map.Entry<String, String[]> element : params.entrySet()) {
+                System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
+                for(String s : element.getValue())
+                    System.out.print("\t" + s);
+                System.out.println();
+            }
+
+            Student editedStudent = studentService.getById(Long.parseLong(request.getParameter("studentId")));
+            editedStudent.setUniversity(request.getParameter("studentUniversity"));
+            editedStudent.setFaculty(request.getParameter("studentFaculty"));
+            editedStudent.setCourse(Integer.parseInt(request.getParameter("studentCourse")));
+            editedStudent.setGroup(Integer.parseInt(request.getParameter("studentGroup")));
+            editedStudent.setGraduationDate(Date.valueOf(request.getParameter("studentGraduationDate")));
+            studentService.save(editedStudent);
+
+
+            response.getWriter().print("{\"post\":\"ok\"}"); //string in double quotes
+            response.setStatus(200);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

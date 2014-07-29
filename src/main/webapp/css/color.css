@@ -6,7 +6,7 @@
 header,
 .prj-header {
     background: #f1f1f1;
-    color : #333;
+    color: #333;
 }
 
 body,
@@ -38,23 +38,21 @@ input,
 /****************************** Label ******************************************/
 label,
 .team-label-default {
-    color: #333;
     background: transparent;
+    color: #333;
 }
 
 /****************************** Buttons ****************************************/
 
 .prj-btn {
+    border-color: #2D3E5C;
+    border-radius: 4px;
+    background-color: #4A5D80;
     color: #ffffff;
-    background-color: #5b32ff;
-    border-color: #3808eb;
 }
 
 .prj-btn:hover,
 .prj-btn:active {
-    /*color: #ffffff;*/
-    /*background-color: #5b32ff;*/
-    /*border-color: #3808eb;*/
     opacity: 0.5;
 }
 
@@ -65,8 +63,7 @@ label,
 .prj-btn.disabled:focus,
 .prj-btn[disabled]:focus,
 .prj-btn.disabled:active,
-.prj-btn[disabled]:active
-{
+.prj-btn[disabled]:active {
     color: gray;
 }
 
@@ -78,7 +75,7 @@ label,
 }
 
 .prj-link:hover {
-    color: #5b32ff;
+    color: #4A5D80;
 }
 
 /****************************** Table ******************************************/
