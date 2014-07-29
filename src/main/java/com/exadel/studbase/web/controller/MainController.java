@@ -1,29 +1,21 @@
 package com.exadel.studbase.web.controller;
 
-
-import com.exadel.studbase.domain.document.Document;
-import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.feedback.Feedback;
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.skills.SkillType;
-import com.exadel.studbase.domain.student.Student;
-import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.domain.impl.Employee;
+import com.exadel.studbase.domain.init.Options;
+import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 
 @Controller
@@ -55,104 +47,6 @@ public class MainController {
         return "secured/index";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String index() {
-
-        System.out.println("log!!");
-
-        return "listPage";
-    }
-
-
-    public static List<User> testList;
-    public static List<User> getTestList(){
-        if(testList==null){
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            testList = new ArrayList<User>();
-            User st;
-            Random rand  =new Random();
-            for(int id_ = 1; id_<=1000; id_++) {
-                st = new User();
-
-                st.setId(Long.valueOf(id_));
-                st.setName("User_" + id_);
-                st.setLogin("Login_" + id_);
-                st.setPassword("");
-                st.setRole("user");
-                st.setEmail("email_" + id_ + "@mail.ru");
-                st.setStudentInfo(new Student());
-                st.getStudentInfo().setCourse((id_ % 10 < 5 ? 1 : 2));
-                st.getStudentInfo().setGroup(id_ % 10);
-                st.getStudentInfo().setUniversity((id_ < 10) ? "MSU" : "BSU");
-                st.getStudentInfo().setFaculty((id_ < 10) ? "IP" : "FPM");
-                st.getStudentInfo().setWorkingHours(4 + rand.nextInt(20));
-                try {
-                    st.getStudentInfo().setHireDate(new Date(sdf.parse("07.07.2014").getTime()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if(rand.nextBoolean())
-                    try {
-                       st.getStudentInfo().setBillable(new Date(sdf.parse("02.09.2014").getTime()));
-                    } catch (ParseException e) {
-                       e.printStackTrace();
-                    }
-                else
-                    st.getStudentInfo().setBillable(null);
-                try {
-                    st.getStudentInfo().setGraduationDate(new Date(sdf.parse("01.05.2018").getTime()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                st.getStudentInfo().setRoleCurrentProject(rand.nextBoolean() ? "developer" : "test");
-                st.getStudentInfo().setTechsCurrentProject(rand.nextBoolean() ? "java" : "php");
-                st.getStudentInfo().setEnglishLevel("advansed");
-                testList.add(st);
-            }
-        }
-        return testList;
-    }
-
-
-    // Provide sanding list data
-    @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response){
-        Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String searchName = (String) request.getParameter("name");
-        Object filter = request.getParameter("filter");
-
-        Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(searchName);
-        System.out.println(gson.fromJson((String) filter, map.getClass()));
-
-
-        //System.out.println("get it!!!  "+smth);
-
-
-        List<User> someStudentList  = getTestList();
-
-        try {
-            response.getWriter().print(gson.toJson(someStudentList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
-    }
-
-    @RequestMapping(value= "/test", method = RequestMethod.POST)
-    public void test(HttpServletRequest request, HttpServletResponse response){
-
-        try {
-            System.out.println("Get post req.!!");
-            response.getWriter().print("good!!!");
-            response.setStatus(200);
-         //   response.flushBuffer();
-            System.out.println("All sended!!!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @RequestMapping(value = "/addStudent")
     public String addStudent() {
@@ -214,137 +108,85 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping(value = "/updateStudent")
-    public String updateStudent(@RequestParam("stId") Long studentId) {
-
-        Student studentToUpdate = studentService.getById(studentId);
-        studentToUpdate.setRoleCurrentProject(studentToUpdate.getRoleCurrentProject() + ", The King!");
-        studentService.save(studentToUpdate);
-
-        return "login";
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public String infoPage() {
+        return "studentInfo";
     }
 
-    @RequestMapping(value = "/updateEmployee")
-    public String updateEmployee(@RequestParam("empId") Long employeeId) {
-        User userToUpdate = userService.getById(employeeId);
-        userToUpdate.setRole("superadmin");
-        userService.save(userToUpdate);
-        return "login";
+
+    @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
+    public void studentData(HttpServletRequest request, HttpServletResponse response) {
+        //Object smth = request.getAttribute("id");
+        try {
+            Gson gson = new Gson();
+            Options options = new Options();
+            response.getWriter().print(gson.toJson(options, Options.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        response.setStatus(200);
     }
 
-    @RequestMapping(value = "/addFeedback")
-    public String addFeedback(@RequestParam("stId") Long studentId, @RequestParam("fbId") Long feedbackerId) {
 
-        Student student = studentService.getById(studentId);
-        Employee employee =  employeeService.getById(feedbackerId);
-
-        Feedback feedback = new Feedback();
-        feedback.setStudent(student);
-        feedback.setFeedbacker(employee);
-        feedback.setContent("Nice girl, but she should stop hmurit' brovi");
-        feedback.setProfessionalCompetence("norm");
-        feedback.setAttitudeToWork("norm");
-        feedback.setCollectiveRelations("Cats love her");
-        feedback.setProfessionalProgress("norm");
-        feedback.setNeedMoreHours(false);
-        feedback.setOnProject(true);
-        feedback.setFeedbackDate(Date.valueOf("2014-07-22"));
-
-        System.out.println(feedbackService.save(feedback));
-        System.out.println("Saved success!");
-
-        return "login";
+    @RequestMapping(value = "/info/getInformation", method = RequestMethod.GET)
+    public void optionsData(HttpServletRequest request, HttpServletResponse response) {
+        // System.out.println("get it3333333333333333333!!!");
+        try {
+            Gson gson = new Gson();
+            System.out.println(request.getQueryString());
+            User user = userService.getById(Long.parseLong(request.getQueryString()));
+            System.out.println(user);
+            String str = gson.toJson(user, User.class);
+            response.getWriter().print(str);
+            System.out.println("fucking shit");
+            System.out.println(feedbackService.getAllAboutStudent(Long.parseLong(request.getQueryString())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        response.setStatus(200);
     }
 
-    @RequestMapping(value = "/deleteStudentTest")
-    public String deleteStudentTest(@RequestParam("id") Long id) {
-        studentService.delete(studentService.getById(id));
-        return "login";
+
+    @RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
+    public ModelAndView test(@PathVariable long id) {
+        ModelAndView mv = new ModelAndView("studentInfo");
+        User user_ = new User();
+  //      mv.addObject("user", user_);
+        mv.addObject("id",id);
+//        ${user.name}
+        return mv;
     }
 
-    @RequestMapping(value= "/deleteEmployeeTest")
-    public String deleteEmployeeTest(@RequestParam("id") Long id) {
-        employeeService.delete(employeeService.getById(id));
-        return "login";
+
+    @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
+    public void editInformation(HttpServletRequest request, HttpServletResponse response) {
+        //System.out.println("post it44444!");
+        try {
+
+//            Map<String, String[]> params = request.getParameterMap();
+//            Set<Map.Entry<String, String[]>> entry = params.entrySet();
+//            for (Map.Entry<String, String[]> element : params.entrySet()) {
+//                System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
+//                for(String s : element.getValue())
+//                    System.out.print("\t" + s);
+//                System.out.println();
+//            }
+            User editedUser = userService.getById(Long.parseLong(request.getParameter("studentId")));
+            editedUser.setName(request.getParameter("studentName"));
+            editedUser.setLogin(request.getParameter("studentLogin"));
+            editedUser.setPassword(request.getParameter("studentPassword"));
+            editedUser.setEmail(request.getParameter("studentEmail"));
+            editedUser.setRole(request.getParameter("studentRole"));
+            editedUser.getStudentInfo().setState(request.getParameter("studentState"));
+            userService.save(editedUser);
+            studentService.save(editedUser.getStudentInfo());
+
+            response.getWriter().print("{\"post\":\"ok\"}"); //string in double quotes
+            response.setStatus(200);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @RequestMapping(value = "/addDocument")
-    public String addDocument(@RequestParam("stId") Long studentId) throws ParseException {
 
-        Document document = new Document();
-        document.setStudent(studentService.getById((studentId)));
-        document.setDoctype("Certificate from Belhard");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
-        document.setIssueDate(new Date(dateFormat.parse("2014").getTime()));
-
-        documentService.save(document);
-
-        return "login";
-    }
-
-    @RequestMapping(value = "/updateDocument")
-    public String updateDocument(@RequestParam("docId") Long documentId) throws ParseException {
-        Document document = documentService.getById(documentId);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        java.util.Date date = dateFormat.parse("2014-07-22");
-        document.setIssueDate(new Date (date.getTime()));
-
-        documentService.save(document);
-
-        return "login";
-    }
-
-    @RequestMapping(value = "/deleteDocument")
-    public String deleteDocument(@RequestParam("docId") Long documentId) throws ParseException {
-
-        documentService.delete(documentService.getById(documentId));
-        return "login";
-    }
-
-    @RequestMapping(value = "/addSkillType")
-    public String addSkillType(@RequestParam("name") String skillName) {
-        SkillType skillType = new SkillType();
-        skillType.setName(skillName);
-        skillTypeService.save(skillType);
-        return "login";
-    }
-
-    @RequestMapping(value = "/updateSkillType")
-    public String updateSkillType(@RequestParam("id") Long skillTypeId, @RequestParam("newName") String newName) {
-        SkillType skillType = skillTypeService.getById(skillTypeId);
-        skillType.setName(newName);
-        skillTypeService.save(skillType);
-        return "login";
-    }
-
-    @RequestMapping(value = "/deleteSkillType")
-    public String deleteSkillType(@RequestParam("id") Long skillTypeId) {
-        skillTypeService.delete(skillTypeService.getById(skillTypeId));
-        return "login";
-    }
-
-    @RequestMapping (value = "/addSkillSet")
-    public String addSkillSet(@RequestParam("usId") Long usertId, @RequestParam("skTId") Long skillTypeId) {
-        SkillSet skillSet = new SkillSet();
-        skillSet.setUser(userService.getById(usertId));
-        skillSet.setSkillType(skillTypeService.getById(skillTypeId));
-        skillSet.setLevel(5);
-
-        skillSetService.save(skillSet);
-
-        return "login";
-    }
-
-    @RequestMapping(value="/updateUser")
-    public String updateUser(@RequestParam("usId") Long userId) {
-        User userToUpdate = userService.getById(userId);
-        return "login";
-    }
-
-    @RequestMapping(value="/getUsers")
-    public String getUsers(@RequestParam("skTId")  Long skillTypeId) {
-        ArrayList<User> users = (ArrayList<User>) skillSetService.getAllWithSkill(skillTypeId);
-        return "login";
-    }
 }

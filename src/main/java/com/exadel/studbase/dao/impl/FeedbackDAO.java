@@ -1,7 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IFeedbackDAO;
-import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.impl.Feedback;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public class FeedbackDAO extends GenericDAOImpl<Feedback, Long> implements IFeed
 
     @Override
     public Collection<Feedback> getAllAboutStudent(Long id) {
-        Query query = getSession().createQuery("FROM Feedback WHERE student.id="+id);
+        Query query = getSession().createQuery("FROM Feedback WHERE studentId="+id);
 
         return query.list();
     }

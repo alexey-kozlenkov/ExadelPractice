@@ -1,6 +1,6 @@
 package com.exadel.studbase.dao;
 
-import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.impl.Feedback;
 
 import java.util.Collection;
 
@@ -8,5 +8,5 @@ import java.util.Collection;
  * Created by Алексей on 21.07.14.
  */
 public interface IFeedbackDAO extends GenericDAO<Feedback, Long> {
-    Collection<Feedback> getAllAboutStudent(Long studentId);
+    public Collection<Feedback> getAllAboutStudent(Long studentId);
 }

@@ -1,7 +1,7 @@
 package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.ISkillTypeDAO;
-import com.exadel.studbase.domain.skills.SkillType;
+import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.service.ISkillTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

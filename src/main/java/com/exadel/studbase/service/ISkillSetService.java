@@ -1,7 +1,8 @@
 package com.exadel.studbase.service;
 
-import com.exadel.studbase.domain.skills.SkillSet;
-import com.exadel.studbase.domain.user.User;
+import com.exadel.studbase.domain.impl.SkillSet;
+import com.exadel.studbase.domain.impl.SkillType;
+import com.exadel.studbase.domain.impl.User;
 
 import java.util.Collection;
 
@@ -18,4 +19,6 @@ public interface ISkillSetService {
     public Collection<SkillSet> getAll();
 
     public Collection<User> getAllWithSkill(Long skillTypeId);
+
+    public Collection<SkillType> getAllForUser(Long userId);
 }

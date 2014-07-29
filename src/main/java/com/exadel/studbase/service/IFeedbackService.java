@@ -1,6 +1,6 @@
 package com.exadel.studbase.service;
 
-import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.impl.Feedback;
 
 import java.util.Collection;
 

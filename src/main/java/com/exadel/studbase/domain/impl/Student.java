@@ -1,15 +1,9 @@
-package com.exadel.studbase.domain.student;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.document.Document;
-import com.exadel.studbase.domain.feedback.Feedback;
-import com.exadel.studbase.domain.skills.SkillSet;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -58,15 +52,7 @@ public class Student implements IEntity<Long> {
     @Column(name="english_level")
     private String englishLevel;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Feedback> feedbacks;
-
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Document> documents;
-
     public Student() {
-        feedbacks = new HashSet<Feedback>();
-        documents = new HashSet<Document>();
     }
 
     @Override
@@ -173,30 +159,6 @@ public class Student implements IEntity<Long> {
 
     public void setEnglishLevel(String englishLevel) {
         this.englishLevel = englishLevel;
-    }
-
-    public Collection<Feedback> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(Set<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
-    }
-
-    public void addFeedback (Feedback feedback) {
-        this.feedbacks.add(feedback);
-    }
-
-    public Collection<Document> getDocuments() {
-        return documents;
-    }
-
-    public void setDocuments(Set<Document> documents) {
-        this.documents = documents;
-    }
-
-    public void addDocument(Document document) {
-        this.documents.add(document);
     }
 
     @Override

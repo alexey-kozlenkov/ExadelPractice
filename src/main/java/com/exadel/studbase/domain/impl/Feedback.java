@@ -1,8 +1,6 @@
-package com.exadel.studbase.domain.feedback;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.employee.Employee;
-import com.exadel.studbase.domain.student.Student;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,13 +17,11 @@ public class Feedback implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="student_id")
-    private Student student;
+    @Column(name="student_id")
+    private Long studentId;
 
-    @ManyToOne
-    @JoinColumn(name="employee_id")
-    private Employee feedbacker;
+    @Column(name="employee_id")
+    private Long feedbackerId;
 
     @Column(name = "content")
     private String content;
@@ -64,20 +60,20 @@ public class Feedback implements IEntity<Long> {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public Employee getFeedbacker() {
-        return feedbacker;
+    public Long getFeedbackerId() {
+        return feedbackerId;
     }
 
-    public void setFeedbacker(Employee employee) {
-        this.feedbacker = employee;
+    public void setFeedbacker(Long feedbackerId) {
+        this.feedbackerId = feedbackerId;
     }
 
     public String getContent() {

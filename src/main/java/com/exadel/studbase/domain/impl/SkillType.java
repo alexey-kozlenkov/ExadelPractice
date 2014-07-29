@@ -1,4 +1,4 @@
-package com.exadel.studbase.domain.skills;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
 

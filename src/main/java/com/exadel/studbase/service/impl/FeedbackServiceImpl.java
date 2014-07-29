@@ -1,7 +1,7 @@
 package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.IFeedbackDAO;
-import com.exadel.studbase.domain.feedback.Feedback;
+import com.exadel.studbase.domain.impl.Feedback;
 import com.exadel.studbase.service.IFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

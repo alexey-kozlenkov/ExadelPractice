@@ -1,6 +1,6 @@
 package com.exadel.studbase.service;
 
-import com.exadel.studbase.domain.employee.Employee;
+import com.exadel.studbase.domain.impl.Employee;
 
 import java.util.Collection;
 
@@ -15,5 +15,4 @@ public interface IEmployeeService {
     void delete(Employee employee);
 
     Collection<Employee> getAll();
-
 }

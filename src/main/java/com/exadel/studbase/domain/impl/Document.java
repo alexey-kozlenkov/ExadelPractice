@@ -1,7 +1,6 @@
-package com.exadel.studbase.domain.document;
+package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.student.Student;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,16 +10,15 @@ import java.sql.Date;
  */
 @Entity
 @Table(name="\"DOCUMENT\"")
-public class Document implements IEntity<Long>{
+public class Document implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
-    @ManyToOne
     @JoinColumn(name="student_id")
-    private Student student;
+    private Long studentId;
 
     @Column(name="doctype")
     private String doctype;
@@ -47,12 +45,12 @@ public class Document implements IEntity<Long>{
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(Long id) {
+        this.studentId = id;
     }
 
     public String getDoctype() {
@@ -108,7 +106,7 @@ public class Document implements IEntity<Long>{
     public String toString() {
         return "Document{" +
                 "id=" + id +
-                ", studentId=" + student.getId() +
+                ", studentId=" + studentId +
                 ", doctype='" + doctype + '\'' +
                 ", issueDate=" + issueDate +
                 ", expirationDate=" + expirationDate +
