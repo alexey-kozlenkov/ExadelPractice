@@ -1,11 +1,12 @@
+
 var studentId;
 
-window.onload = function () {
+$(window).ready(function () {
     // alert(window.location.search);
-    parseRequestForId(window.location.search)
+    parseRequestForId(window.location.search);
     fillOptions();
-    fill();
-};
+    fillManualInfo();
+});
 
 $(document).ready(function () {
 
@@ -20,7 +21,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    //event handler for submit button
+    //event handlers for submit button save
     $("#saveManualInformation").click(function () {
         //collect data entered by users
         var editedName = $("#name").val();
@@ -32,6 +33,23 @@ $(document).ready(function () {
 
         saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState);
     });
+    $("#saveEducationInformation").click(function () {
+        //collect data entered by users
+        var editedUniversity = $("#institution").val();
+        var editedFaculty = $("#faculty").val();
+        var editedSpeciality = $("#speciality").val();
+        var editedCourse = $("#course").val();
+        var editedGroup = $("#group").val();
+        var editedGraduationDate = $("#graduationDate").val();
+
+        saveEducationChanges(editedUniversity,editedFaculty,editedSpeciality,editedCourse,editedGroup,editedGraduationDate);
+    });
+
+    //handler for state select
+    $("#state").change(
+        checkState
+    );
+
 });
 
 function parseRequestForId(string) {
@@ -67,17 +85,16 @@ function fillOptions() {
     });
 }
 
-function fill() {
+function fillManualInfo() {
     $.ajax
     ({
         type: "GET",
         //SEND TO CONTROLLER
-        url: "/info/getInformation",
-//        dataType: 'json',
+        url: "/info/getManualInformation",
         async: true,
         data: studentId,
         success: function (data) {
-            // alert("" + data);
+             alert("" + data);
             var gottenStudent = JSON.parse(data);
             $("#headerName").text(gottenStudent.name);
             $("#name").val(gottenStudent.name);
@@ -86,8 +103,29 @@ function fill() {
             $("#email").val(gottenStudent.email);
             $("#role").find("option:contains(" + "\'" + gottenStudent.role + "\')").attr("selected", "selected");
             $("#state").find("option:contains(" + "\'" + gottenStudent.studentInfo.state + "\')").attr("selected", "selected");
+            checkState();
+            $("#institution").val(gottenStudent.studentInfo.university);
+            $("#faculty").val(gottenStudent.studentInfo.faculty);
+            $("#speciality").val("applied maths");
+            $("#course").val(gottenStudent.studentInfo.course);
+            $("#group").val(gottenStudent.studentInfo.group);
+           $("#graduationDate").val(gottenStudent.studentInfo.graduationDate);
         }
     });
+}
+
+function checkState(){
+    var state = $("#state :selected").text();
+    if(state == 'working'){
+        $("#exadelHeader").show();
+
+    }
+    else{
+        if($("#exadelContent").is(":visible")){
+            $("#exadelContent").slideToggle(100);
+        }
+        $("#exadelHeader").hide(200);
+    }
 }
 
 function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState) {
@@ -107,11 +145,77 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
             'studentState': editedState
         },
         success: function () {
-            //alert("success");
+            $("#saveManualInformation").text("Saved!");
+            $("#saveManualInformation").animate({
+                backgroundColor: '#5cb85c',
+                borderColor : '#4cae4c'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveManualInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor : '#2D3E5C'
+                    }, 500);
+                    $("#saveManualInformation").text("Save");
+                },1000)
+            });
+
             $("#headerName").text(editedName);
+//            dimensionPopup($("#manualContent"));
+//            $("#saved").fadeIn(600);
+//            hidePopupSave();
+
         },
         error: function () {
             alert("error");
         }
     });
 }
+
+function saveEducationChanges(editedUniversity,editedFaculty,editedSpeciality,editedCourse,editedGroup,editedGraduationDate){
+    $.ajax
+    ({
+        type: "POST",
+        //SEND
+        url: "/info/postEducation",
+        dataType: 'json', // from the server!
+        data: {
+            'studentId': studentId,
+            'studentUniversity' : editedUniversity,
+            'studentFaculty' : editedFaculty,
+            'studentSpeciality' : editedSpeciality,
+            'studentCourse' : editedCourse,
+            'studentGroup' : editedGroup,
+            'studentGraduationDate' : editedGraduationDate
+        },
+        success: function () {
+            $("#saveEducationInformation").text("Saved!");
+            $("#saveEducationInformation").animate({
+                backgroundColor: '#5cb85c',
+                borderColor : '#4cae4c'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveEducationInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor : '#2D3E5C'
+                    }, 500);
+                    $("#saveEducationInformation").text("Save");
+                },1000)
+            });
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}
+
+
+
+
+
+
+
+

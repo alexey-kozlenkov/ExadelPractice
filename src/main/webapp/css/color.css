@@ -6,7 +6,7 @@
 header,
 .prj-header {
     background: #f1f1f1;
-    color : #333;
+    color: #333;
 }
 
 body,
@@ -45,16 +45,15 @@ label,
 /****************************** Buttons ****************************************/
 
 .prj-btn {
+    border-color: #2D3E5C;
+    border-radius: 4px;
+    background-color: #4A5D80;
     color: #ffffff;
-    background-color: #5b32ff;
-    border-color: #3808eb;
+   
 }
 
 .prj-btn:hover,
 .prj-btn:active {
-    /*color: #ffffff;*/
-    /*background-color: #5b32ff;*/
-    /*border-color: #3808eb;*/
     opacity: 0.5;
 }
 
@@ -65,24 +64,34 @@ label,
 .prj-btn.disabled:focus,
 .prj-btn[disabled]:focus,
 .prj-btn.disabled:active,
-.prj-btn[disabled]:active
-{
+.prj-btn[disabled]:active {
     color: gray;
 }
 
-/****************************** Links ******************************************/
+.static-green{
+    border-color: #4b954b;
+    background-color: #5cb85c;
+    color: #fff;
 
+    border-radius: 4px;
+
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/****************************** Links ******************************************/
 .prj-link {
     background: transparent;
     color: #333;
 }
 
 .prj-link:hover {
-    color: #5b32ff;
+    color: #4A5D80;
 }
 
 /****************************** Table ******************************************/
-.prj-table-striped > tbody > tr:nth-child(odd) > td,
-.prj-table-striped > tbody > tr:nth-child(odd) > th {
+
+.prj-table-striped > tbody > tr:nth-child(even) > td,
+.prj-table-striped > tbody > tr:nth-child(even) > th {
     background-color: #f1f1f1;
 }
