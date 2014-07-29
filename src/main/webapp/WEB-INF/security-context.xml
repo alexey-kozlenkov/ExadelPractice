@@ -11,8 +11,8 @@
     <security:http auto-config="true" use-expressions="false">
         <!--security:intercept-url pattern="/WEB-INF/jsp/partials" access="ROLE_ANONYMOUS, ROLE_USER, ROLE_ADMIN" /-->
         <!--security:intercept-url pattern="/rest/**" access="ROLE_USER, ROLE_ADMIN"/-->
-        <security:intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN"/>
-        <security:form-login login-page="/html/login.html" login-processing-url="/login" default-target-url="/html/listPage.html" authentication-failure-url="/login.jsp?error=true"/>
+        <security:intercept-url pattern="/secured/**" access="ROLE_USER, ROLE_ADMIN"/>
+        <security:form-login login-page="/html/login.html" login-processing-url="/login" default-target-url="/list" authentication-failure-url="/login.jsp?error=true"/>
         <security:logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
     </security:http>
 

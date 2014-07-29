@@ -10,6 +10,7 @@
 /*-------------------------------------*/
 .first-header-block {
     margin: 2pt;
+    margin-bottom: 1pt;
 }
 
 .menu-block {
@@ -24,8 +25,8 @@
 
 .menu-button {
     padding: 1pt 1pt !important;
-    width: 26pt;
-    height: 26pt;
+    width: 24pt;
+    height: 24pt;
 }
 
 .add-button {
@@ -42,24 +43,22 @@
     text-align: center;
 }
 
-.search-line {
-    /*display: inline;*/
-
-    /*width: 30% !important;*/
+#searchLine {
     margin-right: 0;
-
-    min-width: 200pt;
+    min-width: 150pt;
+    width: 150pt;
+    height: 24pt;
 }
 
 .search-button {
     margin-left: -1pt;
     width: 34pt;
-    height: 26pt;
+    height: 24pt;
 }
 
 /*-------------------------------------*/
 
-.header-info-label {
+.info-label {
     margin: 2pt;
     text-align: center;
 }
@@ -69,9 +68,15 @@
 .header-table-block {
     overflow: hidden;
     margin: 0;
+
+    background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -ms-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -o-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -webkit-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
 }
 
 #header-fixed {
+    /*height: 30pt;*/
     margin: 0;
 }
 
@@ -97,6 +102,24 @@
 .student-table {
     background: transparent;
     text-align: center;
+}
+
+.student-table > thead {
+    padding-top: 1pt;
+    font-size: 12px
+}
+
+.student-table > thead > tr > th {
+    margin: 1pt;
+    padding-top: 4pt;
+    padding-bottom: 2pt;
+
+    vertical-align: middle;
+    text-align: center;
+}
+
+.student-table > tbody > tr > td {
+    vertical-align: middle;
 }
 
 .header-column-0 {
@@ -143,21 +166,6 @@
     width: 90px;
 }
 
-.header-column-0,
-.header-column-1,
-.header-column-2,
-.header-column-3,
-.header-column-4,
-.header-column-5,
-.header-column-6,
-.header-column-7,
-.header-column-8,
-.header-column-9,
-.header-column-10 {
-    vertical-align: middle;
-    text-align: center;
-}
-
 /*----------------------Load Image-----------------------*/
 
 .load-image-class {
@@ -177,18 +185,70 @@
 
 }
 
-.filter-popup {
-    width: 400pt;
-    height: 100pt;
-
-    border: solid darkblue 2pt;
-    border-radius: 5pt;
+#filterBlock {
+    max-height: 42pt;
 }
 
-.add-filter-button {
+.static-separator {
+    padding: 2pt;
+    padding-bottom: 0;
+    padding-left: 1pt;
+    vertical-align: bottom;
+    font-weight: 600;
+    font-size: 12pt;
+}
+
+.filter-separator,
+.filter-button {
     position: relative !important;
-    margin: 3pt;
+    display: inline-block;
+    margin: 1pt;
+    margin-left: 2pt;
+    margin-right: 2pt;
     padding: 0pt;
+    width: 18pt;
+    height: 18pt;
+    border: 1px solid transparent;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.filter-separator {
     width: 24pt;
-    height: 24pt;
+}
+
+.item-btn-attr {
+    position: relative !important;
+    padding: 1pt;
+    padding-right: 1pt;
+    padding-left: 1pt;
+    width: 40% !important;
+
+    white-space: nowrap;
+}
+
+.filter-item {
+    position: relative;
+    display: inline-flex;
+    padding: 0;
+    width: 100pt;
+    height: 18pt;
+    border: solid 1pt;
+    border-color: #2D3E5C;
+    border-radius: 4pt;
+}
+
+.remove-btn:hover,
+.remove-btn:focus,
+.remove-btn:active {
+    opacity: 1.0 !important;
+    border-color: red;
+    background-color: rgba(255, 128, 128, 0.61);
+    color: red;
+    text-decoration: line-through
+}
+
+.value-field {
+    width: 60% !important;
+    height: 100%;
 }
