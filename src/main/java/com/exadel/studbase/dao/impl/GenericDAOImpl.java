@@ -28,8 +28,6 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
         setSessionFactory(sessionFactory);
     }
 
-    ;
-
     @Override
     public Collection<CONTENT> getAll() {
         Collection<CONTENT> result =
