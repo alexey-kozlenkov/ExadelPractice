@@ -210,9 +210,13 @@
 }
 
 .value-field {
+    padding: 0;
+    text-align: center;
     width: 60% !important;
     height: 100%;
 }
+
+/********************************************************************************/
 
 
 .popup-menu {
