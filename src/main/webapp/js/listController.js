@@ -43,14 +43,17 @@ function bindEventControl() {
 
     $("#addMenuButton").click(function () {
         addRow(0, 'Vasya Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 9);
+        addRow(0, 'Vasya Uan Hun Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'html js php java json hibitrnate spring ', 'Intermediate'], 9);
         updateInfoLabel();
     });
     $("#exportMenuButton").click(function () {
         clearTable();
+        eraseStorage();
         updateInfoLabel();
     });
     $("#distributionMenuButton").click(function () {
-        alert(getCheckedRowsId());
+        showDialog(1);
+       // alert(getCheckedRowsId());
     });
     $("#startSearchButton").click(function () {
         loadTable();
@@ -77,6 +80,15 @@ function bindEventControl() {
     $("#studTable").click(function () {
         updateInfoLabel();
     });
+
+    $("#searchLine").change(function(){
+//        clearTable();
+//        var search = $(this).val();
+//        var data = localLoad();
+//        var view  =localSearch(data, search);
+//        addAllStudents(view);
+//        updateInfoLabel();
+    });
 }
 
 function loadTable() {
@@ -98,6 +110,7 @@ function loadTable() {
     }).done(function (data) {
         var obj = JSON.parse(data);
         if (obj) {
+          //  localSave(obj);
             clearTable();
             addAllStudents(obj);
             updateInfoLabel();
@@ -108,7 +121,34 @@ function loadTable() {
         setTableLoadingState(false);
     });
 }
-////////////////////////////////////// Toggle popup ////////////////////////////////////////////
+////////////////////////////////////// Local storage *** NOT SUPORTED NOW //////////////////////
+function localSave(data){
+    localStorage.setItem("StudBase", JSON.stringify(data));
+    console.log("Local storage update");
+}
+function eraseStorage(){
+    localStorage.removeItem("StudBase");
+    console.log("Local storage erase");
+}
+function localLoad(){
+    return JSON.parse(localStorage.getItem("StudBase"));
+}
+function localSearch(data, name){
+    var result = [];
+ //   var lexems = name.split(" ");
+//    if(lexems.length>3)
+//        return null;
+    var searchname = name.toLowerCase();
+    for(var i=0; i<data.length; i++){
+        var item = data[i];
+
+        if(item.name.toLowerCase().search(searchname) != -1){
+            result.push(item);
+        }
+    }
+    return result;
+}
+////////////////////////////////////// Popup ////////////////////////////////////////////
 function togglePopup(popup) {
     if (popup.is(':visible')) {
         popup.hide();
@@ -231,9 +271,9 @@ function headerScrollControl() {
 }
 function checkEmptyFieldSize() {
     var headerHeight = $("#headerBlock").height();
-    headerHeight -= $("#header-fixed").height();
     $("#emptyField").css("height", headerHeight + "px");
 }
+
 function setTableLoadingState(loading) {
     if (loading) {
         $("#studTable").hide();
@@ -255,9 +295,7 @@ function updateInfoLabel() {
 }
 
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
-const STATIC_SEPARATOR =
-    "<span class='static-separator'>,</span>";
-const LOGIC_SEPARATOR =
+const SEPARATOR =
     "<span class='static-green filter-separator'>and</span>";
 
 //---------------------------------
@@ -266,12 +304,12 @@ function addFilterAttribute(name) {
     if (filterTypes.multyType[name]) {
         var filtersExist = existFilterAttribute(name);
         if (filtersExist && filtersExist.length > 0) {
-            filtersExist.last().after(LOGIC_SEPARATOR + filterElementContent);
+            filtersExist.last().after(SEPARATOR + filterElementContent);
         } else {
-            $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
+            $("#addFilterButton").before(filterElementContent);
         }
     } else {
-        $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
+        $("#addFilterButton").before(filterElementContent);
         $("#filterMenu > li[name='filter_" + name + "']").hide();
     }
 }
@@ -287,10 +325,10 @@ function createFilterAttributeContent(name) {
 
     switch (filterTypes.keyType[name]) {
         case 'number':
-            htmContent += "<input type='text' class='form-control value-field' placeholder='??'>";
+            htmContent += "<input type='number' class='form-control value-field' placeholder='??'>";
             break;
         case 'date':
-            htmContent += "<input type='text' class='form-control value-field' placeholder='date'>";
+            htmContent += "<input type='date' class='form-control value-field' placeholder='date'>";
             break;
         case 'list':
             htmContent += "<select class='selectpicker value-field' style='width:60%'>";
@@ -335,8 +373,6 @@ function removeFilterAttribute(name, element) {
     if (prevItem.is('.filter-separator')) {
         prevItem.remove();
     } else if (nextItem.is('.filter-separator')) {
-        nextItem.remove();
-    } else if (nextItem.is('.static-separator')) {
         nextItem.remove();
     }
 
@@ -401,6 +437,7 @@ function menuEvent(name) {
     addFilterAttribute(name);
     checkFilterCount();
 }
+
 function addFilterAction() {
     var $menu = $("#filterMenu");
     if ($menu.is(':visible')) {
@@ -415,6 +452,7 @@ function addFilterAction() {
         $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
     }
 }
+
 function clearMenu(menu) {
     menu.empty();
 }
