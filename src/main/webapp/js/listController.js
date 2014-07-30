@@ -43,6 +43,7 @@ function bindEventControl() {
 
     $("#addMenuButton").click(function () {
         addRow(0, 'Vasya Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 9);
+        addRow(0, 'Vasya Uan Hun Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'html js php java json hibitrnate spring ', 'Intermediate'], 9);
         updateInfoLabel();
     });
     $("#exportMenuButton").click(function () {
@@ -231,9 +232,9 @@ function headerScrollControl() {
 }
 function checkEmptyFieldSize() {
     var headerHeight = $("#headerBlock").height();
-    headerHeight -= $("#header-fixed").height();
     $("#emptyField").css("height", headerHeight + "px");
 }
+
 function setTableLoadingState(loading) {
     if (loading) {
         $("#studTable").hide();
@@ -255,9 +256,7 @@ function updateInfoLabel() {
 }
 
 //////////////////////////////////////// Filter ////////////////////////////////////////////////
-const STATIC_SEPARATOR =
-    "<span class='static-separator'>,</span>";
-const LOGIC_SEPARATOR =
+const SEPARATOR =
     "<span class='static-green filter-separator'>and</span>";
 
 //---------------------------------
@@ -266,12 +265,12 @@ function addFilterAttribute(name) {
     if (filterTypes.multyType[name]) {
         var filtersExist = existFilterAttribute(name);
         if (filtersExist && filtersExist.length > 0) {
-            filtersExist.last().after(LOGIC_SEPARATOR + filterElementContent);
+            filtersExist.last().after(SEPARATOR + filterElementContent);
         } else {
-            $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
+            $("#addFilterButton").before(filterElementContent);
         }
     } else {
-        $("#addFilterButton").before(filterElementContent + STATIC_SEPARATOR);
+        $("#addFilterButton").before(filterElementContent);
         $("#filterMenu > li[name='filter_" + name + "']").hide();
     }
 }
@@ -335,8 +334,6 @@ function removeFilterAttribute(name, element) {
     if (prevItem.is('.filter-separator')) {
         prevItem.remove();
     } else if (nextItem.is('.filter-separator')) {
-        nextItem.remove();
-    } else if (nextItem.is('.static-separator')) {
         nextItem.remove();
     }
 

@@ -15,11 +15,7 @@
 
 .menu-block {
     display: inline-block;
-
-    margin: 1pt;
-
-    width: 90pt;
-
+    width: 100pt;
     text-align: center;
 }
 
@@ -29,24 +25,18 @@
     height: 24pt;
 }
 
-.add-button {
-    padding: 4pt 4pt !important;
-}
-
 .search-block {
     display: inline-block;
-
-    margin: 2pt;
-
-    width: 50%;
-
     text-align: center;
 }
 
-#searchLine {
-    margin-right: 0;
-    min-width: 150pt;
+#searchLine{
     width: 150pt;
+}
+.search-line {
+    float: left;
+    margin: 0;
+    min-width: 150pt;
     height: 24pt;
 }
 
@@ -67,7 +57,7 @@
 
 .header-table-block {
     overflow: hidden;
-    margin: 0;
+    margin: 0 !important;
 
     background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
     background: -ms-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
@@ -75,42 +65,37 @@
     background: -webkit-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
 }
 
-#header-fixed {
-    /*height: 30pt;*/
-    margin: 0;
+#headerFixed{
+    margin:0;
 }
-
 /***************************** Central *******************************/
-.central-block {
-    /*display: initial;*/
-    top: 40pt;
-    margin: 0 auto;
-
-    width: 900pt;
-
-    text-align: center;
+/* Table position fix */
+#emptyField {
+    margin: 0;
+    width: 100%;
+    height: 30pt;
 }
 
 /*-----------------------------------------------------*/
-/* Table position fix */
-#emptyField {
-    width: 100%;
-    height: 30pt;
+.central-block {
+/*  display: initial; */
+    margin: 0 auto;
+    width: 900pt;
+    text-align: center;
 }
 
 /*-------------------Table-----------------------------*/
 .student-table {
     background: transparent;
     text-align: center;
+    table-layout: fixed;
 }
 
 .student-table > thead {
-    padding-top: 1pt;
     font-size: 12px
 }
 
 .student-table > thead > tr > th {
-    margin: 1pt;
     padding-top: 4pt;
     padding-bottom: 2pt;
 
@@ -120,52 +105,47 @@
 
 .student-table > tbody > tr > td {
     vertical-align: middle;
+           padding: 5pt 3pt;
+
+/*        overflow: hidden; */
+/*     white-space: nowrap; */
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .header-column-0 {
-    width: 20px;
+    width: 40px;
 }
-
 .header-column-1 {
-    width: 160px;
+    width: 240px;
 }
-
 .header-column-2 {
-    width: 80px;
-}
-
-.header-column-3 {
-    width: 80px;
-}
-
-.header-column-4 {
-    width: 50px;
-}
-
-.header-column-5 {
-    width: 50px;
-}
-
-.header-column-6 {
-    width: 50px;
-}
-
-.header-column-7 {
-    width: 80px;
-}
-
-.header-column-8 {
-    width: 100px;
-}
-
-.header-column-9 {
-    width: 130px;
-}
-
-.header-column-10 {
     width: 90px;
 }
-
+.header-column-3 {
+    width: 85px;
+}
+.header-column-4 {
+    width: 65px;
+}
+.header-column-5 {
+    width: 80px;
+}
+.header-column-6 {
+    width: 65px;
+}
+.header-column-7 {
+    width: 90px;
+}
+.header-column-8 {
+    width: 90px;
+}
+.header-column-9 {
+    width: auto;
+}
+.header-column-10 {
+    width: 100px;
+}
 /*----------------------Load Image-----------------------*/
 
 .load-image-class {
@@ -174,29 +154,7 @@
     height: 320pt;
 }
 
-/***************************** Popups *******************************/
-
-.popup-menu {
-    position: absolute;
-    z-index: 10;
-    display: none;
-    border: solid 2pt #000000;
-    border-radius: 4pt;
-
-}
-
-#filterBlock {
-    max-height: 42pt;
-}
-
-.static-separator {
-    padding: 2pt;
-    padding-bottom: 0;
-    padding-left: 1pt;
-    vertical-align: bottom;
-    font-weight: 600;
-    font-size: 12pt;
-}
+/***************************** FILTER *******************************/
 
 .filter-separator,
 .filter-button {
@@ -217,25 +175,28 @@
     width: 24pt;
 }
 
-.item-btn-attr {
-    position: relative !important;
-    padding: 1pt;
-    padding-right: 1pt;
-    padding-left: 1pt;
-    width: 40% !important;
-
-    white-space: nowrap;
-}
-
-.filter-item {
+.filter-item {    
     position: relative;
     display: inline-flex;
+    
     padding: 0;
-    width: 100pt;
+    width: 120pt;
     height: 18pt;
+    
     border: solid 1pt;
     border-color: #2D3E5C;
     border-radius: 4pt;
+    
+    margin: 1pt;
+}
+
+.item-btn-attr {
+    padding: 1pt;
+    padding-right: 1pt;
+    padding-left: 1pt;
+
+    width: 40% !important;
+    white-space: nowrap;
 }
 
 .remove-btn:hover,
@@ -251,4 +212,14 @@
 .value-field {
     width: 60% !important;
     height: 100%;
+}
+
+
+.popup-menu {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    border: solid 2pt #000000;
+    border-radius: 4pt;
+
 }

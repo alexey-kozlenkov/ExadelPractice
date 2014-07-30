@@ -25,14 +25,14 @@
         <!--<input type="image" id="showFilterButton" class="btn prj-btn menu-button" src="../images/filter.png"-->
                <!--alt="Filter">-->
         <span class="btn-group input-group">
-            <input type="text" id="searchLine" class="form-control search-query search-line">
+            <input type="text"  id="searchLine" class="form-control search-query search-line">
             <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
                    alt="Find!">
         </span>
         <!--</div>-->
     </div>
 
-    <span id="filterBlock">
+    <span id="filterBlock" >
              <button id="addFilterButton" class="btn prj-btn filter-button">
                  <span class="glyphicon glyphicon-filter"></span>
              </button>
@@ -40,20 +40,33 @@
 
     <div id="headerScrollingBlock" class="header-table-block">
         <div class="central-block">
-            <table id="header-fixed" class="table prj-table-striped student-table">
+            <table id="headerFixed" class="table prj-table-striped student-table">
+                <colgroup>
+                    <col class="header-column-0">
+                    <col class="header-column-1">
+                    <col class="header-column-2">
+                    <col class="header-column-3">
+                    <col class="header-column-4">
+                    <col class="header-column-5">
+                    <col class="header-column-6">
+                    <col class="header-column-7">
+                    <col class="header-column-8">
+                    <col class="header-column-9">
+                    <col class="header-column-10">
+                </colgroup>
                 <thead>
                 <tr>
-                    <th class="header-column-0"><input id="checkAll" type="checkbox"></th>
-                    <th class="header-column-1">Name</th>
-                    <th class="header-column-2">Date(work)</th>
-                    <th class="header-column-3">Faculty</th>
-                    <th class="header-column-4">Course/<br>Group</th>
-                    <th class="header-column-5">Graduated</th>
-                    <th class="header-column-6">Working<br>hour</th>
-                    <th class="header-column-7">Billable</th>
-                    <th class="header-column-8">Role on prj.</th>
-                    <th class="header-column-9">Current<br>technology</th>
-                    <th class="header-column-10">English</th>
+                    <th><input id="checkAll" type="checkbox"></th>
+                    <th>Name</th>
+                    <th>Date(work)</th>
+                    <th>Faculty</th>
+                    <th>Course/<br>Group</th>
+                    <th>Graduated</th>
+                    <th>Working<br>hour</th>
+                    <th>Billable</th>
+                    <th>Role on prj.</th>
+                    <th>Current<br>technology</th>
+                    <th>English</th>
                 </tr>
                 </thead>
             </table>
@@ -65,21 +78,19 @@
 <div id="contentBlock" class="central-block">
     <div id="emptyField"></div>
     <table id="studTable" class="table prj-table-striped student-table">
-        <thead>
-        <tr>
-            <th class="header-column-0"><input type="checkbox"></th>
-            <th class="header-column-1">Name</th>
-            <th class="header-column-2">Date(work)</th>
-            <th class="header-column-3">Faculty</th>
-            <th class="header-column-4">Course/<br>Group</th>
-            <th class="header-column-5">Graduated</th>
-            <th class="header-column-6">Working<br>hour</th>
-            <th class="header-column-7">Billable</th>
-            <th class="header-column-8">Role on prj.</th>
-            <th class="header-column-9">Current<br>technology</th>
-            <th class="header-column-10">English</th>
-        </tr>
-        </thead>
+        <colgroup>
+            <col class="header-column-0">
+            <col class="header-column-1">
+            <col class="header-column-2">
+            <col class="header-column-3">
+            <col class="header-column-4">
+            <col class="header-column-5">
+            <col class="header-column-6">
+            <col class="header-column-7">
+            <col class="header-column-8">
+            <col class="header-column-9">
+            <col class="header-column-10">
+        </colgroup>
         <tbody>
         </tbody>
     </table>
