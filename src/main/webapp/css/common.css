@@ -95,3 +95,12 @@ label,
 .prj-table-striped > tbody > tr:nth-child(even) > th {
     background-color: #f1f1f1;
 }
+
+ /****************************remove arrows from inputs***************************/
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none; margin: 0px;
+}
+input{
+    -moz-appearance:textfield;
+}

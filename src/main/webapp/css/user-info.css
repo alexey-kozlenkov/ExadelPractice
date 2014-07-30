@@ -22,11 +22,10 @@ h1 {
     padding: 0;
     width: 100%;
 
-
+    border: 0.5px solid #616161;
+    -webkit-box-shadow: 1px 0 2px #000;
     text-transform: uppercase;
     line-height: 30%;
-    border : 0.5px solid #616161;
-    -webkit-box-shadow: 1px 0 2px #000;
 }
 
 .wrapper {
@@ -74,9 +73,9 @@ div ::selection {
 .category-header > a span {
     position: absolute;
     top: 50%;
-    margin-right: 58%;
     right: -26px;
     margin-top: -7px;
+    margin-right: 58%;
     width: 26px;
     height: 14px;
 
@@ -125,7 +124,6 @@ div ::selection {
     opacity: 1;
 }
 
-
 .category-content {
     margin-bottom: 10pt;
 }
@@ -146,7 +144,42 @@ div ::selection {
 .form-control {
     width: auto;
 }
+.form-control input[type="date"]{
+    -mv-padding : 0;
+}
+.list-inline{
+    display:inline-block;
+}
+#addNextTerm {
+    padding: 5px;
+    width: 24px;
+    height: 24px;
+}
 
+.termMark input[type="number"]{
+    width : 40px;
+}
 
+.termMark{
+    display : inline;
+    margin:0;
+    padding:0;
+    padding-left: 0;
+    list-style-type: upper-roman;
+    list-style-position: inside
+    counter-reset : termNumber;
+}
+
+.termMark > li{
+    display: inline;
+    padding-right: 5px;
+    padding-left: 5px;
+    counter-increment : termNumber;
+}
+.termMark > li:before{
+    content:counter(termNumber, upper-roman) ".";
+    padding-right: 0.25em;
+
+}
 
 
