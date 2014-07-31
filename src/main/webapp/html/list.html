@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Student list</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/listStyle.css" rel="stylesheet">
+    <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/list/list.css" rel="stylesheet">
     <link href="../css/common.css" rel="stylesheet">
 </head>
 <body>
 
 <header id="headerBlock" class="header-block">
-    <!--<div class="header-content  center-block">-->
+
     <div class="form-inline first-header-block" align="center">
         <div id="menuBlock" class="menu-block">
             <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
@@ -21,15 +21,12 @@
                    src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
         </div>
         <span style="width: 20pt; height: 20pt"></span>
-        <!--<div class="form-inline search-block">-->
-        <!--<input type="image" id="showFilterButton" class="btn prj-btn menu-button" src="../images/filter.png"-->
-               <!--alt="Filter">-->
+
         <span class="btn-group input-group">
             <input type="text"  id="searchLine" class="form-control search-query search-line" placeholder="Name">
             <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
                    alt="Find!" title="Search!">
         </span>
-        <!--</div>-->
     </div>
 
     <span id="filterBlock" >
@@ -72,7 +69,6 @@
             </table>
         </div>
     </div>
-    <!--</div>-->
 </header>
 
 <div id="contentBlock" class="central-block">
@@ -99,9 +95,8 @@
 
 <label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
 
-<ul class="dropdown-menu" role="menu" id="filterMenu">
+<ul id="filterMenu" class="dropdown-menu" role="menu" >
 </ul>
-
 
 <div class='content-locker'>
     <div class='dialog-area'>
@@ -111,20 +106,27 @@
         </div>
         <div class='dialog-content' dialog-number ='1'>
             <div class="dialog-content-central">
-                <label for="sendMessage"> Message text: </label>
-                <textarea id="sendMessage" class="message-area">
+                <label for="sendedMessage"> Message text: </label>
+                <textarea id="sendedMessage" class="message-area">
                 </textarea>
             </div>
             <div class="dialog-footer">
-                <button class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send</button>
+                <button id='sendButton' class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="../js/jquery-2.1.1.min.js"></script>
-<script src="../js/jquery.animate-colors-min.js"></script>
+<script src="../js/lib/jquery-2.1.1.min.js"></script>
+<script src="../js/lib/jquery.animate-colors-min.js"></script>
+
+<script src="../js/list/tableHeader.js"></script>
+<script src="../js/list/tableOperations.js"></script>
+
+<script src="../js/list/filter.js"></script>
+<script src="../js/list/navigation.js"></script>
+
 <script src="../js/common.js"></script>
-<script src="../js/listController.js"></script>
+
 </body>
 </html>

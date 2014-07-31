@@ -1,7 +1,7 @@
 CREATE EXTENSION pg_trgm;
 
 CREATE OR REPLACE FUNCTION find_student_by_name (desired_name text)
-  RETURNS SETOF STUDENT_VIEW
+  RETURNS SETOF "STUDENT_VIEW"
 AS
   $BODY$
   DECLARE
@@ -11,7 +11,7 @@ AS
     max_similarity_value := 0;
     FOR line IN (SELECT
                    *
-                 FROM "STUDENT_VIEW") LOOP
+                 FROM "STUDENT_VIEW" ORDER BY similarity(name, $1)  DESC) LOOP
       IF  desired_name =''
       THEN RETURN NEXT line;
       ELSE

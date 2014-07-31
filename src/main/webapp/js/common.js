@@ -13,3 +13,4 @@ function showDialog(content_number){
     $(".dialog-area").show();
     $(".dialog-content[dialog-number='"+content_number+"']").show();
 }
+

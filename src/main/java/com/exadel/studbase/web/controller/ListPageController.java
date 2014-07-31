@@ -37,7 +37,7 @@ public class ListPageController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
-        return "listPage";
+        return "list";
     }
 
     // Provide sanding list data
@@ -64,7 +64,7 @@ public class ListPageController {
     @RequestMapping(value = "/list/name", method = RequestMethod.GET)
     public void getViewByName(HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String desiredName = (String) request.getParameter("desiredName");
+        String desiredName = (String) request.getParameter("searchName");
 //        Object filter = request.getParameter("filter");
 
         Map<String, String[]> map = new HashMap<String, String[]>();
