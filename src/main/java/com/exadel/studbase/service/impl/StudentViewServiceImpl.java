@@ -24,4 +24,9 @@ public class StudentViewServiceImpl implements IStudentViewService{
     public Collection<StudentView> getAll() {
         return studentViewDAO.getAll();
     }
+
+    @Override
+    public Collection<StudentView> getViewByStudentName(String desiredName) {
+        return studentViewDAO.getViewByStudentName(desiredName);
+    }
 }
