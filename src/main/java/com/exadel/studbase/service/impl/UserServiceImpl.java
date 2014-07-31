@@ -33,6 +33,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    public User getByLogin(String login) {
+        return userDAO.getByLogin(login);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(User user) {
         userDAO.delete(user);
     }

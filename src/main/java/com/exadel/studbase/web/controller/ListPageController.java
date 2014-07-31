@@ -5,6 +5,7 @@ import com.exadel.studbase.service.IStudentViewService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +21,11 @@ import java.util.Map;
  * Created by ala'n on 29.07.2014.
  */
 @Controller
-//@Secured({"ROLE_ADMIN", "ROLE_USER"})
+@Secured({"ROLE_CURATOR", "ROLE_FEEDBACKER", "ROLE_SUPERADMIN", "ROLE_OFFICE"})
 @RequestMapping("/")
 public class ListPageController {
     @Autowired
     IStudentViewService studentViewService;
-
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {

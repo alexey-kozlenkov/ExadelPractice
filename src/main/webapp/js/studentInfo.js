@@ -2,7 +2,7 @@
 var studentId;
 
 $(window).ready(function () {
-    // alert(window.location.search);
+    //alert(window.location.search);
     parseRequestForId(window.location.search);
     fillOptions();
     fillManualInfo();
@@ -28,10 +28,9 @@ $(document).ready(function () {
         var editedLogin = $("#login").val();
         var editedEmail = $("#email").val();
         var editedPassword = $("#password").val();
-        var editedRole = $("#role :selected").val();
         var editedState = $("#state :selected").val();
 
-        saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState);
+        saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState);
     });
     $("#saveEducationInformation").click(function () {
         //collect data entered by users
@@ -68,14 +67,10 @@ function fillOptions() {
         success: function (data) {
             // alert("" + data);
 
-            $("#role").empty();
+
             $("#state").empty();
             //filling
             var options = JSON.parse(data);
-            var roleOptions = options.roles;
-            roleOptions.forEach(function (element, index, array) {
-                $("#role").append($("<option value=" + element + ">" + element + "</option>"));
-            })
 
             var stateOptions = options.states;
             stateOptions.forEach(function (element, index, array) {
@@ -101,7 +96,6 @@ function fillManualInfo() {
             $("#login").val(gottenStudent.login);
             $("#password").val(gottenStudent.password);
             $("#email").val(gottenStudent.email);
-            $("#role").find("option:contains(" + "\'" + gottenStudent.role + "\')").attr("selected", "selected");
             $("#state").find("option:contains(" + "\'" + gottenStudent.studentInfo.state + "\')").attr("selected", "selected");
             checkState();
             $("#institution").val(gottenStudent.studentInfo.university);
@@ -128,7 +122,7 @@ function checkState(){
     }
 }
 
-function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedRole, editedState) {
+function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState) {
     $.ajax
     ({
         type: "POST",
@@ -141,7 +135,6 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
             'studentLogin': editedLogin,
             'studentPassword': editedPassword,
             'studentEmail': editedEmail,
-            'studentRole': editedRole,
             'studentState': editedState
         },
         success: function () {

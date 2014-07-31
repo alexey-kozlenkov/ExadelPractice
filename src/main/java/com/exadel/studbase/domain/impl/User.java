@@ -42,7 +42,7 @@ public class User implements IEntity<Long> {
 
 
     public User() {
-        password = "pass";
+        password = "11111";
     }
 
     @Override
@@ -109,6 +109,10 @@ public class User implements IEntity<Long> {
 
     public void setEmployeeInfo(Employee employeeInfo) {
         this.employeeInfo = employeeInfo;
+    }
+
+    public void addRole(String addingRole) {
+        setRole(getRole()+";"+addingRole);
     }
 
     @Override

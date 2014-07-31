@@ -6,10 +6,16 @@ import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +26,6 @@ import java.util.Set;
 
 
 @Controller
-//@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/")
 public class InfoPageController {
 
@@ -39,12 +44,10 @@ public class InfoPageController {
     @Autowired
     ISkillSetService skillSetService;
 
-
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String infoPage() {
         return "studentInfo";
     }
-
 
     @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
     public void studentData(HttpServletRequest request, HttpServletResponse response) {
@@ -59,7 +62,6 @@ public class InfoPageController {
         response.setStatus(200);
     }
 
-
     @RequestMapping(value = "/info/getManualInformation", method = RequestMethod.GET)
     public void manualData(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -73,8 +75,6 @@ public class InfoPageController {
         }
         response.setStatus(200);
     }
-
-
 
     @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
     public void editManualInformation(HttpServletRequest request, HttpServletResponse response) {
@@ -94,7 +94,7 @@ public class InfoPageController {
             editedUser.setLogin(request.getParameter("studentLogin"));
             editedUser.setPassword(request.getParameter("studentPassword"));
             editedUser.setEmail(request.getParameter("studentEmail"));
-            editedUser.setRole(request.getParameter("studentRole"));
+            //editedUser.setRole(request.getParameter("studentRole"));
             editedUser.getStudentInfo().setState(request.getParameter("studentState"));
             userService.save(editedUser);
             studentService.save(editedUser.getStudentInfo());
@@ -135,4 +135,9 @@ public class InfoPageController {
 
     }
 
+    @RequestMapping(value = "/redirectInfo")
+    public String loadInfo (@RequestParam("login") String login) {
+        Long id = userService.getByLogin(login).getId();
+        return "redirect:/info?id="+id;
+    }
 }

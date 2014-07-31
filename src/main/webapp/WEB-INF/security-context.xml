@@ -7,40 +7,29 @@
                            http://www.springframework.org/schema/security
                            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-    <!--<security:http authentication-manager-ref="authenticationManager" auto-config="true" use-expressions="false">-->
-    <security:http auto-config="true" use-expressions="false">
+    <!--<security:http authentication-manager-ref="authenticationManager">-->
+    <security:http auto-config="true" use-expressions="false" authentication-manager-ref="authenticationManager">
         <!--security:intercept-url pattern="/WEB-INF/jsp/partials" access="ROLE_ANONYMOUS, ROLE_USER, ROLE_ADMIN" /-->
         <!--security:intercept-url pattern="/rest/**" access="ROLE_USER, ROLE_ADMIN"/-->
-        <security:intercept-url pattern="/secured/**" access="ROLE_USER, ROLE_ADMIN"/>
-        <security:form-login login-page="/html/login.html" login-processing-url="/login" default-target-url="/list" authentication-failure-url="/login.jsp?error=true"/>
+        <security:form-login login-page="/html/login.html"
+                             login-processing-url="/login"
+                             authentication-success-handler-ref="myAuthenticationSuccessHandler"
+                             authentication-failure-url="/login.html?error=true"/>
         <security:logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
+        <!--<security:intercept-url pattern="/list/**" access="ROLE_CURATOR"/>-->
     </security:http>
 
-    <!--<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">-->
-        <!--<property name="eraseCredentialsAfterAuthentication" value="false"/>-->
-        <!--<constructor-arg>-->
-            <!--<list>-->
-                <!--<ref local="inMemoryAuthenticationProvider"/>-->
-            <!--</list>-->
-        <!--</constructor-arg>-->
-    <!--</bean>-->
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <property name="eraseCredentialsAfterAuthentication" value="false"/>
+        <constructor-arg>
+            <list>
+                <ref local="authenticationProvider"/>
+            </list>
+        </constructor-arg>
+    </bean>
 
-
-
-    <!--<bean id="inMemoryAuthenticationProvider"-->
-          <!--class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
-        <!--<property name="userDetailsService" ref="userService"/>-->
-    <!--</bean>-->
-
-    <!--<security:user-service id="inMemoryUserService">-->
-        <!--<security:user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>-->
-        <!--<security:user name="user" password="user" authorities="ROLE_USER"/>-->
-    <!--</security:user-service>-->
-
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:jdbc-user-service data-source-ref="dataSource"/>
-        </security:authentication-provider>
-    </security:authentication-manager>
+    <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsServiceImpl"/>
+    </bean>
 
 </beans>
