@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -16,7 +18,6 @@ import java.util.Collection;
 /**
  * Created by Алексей on 18.07.14.
  */
-
 public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<CONTENT, ID> {
 
     public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];

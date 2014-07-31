@@ -6,16 +6,12 @@ import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +22,7 @@ import java.util.Set;
 
 
 @Controller
+
 @RequestMapping("/")
 public class InfoPageController {
 
@@ -85,7 +82,7 @@ public class InfoPageController {
             Set<Map.Entry<String, String[]>> entry = params.entrySet();
             for (Map.Entry<String, String[]> element : params.entrySet()) {
                 System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
-                for(String s : element.getValue())
+                for (String s : element.getValue())
                     System.out.print("\t" + s);
                 System.out.println();
             }
@@ -106,14 +103,15 @@ public class InfoPageController {
         }
     }
 
-    @RequestMapping(value="/info/postEducation", method = RequestMethod.POST)
-    public void editEducation(HttpServletRequest request, HttpServletResponse response){
+    @Secured("isAuthenticated()")
+    @RequestMapping(value = "/info/postEducation", method = RequestMethod.POST)
+    public void editEducation(HttpServletRequest request, HttpServletResponse response) {
         try {
             Map<String, String[]> params = request.getParameterMap();
             Set<Map.Entry<String, String[]>> entry = params.entrySet();
             for (Map.Entry<String, String[]> element : params.entrySet()) {
                 System.out.print("Key = " + element.getKey()); //+ ", Value = " + element.getValue()[0]);
-                for(String s : element.getValue())
+                for (String s : element.getValue())
                     System.out.print("\t" + s);
                 System.out.println();
             }
@@ -136,8 +134,10 @@ public class InfoPageController {
     }
 
     @RequestMapping(value = "/redirectInfo")
-    public String loadInfo (@RequestParam("login") String login) {
+    public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
-        return "redirect:/info?id="+id;
+        return "redirect:/info?id=" + id;
     }
+
+
 }

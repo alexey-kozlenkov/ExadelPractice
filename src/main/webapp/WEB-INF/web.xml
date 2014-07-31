@@ -11,6 +11,7 @@
             /WEB-INF/applicationContext.xml
             /WEB-INF/persistence.xml
             /WEB-INF/security-context.xml
+            /WEB-INF/util-context.xml
         </param-value>
     </context-param>
 
@@ -77,19 +78,5 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-    <!--filter>
-        <filter-name>hibernateFilter</filter-name>
-        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
-        <init-param>
-            <param-name>singleSession</param-name>
-            <param-value>false</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>hibernateFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping-->
 
 </web-app>
