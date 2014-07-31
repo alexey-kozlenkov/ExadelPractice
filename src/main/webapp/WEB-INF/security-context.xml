@@ -8,7 +8,7 @@
                            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <!--<security:http authentication-manager-ref="authenticationManager">-->
-    <security:http auto-config="true" use-expressions="false" authentication-manager-ref="authenticationManager">
+    <security:http auto-config="true" use-expressions="true" authentication-manager-ref="authenticationManager">
         <!--security:intercept-url pattern="/WEB-INF/jsp/partials" access="ROLE_ANONYMOUS, ROLE_USER, ROLE_ADMIN" /-->
         <!--security:intercept-url pattern="/rest/**" access="ROLE_USER, ROLE_ADMIN"/-->
         <security:form-login login-page="/html/login.html"
@@ -16,7 +16,6 @@
                              authentication-success-handler-ref="myAuthenticationSuccessHandler"
                              authentication-failure-url="/login.html?error=true"/>
         <security:logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
-        <!--<security:intercept-url pattern="/list/**" access="ROLE_CURATOR"/>-->
     </security:http>
 
     <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">

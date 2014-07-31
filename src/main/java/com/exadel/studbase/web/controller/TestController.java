@@ -187,4 +187,14 @@ public class TestController {
         }
 
     }
+    @RequestMapping(value = "/add")
+    public void add() {
+        User user = userService.getById(Long.parseLong("32"));
+        user.setEmail("test2test");
+        userService.save(user);
+
+        System.out.println(userService.save(user));
+        System.out.println("blabla");
+    }
+
 }
