@@ -67,8 +67,8 @@ function bindEventControl() {
        // alert(getCheckedRowsId());
     });
     $("#startSearchButton").click(function () {
-       // loadTable();
-        pickFilters();
+        loadTable();
+        //pickFilters();
         updateInfoLabel();
     });
 
