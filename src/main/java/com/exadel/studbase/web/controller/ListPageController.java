@@ -1,7 +1,11 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.StudentView;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IStudentViewService;
+import com.exadel.studbase.service.IUserService;
+import com.exadel.studbase.service.mail.MailService;
+import com.exadel.studbase.service.mail.MailServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ala'n on 29.07.2014.
@@ -22,6 +29,8 @@ import java.util.*;
 @Secured({"ROLE_CURATOR", "ROLE_FEEDBACKER", "ROLE_SUPERADMIN", "ROLE_OFFICE"})
 @RequestMapping("/")
 public class ListPageController {
+    @Autowired
+    IUserService userService;
     @Autowired
     IStudentViewService studentViewService;
 
@@ -70,5 +79,23 @@ public class ListPageController {
             e.printStackTrace();
         }
         response.setStatus(200);
+    }
+
+    @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
+    public void sendMail(HttpServletRequest request, HttpServletResponse response) {
+        MailService mailService= new MailServiceImpl();
+
+        Gson gson = new Gson();
+
+        String students =(String) request.getParameter("students");
+        //String subject =(String) request.getParameter("subject");
+        String body =(String) request.getParameter("message");
+
+        ArrayList<Long> studentId = gson.fromJson(students, ArrayList.class);
+
+        for(Long id : studentId) {
+            User user = userService.getById(id);
+            mailService.sendMail(user.getEmail(), "", body);
+        }
     }
 }
