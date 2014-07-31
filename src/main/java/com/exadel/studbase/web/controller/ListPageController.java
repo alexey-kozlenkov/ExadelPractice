@@ -50,7 +50,31 @@ public class ListPageController {
             response.getWriter().print(gson.toJson(studList));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+    }
         response.setStatus(200);
+    }
+
+    @RequestMapping(value = "/list/name", method = RequestMethod.GET)
+    public void getViewByName(HttpServletRequest request, HttpServletResponse response){
+        /*Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
+        String desiredName = (String) request.getParameter("desiredName");
+        Object filter = request.getParameter("filter");
+
+        Map<String, String[]> map = new HashMap<String, String[]>();
+        System.out.println(desiredName);
+        System.out.println(gson.fromJson((String) filter, map.getClass()));*/
+
+
+        String desiredName = "Ale";
+
+        Collection<StudentView> studList  = studentViewService.getViewByStudentName(desiredName);
+        System.out.println();
+
+        /*try {
+            response.getWriter().print(gson.toJson(studList));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        response.setStatus(200);*/
     }
 }
