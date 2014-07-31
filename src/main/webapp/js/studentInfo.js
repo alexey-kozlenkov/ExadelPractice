@@ -1,5 +1,8 @@
 
 var studentId;
+var MAX_NUMBER_TERMS = 10;
+var MIN_MARK = 0;
+var MAX_MARK = 10;
 
 $(window).ready(function () {
     // alert(window.location.search);
@@ -49,6 +52,30 @@ $(document).ready(function () {
     $("#state").change(
         checkState
     );
+    //new term
+    $("#addNextTerm").click(function(){
+        var numberTerms;
+        numberTerms = $("#termMark").children().length;
+//        console.log(document.getElementById("termMark").lastElementChild.lastElementChild);
+//        console.log($(".termMark li input").last().val() + " is val");
+        if($(".termMark li input").last().val() <= MIN_MARK || $(".termMark li input").last().val() > MAX_MARK ){
+            $(".termMark li input").last().focus();
+            $(".termMark li input").last().css({
+                'background-color' : "red",
+                opacity : 0.5,
+                borderColor : "red",
+                'color' : 'black'
+            },1000);
+        }
+        else {
+            ++numberTerms;
+            var nextTerm;
+            nextTerm = "<li><input type=\"number\" placeholder=\"1.23\" min=\"1\" max=\"10\"></li>";
+            $(nextTerm).appendTo("#termMark");
+            if (numberTerms === MAX_NUMBER_TERMS)
+                $("#addNextTerm").attr("disabled", "true");
+        }
+    });
 
 });
 

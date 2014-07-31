@@ -22,7 +22,7 @@
                 <a href="#">Manual information<span class="st-arrow">Open or Close</span></a>
             </div>
             <div class="category-content" id="manualContent">
-                <form class="form-horizontal" role="form">
+                <div class="form-horizontal">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
 
@@ -59,9 +59,7 @@
                     </div>
                     <button id="saveManualInformation" type="button" class="category-content-button prj-btn">Save
                     </button>
-
-                </form>
-
+                </div>
             </div>
 
 
@@ -69,7 +67,7 @@
                 <a href="#">Education<span class="st-arrow">Open or Close</span></a>
             </div>
             <div class="category-content" id="educationContent">
-                <form class="form-horizontal" role="form">
+                <div class="form-horizontal">
                     <div class="form-group">
                         <label for="institution" class="col-sm-2 control-label">Educational institution</label>
 
@@ -116,29 +114,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="averageMarks" class="col-sm-2 control-label">Average term's marks</label>
+                        <label for="averageMarks" class="col-sm-2 control-label">Average marks</label>
 
                         <ul class="list-inline" id="averageMarks">
                             <li>
-                            <input type="image" id="addNextTerm" class="btn prj-btn menu-button" src="../images/add.png"
+                            <input type="image"  title="add next term" id="addNextTerm" class="btn prj-btn" src="../images/add.png"
                                    alt="Add next term">
                             </li>
                             <li>
-                            <ol class="termMark">
+                            <ol class="termMark" id="termMark">
                                 <li>
-                                    <input type="number" id="term1" placeholder="1.23">
-                                </li>
-                                <li>
-                                    <input type="number" id="term2" placeholder="1.23">
-                                </li>
-                                <li>
-                                    <input type="number" placeholder="1.23">
-                                </li>
-                                <li>
-                                    <input type="number" placeholder="1.23">
-                                </li>
-                                <li>
-                                    <input type="number" placeholder="1.23">
+                                    <input type="number" placeholder="1.23" min="1" max="10">
                                 </li>
                             </ol>
                             </li>
@@ -146,7 +132,7 @@
                     </div>
                     <button id="saveEducationInformation" type="button" class="category-content-button prj-btn">Save
                     </button>
-                </form>
+                </div>
             </div>
 
 
@@ -154,7 +140,7 @@
                 <a href="#">Exadel<span class="st-arrow">Open or Close</span></a>
             </div>
             <div class="category-content" id="exadelContent">
-                <form class="form-horizontal" role="form">
+                <div class="form-horizontal">
                     <div class="form-group">
                         <label for="workingHours" class="col-sm-2 control-label">Working hours</label>
 
@@ -181,8 +167,7 @@
                         <button id="saveExadelInformation" type="button" class="category-content-button  prj-btn">Save
                         </button>
                     </div>
-                </form>
-
+                </div>
             </div>
 
 
