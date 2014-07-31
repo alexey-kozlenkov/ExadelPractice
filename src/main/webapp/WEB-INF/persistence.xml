@@ -13,8 +13,6 @@
     <context:component-scan base-package="com.exadel.studbase"/>
 
     <context:annotation-config/>
-
-    <tx:annotation-driven/>
     <!--<context:annotation-config/>-->
 
     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! JDBS PROP PATH !!!!!!!!!!!!!!!!!!!!!!!!!!!!1!!!-->

@@ -12,6 +12,8 @@ public interface IUserService {
 
     User getById(Long id);
 
+    User getByLogin(String login);
+
     void delete(User user);
 
     Collection<User> getAll();

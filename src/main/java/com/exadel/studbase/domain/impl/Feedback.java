@@ -17,10 +17,10 @@ public class Feedback implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="student_id")
+    @Column(name = "student_id")
     private Long studentId;
 
-    @Column(name="employee_id")
+    @Column(name = "employee_id")
     private Long feedbackerId;
 
     @Column(name = "content")

@@ -81,13 +81,8 @@ function bindEventControl() {
         updateInfoLabel();
     });
 
-    $("#searchLine").change(function(){
-//        clearTable();
-//        var search = $(this).val();
-//        var data = localLoad();
-//        var view  =localSearch(data, search);
-//        addAllStudents(view);
-//        updateInfoLabel();
+    $('#searchLine').on('input', function() {
+        loadTable();
     });
 }
 
@@ -104,8 +99,8 @@ function loadTable() {
         url: "/list/data",
         async: true,
         data: {
-            'name': search,
-            'filter': filterPack
+            'name': search
+           //'filter': filterPack
         }
     }).done(function (data) {
         var obj = JSON.parse(data);
@@ -119,59 +114,6 @@ function loadTable() {
     }).fail(function () {
         alert("error");
         setTableLoadingState(false);
-    });
-}
-////////////////////////////////////// Local storage *** NOT SUPORTED NOW //////////////////////
-function localSave(data){
-    localStorage.setItem("StudBase", JSON.stringify(data));
-    console.log("Local storage update");
-}
-function eraseStorage(){
-    localStorage.removeItem("StudBase");
-    console.log("Local storage erase");
-}
-function localLoad(){
-    return JSON.parse(localStorage.getItem("StudBase"));
-}
-function localSearch(data, name){
-    var result = [];
- //   var lexems = name.split(" ");
-//    if(lexems.length>3)
-//        return null;
-    var searchname = name.toLowerCase();
-    for(var i=0; i<data.length; i++){
-        var item = data[i];
-
-        if(item.name.toLowerCase().search(searchname) != -1){
-            result.push(item);
-        }
-    }
-    return result;
-}
-////////////////////////////////////// Popup ////////////////////////////////////////////
-function togglePopup(popup) {
-    if (popup.is(':visible')) {
-        popup.hide();
-        return false;
-    } else {
-        popup.show();
-        return true;
-    }
-}
-function centrePopup(popup, x, y) {
-    var WIDTH = $(window).width();
-    var HEIGHT = $(window).height();
-    var popupWidth = popup.width();
-    var popupHeight = popup.height();
-    if (x == undefined || x == null) {
-        x = (WIDTH - popupWidth) / 2;
-    }
-    if (y == undefined || y == null) {
-        y = (HEIGHT - popupHeight) / 2;
-    }
-    popup.css({
-        left: x,
-        top: y
     });
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////

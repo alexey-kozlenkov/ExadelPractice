@@ -4,7 +4,6 @@
     <meta charset="UTF-8"/>
     <title>Student list</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/dialog.css" rel="stylesheet">
     <link href="../css/listStyle.css" rel="stylesheet">
     <link href="../css/common.css" rel="stylesheet">
 </head>
@@ -111,7 +110,14 @@
                     onclick="closeDialog();"></span>
         </div>
         <div class='dialog-content' dialog-number ='1'>
-            Hallo!
+            <div class="dialog-content-central">
+                <label for="sendMessage"> Message text: </label>
+                <textarea id="sendMessage" class="message-area">
+                </textarea>
+            </div>
+            <div class="dialog-footer">
+                <button class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send</button>
+            </div>
         </div>
     </div>
 </div>

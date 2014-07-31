@@ -2,7 +2,14 @@ package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IUserDAO;
 import com.exadel.studbase.domain.impl.User;
+import org.hibernate.Query;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -10,4 +17,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
 
+    @Override
+    public User getByLogin(String login) {
+        Query query = getSession().createQuery("FROM User where login=:login");
+        query.setParameter("login", login);
+        List<User> executeResult = query.list();
+        if(executeResult.size() > 0) {
+            return executeResult.get(0);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        com.exadel.studbase.domain.impl.User user = this.getByLogin(username);
+        final String[] roles = user.getRole().trim().split(";");
+        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>(roles.length){{
+            for (int i = 0; i < roles.length; i++) {
+                add(i, new SimpleGrantedAuthority(roles[i]));
+            }
+        }};
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), authorities);
+    }
 }

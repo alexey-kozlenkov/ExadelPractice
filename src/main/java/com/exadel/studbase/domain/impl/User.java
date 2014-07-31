@@ -9,40 +9,40 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="\"USER\"")
+@Table(name = "\"USER\"")
 public class User implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="login")
+    @Column(name = "login")
     private String login;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name="role")
+    @Column(name = "role")
     private String role;
 
     @OneToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private Student studentInfo;
 
     @OneToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private Employee employeeInfo;
 
 
     public User() {
-        password="pass";
+        password = "11111";
     }
 
     @Override
@@ -111,13 +111,9 @@ public class User implements IEntity<Long> {
         this.employeeInfo = employeeInfo;
     }
 
-//    public Set<SkillSet> getSkills() {
-//        return skills;
-//    }
-//
-//    public void setSkills(Set<SkillSet> skills) {
-//        this.skills = skills;
-//    }
+    public void addRole(String addingRole) {
+        setRole(getRole()+";"+addingRole);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -136,7 +132,7 @@ public class User implements IEntity<Long> {
 
     @Override
     public int hashCode() {
-        return id!=null ? id.hashCode() : 0;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

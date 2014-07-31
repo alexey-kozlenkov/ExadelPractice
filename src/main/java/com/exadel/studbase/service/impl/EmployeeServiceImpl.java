@@ -14,7 +14,7 @@ import java.util.Collection;
  * Created by Алексей on 21.07.14.
  */
 @Service
-public class EmployeeServiceImpl  implements IEmployeeService{
+public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     private IEmployeeDAO employeeDAO;

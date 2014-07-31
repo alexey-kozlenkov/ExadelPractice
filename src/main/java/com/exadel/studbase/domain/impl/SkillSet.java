@@ -8,12 +8,12 @@ import javax.persistence.*;
  * Created by Алексей on 24.07.14.
  */
 @Entity
-@Table(name="\"SKILL_SET\"")
+@Table(name = "\"SKILL_SET\"")
 public class SkillSet implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -24,10 +24,10 @@ public class SkillSet implements IEntity<Long> {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name="level")
+    @Column(name = "level")
     private int level;
 
-    @Column(name="info")
+    @Column(name = "info")
     private String info;
 
     @Override

@@ -2,17 +2,20 @@ package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Алексей on 21.07.14.
  */
 @Entity
-@Table(name="\"EMPLOYEE\"")
+@Table(name = "\"EMPLOYEE\"")
 public class Employee implements IEntity<Long> {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     public Employee() {
@@ -25,7 +28,7 @@ public class Employee implements IEntity<Long> {
 
     @Override
     public void setId(Long id) {
-        this.id=id;
+        this.id = id;
     }
 
     @Override

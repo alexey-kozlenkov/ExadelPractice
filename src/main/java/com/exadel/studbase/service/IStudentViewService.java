@@ -9,4 +9,6 @@ import java.util.Collection;
  */
 public interface IStudentViewService {
     public Collection<StudentView> getAll();
+
+    public Collection<StudentView> getViewByStudentName(String desiredName);
 }
