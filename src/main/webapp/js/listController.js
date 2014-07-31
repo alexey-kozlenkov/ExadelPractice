@@ -261,7 +261,7 @@ function addFilterAttribute(name) {
         }
     } else {
         $("#addFilterButton").before(filterElementContent);
-        $("#filterMenu > li[name='filter_" + name + "']").hide();
+        $("#filterMenu > li[filter='" + name + "']").hide();
     }
 }
 
