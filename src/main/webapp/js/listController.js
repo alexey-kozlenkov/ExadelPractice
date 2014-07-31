@@ -2,8 +2,9 @@
  * Created by ala'n on 14.07.2014.
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////
-var MAX_FILTER_COUNT = 10;
-var filterTypes = {
+const MAX_FILTER_COUNT = 10;
+// This can be an info from server (not a constant)
+const filterTypes = {
     changed: true,
     keys: ['age', 'working hour', 'billable', 'skill', 'english', 'date'],
     keyType: {
@@ -20,6 +21,14 @@ var filterTypes = {
     },
     multyType: {
         'skill': true
+    },
+    width: {
+        'age': 100,
+        'working hour': 200,
+        'billable': 200,
+        'skill': 200,
+        'english': 200,
+        'date': 200
     }
 };
 
@@ -35,41 +44,41 @@ $(document).ready(function () {
     checkEmptyFieldSize();
     bindEventControl();
     console.log("initialize ended.");
-    if(window.location.search == '?loaded')
-        loadTable();
+//    if(window.location.search == '?loaded')
+//        loadTable();
 });
 function bindEventControl() {
     $("#checkAll").click(onCheckedAll);
 
     $("#addMenuButton").click(function () {
+        // FOR TESTING TODO!
         addRow(0, 'Vasya Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 9);
         addRow(0, 'Vasya Uan Hun Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'html js php java json hibitrnate spring ', 'Intermediate'], 9);
         updateInfoLabel();
     });
     $("#exportMenuButton").click(function () {
+        // FOR TESTING TODO!
         clearTable();
-        eraseStorage();
         updateInfoLabel();
     });
+
     $("#distributionMenuButton").click(function () {
         showDialog(1);
        // alert(getCheckedRowsId());
     });
     $("#startSearchButton").click(function () {
-        loadTable();
+       // loadTable();
+        pickFilters();
         updateInfoLabel();
     });
 
-    $("#filterMenu").mouseleave(
-        function () {
-            $('#filterMenu').hide(400);
-        }
-    );
+    $("#filterMenu").mouseleave(function () {
+        $('#filterMenu').hide(400);
+    });
 
     $("#addFilterButton").click(function () {
         addFilterAction();
     });
-
 
     $("#searchLine").focus(function () {
         $(this).animate({ width: "250pt"}, 1000);
@@ -82,7 +91,7 @@ function bindEventControl() {
     });
 
     $('#searchLine').on('input', function() {
-        loadTable();
+        //TODO! loadTable();
     });
 }
 
@@ -257,15 +266,17 @@ function addFilterAttribute(name) {
 }
 
 function createFilterAttributeContent(name) {
+    var typeName = filterTypes.keyType[name];
     var htmContent = "";
 
-    htmContent += "<div name ='filter_" + name + "' class='btn-group input-group filter-item'>";
+    htmContent += "<div name ='filter_" + name + "' class='btn-group input-group filter-item";
+    htmContent += " filter-"+typeName+"'>";
     htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' ";
     htmContent += "onclick=\"removeFilterAttribute( '" + name + "', this );\">";
     htmContent += name;
     htmContent += "</button>";
 
-    switch (filterTypes.keyType[name]) {
+    switch (typeName) {
         case 'number':
             htmContent += "<input type='number' class='form-control value-field' placeholder='??'>";
             break;
@@ -340,10 +351,10 @@ function pickFilters() {
     var returnStatement = {};
     var lastAtrName = "";
 
-    var itms = $("#filterBlock").find(".filter-item");
+    var filterItems = $("#filterBlock").find(".filter-item");
 
-    for (var i = 0; i < itms.length; i++) {
-        var element = $(itms[i]);
+    for (var i = 0; i < filterItems.length; i++) {
+        var element = $(filterItems[i]);
 
         var atr_name = $(element.find(".item-btn-attr")).text();
         var atr_value = $(element.find(".value-field")).val();
@@ -352,9 +363,13 @@ function pickFilters() {
             returnStatement[atr_name] = '';
         else
             returnStatement[atr_name] += '&';
+
         switch (filterTypes.keyType[atr_name]) {
-            case 'number':
             case 'date':
+                //TODO ! Date can be parsed as a long ( [RFC 3339] not god for working)
+                returnStatement[atr_name] += atr_value;
+                break;
+            case 'number':
             case 'list':
                 returnStatement[atr_name] += atr_value;
                 break;
