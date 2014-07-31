@@ -11,7 +11,7 @@ AS
     max_similarity_value := 0;
     FOR line IN (SELECT
                    *
-                 FROM "STUDENT_VIEW") LOOP
+                 FROM "STUDENT_VIEW" ORDER BY similarity(name, $1)  DESC) LOOP
       IF  desired_name =''
       THEN RETURN NEXT line;
       ELSE
