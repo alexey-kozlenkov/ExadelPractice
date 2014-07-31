@@ -187,4 +187,12 @@ public class TestController {
         }
 
     }
+
+    @RequestMapping(value = "/add")
+    public void add() {
+        User user = userService.getById(Long.parseLong("1"));
+        user.setName("Julia");
+        userService.save(user);
+        System.out.println("Bla");
+    }
 }

@@ -5,27 +5,13 @@ h1 {
     font-weight: 300;
     font-size: 30px;
 
-    -webkit-margin-after: .67em;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
 }
 
 .header {
-
-    z-index: 4;
-
-    display: block;
-
     box-sizing: border-box;
 
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-
-    border: 0.5px solid #616161;
-    -webkit-box-shadow: 1px 0 2px #000;
+    border: 1px solid #616161;
     text-transform: uppercase;
-    line-height: 30%;
 }
 
 .wrapper {
@@ -156,11 +142,11 @@ div ::selection {
     height: 24px;
 }
 
-.termMark input[type="number"]{
+.termMark{
     width : 40px;
 }
 
-.termMark{
+.termMarkList{
     display : inline;
     margin:0;
     padding:0;
@@ -170,13 +156,13 @@ div ::selection {
     counter-reset : termNumber;
 }
 
-.termMark > li{
+.termMarkList > li{
     display: inline;
     padding-right: 5px;
     padding-left: 5px;
     counter-increment : termNumber;
 }
-.termMark > li:before{
+.termMarkList > li:before{
     content:counter(termNumber, upper-roman) ".";
     padding-right: 0.25em;
 

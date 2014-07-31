@@ -51,32 +51,70 @@ $(document).ready(function () {
     $("#state").change(
         checkState
     );
-    //new term
-    $("#addNextTerm").click(function(){
-        var numberTerms;
-        numberTerms = $("#termMark").children().length;
-//        console.log(document.getElementById("termMark").lastElementChild.lastElementChild);
-//        console.log($(".termMark li input").last().val() + " is val");
-        if($(".termMark li input").last().val() <= MIN_MARK || $(".termMark li input").last().val() > MAX_MARK ){
-            $(".termMark li input").last().focus();
-            $(".termMark li input").last().css({
+    //handler termMark changed
+   // $(".termMark").change(checkTermMark($(this)));
+    $(".termMark").on("change",function(){
+        if(!validInputTermMark($(this).val())){
+            $(this).animate({
                 'background-color' : "red",
                 opacity : 0.5,
-                borderColor : "red",
                 'color' : 'black'
             },1000);
+            $(this).val(null);
+        }
+        else{
+            $(this).animate({
+                'background-color' : "#fff",
+                opacity : 1,
+                color : "#333"
+            },200);
+        }
+    });
+
+    $("#addNextTerm").click(function(){
+        var numberTerms;
+        numberTerms = $("#termMarkList").children().length;
+//        console.log(document.getElementById("termMarkList").lastElementChild.lastElementChild);
+//        console.log($(".termMarkList li input").last().val() + " is val");
+        if($(".termMarkList li input").last().val() == MIN_MARK){
+            $(".termMarkList li input").last().focus();
         }
         else {
             ++numberTerms;
             var nextTerm;
-            nextTerm = "<li><input type=\"number\" placeholder=\"1.23\" min=\"1\" max=\"10\"></li>";
-            $(nextTerm).appendTo("#termMark");
+            nextTerm = "<li><input type=\"number\" class=\"termMark\" placeholder=\"10.00\"></li>";
+
+            $(nextTerm).appendTo("#termMarkList");
+
             if (numberTerms === MAX_NUMBER_TERMS)
                 $("#addNextTerm").attr("disabled", "true");
         }
     });
 
 });
+
+function validInputTermMark(termMarkVal){
+    if(termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK )
+       return false;
+    return true;
+};
+function checkTermMark(termMark){
+    if(!validInputTermMark(termMark.val())){
+        termMark.animate({
+            'background-color' : "red",
+            opacity : 0.5,
+            'color' : 'black'
+        },1000);
+        termMark.val(null);
+    }
+    else{
+        termMark.animate({
+            'background-color' : "#ffffff",
+            opacity : 1,
+            color : "#333"
+        },200);
+    }
+}
 
 function parseRequestForId(string) {
     var gottenId;
