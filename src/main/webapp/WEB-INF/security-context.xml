@@ -15,6 +15,8 @@
         <security:logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
         <security:intercept-url pattern="/html/studentInfo.html" access="isAuthenticated()"/>
         <security:intercept-url pattern="/html/list.html" access="isAuthenticated()"/>
+        <security:logout logout-success-url="/html/login.html?logout=success" invalidate-session="true"/>
+        <security:access-denied-handler error-page="/html/403.html"/>
     </security:http>
 
     <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
