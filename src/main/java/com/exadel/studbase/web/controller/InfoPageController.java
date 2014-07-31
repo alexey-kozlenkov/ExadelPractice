@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Date;
 import java.util.Map;
 import java.util.Set;
 
 
 @Controller
-
+@Secured("IS_AUTHENTICATED_FULLY")
 @RequestMapping("/")
 public class InfoPageController {
 
@@ -73,6 +74,7 @@ public class InfoPageController {
         response.setStatus(200);
     }
 
+    @Secured("IS_AUTHENTICATED_FULLY")
     @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
     public void editManualInformation(HttpServletRequest request, HttpServletResponse response) {
         //System.out.println("post it44444!");
@@ -103,7 +105,6 @@ public class InfoPageController {
         }
     }
 
-    @Secured("isAuthenticated()")
     @RequestMapping(value = "/info/postEducation", method = RequestMethod.POST)
     public void editEducation(HttpServletRequest request, HttpServletResponse response) {
         try {
