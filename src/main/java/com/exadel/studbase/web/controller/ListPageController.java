@@ -1,7 +1,10 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.StudentView;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IStudentViewService;
+import com.exadel.studbase.service.IUserService;
+import com.exadel.studbase.service.mail.MailService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ala'n on 29.07.2014.
@@ -23,12 +28,16 @@ import java.util.*;
 @RequestMapping("/")
 public class ListPageController {
     @Autowired
+    IUserService userService;
+    @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
-        return "listPage";
+        return "list";
     }
 
     // Provide sanding list data
@@ -55,7 +64,7 @@ public class ListPageController {
     @RequestMapping(value = "/list/name", method = RequestMethod.GET)
     public void getViewByName(HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String desiredName = (String) request.getParameter("desiredName");
+        String desiredName = (String) request.getParameter("searchName");
 //        Object filter = request.getParameter("filter");
 
         Map<String, String[]> map = new HashMap<String, String[]>();
@@ -69,6 +78,24 @@ public class ListPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        response.setStatus(200);
+    }
+
+    @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
+    public void sendMail(HttpServletRequest request, HttpServletResponse response) {
+
+        Gson gson = new Gson();
+
+        String students =(String) request.getParameter("students");
+        String body =(String) request.getParameter("message");
+
+        Long[] studentId = gson.fromJson(students, Long[].class);
+
+        for(Long id : studentId) {
+            User user = userService.getById(id);
+            mailService.sendMail(user.getEmail(), "", body);
+        }
+
         response.setStatus(200);
     }
 }
