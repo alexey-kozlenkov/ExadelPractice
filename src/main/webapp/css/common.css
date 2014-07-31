@@ -49,7 +49,7 @@ label,
     border-radius: 4px;
     background-color: #4A5D80;
     color: #ffffff;
-   
+
 }
 
 .prj-btn:hover,
@@ -68,7 +68,7 @@ label,
     color: gray;
 }
 
-.static-green{
+.static-green {
     border-color: #4b954b;
     background-color: #5cb85c;
     color: #fff;
@@ -96,17 +96,19 @@ label,
     background-color: #f1f1f1;
 }
 
- /****************************remove arrows from inputs***************************/
+/****************************remove arrows from inputs***************************/
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
-    -webkit-appearance: none; margin: 0px;
+    -webkit-appearance: none;
+    margin: 0px;
 }
-input{
-    -moz-appearance:textfield;
+
+input {
+    -moz-appearance: textfield;
 }
 
 /**************************************************************************/
-.content-locker{
+.content-locker {
     display: none;
     position: absolute;
 
@@ -117,7 +119,8 @@ input{
 
     background: rgba(0, 0, 0, 0.5);
 }
-.dialog-area{
+
+.dialog-area {
     display: none;
     position: absolute;
 
@@ -126,8 +129,8 @@ input{
     top: 0;
     bottom: 0;
 
-    width: 250pt;
-    height: 250pt;
+    width: 220pt;
+    height: 200pt;
 
     margin: auto;
 
@@ -138,29 +141,31 @@ input{
 
     overflow: hidden;
 }
-.dialog-header{
+
+.dialog-header {
     width: 100%;
     height: 18pt;
-
-    background: rgba(0,0,0,0.5);
-}.dialog-content{
-
+    background: rgba(0, 0, 0, 0.6);
 }
 
-.dialog-close{
-    /*width: 15pt;*/
-    /*height: 15pt;*/
+.dialog-content {
+    text-align: center;
+    /*width: 100%;*/
+    height: 180pt;
+    padding: 3pt;
+}
+
+.dialog-close {
     float: right;
     margin: 2pt;
     color: #ffffff;
     background-size: 100%;
     padding: 1pt;
 }
-.dialog-close:hover{
+.dialog-close:hover {
     color: #4A5D80;
 }
-.dialog-close:active{
-    /*color: #4A5D80;*/
+.dialog-close:active {
     padding-top: 2pt;
     padding-right: 0;
 }
