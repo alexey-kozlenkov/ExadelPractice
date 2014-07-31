@@ -5,7 +5,6 @@ import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.exadel.studbase.service.mail.MailService;
-import com.exadel.studbase.service.mail.MailServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +31,8 @@ public class ListPageController {
     IUserService userService;
     @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
@@ -83,19 +83,19 @@ public class ListPageController {
 
     @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
     public void sendMail(HttpServletRequest request, HttpServletResponse response) {
-        MailService mailService= new MailServiceImpl();
 
         Gson gson = new Gson();
 
         String students =(String) request.getParameter("students");
-        //String subject =(String) request.getParameter("subject");
         String body =(String) request.getParameter("message");
 
-        ArrayList<Long> studentId = gson.fromJson(students, ArrayList.class);
+        Long[] studentId = gson.fromJson(students, Long[].class);
 
         for(Long id : studentId) {
             User user = userService.getById(id);
             mailService.sendMail(user.getEmail(), "", body);
         }
+
+        response.setStatus(200);
     }
 }

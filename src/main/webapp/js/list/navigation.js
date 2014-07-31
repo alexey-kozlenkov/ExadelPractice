@@ -49,10 +49,11 @@ function bindSendMessageDialog(){
 
         $.ajax({
             type: "POST",
-            url: "/?",
+            url: "/list/sendMail",
             async: true,
             data: {
                 message: messageText,
+                subject: '',
                 students: studIds
             }
         }).done(function (data) {
@@ -60,6 +61,7 @@ function bindSendMessageDialog(){
         }).fail(function () {
             alert("error");
         });
+        closeDialog();
      });
 }
 

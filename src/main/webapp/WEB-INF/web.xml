@@ -11,6 +11,7 @@
             /WEB-INF/applicationContext.xml
             /WEB-INF/persistence.xml
             /WEB-INF/security-context.xml
+            /WEB-INF/util-context.xml
         </param-value>
     </context-param>
 
