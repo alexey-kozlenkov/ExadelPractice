@@ -79,7 +79,7 @@ div ::selection {
     width: 26px;
     height: 14px;
 
-    background: transparent url(../images/down.png) no-repeat center center;
+    background: transparent url(../../images/down.png) no-repeat center center;
     text-indent: -9000px;
     opacity: 0;
     -webkit-transition: all .2s ease-in-out;
