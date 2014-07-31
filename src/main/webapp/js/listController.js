@@ -269,7 +269,7 @@ function createFilterAttributeContent(name) {
     var typeName = filterTypes.keyType[name];
     var htmContent = "";
 
-    htmContent += "<div name ='filter_" + name + "' class='btn-group input-group filter-item";
+    htmContent += "<div filter='" + name + "' class='btn-group input-group filter-item";
     htmContent += " filter-"+typeName+"'>";
     htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' ";
     htmContent += "onclick=\"removeFilterAttribute( '" + name + "', this );\">";
@@ -317,7 +317,7 @@ function createFilterAttributeContent(name) {
 }
 
 function existFilterAttribute(name) {
-    return $(".filter-item[name='filter_" + name + "']");
+    return $(".filter-item[filter='" + name + "']");
 }
 function removeFilterAttribute(name, element) {
     var selfItem = $($(element).parent().get(0));
@@ -330,7 +330,7 @@ function removeFilterAttribute(name, element) {
     }
 
     selfItem.remove();
-    $("#filterMenu > li[name='filter_" + name + "']").show();
+    $("#filterMenu > li[filter='" + name + "']").show();
     checkFilterCount();
 }
 
@@ -356,7 +356,7 @@ function pickFilters() {
     for (var i = 0; i < filterItems.length; i++) {
         var element = $(filterItems[i]);
 
-        var atr_name = $(element.find(".item-btn-attr")).text();
+        var atr_name = element.attr('filter');
         var atr_value = $(element.find(".value-field")).val();
 
         if (!returnStatement[atr_name])
