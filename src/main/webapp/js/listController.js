@@ -82,7 +82,7 @@ function bindEventControl() {
     });
 
     $('#searchLine').on('input', function() {
-        //TODO! loadTable();
+        loadTable();
     });
 }
 
@@ -99,8 +99,8 @@ function loadTable() {
         url: "/list/data",
         async: true,
         data: {
-            'name': search,
-            'filter': filterPack
+            'name': search
+           //'filter': filterPack
         }
     }).done(function (data) {
         var obj = JSON.parse(data);

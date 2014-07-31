@@ -14,7 +14,7 @@ import java.util.Collection;
 public class StudentViewDAO extends GenericDAOImpl<StudentView, Long> implements IStudentViewDAO {
     @Override
     public Collection<StudentView> getViewByStudentName(String desiredName) {
-        Query query = getSession().createSQLQuery("SELECT * FROM find_student_by_name('" + desiredName + "')");
+        Query query = getSession().createSQLQuery("SELECT * FROM find_student_by_name('" + desiredName + "' )");
         return query.list();
     }
 }

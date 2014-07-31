@@ -35,8 +35,8 @@ public class ListPageController {
 
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response){
-        Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
+    public void listData(HttpServletRequest request, HttpServletResponse response) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
         String searchName = (String) request.getParameter("name");
         Object filter = request.getParameter("filter");
 
@@ -44,37 +44,33 @@ public class ListPageController {
         System.out.println(searchName);
         System.out.println(gson.fromJson((String) filter, map.getClass()));
 
-        Collection<StudentView> studList  = studentViewService.getAll();
+        Collection<StudentView> studList = studentViewService.getAll();
 
         try {
             response.getWriter().print(gson.toJson(studList));
         } catch (IOException e) {
             e.printStackTrace();
-    }
+        }
         response.setStatus(200);
     }
 
     @RequestMapping(value = "/list/name", method = RequestMethod.GET)
-    public void getViewByName(HttpServletRequest request, HttpServletResponse response){
-        /*Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
+    public void getViewByName(HttpServletRequest request, HttpServletResponse response) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
         String desiredName = (String) request.getParameter("desiredName");
-        Object filter = request.getParameter("filter");
+//        Object filter = request.getParameter("filter");
 
         Map<String, String[]> map = new HashMap<String, String[]>();
         System.out.println(desiredName);
-        System.out.println(gson.fromJson((String) filter, map.getClass()));*/
+        //    System.out.println(gson.fromJson((String) filter, map.getClass()));
 
+        Collection<StudentView> studList = studentViewService.getViewByStudentName(desiredName);
 
-        String desiredName = "Ale";
-
-        Collection<StudentView> studList  = studentViewService.getViewByStudentName(desiredName);
-        System.out.println();
-
-        /*try {
+        try {
             response.getWriter().print(gson.toJson(studList));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        response.setStatus(200);*/
+        response.setStatus(200);
     }
 }
