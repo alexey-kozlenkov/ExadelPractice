@@ -114,7 +114,9 @@ function fillManualInfo() {
         //SEND TO CONTROLLER
         url: "/info/getManualInformation",
         async: true,
-        data: studentId,
+        data: {
+            "studentId" : studentId
+        },
         success: function (data) {
            //  alert("" + data);
             var gottenStudent = JSON.parse(data);

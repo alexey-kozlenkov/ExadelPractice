@@ -2,6 +2,7 @@ package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IUserDAO;
 import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.security.MySecurityUser;
 import org.hibernate.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,13 +33,13 @@ public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.exadel.studbase.domain.impl.User user = this.getByLogin(username);
+        User user = this.getByLogin(username);
         final String[] roles = user.getRole().trim().split(";");
         List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>(roles.length){{
             for (int i = 0; i < roles.length; i++) {
                 add(i, new SimpleGrantedAuthority(roles[i]));
             }
         }};
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), authorities);
+        return new MySecurityUser(user.getId(), user.getLogin(), user.getPassword(), authorities);
     }
 }
