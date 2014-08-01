@@ -121,6 +121,7 @@ public class InfoPageController {
         }
     }
 
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
     @RequestMapping(value = "/info/postEducation", method = RequestMethod.POST)
     public void editEducation(@RequestParam("studentId") Long id,
                               @RequestParam("studentUniversity") String university,
@@ -130,6 +131,7 @@ public class InfoPageController {
                               @RequestParam("studentGraduationDate") Date graduationDate,
                               HttpServletResponse response) {
         try {
+
 //            Map<String, String[]> params = request.getParameterMap();
 //            Set<Map.Entry<String, String[]>> entry = params.entrySet();
 //            for (Map.Entry<String, String[]> element : params.entrySet()) {
@@ -160,6 +162,4 @@ public class InfoPageController {
         Long id = userService.getByLogin(login).getId();
         return "redirect:/info?id=" + id;
     }
-
-
 }
