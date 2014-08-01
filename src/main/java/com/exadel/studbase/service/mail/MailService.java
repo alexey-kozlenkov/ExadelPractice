@@ -7,5 +7,5 @@ public interface MailService {
 
     public void setMailSender(MailSender mailSender);
 
-    public void sendMail(String to, String subject, String body);
+    public boolean sendMail(String to, String subject, String body);
 }
