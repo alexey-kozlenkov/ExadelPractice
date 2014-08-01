@@ -112,23 +112,25 @@
                                    placeholder="yyyy-mm-dd">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="averageMarks" class="col-sm-2 control-label">Average marks</label>
 
                         <ul class="list-inline" id="averageMarks">
                             <li>
-                            <input type="image"  title="add next term" id="addNextTerm" class="btn prj-btn" src="../images/add.png"
-                                   alt="Add next term">
+                                <input type="image"  title="add next term" id="addNextTerm" class="btn prj-btn" src="../images/add.png"
+                                       alt="Add next term">
                             </li>
                             <li>
-                            <ol class="termMark" id="termMark">
-                                <li>
-                                    <input type="number" placeholder="1.23" min="1" max="10">
-                                </li>
-                            </ol>
+                                <ol class="termMark" id="termMark">
+                                    <li>
+                                        <input onchange='validateMark();' type="number" placeholder="1.23" min="1" max="10">
+                                    </li>
+                                </ol>
                             </li>
                         </ul>
                     </div>
+
                     <button id="saveEducationInformation" type="button" class="category-content-button prj-btn">Save
                     </button>
                 </div>
