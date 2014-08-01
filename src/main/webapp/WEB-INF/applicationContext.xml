@@ -17,4 +17,14 @@
         </property>
     </bean>
 
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location">
+            <value>/WEB-INF/util-context.xml</value>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+</bean>
+
 </beans>

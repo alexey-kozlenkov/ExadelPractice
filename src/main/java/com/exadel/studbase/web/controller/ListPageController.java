@@ -102,9 +102,10 @@ public class ListPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        response.setStatus(200);
     }
 
-    @RequestMapping(value = "/list/export", method = RequestMethod.POST)
+    @RequestMapping(value = "/list/export", method = RequestMethod.GET)
     public ModelAndView export(HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new Gson();
 

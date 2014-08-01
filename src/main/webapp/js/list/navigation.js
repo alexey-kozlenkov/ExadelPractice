@@ -43,9 +43,10 @@ function bindMenuBlock() {
         addAllStudents(list);
     });
     $("#exportMenuButton").click(function () {
-        // FOR TESTING TODO!
-        clearList();
-        updateInfoLabel();
+//        // FOR TESTING TODO!
+//        clearList();
+//        updateInfoLabel();
+          exportExel();
     });
     $("#distributionMenuButton").click(function () {
         showDialog(1);
@@ -71,8 +72,8 @@ function bindSearchBlock(){
 
 function bindSendMessageDialog(){
     $("#sendButton").click(function(){
-        var messageText = $("#sentMessage").val();
-        var studIds = JSON.stringify(getCheckedRowsId());
+        var messageText = $("#sentMessage").val(),
+            studIds = JSON.stringify(getCheckedRowsId());
 
         $.ajax({
             type: "POST",
@@ -84,9 +85,17 @@ function bindSendMessageDialog(){
                 students: studIds
             }
         }).done(function (data) {
-            console.log("Done ! - ", data, ' -');
+            var mails = JSON.parse(data);
+            if(mails && mails.length>0){
+                var mailList = $("#inaccessibleMailList");
+                var mailTemplate = Handlebars.compile($("#mailListTemplate").html());
+                mailList.empty();
+                mailList.append(mailTemplate({mails:mails}));
+                showDialog(2);
+            }else
+                console.log("Done ! - ");
         }).fail(function () {
-            alert("error");
+            alert("Error");
         });
         closeDialog();
      });
@@ -118,4 +127,9 @@ function loadTable() {
         alert("error");
         setTableLoadingState(false);
     });
+}
+
+function exportExel(){
+    var studIds = JSON.stringify(getCheckedRowsId());
+    window.open("/list/export?students="+studIds,"exportFile");
 }

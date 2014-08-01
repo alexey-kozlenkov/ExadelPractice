@@ -139,6 +139,7 @@
             <span class='glyphicon glyphicon-remove dialog-close'
                   onclick="closeDialog();"></span>
         </div>
+
         <div class='dialog-content' dialog-number='1'>
             <div class="dialog-content-central">
                 <label for="sentMessage"> Message text: </label>
@@ -147,6 +148,24 @@
             </div>
             <div class="dialog-footer">
                 <button id='sendButton' class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send
+                </button>
+            </div>
+        </div>
+
+        <div class='dialog-content' dialog-number='2'>
+            <div class="dialog-content-central">
+                <ul id="inaccessibleMailList">
+                </ul>
+                <script id="mailListTemplate" type="text/x-handlebars-template">
+                    {{#each mails}}
+                    <li>
+                        {{this}}
+                    </li>
+                    {{/each}}
+                </script>
+            </div>
+            <div class="dialog-footer">
+                <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
                 </button>
             </div>
         </div>
