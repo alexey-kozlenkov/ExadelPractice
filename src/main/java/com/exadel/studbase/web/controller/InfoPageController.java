@@ -3,12 +3,19 @@ package com.exadel.studbase.web.controller;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.domain.init.Options;
+import com.exadel.studbase.security.MySecurityUser;
 import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +49,11 @@ public class InfoPageController {
     ISkillSetService skillSetService;
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public String infoPage() {
+    public String infoPage(@RequestParam("id") Long id) {
+        MySecurityUser principal =(MySecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STUDENT")) && !principal.getId().equals(id)) {
+            throw new AccessDeniedException("Pfff");
+        }
         return "studentInfo";
     }
 
@@ -72,8 +83,6 @@ public class InfoPageController {
         }
         response.setStatus(200);
     }
-
-    @Secured("IS_AUTHENTICATED_FULLY")
     @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
     public void editManualInformation(HttpServletRequest request, HttpServletResponse response) {
         //System.out.println("post it44444!");
