@@ -3,18 +3,18 @@
  */
 
 
-var pastHeaderHeight = $("#headerBlock").outerHeight();
+var pastHeaderHeight = $("#header").outerHeight();
 
 $(window).ready(function () {
-    checkEmptyFieldSize();
+    checkContentMargin();
 });
 
 $(document).ready(function () {
     $(window).resize(function () {
-        var height = $("#headerBlock").outerHeight();
+        var height = $("#header").outerHeight();
         if (pastHeaderHeight != height) {
             pastHeaderHeight = height;
-            checkEmptyFieldSize();
+            checkContentMargin();
         }
     });
 
@@ -23,10 +23,10 @@ $(document).ready(function () {
         $("#headerScrollingBlock").scrollLeft(offset);
     });
 
-    checkEmptyFieldSize();
+    checkContentMargin();
 });
 
-function checkEmptyFieldSize() {
-    var headerHeight = $("#headerBlock").height();
-    $("#emptyField").css("height", headerHeight + "px");
+function checkContentMargin() {
+    var headerHeight = $("#header").height();
+    $("#listContent").css("margin-top", headerHeight + "px");
 }
