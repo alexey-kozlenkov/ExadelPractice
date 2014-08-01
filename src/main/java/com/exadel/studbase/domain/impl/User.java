@@ -32,11 +32,11 @@ public class User implements IEntity<Long> {
     @Column(name = "role")
     private String role;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Student studentInfo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Employee employeeInfo;
 
