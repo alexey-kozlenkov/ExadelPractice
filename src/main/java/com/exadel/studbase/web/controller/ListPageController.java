@@ -2,9 +2,9 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.service.IMailService;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
-import com.exadel.studbase.service.mail.MailService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ListPageController {
     @Autowired
     IStudentViewService studentViewService;
     @Autowired
-    MailService mailService;
+    IMailService mailService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
