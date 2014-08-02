@@ -80,6 +80,7 @@ public class ListPageController {
         response.setStatus(200);
     }
 
+    @Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
     public void sendMail(HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new Gson();

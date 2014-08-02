@@ -26,7 +26,7 @@ public class MailServiceImpl implements IMailService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void sendMail(String to, String subject, String body) {
+    public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
@@ -35,6 +35,8 @@ public class MailServiceImpl implements IMailService {
             mailSender.send(message);
         } catch (MailException me) {
             me.printStackTrace();
+            return false;
         }
+        return true;
     }
 }

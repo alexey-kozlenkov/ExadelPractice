@@ -18,13 +18,5 @@
         </property>
     </bean>
 
-    <!--<bean id="mailService" class="com.exadel.studbase.service.impl.IMailServiceImpl">-->
-        <!--<property name="mailSender" ref="mailSender"/>-->
-    <!--</bean>-->
-
-    <bean id="excelView" class="com.exadel.studbase.service.export.ExcelView">
-    </bean>
-
-
 
 </beans>
