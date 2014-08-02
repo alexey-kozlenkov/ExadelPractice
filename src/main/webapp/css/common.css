@@ -139,6 +139,12 @@ label,
 }
 
 /****************************** Table ******************************************/
+.prj-list-header {
+    background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -ms-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -o-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+    background: -webkit-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
+}
 
 .prj-table-striped > tbody > tr:nth-child(even) > td,
 .prj-table-striped > tbody > tr:nth-child(even) > th {
@@ -146,15 +152,15 @@ label,
 }
 
 /****************************remove arrows from inputs***************************/
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0px;
-}
+/*input::-webkit-inner-spin-button,*/
+/*input::-webkit-outer-spin-button {*/
+    /*-webkit-appearance: none;*/
+    /*margin: 0px;*/
+/*}*/
 
-input {
-    -moz-appearance: textfield;
-}
+/*input {*/
+    /*-moz-appearance: textfield;*/
+/*}*/
 
 /**************************************************************************/
 .content-locker {

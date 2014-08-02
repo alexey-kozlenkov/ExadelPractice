@@ -39,6 +39,8 @@ public class ListPageController {
         return "list";
     }
 
+    //TODO! reorganized (listData, getViewByName) (mast be one rest-service)
+
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
     public void listData(HttpServletRequest request, HttpServletResponse response) {
@@ -119,5 +121,15 @@ public class ListPageController {
         }
 
         return new ModelAndView("excelView", "users", listOfUsers);
+    }
+
+    @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
+    public void addUser(HttpServletRequest request, HttpServletResponse response){
+        Object name = request.getParameter("user");
+        Object role = request.getParameter("role");
+
+        //TODO ! Real service
+
+        response.setStatus(200);
     }
 }
