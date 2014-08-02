@@ -49,7 +49,7 @@ function bindMenuBlock() {
           exportExcel();
     });
     $("#distributionMenuButton").click(function () {
-        showDialog(1);
+        showDialog('send-message');
         // alert(getCheckedRowsId());
     });
 }
@@ -91,9 +91,10 @@ function bindSendMessageDialog(){
                 var mailTemplate = Handlebars.compile($("#mailListTemplate").html());
                 mailList.empty();
                 mailList.append(mailTemplate({mails:mails}));
-                showDialog(2);
-            }else
+                showDialog('inaccessible-mail');
+            }else {
                 console.log("Done ! - ");
+            }
         }).fail(function () {
             alert("Error");
         });

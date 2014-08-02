@@ -107,7 +107,7 @@ function checkFilterCount() {
     } else {
         filterBtn.hide();
     }
-    checkContentMargin();
+    checkTopMarginOfList();
 }
 
 function pickFilters() {
