@@ -22,8 +22,8 @@
         <!--<property name="mailSender" ref="mailSender"/>-->
     <!--</bean>-->
 
-    <!--<bean id="excelView" class="com.exadel.studbase.web.util.ExcelView">
-    </bean>-->
+    <bean id="excelView" class="com.exadel.studbase.service.export.ExcelView">
+    </bean>
 
 
 

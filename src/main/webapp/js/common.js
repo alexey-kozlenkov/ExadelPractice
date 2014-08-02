@@ -14,3 +14,21 @@ function showDialog(content_number){
     $(".dialog-content[dialog-number='"+content_number+"']").show();
 }
 
+function setLocationRelativeTo(element, parent) {
+    var winOffsetW = $(window).width();
+
+    var pos = parent.offset();
+
+    var x = pos.left;
+    var space = pos.left + element.width() - winOffsetW + 4;
+    if (space > 0)
+        x -= space;
+    var y = pos.top + parent.height();
+
+    element.css(
+        {
+            left: x,
+            top: y
+        }
+    );
+}

@@ -4,15 +4,15 @@
     <meta charset="UTF-8"/>
     <title>Student list</title>
     <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/list/list.css" rel="stylesheet">
     <link href="../css/common.css" rel="stylesheet">
+    <link href="../css/list/list.css" rel="stylesheet">
 </head>
 <body>
 
-<header id="headerBlock" class="header-block">
+<header id="header" class="header">
 
     <div class="form-inline first-header-block" align="center">
-        <div id="menuBlock" class="menu-block">
+        <div id="utilityMenu" class="btn-menu">
             <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
                    alt="Add student" title="Add student">
             <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
@@ -20,23 +20,22 @@
             <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
                    src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
         </div>
-        <span style="width: 20pt; height: 20pt"></span>
 
         <span class="btn-group input-group">
-            <input type="text"  id="searchLine" class="form-control search-query search-line" placeholder="Name">
+            <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name">
             <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
                    alt="Find!" title="Search!">
         </span>
     </div>
 
-    <span id="filterBlock" >
+    <span id="filter">
              <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
                  <span class="glyphicon glyphicon-filter"></span>
              </button>
     </span>
 
-    <div id="headerScrollingBlock" class="header-table-block">
-        <div class="central-block">
+    <div id="headerScrollingBlock" class="list-header">
+        <div class="central">
             <table id="headerFixed" class="table prj-table-striped student-table">
                 <colgroup>
                     <col class="header-column-0">
@@ -71,8 +70,7 @@
     </div>
 </header>
 
-<div id="contentBlock" class="central-block">
-    <div id="emptyField"></div>
+<div id="listContent" class="central">
     <table id="studTable" class="table prj-table-striped student-table">
         <colgroup>
             <col class="header-column-0">
@@ -87,31 +85,88 @@
             <col class="header-column-9">
             <col class="header-column-10">
         </colgroup>
+
         <tbody>
         </tbody>
+
+        <script id="listContentTemplate" type="text/x-handlebars-template">
+            {{#each list}}
+            <tr>
+                <td>
+                    <input type='checkbox' class='item-checkbox' data-id="{{id}}">
+                </td>
+                <td>
+                    <a href='/info?id={{id}}'>{{name}}</a>
+                </td>
+                <td>{{hireDate}}</td>
+                <td>{{faculty}}</td>
+                <td>{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
+                <td>{{graduationDate}}</td>
+                <td>{{workingHours}}</td>
+                <td>{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
+                <td>{{roleCurrentProject}}</td>
+                <td>{{techsCurrentProject}}</td>
+                <td>{{englishLevel}}</td>
+            </tr>
+            {{/each}}
+        </script>
     </table>
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
 
 <label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
 
-<ul id="filterMenu" class="dropdown-menu" role="menu" >
-</ul>
+<ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
+<script id="filterMenuTemplate" type="text/x-handlebars-template">
+    {{#each types}}
+    <li class='menu-item' data-filter-name='{{name}}'>
+        <a role='menuitem'>{{name}}</a>
+    </li>
+    {{/each}}
+</script>
+
+<script id="filterTemplate" type="text/x-handlebars-template">
+    {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
+    <div data-filter='{{name}}' class='btn-group input-group filter-item'>
+        <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
+
+    </div>
+</script>
 
 <div class='content-locker'>
     <div class='dialog-area'>
         <div class='dialog-header'>
             <span class='glyphicon glyphicon-remove dialog-close'
-                    onclick="closeDialog();"></span>
+                  onclick="closeDialog();"></span>
         </div>
-        <div class='dialog-content' dialog-number ='1'>
+
+        <div class='dialog-content' dialog-number='1'>
             <div class="dialog-content-central">
-                <label for="sendedMessage"> Message text: </label>
-                <textarea id="sendedMessage" class="message-area">
+                <label for="sentMessage"> Message text: </label>
+                <textarea id="sentMessage" class="message-area">
                 </textarea>
             </div>
             <div class="dialog-footer">
-                <button id='sendButton' class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send</button>
+                <button id='sendButton' class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send
+                </button>
+            </div>
+        </div>
+
+        <div class='dialog-content' dialog-number='2'>
+            <div class="dialog-content-central">
+                <ul id="inaccessibleMailList">
+                </ul>
+                <script id="mailListTemplate" type="text/x-handlebars-template">
+                    {{#each mails}}
+                    <li>
+                        {{this}}
+                    </li>
+                    {{/each}}
+                </script>
+            </div>
+            <div class="dialog-footer">
+                <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
+                </button>
             </div>
         </div>
     </div>
@@ -119,10 +174,11 @@
 
 <script src="../js/lib/jquery-2.1.1.min.js"></script>
 <script src="../js/lib/jquery.animate-colors-min.js"></script>
+<script src="../js/lib/underscore-min.js"></script>
+<script src="../js/lib/handlebars-v1.3.0.js"></script>
 
 <script src="../js/list/tableHeader.js"></script>
 <script src="../js/list/tableOperations.js"></script>
-
 <script src="../js/list/filter.js"></script>
 <script src="../js/list/navigation.js"></script>
 

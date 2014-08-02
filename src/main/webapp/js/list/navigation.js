@@ -11,14 +11,42 @@ $(document).ready(function () {
 function bindMenuBlock() {
     $("#addMenuButton").click(function () {
         // FOR TESTING TODO!
-        addRow(0, 'Vasya Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'php', 'Intermediate'], 9);
-        addRow(0, 'Vasya Uan Hun Pupkin', ['16.07.2014', 'FPM', '1-1', '2018', 12, '-', 'tester', 'html js php java json hibitrnate spring ', 'Intermediate'], 9);
-        updateInfoLabel();
+        var list = [
+            {
+                id: 1,
+                name: 'Vasya Pupkin',
+                hireDate: '16.07.2014',
+                faculty: 'FPM',
+                course: 3,
+                group: 8,
+                graduationDate: '2018',
+                workingHours: 8,
+                billable: null,
+                roleCurrentProject: 'tester',
+                techsCurrentProject: 'java javascript css html sql',
+                englishLevel:'Intermediate'
+            },
+            {
+                id: 2,
+                name: 'Vasya Uan Hun Pupkin',
+                hireDate: '16.07.2014',
+                faculty: 'FPM',
+                course: 3,
+                graduationDate: '2018',
+                workingHours: 8,
+                billable: null,
+                roleCurrentProject: 'tester',
+                techsCurrentProject:  'html js php java json hibitrnate spring',
+                englishLevel:'Intermediate'
+            }
+        ];
+        addAllStudents(list);
     });
     $("#exportMenuButton").click(function () {
-        // FOR TESTING TODO!
-        clearTable();
-        updateInfoLabel();
+//        // FOR TESTING TODO!
+//        clearList();
+//        updateInfoLabel();
+          exportExel();
     });
     $("#distributionMenuButton").click(function () {
         showDialog(1);
@@ -44,8 +72,8 @@ function bindSearchBlock(){
 
 function bindSendMessageDialog(){
     $("#sendButton").click(function(){
-        var messageText = $("#sendedMessage").val();
-        var studIds = JSON.stringify(getCheckedRowsId());
+        var messageText = $("#sentMessage").val(),
+            studIds = JSON.stringify(getCheckedRowsId());
 
         $.ajax({
             type: "POST",
@@ -57,21 +85,28 @@ function bindSendMessageDialog(){
                 students: studIds
             }
         }).done(function (data) {
-            console.log("Done ! - ", data, ' -');
+            var mails = JSON.parse(data);
+            if(mails && mails.length>0){
+                var mailList = $("#inaccessibleMailList");
+                var mailTemplate = Handlebars.compile($("#mailListTemplate").html());
+                mailList.empty();
+                mailList.append(mailTemplate({mails:mails}));
+                showDialog(2);
+            }else
+                console.log("Done ! - ");
         }).fail(function () {
-            alert("error");
+            alert("Error");
         });
         closeDialog();
      });
 }
 
 function loadTable() {
+    var search = $("#searchLine").val(),
+        filter = pickFilters(),
+        filterPack = JSON.stringify(filter);
+
     setTableLoadingState(true);
-
-    var search = $("#searchLine").val();
-    var filter = pickFilters();
-
-    var filterPack = JSON.stringify(filter);
 
     $.ajax({
         type: "GET",
@@ -84,7 +119,7 @@ function loadTable() {
     }).done(function (data) {
         var obj = JSON.parse(data);
         if (obj) {
-            clearTable();
+            clearList();
             addAllStudents(obj);
             setTableLoadingState(false);
         }
@@ -92,4 +127,9 @@ function loadTable() {
         alert("error");
         setTableLoadingState(false);
     });
+}
+
+function exportExel(){
+    var studIds = JSON.stringify(getCheckedRowsId());
+    window.open("/list/export?students="+studIds,"exportFile");
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class IMailServiceImpl implements IMailService {
+public class MailServiceImpl implements IMailService {
     @Autowired
     private MailSender mailSender;
 
