@@ -8,7 +8,7 @@
 }
 
 /*-------------------------------------*/
-.first-header-block {
+.first-header-line {
     margin: 2pt;
     margin-bottom: 1pt;
 }
@@ -26,7 +26,7 @@
 }
 
 .search-block {
-    display: inline-block;
+    display: block;
     text-align: center;
 }
 
@@ -161,9 +161,8 @@
     width: 24pt;
 }
 
-.filter-item {    
-    position: relative;
-    display: inline-flex;
+.filter-item {
+    display: inline-table;
     
     padding: 0;
     width: 120pt;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title>Student list</title>
@@ -11,15 +11,15 @@
 
 <header id="header" class="header">
 
-    <div class="form-inline first-header-block" align="center">
-        <div id="utilityMenu" class="btn-menu">
+    <div class="form-inline first-header-line" align="center">
+        <span id="utilityMenu" class="btn-menu">
             <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
                    alt="Add student" title="Add student">
             <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
                    alt="Export" title="Export to Excel Doc.">
             <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
                    src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
-        </div>
+        </span>
 
         <span class="btn-group input-group">
             <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name">
@@ -28,11 +28,11 @@
         </span>
     </div>
 
-    <span id="filter">
+    <div id="filter">
              <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
                  <span class="glyphicon glyphicon-filter"></span>
              </button>
-    </span>
+    </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
         <div class="central">
