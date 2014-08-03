@@ -5,9 +5,9 @@
     <title>Information</title>
 
     <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'/>
-    <link rel="stylesheet" href="../css/info/user-info.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel="stylesheet" type='text/css'/>
     <link href="../css/common.css" rel="stylesheet">
+    <link href="../css/info/user-info.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -118,13 +118,15 @@
 
                         <ul class="list-inline" id="averageMarks">
                             <li>
-                                <input type="image"  title="add next term" id="addNextTerm" class="btn prj-btn" src="../images/add.png"
+                                <input type="image" title="add next term" id="addNextTerm" class="btn prj-btn"
+                                       src="../images/add.png"
                                        alt="Add next term">
                             </li>
                             <li>
                                 <ol class="termMark" id="termMark">
                                     <li>
-                                        <input onchange='validateMark();' type="number" placeholder="1.23" min="1" max="10">
+                                        <input onchange='validateMark();' type="number" placeholder="1.23" min="1"
+                                               max="10">
                                     </li>
                                 </ol>
                             </li>

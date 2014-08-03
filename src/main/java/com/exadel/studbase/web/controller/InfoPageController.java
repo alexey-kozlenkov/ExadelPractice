@@ -8,18 +8,19 @@ import com.exadel.studbase.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Date;
 import java.util.Map;
 import java.util.Set;
@@ -55,40 +56,46 @@ public class InfoPageController {
     }
 
     @RequestMapping(value = "/info/getOptions", method = RequestMethod.GET)
-    public void studentData(HttpServletResponse response) {
-        try {
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String studentData(HttpServletResponse response) {
+        //try {
             Gson gson = new Gson();
             Options options = new Options();
-            response.getWriter().print(gson.toJson(options, Options.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
+            //response.getWriter().print(gson.toJson(options, Options.class));
+            return gson.toJson(options, Options.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        //response.setStatus(200);
     }
 
     @RequestMapping(value = "/info/getManualInformation", method = RequestMethod.GET)
-    public void manualData(@RequestParam("studentId") Long studentId, HttpServletResponse response) {
-        try {
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String manualData(@RequestParam("studentId") Long studentId, HttpServletResponse response) {
+        //try {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             User user = userService.getById(studentId);
             System.out.println(user.getStudentInfo().toString());
-            response.getWriter().print(gson.toJson(user, User.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
+            //response.getWriter().print(gson.toJson(user, User.class));
+        return gson.toJson(user, User.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        //response.setStatus(200);
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
     @RequestMapping(value = "/info/postManualInformation", method = RequestMethod.POST)
-    public void editManualInformation(@RequestParam("studentId") Long id,
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String editManualInformation(@RequestParam("studentId") Long id,
                                         @RequestParam("studentName") String name,
                                         @RequestParam("studentLogin") String login,
                                         @RequestParam("studentPassword") String password,
                                         @RequestParam("studentEmail") String email,
-                                        @RequestParam("studentState") String state,
-                                        HttpServletResponse response) {
-        try {
+                                        @RequestParam("studentState") String state) {
 //
 //            Map<String, String[]> params = request.getParameterMap();
 //            Set<Map.Entry<String, String[]>> entry = params.entrySet();
@@ -114,11 +121,7 @@ public class InfoPageController {
 
             userService.save(editedUser);
 
-            response.getWriter().print("{\"post\":\"ok\"}"); //string in double quotes
-            response.setStatus(200);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+             return "{\"post\":\"ok\"}"; //string in double quotes
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
