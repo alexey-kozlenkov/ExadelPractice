@@ -14,18 +14,18 @@ function showDialog(content_name){
     $(".dialog-content[dialog-name='"+content_name+"']").show();
 }
 
-function setLocationRelativeTo(element, parent) {
+function setMenuLocationRelativeTo(menu, owner) {
     var winOffsetW = $(window).width();
 
-    var pos = parent.offset();
+    var pos = owner.offset();
 
     var x = pos.left;
-    var space = pos.left + element.width() - winOffsetW + 4;
+    var space = pos.left + menu.width() - winOffsetW + 4;
     if (space > 0)
         x -= space;
-    var y = pos.top + parent.height();
+    var y = pos.top + owner.height();
 
-    element.css(
+    menu.css(
         {
             left: x,
             top: y

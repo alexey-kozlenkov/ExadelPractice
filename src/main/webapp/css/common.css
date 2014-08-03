@@ -184,8 +184,8 @@ label,
     top: 0;
     bottom: 0;
 
-    width: 220pt;
-    height: 200pt;
+    width: 200pt;
+    height: 180pt;
 
     margin: auto;
 
@@ -204,9 +204,10 @@ label,
 }
 
 .dialog-content {
+    display: none;
     text-align: center;
     /*width: 100%;*/
-    height: 180pt;
+    height: 160pt;
     padding: 3pt;
 }
 
