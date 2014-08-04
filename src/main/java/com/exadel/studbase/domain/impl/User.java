@@ -52,10 +52,10 @@ public class User implements IEntity<Long> {
 
 
     public User() {
-        password = "pas";
+        password = "11111";
     }
     public User(String name, String login) {
-        super();
+        this();
         setName(name);
         setLogin(login);
     }
