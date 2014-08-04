@@ -132,9 +132,16 @@ public class ListPageController {
                         @RequestParam("login") String login,
                         @RequestParam("state") String state) {
 
-        User user = new User(name, login);
-        user.setStudentInfo(new Student());
-        user.getStudentInfo().setState(state);
-        userService.save(user);
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setLogin(login);
+        newUser.setRole("ROLE_STUDENT");
+        userService.save(newUser);
+        Student newStudent = new Student();
+        newStudent.setId(newUser.getId());
+        newUser.setStudentInfo(newStudent);
+        newUser.getStudentInfo().setState(state);
+        userService.save(newUser);
+        System.out.println("ok");
     }
 }
