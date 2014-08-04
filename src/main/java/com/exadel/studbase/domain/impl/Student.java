@@ -60,6 +60,16 @@ public class Student implements IEntity<Long> {
     @Column(name="term_marks")
     private String termMarks;
 
+    @Column(name="current_project")
+    private String currentProject;
+
+    @Column(name="team_lead_current_project")
+    private Long teamLeadId;
+
+    @Column(name="project_manager_current_project")
+    private Long projectManagerId;
+
+
     public Student() {
     }
 
@@ -105,19 +115,19 @@ public class Student implements IEntity<Long> {
         this.faculty = faculty;
     }
 
-    public int getCourse() {
+    public Integer getCourse() {
         return course;
     }
 
-    public void setCourse(int course) {
+    public void setCourse(Integer course) {
         this.course = course;
     }
 
-    public int getGroup() {
+    public Integer getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(Integer group) {
         this.group = group;
     }
 
@@ -129,11 +139,11 @@ public class Student implements IEntity<Long> {
         this.graduationDate = graduationDate;
     }
 
-    public int getWorkingHours() {
+    public Integer getWorkingHours() {
         return workingHours;
     }
 
-    public void setWorkingHours(int working_hours) {
+    public void setWorkingHours(Integer working_hours) {
         this.workingHours = working_hours;
     }
 
@@ -184,6 +194,30 @@ public class Student implements IEntity<Long> {
             result+=mark+";";
         }
         this.termMarks = result;
+    }
+
+    public String getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(String currentProject) {
+        this.currentProject = currentProject;
+    }
+
+    public Long getTeamLeadId() {
+        return teamLeadId;
+    }
+
+    public void setTeamLeadId(Long teamLeadId) {
+        this.teamLeadId = teamLeadId;
+    }
+
+    public Long getProjectManagerId() {
+        return projectManagerId;
+    }
+
+    public void setProjectManagerId(Long projectManagerId) {
+        this.projectManagerId = projectManagerId;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.exadel.studbase.domain.impl;
 import com.exadel.studbase.domain.IEntity;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -45,6 +46,9 @@ public class User implements IEntity<Long> {
 
     @Column(name="telephone")
     private String telephone;
+
+    @Column(name="birthdate")
+    private Date birthdate;
 
 
     public User() {
@@ -135,6 +139,14 @@ public class User implements IEntity<Long> {
 
     public void setSkype(String skype) {
         this.skype = skype;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     @Override
