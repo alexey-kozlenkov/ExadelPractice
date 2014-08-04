@@ -194,18 +194,8 @@ label,
 }
 
 .dialog-area {
-    /*display: table;*/
-    /*position: absolute;*/
-
-    /*left: 0;*/
-    /*right: 0;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-
     width: 220pt;
     height: auto;
-
-    /*margin: auto;*/
 
     display: inline-block;
     vertical-align: middle;
