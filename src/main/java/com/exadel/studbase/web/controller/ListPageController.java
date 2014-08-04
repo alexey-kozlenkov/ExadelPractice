@@ -2,6 +2,7 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.service.IMailService;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.google.gson.Gson;
