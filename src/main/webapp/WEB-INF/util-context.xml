@@ -7,7 +7,7 @@
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com"/>
-        <property name="username" value="<vasia.ermakov@gmail.com>"/>
+        <property name="username" value="vasia.ermakov@gmail.com"/>
         <property name="password" value="631136631"/>
         <property name="javaMailProperties">
             <props>
@@ -16,10 +16,6 @@
                 <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
             </props>
         </property>
-    </bean>
-
-    <bean id="mailService" class="com.exadel.studbase.service.mail.MailServiceImpl">
-        <property name="mailSender" ref="mailSender"/>
     </bean>
 
 </beans>
