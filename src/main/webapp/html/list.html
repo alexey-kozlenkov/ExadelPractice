@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Student list</title>
@@ -11,7 +11,7 @@
 
 <header id="header" class="header">
 
-    <div class="form-inline first-header-line" align="center">
+    <div class="form-inline first-header-line">
         <span id="utilityMenu" class="btn-menu">
             <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
                    alt="Add student" title="Add student">
@@ -135,21 +135,21 @@
 <div class='content-locker'>
     <div class='dialog-area'>
         <div class='dialog-header'>
-            <span class='glyphicon glyphicon-remove dialog-close'
-                  onclick="closeDialog();"></span>
+            <span id="closeDialog" class='glyphicon glyphicon-remove dialog-close'></span>
         </div>
 
-        <div class='dialog-content' dialog-name='send-message'>
+        <div class='dialog-content' data-dialog-name='send-message'>
             <div class="dialog-content-central">
-                <label for="sentMessage"> Message text: </label>
-                <textarea id="sentMessage" class="message-area"></textarea>
+                <input type="text" id="subjectField" placeholder="Subject" class="dialog-input">
+                <textarea id="sentMessage" class="message-area dialog-input" placeholder="Message"></textarea>
             </div>
             <div class="dialog-footer">
-                <button id='sendButton' class="btn prj-btn"><span class="glyphicon glyphicon-envelope"></span> Send
+                <button id='sendButton' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-envelope"></span>Send
                 </button>
             </div>
         </div>
-        <div class='dialog-content' dialog-name='inaccessible-mail'>
+        <div class='dialog-content' data-dialog-name='inaccessible-mail'>
             <div class="dialog-content-central">
                 <ul id="inaccessibleMailList">
                 </ul>
@@ -162,27 +162,32 @@
                 </script>
             </div>
             <div class="dialog-footer">
-                <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span
-                        class="glyphicon glyphicon-ok"></span> Ok
+                <button id='closeMessageButton' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-ok"></span>Ok
                 </button>
             </div>
         </div>
-        <div class='dialog-content' dialog-name='add-student'>
+        <div class='dialog-content' data-dialog-name='add-student'>
             <div class="dialog-content-central form-horizontal">
                 <div class="form-group">
-                    <label for="loginField" class="col-sm-2 control-label">Login: </label>
+                    <label for="nameField" class="col-sm-2 control-label">Name: </label>
+                    <input type="text" id="nameField" placeholder="name">
+                </div>
+                <div class="form-group">
+                    <label for="nameField" class="col-sm-2 control-label">Login: </label>
                     <input type="text" id="loginField" placeholder="login">
                 </div>
                 <div class="form-group">
-                    <label for="roleField" class="col-sm-2 control-label">Role: </label>
-                    <select id="roleField" title="role">
-                        <option>Student</option>
-                        <option>Curator</option>
+                    <label for="stateField" class="col-sm-2 control-label">State: </label>
+                    <select id="stateField" title="role">
+                        <option>working</option>
+                        <option>training</option>
                     </select>
                 </div>
             </div>
             <div class="dialog-footer">
-                <button id='createUser' class="btn prj-btn"><span class="glyphicon glyphicon-ok"></span> Ok
+                <button id='createUser' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-ok"></span>Ok
                 </button>
             </div>
         </div>

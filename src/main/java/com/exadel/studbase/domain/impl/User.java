@@ -48,7 +48,12 @@ public class User implements IEntity<Long> {
 
 
     public User() {
-        password = "11111";
+        password = "pas";
+    }
+    public User(String name, String login) {
+        super();
+        setName(name);
+        setLogin(login);
     }
 
     @Override

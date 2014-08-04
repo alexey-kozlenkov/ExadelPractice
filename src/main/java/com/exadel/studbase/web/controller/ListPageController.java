@@ -1,8 +1,10 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IMailService;
+import com.exadel.studbase.service.IStudentService;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.google.gson.Gson;
@@ -26,9 +28,40 @@ public class ListPageController {
     @Autowired
     IUserService userService;
     @Autowired
+    IStudentService studentService;
+    @Autowired
     IStudentViewService studentViewService;
     @Autowired
     IMailService mailService;
+
+    public class StudResponse {
+        private Long version;
+        private Collection<StudentView> studentViews;
+
+        public StudResponse() {
+        }
+
+        public StudResponse(Long version, Collection<StudentView> studentViews) {
+            this.version = version;
+            this.studentViews = studentViews;
+        }
+
+        public Long getVersion() {
+            return version;
+        }
+
+        public void setVersion(Long version) {
+            this.version = version;
+        }
+
+        public Collection<StudentView> getStudentViews() {
+            return studentViews;
+        }
+
+        public void setStudentViews(Collection<StudentView> studentViews) {
+            this.studentViews = studentViews;
+        }
+    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
@@ -36,38 +69,26 @@ public class ListPageController {
         return "list";
     }
 
-    //TODO! reorganized (listData, getViewByName) (mast be one rest-service)
-
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String listData(@RequestParam("name") String searchName,
-                           @RequestParam("filter") Object filter) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-
-        Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(searchName);
-        System.out.println(gson.fromJson((String) filter, map.getClass()));
-
-        Collection<StudentView> studList = studentViewService.getAll();
-
-        return gson.toJson(studList);
-    }
-
-    @RequestMapping(value = "/list/name", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String getViewByName(@RequestParam("searchName") String desiredName) {
+    public String getStudentsByRequest(@RequestParam("version") Long version,
+                                       @RequestParam(value = "searchName", required = false) String desiredName,
+                                       @RequestParam(value = "filter", required = false) String filter) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(desiredName);
+
+        System.out.println("Version: " + version);
+        System.out.println("Search name: " + desiredName);
+        System.out.println("Filter: " + filter);
         //    System.out.println(gson.fromJson((String) filter, map.getClass()));
 
-        Collection<StudentView> studList = studentViewService.getViewByStudentName(desiredName);
+        StudResponse response = new StudResponse(version,
+                studentViewService.getViewByStudentName(desiredName));
 
-        return gson.toJson(studList);
+        return gson.toJson(response, StudResponse.class);
     }
 
     @Secured("ROLE_SUPERADMIN")
@@ -75,6 +96,7 @@ public class ListPageController {
     @ResponseBody
     @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
     public String sendMail(@RequestParam("students") String students,
+                           @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam("message") String body) {
         Gson gson = new Gson();
 
@@ -83,7 +105,7 @@ public class ListPageController {
         List<String> inaccessibleEmail = new ArrayList<String>();
         for (Long id : studentId) {
             User user = userService.getById(id);
-            if (!mailService.sendMail(user.getEmail(), "", body)) {
+            if (!mailService.sendMail(user.getEmail(), subject, body)) {
                 inaccessibleEmail.add(user.getEmail());
             }
         }
@@ -106,9 +128,13 @@ public class ListPageController {
 
     @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void addUser(@RequestParam("user") Object name,
-                        @RequestParam("role") Object role) {
+    public void addUser(@RequestParam("name") String name,
+                        @RequestParam("login") String login,
+                        @RequestParam("state") String state) {
 
-        //TODO ! Real service
+        User user = new User(name, login);
+        user.setStudentInfo(new Student());
+        user.getStudentInfo().setState(state);
+        userService.save(user);
     }
 }
