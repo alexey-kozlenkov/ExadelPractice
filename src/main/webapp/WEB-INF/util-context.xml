@@ -7,7 +7,7 @@
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com"/>
-        <property name="username" value="vasia.ermakov@gmail.com"/>
+        <property name="username" value="<vasia.ermakov@gmail.com>"/>
         <property name="password" value="631136631"/>
         <property name="javaMailProperties">
             <props>
@@ -21,10 +21,5 @@
     <bean id="mailService" class="com.exadel.studbase.service.mail.MailServiceImpl">
         <property name="mailSender" ref="mailSender"/>
     </bean>
-
-    <bean id="excelView" class="com.exadel.studbase.service.export.ExcelView">
-    </bean>
-
-
 
 </beans>
