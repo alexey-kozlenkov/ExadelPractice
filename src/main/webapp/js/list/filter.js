@@ -70,7 +70,7 @@ function toggleFilterChooseMenu() {
     if ($menu.is(':visible')) {
         $menu.hide(300);
     } else {
-        setLocationRelativeTo($menu, $("#addFilterButton"));
+        setMenuLocationRelativeTo($menu, $("#addFilterButton"));
         if (filter.changed) {
             filter.changed = false;
             var filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
@@ -107,7 +107,7 @@ function checkFilterCount() {
     } else {
         filterBtn.hide();
     }
-    checkContentMargin();
+    checkTopMarginOfList();
 }
 
 function pickFilters() {

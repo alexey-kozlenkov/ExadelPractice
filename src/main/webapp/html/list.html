@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title>Student list</title>
@@ -11,15 +11,15 @@
 
 <header id="header" class="header">
 
-    <div class="form-inline first-header-block" align="center">
-        <div id="utilityMenu" class="btn-menu">
+    <div class="form-inline first-header-line" align="center">
+        <span id="utilityMenu" class="btn-menu">
             <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
                    alt="Add student" title="Add student">
             <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
                    alt="Export" title="Export to Excel Doc.">
             <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
                    src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
-        </div>
+        </span>
 
         <span class="btn-group input-group">
             <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name">
@@ -28,11 +28,27 @@
         </span>
     </div>
 
-    <span id="filter">
-             <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
-                 <span class="glyphicon glyphicon-filter"></span>
-             </button>
-    </span>
+    <div id="filter">
+        <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
+            <span class="glyphicon glyphicon-filter"></span>
+        </button>
+        <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
+        <script id="filterMenuTemplate" type="text/x-handlebars-template">
+            {{#each types}}
+            <li class='menu-item' data-filter-name='{{name}}'>
+                <a role='menuitem'>{{name}}</a>
+            </li>
+            {{/each}}
+        </script>
+
+        <script id="filterTemplate" type="text/x-handlebars-template">
+            {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
+            <div data-filter='{{name}}' class='btn-group input-group filter-item'>
+                <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
+
+            </div>
+        </script>
+    </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
         <div class="central">
@@ -116,23 +132,6 @@
 
 <label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
 
-<ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
-<script id="filterMenuTemplate" type="text/x-handlebars-template">
-    {{#each types}}
-    <li class='menu-item' data-filter-name='{{name}}'>
-        <a role='menuitem'>{{name}}</a>
-    </li>
-    {{/each}}
-</script>
-
-<script id="filterTemplate" type="text/x-handlebars-template">
-    {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
-    <div data-filter='{{name}}' class='btn-group input-group filter-item'>
-        <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-
-    </div>
-</script>
-
 <div class='content-locker'>
     <div class='dialog-area'>
         <div class='dialog-header'>
@@ -140,19 +139,17 @@
                   onclick="closeDialog();"></span>
         </div>
 
-        <div class='dialog-content' dialog-name='1'>
+        <div class='dialog-content' dialog-name='send-message'>
             <div class="dialog-content-central">
                 <label for="sentMessage"> Message text: </label>
-                <textarea id="sentMessage" class="message-area">
-                </textarea>
+                <textarea id="sentMessage" class="message-area"></textarea>
             </div>
             <div class="dialog-footer">
-                <button id='sendButton' class="btn btn-success"><span class="glyphicon glyphicon-envelope"></span> Send
+                <button id='sendButton' class="btn prj-btn"><span class="glyphicon glyphicon-envelope"></span> Send
                 </button>
             </div>
         </div>
-
-        <div class='dialog-content' dialog-name='2'>
+        <div class='dialog-content' dialog-name='inaccessible-mail'>
             <div class="dialog-content-central">
                 <ul id="inaccessibleMailList">
                 </ul>
@@ -165,16 +162,27 @@
                 </script>
             </div>
             <div class="dialog-footer">
-                <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
+                <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span
+                        class="glyphicon glyphicon-ok"></span> Ok
                 </button>
             </div>
         </div>
-        <div class='dialog-content' dialog-name='3'>
-            <div class="dialog-content-central">
-
+        <div class='dialog-content' dialog-name='add-student'>
+            <div class="dialog-content-central form-horizontal">
+                <div class="form-group">
+                    <label for="loginField" class="col-sm-2 control-label">Login: </label>
+                    <input type="text" id="loginField" placeholder="login">
+                </div>
+                <div class="form-group">
+                    <label for="roleField" class="col-sm-2 control-label">Role: </label>
+                    <select id="roleField" title="role">
+                        <option>Student</option>
+                        <option>Curator</option>
+                    </select>
+                </div>
             </div>
             <div class="dialog-footer">
-                <button id='createUser' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
+                <button id='createUser' class="btn prj-btn"><span class="glyphicon glyphicon-ok"></span> Ok
                 </button>
             </div>
         </div>
@@ -186,10 +194,9 @@
 <script src="../js/lib/underscore-min.js"></script>
 <script src="../js/lib/handlebars-v1.3.0.js"></script>
 
-<script src="../js/list/tableHeader.js"></script>
-<script src="../js/list/tableOperations.js"></script>
+<script src="../js/list/listController.js"></script>
 <script src="../js/list/filter.js"></script>
-<script src="../js/list/navigation.js"></script>
+<script src="../js/list/rest.js"></script>
 
 <script src="../js/common.js"></script>
 
