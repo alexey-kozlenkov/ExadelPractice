@@ -28,6 +28,7 @@ public class MailServiceImpl implements IMailService {
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("<vasia.ermakov@gmail.com>");
         message.setTo(to);
         message.setFrom("<vasia.ermakov@gmail.com>");
         message.setSubject(subject);
