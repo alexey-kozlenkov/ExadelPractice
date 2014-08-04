@@ -7,29 +7,11 @@ function closeDialog(){
     $(".dialog-area").hide();
 }
 /* Show dialog with content [data-dialog_number='content_name'] on current page */
-function showDialog(content_name){
-    //centrePopup($(".dialog-area"));
+function showDialog(content_name) {
     $(".content-locker").fadeIn(500);
     $(".dialog-area").show();
     $(".dialog-content").hide();
-    $(".dialog-content[data-dialog-name='"+content_name+"']").show();
-}
-
-function centrePopup(popup, x, y) {
-    var WIDTH = $(window).width();
-    var HEIGHT = $(window).height();
-    var popupWidth = popup.width();
-    var popupHeight = popup.height();
-    if (x == undefined || x == null) {
-        x = (WIDTH - popupWidth) / 2;
-    }
-    if (y == undefined || y == null) {
-        y = (HEIGHT - popupHeight) / 2;
-    }
-    popup.css({
-        left: x,
-        top: y
-    });
+    $(".dialog-content[data-dialog-name='" + content_name + "']").show();
 }
 
 function setMenuLocationRelativeTo(menu, owner) {

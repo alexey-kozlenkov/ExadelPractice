@@ -14,7 +14,7 @@ import java.util.Collection;
  * Created by ala'n on 29.07.2014.
  */
 @Service
-public class StudentViewServiceImpl implements IStudentViewService{
+public class StudentViewServiceImpl implements IStudentViewService {
 
     @Autowired
     private IStudentViewDAO studentViewDAO;

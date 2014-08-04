@@ -1,6 +1,6 @@
 CREATE EXTENSION pg_trgm;
 
-CREATE OR REPLACE FUNCTION find_student_by_name (desired_name text)
+CREATE OR REPLACE FUNCTION find_student_by_name(desired_name TEXT)
   RETURNS SETOF "STUDENT_VIEW"
 AS
   $BODY$

@@ -57,18 +57,18 @@ public class InfoPageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String studentData() {
-            Gson gson = new Gson();
-            Options options = new Options();
-            return gson.toJson(options, Options.class);
+        Gson gson = new Gson();
+        Options options = new Options();
+        return gson.toJson(options, Options.class);
     }
 
     @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String manualData(@RequestParam("studentId") Long studentId) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            User user = userService.getById(studentId);
-            System.out.println(user.getStudentInfo().toString());
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User user = userService.getById(studentId);
+        System.out.println(user.getStudentInfo().toString());
         return gson.toJson(user, User.class);
     }
 
@@ -91,16 +91,16 @@ public class InfoPageController {
                                         @RequestParam("studentPassword") String password,
                                         @RequestParam("studentEmail") String email,
                                         @RequestParam("studentState") String state) {
-            User editedUser = userService.getById(id);
-            editedUser.setName(name);
-            editedUser.setLogin(login);
-            editedUser.setPassword(password);
-            editedUser.setEmail(email);
-            editedUser.getStudentInfo().setState(state);
+        User editedUser = userService.getById(id);
+        editedUser.setName(name);
+        editedUser.setLogin(login);
+        editedUser.setPassword(password);
+        editedUser.setEmail(email);
+        editedUser.getStudentInfo().setState(state);
 
-            userService.save(editedUser);
+        userService.save(editedUser);
 
-             return "{\"post\":\"ok\"}"; //string in double quotes
+        return "{\"post\":\"ok\"}"; //string in double quotes
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
@@ -108,23 +108,23 @@ public class InfoPageController {
     @ResponseBody
     @RequestMapping(value = "/postEducation", method = RequestMethod.POST)
     public String editEducation(@RequestParam("studentId") Long id,
-                              @RequestParam("studentUniversity") String university,
-                              @RequestParam("studentFaculty") String faculty,
-                              @RequestParam("studentCourse") int course,
-                              @RequestParam("studentGroup") int group,
-                              @RequestParam("studentGraduationDate") Date graduationDate,
-                              @RequestParam("studentTermMarks") String termMarks){
+                                @RequestParam("studentUniversity") String university,
+                                @RequestParam("studentFaculty") String faculty,
+                                @RequestParam("studentCourse") int course,
+                                @RequestParam("studentGroup") int group,
+                                @RequestParam("studentGraduationDate") Date graduationDate,
+                                @RequestParam("studentTermMarks") String termMarks) {
 
-            Student editedStudent = studentService.getById(id);
-            editedStudent.setUniversity(university);
-            editedStudent.setFaculty(faculty);
-            editedStudent.setCourse(course);
-            editedStudent.setGroup(group);
-            editedStudent.setGraduationDate(graduationDate);
-            editedStudent.setTermMarks(termMarks);
-            studentService.save(editedStudent);
+        Student editedStudent = studentService.getById(id);
+        editedStudent.setUniversity(university);
+        editedStudent.setFaculty(faculty);
+        editedStudent.setCourse(course);
+        editedStudent.setGroup(group);
+        editedStudent.setGraduationDate(graduationDate);
+        editedStudent.setTermMarks(termMarks);
+        studentService.save(editedStudent);
 
-            return ("{\"post\":\"ok\"}");
+        return ("{\"post\":\"ok\"}");
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
@@ -132,11 +132,11 @@ public class InfoPageController {
     @ResponseBody
     @RequestMapping(value = "/postExadel", method = RequestMethod.POST)
     public String editExadel(@RequestParam("studentId") Long id,
-                                @RequestParam("studentWorkingHours")Integer workingHours,
-                                @RequestParam("studentHireDate") Date hireDate,
-                                @RequestParam("studentBillable") Date billable,
-                                @RequestParam("studentRoleCurrentProject") String roleCurrentProject,
-                                @RequestParam("studentTechsCurrentProject") String techsCurrentProject) {
+                             @RequestParam("studentWorkingHours") Integer workingHours,
+                             @RequestParam("studentHireDate") Date hireDate,
+                             @RequestParam("studentBillable") Date billable,
+                             @RequestParam("studentRoleCurrentProject") String roleCurrentProject,
+                             @RequestParam("studentTechsCurrentProject") String techsCurrentProject) {
 
         Student editedStudent = studentService.getById(id);
         editedStudent.setWorkingHours(workingHours);

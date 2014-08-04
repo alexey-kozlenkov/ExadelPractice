@@ -55,20 +55,23 @@ public class Student implements IEntity<Long> {
     @Column(name = "english_level")
     private String englishLevel;
 
-    @Column(name="term_marks")
+    @Column(name = "term_marks")
     private String termMarks;
 
-    @Column(name="current_project")
+    @Column(name = "current_project")
     private String currentProject;
 
-    @Column(name="team_lead_current_project")
+    @Column(name = "team_lead_current_project")
     private Long teamLeadId;
 
-    @Column(name="project_manager_current_project")
+    @Column(name = "project_manager_current_project")
     private Long projectManagerId;
 
 
     public Student() {
+        course = 0;
+        group = 0;
+        workingHours = 0;
     }
 
     @Override

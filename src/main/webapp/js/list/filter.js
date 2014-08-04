@@ -44,12 +44,12 @@ $(window).ready(function () {
     $("#addFilterButton").click(function () {
         toggleFilterChooseMenu();
     });
-    $("#filterMenu").on("click","a",function(){
-            $("#filterMenu").hide();
-            addFilterAttribute($(this).text());
-            checkFilterCount();
+    $("#filterMenu").on("click", "a", function () {
+        $("#filterMenu").hide();
+        addFilterAttribute($(this).text());
+        checkFilterCount();
     });
-    $("#filter").on("click",".filter-name-btn", function(){
+    $("#filter").on("click", ".filter-name-btn", function () {
         var selfItem = $($(this).parent().get(0));
         var prevItem = selfItem.prev();
         var nextItem = selfItem.next();
@@ -83,8 +83,10 @@ function toggleFilterChooseMenu() {
 
 function addFilterAttribute(name) {
     var filterElementTemplate = Handlebars.compile($('#filterTemplate').html());
-    var filterContext = _.find(filter.types, function(element){return element.name == name;});
-    if(filterContext) {
+    var filterContext = _.find(filter.types, function (element) {
+        return element.name == name;
+    });
+    if (filterContext) {
         if (filterContext.multiset) {
             var filterEqType = $(".filter-item[data-filter='" + name + "']");
             if (filterEqType && filterEqType.length > 0) {
