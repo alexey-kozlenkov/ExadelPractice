@@ -69,6 +69,9 @@ public class Student implements IEntity<Long> {
 
 
     public Student() {
+        course = 0;
+        group = 0;
+        workingHours = 0;
     }
 
     @Override

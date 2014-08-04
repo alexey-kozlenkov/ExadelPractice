@@ -140,8 +140,8 @@ public class ListPageController {
         userService.save(newUser);
         Student newStudent = new Student();
         newStudent.setId(newUser.getId());
+        newStudent.setState(state);
         newUser.setStudentInfo(newStudent);
-        newUser.getStudentInfo().setState(state);
         userService.save(newUser);
     }
 }

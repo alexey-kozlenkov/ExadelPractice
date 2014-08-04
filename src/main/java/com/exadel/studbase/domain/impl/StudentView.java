@@ -56,6 +56,9 @@ public class StudentView implements IEntity<Long> {
     private String englishLevel;
 
     public StudentView() {
+        course = 0;
+        group = 0;
+        workingHours = 0;
     }
 
     @Override
