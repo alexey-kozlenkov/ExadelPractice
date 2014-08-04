@@ -22,8 +22,4 @@
         <property name="order" value="0"/>
     </bean>
 
-
-<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-<!--</bean>-->
-
 </beans>

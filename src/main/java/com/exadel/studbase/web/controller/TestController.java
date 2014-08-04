@@ -2,6 +2,7 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class TestController {
     ISkillTypeService skillTypeService;
     @Autowired
     ISkillSetService skillSetService;
+    @Autowired
+    IStudentViewService studentViewService;
 
     public static List<User> testList;
     public static List<User> getTestList(){

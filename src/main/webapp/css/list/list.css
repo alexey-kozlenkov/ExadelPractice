@@ -8,7 +8,7 @@
 }
 
 /*-------------------------------------*/
-.first-header-block {
+.first-header-line {
     margin: 2pt;
     margin-bottom: 1pt;
 }
@@ -161,9 +161,8 @@
     width: 24pt;
 }
 
-.filter-item {    
-    position: relative;
-    display: inline-flex;
+.filter-item {
+    display: inline-table;
     
     padding: 0;
     width: 120pt;
@@ -204,21 +203,9 @@
 
 
 /****************************************************************************/
-.dialog-content-central{
-    width: 100%;
-    height: 80%;
-}
-.dialog-footer{
-    padding: 2pt;
-    margin: 1pt;
-}
-.dialog-footer > *{
-    float: right;
-    margin-left: 6pt;
-    margin-right: 6pt;
-}
+
 .message-area{
+    resize: none;
+    height: 100pt;
     padding: 4pt;
-    width: 90%;
-    height: 80%;
 }

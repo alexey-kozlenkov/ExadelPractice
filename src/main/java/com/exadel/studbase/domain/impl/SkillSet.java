@@ -25,7 +25,7 @@ public class SkillSet implements IEntity<Long> {
     private User user;
 
     @Column(name = "level")
-    private int level;
+    private Integer level;
 
     @Column(name = "info")
     private String info;

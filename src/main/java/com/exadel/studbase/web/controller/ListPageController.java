@@ -1,22 +1,21 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IMailService;
+import com.exadel.studbase.service.IStudentService;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -29,9 +28,40 @@ public class ListPageController {
     @Autowired
     IUserService userService;
     @Autowired
+    IStudentService studentService;
+    @Autowired
     IStudentViewService studentViewService;
     @Autowired
     IMailService mailService;
+
+    public class StudResponse {
+        private Long version;
+        private Collection<StudentView> studentViews;
+
+        public StudResponse() {
+        }
+
+        public StudResponse(Long version, Collection<StudentView> studentViews) {
+            this.version = version;
+            this.studentViews = studentViews;
+        }
+
+        public Long getVersion() {
+            return version;
+        }
+
+        public void setVersion(Long version) {
+            this.version = version;
+        }
+
+        public Collection<StudentView> getStudentViews() {
+            return studentViews;
+        }
+
+        public void setStudentViews(Collection<StudentView> studentViews) {
+            this.studentViews = studentViews;
+        }
+    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
@@ -39,80 +69,52 @@ public class ListPageController {
         return "list";
     }
 
-    //TODO! reorganized (listData, getViewByName) (mast be one rest-service)
-
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
-    public void listData(HttpServletRequest request, HttpServletResponse response) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String searchName = (String) request.getParameter("name");
-        Object filter = request.getParameter("filter");
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getStudentsByRequest(@RequestParam("version") Long version,
+                                       @RequestParam(value = "searchName", required = false) String desiredName,
+                                       @RequestParam(value = "filter", required = false) String filter) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(searchName);
-        System.out.println(gson.fromJson((String) filter, map.getClass()));
 
-        Collection<StudentView> studList = studentViewService.getAll();
-
-        try {
-            response.getWriter().print(gson.toJson(studList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
-    }
-
-    @RequestMapping(value = "/list/name", method = RequestMethod.GET)
-    public void getViewByName(HttpServletRequest request, HttpServletResponse response) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();//= new Gson();
-        String desiredName = (String) request.getParameter("searchName");
-//        Object filter = request.getParameter("filter");
-
-        Map<String, String[]> map = new HashMap<String, String[]>();
-        System.out.println(desiredName);
+        System.out.println("Version: " + version);
+        System.out.println("Search name: " + desiredName);
+        System.out.println("Filter: " + filter);
         //    System.out.println(gson.fromJson((String) filter, map.getClass()));
 
-        Collection<StudentView> studList = studentViewService.getViewByStudentName(desiredName);
+        StudResponse response = new StudResponse(version,
+                studentViewService.getViewByStudentName(desiredName));
 
-        try {
-            response.getWriter().print(gson.toJson(studList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
+        return gson.toJson(response, StudResponse.class);
     }
 
     @Secured("ROLE_SUPERADMIN")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
-    public void sendMail(HttpServletRequest request, HttpServletResponse response) {
+    public String sendMail(@RequestParam("students") String students,
+                           @RequestParam(value = "subject", required = false) String subject,
+                           @RequestParam("message") String body) {
         Gson gson = new Gson();
-
-        String students = (String) request.getParameter("students");
-        String body = (String) request.getParameter("message");
 
         Long[] studentId = gson.fromJson(students, Long[].class);
 
         List<String> inaccessibleEmail = new ArrayList<String>();
         for (Long id : studentId) {
             User user = userService.getById(id);
-            if (!mailService.sendMail(user.getEmail(), "", body)) {
+            if (!mailService.sendMail(user.getEmail(), subject, body)) {
                 inaccessibleEmail.add(user.getEmail());
             }
         }
-
-        try {
-            response.getWriter().print(gson.toJson(inaccessibleEmail));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        response.setStatus(200);
+        return gson.toJson(inaccessibleEmail);
     }
 
     @RequestMapping(value = "/list/export", method = RequestMethod.GET)
-    public ModelAndView export(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView export(@RequestParam("students") String students) {
         Gson gson = new Gson();
-
-        String students = (String) request.getParameter("students");
 
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<User> listOfUsers = new ArrayList<User>();
@@ -125,12 +127,14 @@ public class ListPageController {
     }
 
     @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
-    public void addUser(HttpServletRequest request, HttpServletResponse response){
-        Object name = request.getParameter("user");
-        Object role = request.getParameter("role");
+    @ResponseStatus(HttpStatus.OK)
+    public void addUser(@RequestParam("name") String name,
+                        @RequestParam("login") String login,
+                        @RequestParam("state") String state) {
 
-        //TODO ! Real service
-
-        response.setStatus(200);
+        User user = new User(name, login);
+        user.setStudentInfo(new Student());
+        user.getStudentInfo().setState(state);
+        userService.save(user);
     }
 }
