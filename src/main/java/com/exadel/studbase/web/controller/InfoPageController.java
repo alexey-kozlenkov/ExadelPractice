@@ -1,6 +1,7 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.dao.ICuratoringDAO;
+import com.exadel.studbase.domain.impl.Document;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.domain.init.Options;
@@ -17,9 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.Date;
+import java.util.Collection;
 
 
 @Controller
@@ -62,7 +62,7 @@ public class InfoPageController {
             return gson.toJson(options, Options.class);
     }
 
-    @RequestMapping(value = "/getManualInformation", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String manualData(@RequestParam("studentId") Long studentId) {
@@ -70,6 +70,15 @@ public class InfoPageController {
             User user = userService.getById(studentId);
             System.out.println(user.getStudentInfo().toString());
         return gson.toJson(user, User.class);
+    }
+
+    @RequestMapping(value = "/getDocuments", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String documentsData(@RequestParam("studentId") Long studentId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<Document> userDocuments = documentService.getAllForUser(studentId);
+        return gson.toJson(userDocuments);
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
@@ -103,7 +112,8 @@ public class InfoPageController {
                               @RequestParam("studentFaculty") String faculty,
                               @RequestParam("studentCourse") int course,
                               @RequestParam("studentGroup") int group,
-                              @RequestParam("studentGraduationDate") Date graduationDate) {
+                              @RequestParam("studentGraduationDate") Date graduationDate,
+                              @RequestParam("studentTermMarks") String termMarks){
 
             Student editedStudent = studentService.getById(id);
             editedStudent.setUniversity(university);
@@ -111,9 +121,32 @@ public class InfoPageController {
             editedStudent.setCourse(course);
             editedStudent.setGroup(group);
             editedStudent.setGraduationDate(graduationDate);
+            editedStudent.setTermMarks(termMarks);
             studentService.save(editedStudent);
 
             return ("{\"post\":\"ok\"}");
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/postExadel", method = RequestMethod.POST)
+    public String editExadel(@RequestParam("studentId") Long id,
+                                @RequestParam("studentWorkingHours")Integer workingHours,
+                                @RequestParam("studentHireDate") Date hireDate,
+                                @RequestParam("studentBillable") Date billable,
+                                @RequestParam("studentRoleCurrentProject") String roleCurrentProject,
+                                @RequestParam("studentTechsCurrentProject") String techsCurrentProject) {
+
+        Student editedStudent = studentService.getById(id);
+        editedStudent.setWorkingHours(workingHours);
+        editedStudent.setHireDate(hireDate);
+        editedStudent.setBillable(billable);
+        editedStudent.setRoleCurrentProject(roleCurrentProject);
+        editedStudent.setTechsCurrentProject(techsCurrentProject);
+        studentService.save(editedStudent);
+
+        return ("{\"post\":\"ok\"}");
     }
 
     @RequestMapping(value = "/redirectInfo")

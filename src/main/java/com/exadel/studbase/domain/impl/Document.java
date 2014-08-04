@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by Алексей on 23.07.14.
+ * Created by on 23.07.14.
  */
 @Entity
 @Table(name = "\"DOCUMENT\"")

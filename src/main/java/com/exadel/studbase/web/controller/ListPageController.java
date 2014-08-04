@@ -126,6 +126,7 @@ public class ListPageController {
         return new ModelAndView("excelView", "users", listOfUsers);
     }
 
+    @Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void addUser(@RequestParam("name") String name,
@@ -142,6 +143,5 @@ public class ListPageController {
         newUser.setStudentInfo(newStudent);
         newUser.getStudentInfo().setState(state);
         userService.save(newUser);
-        System.out.println("ok");
     }
 }
