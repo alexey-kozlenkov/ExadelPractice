@@ -17,7 +17,7 @@ public class Document implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @JoinColumn(name = "student_id")
+    @Column(name = "student_id")
     private Long studentId;
 
     @Column(name = "doctype")
