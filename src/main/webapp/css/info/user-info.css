@@ -5,27 +5,13 @@ h1 {
     font-weight: 300;
     font-size: 30px;
 
-    -webkit-margin-after: .67em;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
 }
 
 .header {
-
-    z-index: 4;
-
-    display: block;
-
     box-sizing: border-box;
-
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-
-    border: 0.5px solid #616161;
-    -webkit-box-shadow: 1px 0 2px #000;
+    margin-bottom: 10pt;
+    border: 1px solid #616161;
     text-transform: uppercase;
-    line-height: 30%;
 }
 
 .wrapper {
@@ -33,18 +19,9 @@ h1 {
     width: 90%;
 }
 
-.ui-dialog .ui-state-error {
-    padding: .3em;
-}
-
-.validateTips {
-    padding: .3em;
-
-    border: 1px solid transparent;
-}
-
-div ::selection {
-    background-color: transparent !important;
+.form-horizontal .form-group {
+   margin-right : 0;
+    margin-left : 0;
 }
 
 .category-header a {
@@ -70,7 +47,7 @@ div ::selection {
     color: #428bca;
 }
 
-.category-header > a span {
+.category-header-span {
     position: absolute;
     top: 50%;
     right: -26px;
@@ -92,30 +69,6 @@ div ::selection {
 
 .form-control {
     color: black;
-    /*font-weight: 700;*/
-}
-
-#saved {
-    position: absolute;
-    display: none;
-    width: 100%;
-    text-align: center;
-}
-
-#modalSaved {
-    display: block;
-    margin-top: 5%;
-    margin-left: 25%;
-    max-width: 30%;
-    border: 1px solid gray;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    color: #333;
-    text-align: center;
-}
-
-#OK {
-    margin-bottom: 5pt;
 }
 
 .category-header a:hover span {
@@ -136,6 +89,7 @@ div ::selection {
 
 .category-content-select {
     border-radius: 4px;
+    margin-left: 10%;
 
     color: #333;
     font-size: 15px;
@@ -144,42 +98,70 @@ div ::selection {
 .form-control {
     width: auto;
 }
-.form-control input[type="date"]{
-    -mv-padding : 0;
+
+.form-control input[type="date"] {
+    -mv-padding: 0;
 }
-.list-inline{
-    display:inline-block;
+
+.list-inline {
+    display: inline-block;
 }
-#addNextTerm {
+
+.term-mark {
+    width: 43px;
+}
+
+.term-mark-list {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    padding-left: 0;
+    list-style-position: inside;
+    list-style-type: upper-roman counter-reset : termNumber;
+}
+
+.term-mark-list > li {
+    display: inline;
+    padding-right: 5px;
+    padding-left: 5px;
+    counter-increment: termNumber;
+}
+
+.term-mark-list > li:before {
+    padding-right: 0.25em;
+    content: counter(termNumber, upper-roman) ".";
+
+}
+
+.term-mark-invalid {
+    background-color: indianred;
+    color: #000000;
+    opacity: 0.5;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    margin: 0px;
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.documents-list-column {
+    padding: 5px 10px 5px;
+    text-align: center;
+}
+
+.category-content-add-button {
     padding: 5px;
     width: 24px;
     height: 24px;
 }
 
-.termMark input[type="number"]{
-    width : 40px;
+@media (min-width: 992px) {
+    .col-md-offset-2 {
+    margin-left: 12.66666667%;
+    }
 }
-
-.termMark{
-    display : inline;
-    margin:0;
-    padding:0;
-    padding-left: 0;
-    list-style-type: upper-roman;
-    list-style-position: inside
-    counter-reset : termNumber;
-}
-
-.termMark > li{
-    display: inline;
-    padding-right: 5px;
-    padding-left: 5px;
-    counter-increment : termNumber;
-}
-.termMark > li:before{
-    content:counter(termNumber, upper-roman) ".";
-    padding-right: 0.25em;
-
-}
-
-
