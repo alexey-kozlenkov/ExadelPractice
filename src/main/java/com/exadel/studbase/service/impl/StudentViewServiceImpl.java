@@ -19,13 +19,14 @@ public class StudentViewServiceImpl implements IStudentViewService{
     @Autowired
     private IStudentViewDAO studentViewDAO;
 
-    @Transactional(propagation = Propagation.REQUIRED)
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Collection<StudentView> getAll() {
         return studentViewDAO.getAll();
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Collection<StudentView> getViewByStudentName(String desiredName) {
         return studentViewDAO.getViewByStudentName(desiredName);
     }
