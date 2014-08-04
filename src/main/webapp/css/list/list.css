@@ -26,7 +26,7 @@
 }
 
 .search-block {
-    display: block;
+    display: inline-block;
     text-align: center;
 }
 
@@ -206,7 +206,6 @@
 
 .message-area{
     resize: none;
-    padding: 4pt;
-    width: 98%;
     height: 100pt;
+    padding: 4pt;
 }

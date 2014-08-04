@@ -121,6 +121,7 @@ function fillManualInfo() {
         //SEND TO CONTROLLER
         url: "/info/getManualInformation",
         async: true,
+        cache:false,
         data: {
             "studentId" : studentId
         },

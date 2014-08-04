@@ -6,12 +6,12 @@ function closeDialog(){
     $(".content-locker").fadeOut(500);
     $(".dialog-area").hide();
 }
-/* Show dialog with content [dialog_number='content_name'] on current page */
+/* Show dialog with content [data-dialog_number='content_name'] on current page */
 function showDialog(content_name){
     $(".content-locker").fadeIn(500);
     $(".dialog-area").show();
     $(".dialog-content").hide();
-    $(".dialog-content[dialog-name='"+content_name+"']").show();
+    $(".dialog-content[data-dialog-name='"+content_name+"']").show();
 }
 
 function setMenuLocationRelativeTo(menu, owner) {

@@ -239,3 +239,9 @@ label,
     margin-left: 6pt;
     margin-right: 6pt;
 }
+
+.dialog-input{
+    width: 98%;
+    padding-right: 4pt;
+    padding-left: 4pt;
+}

@@ -1,8 +1,8 @@
 /**
  * Created by ala'n on 14.07.2014.
  */
+var actualVersion = 0;
 
-var promise;
 $(document).ready(function () {
     bindMenuBlock();
     bindSearchBlock();
@@ -37,8 +37,14 @@ function bindSearchBlock() {
 }
 
 function bindDialog() {
+    $("#closeDialog").click(function () {
+        closeDialog();
+    });
     $("#sendButton").click(function () {
         sendMessage();
+        closeDialog();
+    });
+    $("#closeMessageButton").click(function () {
         closeDialog();
     });
     $("#createUser").click(function () {
@@ -48,30 +54,27 @@ function bindDialog() {
 }
 
 function loadTable() {
-    //TODO!!! Multycall must update to valid result
-    var search = $("#searchLine").val(),
+    var version = Date.now();
+    search = $("#searchLine").val(),
         filter = pickFilters(),
-        filterPack = JSON.stringify(filter);
-
+        filterPack = "";// JSON.stringify(filter);
+    actualVersion = version;
     setTableLoadingState(true);
 
     promise = $.ajax({
         type: "GET",
-        url: "/list/name",
+        url: "/list/data",
+        cache:false,
         async: true,
         data: {
-            'searchName': search
-            //'filter': filterPack
+            'version': version,
+            'searchName': search,
+            'filter': filterPack
         }
     });
 
     promise.done(function (data) {
-        var obj = JSON.parse(data);
-        if (obj) {
-            clearList();
-            addAllStudents(obj);
-            setTableLoadingState(false);
-        }
+        updateListByResponse(JSON.parse(data));
     });
     promise.fail(function () {
         alert("error");
@@ -79,8 +82,20 @@ function loadTable() {
     });
 }
 
-function sendMessage(){
-    var messageText = $("#sentMessage").val(),
+function updateListByResponse(response) {
+    if (actualVersion == response.version) {
+        console.log("Get actual response (", actualVersion, ")");
+        clearList();
+        addAllStudents(response.studentViews);
+        setTableLoadingState(false);
+    } else {
+        console.log("Response (", response.version, ") was ignored; actual: ", actualVersion, "; now: ", Date.now());
+    }
+}
+
+function sendMessage() {
+    var subject = $("#subjectField").val(),
+        messageText = $("#sentMessage").val(),
         studIds = JSON.stringify(getCheckedRowsId());
 
     $.ajax({
@@ -89,7 +104,7 @@ function sendMessage(){
         async: true,
         data: {
             message: messageText,
-            subject: '',
+            subject: subject,
             students: studIds
         }
     }).done(function (data) {
@@ -123,5 +138,28 @@ function exportExcel() {
 }
 
 function createUser() {
-
+    var login = $("#loginField").val(),
+        name = $("#nameField").val(),
+        state = $("#stateField").val(),
+        createStudPromise;
+    createStudPromise = $.ajax({
+        type: "POST",
+        url: "list/quickAdd",
+        async: true,
+        data: {
+            'login': login,
+            'name': name,
+            'state': state
+        }
+    });
+    createStudPromise.done(
+        function () {
+            console.log("Good!");
+        }
+    );
+    createStudPromise.fail(
+        function () {
+            alert("Error creating");
+        }
+    );
 }

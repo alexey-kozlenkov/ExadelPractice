@@ -145,7 +145,6 @@ function pickFilters() {
                 break;
         }
         lastAtrName = atr_name;
-    }
-    ;
+    };
     return returnStatement;
 }
