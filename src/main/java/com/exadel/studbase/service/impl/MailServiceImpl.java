@@ -29,8 +29,10 @@ public class MailServiceImpl implements IMailService {
     public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
+        message.setFrom("<vasia.ermakov@gmail.com>");
         message.setSubject(subject);
         message.setText(body);
+
         try {
             mailSender.send(message);
         } catch (MailException me) {
