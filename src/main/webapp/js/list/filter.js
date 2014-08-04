@@ -2,29 +2,28 @@
  * Created by ala'n on 31.07.2014.
  */
 
-var MAX_FILTER_COUNT = 10;
-
-var filterTypes = {
-    changed: true,
-    keys: ['age', 'working hour', 'billable', 'skill', 'english', 'date'],
-    keyType: {
-        'age': 'number',
-        'working hour': 'number',
-        'billable': 'date',
-        'skill': 'leveled-list',
-        'english': 'list',
-        'date': 'date'
+var MAX_FILTER_COUNT = 10,
+    filterTypes = {
+        changed: true,
+        keys: ['age', 'working hour', 'billable', 'skill', 'english', 'date'],
+        keyType: {
+            'age': 'number',
+            'working hour': 'number',
+            'billable': 'date',
+            'skill': 'leveled-list',
+            'english': 'list',
+            'date': 'date'
+        },
+        keyMap: {
+            'skill': ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
+            'english': ['1', '2', '3', '4', '5']
+        },
+        multiType: {
+            'skill': true
+        }
     },
-    keyMap: {
-        'skill': ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-        'english': ['1', '2', '3', '4', '5']
-    },
-    multyType: {
-        'skill': true
-    }
-};
+    SEPARATOR = "<span class='static-green filter-separator'>and</span>";
 
-var SEPARATOR = "<span class='static-green filter-separator'>and</span>";
 
 $(window).ready(function(){
     $("#filterMenu").mouseleave(function () {
@@ -37,7 +36,7 @@ $(window).ready(function(){
 
 function addFilterAttribute(name) {
     var filterElementContent = createFilterAttributeContent(name);
-    if (filterTypes.multyType[name]) {
+    if (filterTypes.multiType[name]) {
         var filtersExist = existFilterAttribute(name);
         if (filtersExist && filtersExist.length > 0) {
             filtersExist.last().after(SEPARATOR + filterElementContent);
@@ -46,7 +45,7 @@ function addFilterAttribute(name) {
         }
     } else {
         $("#addFilterButton").before(filterElementContent);
-        $("#filterMenu > li[filter='" + name + "']").hide();
+        $("#filterMenu > li[data-filter-name='" + name + "']").hide();
     }
 }
 function createFilterAttributeContent(name) {
@@ -54,7 +53,7 @@ function createFilterAttributeContent(name) {
     var htmContent = "";
 
     htmContent += "<div filter='" + name + "' class='btn-group input-group filter-item";
-    htmContent += " filter-" + typeName + "'>";
+    htmContent += " data-filter-" + typeName + "'>";
     htmContent += "<button class='btn prj-btn remove-btn item-btn-attr' ";
     htmContent += "onclick=\"removeFilterAttribute( '" + name + "', this );\">";
     htmContent += name;
@@ -90,7 +89,6 @@ function createFilterAttributeContent(name) {
                 htmContent += level;
                 htmContent += "</option>";
             }
-            ;
             htmContent += "</select>";
             break;
         default :
@@ -101,7 +99,7 @@ function createFilterAttributeContent(name) {
 }
 
 function existFilterAttribute(name) {
-    return $(".filter-item[filter='" + name + "']");
+    return $(".filter-item[data-filter='" + name + "']");
 }
 function removeFilterAttribute(name, element) {
     var selfItem = $($(element).parent().get(0));
@@ -114,7 +112,7 @@ function removeFilterAttribute(name, element) {
     }
 
     selfItem.remove();
-    $("#filterMenu > li[filter='" + name + "']").show();
+    $("#filterMenu > li[data-filter-name='" + name + "']").show();
     checkFilterCount();
 }
 
@@ -128,19 +126,19 @@ function checkFilterCount() {
         filterBtn.prev().hide();
         filterBtn.hide();
     }
-    checkEmptyFieldSize();
+    checkContentMargin();
 }
 
 function pickFilters() {
     var returnStatement = {};
     var lastAtrName = "";
 
-    var filterItems = $("#filterBlock").find(".filter-item");
+    var filterItems = $("#filter").find(".filter-item");
 
     for (var i = 0; i < filterItems.length; i++) {
         var element = $(filterItems[i]);
 
-        var atr_name = element.attr('filter');
+        var atr_name = element.attr('data-filter');
         var atr_value = $(element.find(".value-field")).val();
 
         if (!returnStatement[atr_name])
@@ -200,7 +198,7 @@ function clearMenu(menu) {
 function fillMenu(menu, data) {
     var liCont = "";
     for (var i = 0; i < data.length; i++) {
-        liCont += "<li class='menu-item' filter='" + data[i] + "'>" +
+        liCont += "<li class='menu-item' data-filter-name='" + data[i] + "'>" +
             "<a onclick='menuEvent(\"" + data[i] + "\");' role='menuitem'>" +
             data[i] + "</a></li>";
     }

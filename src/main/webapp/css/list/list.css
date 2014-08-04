@@ -1,6 +1,6 @@
 /**************************** Header ***********************************/
 
-.header-block {
+.header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -13,7 +13,7 @@
     margin-bottom: 1pt;
 }
 
-.menu-block {
+.btn-menu {
     display: inline-block;
     width: 100pt;
     text-align: center;
@@ -55,7 +55,7 @@
 
 /*-------------------------------------*/
 
-.header-table-block {
+.list-header {
     overflow: hidden;
     margin: 0 !important;
 
@@ -77,7 +77,7 @@
 }
 
 /*-----------------------------------------------------*/
-.central-block {
+.central {
 /*  display: initial; */
     margin: 0 auto;
     width: 900pt;
