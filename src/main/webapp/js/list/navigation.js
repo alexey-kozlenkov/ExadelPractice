@@ -46,7 +46,7 @@ function bindMenuBlock() {
 //        // FOR TESTING TODO!
 //        clearList();
 //        updateInfoLabel();
-          exportExel();
+          exportExcel();
     });
     $("#distributionMenuButton").click(function () {
         showDialog(1);
@@ -129,7 +129,7 @@ function loadTable() {
     });
 }
 
-function exportExel(){
+function exportExcel(){
     var studIds = JSON.stringify(getCheckedRowsId());
     window.open("/list/export?students="+studIds,"exportFile");
 }

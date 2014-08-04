@@ -2,7 +2,6 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
-import com.exadel.studbase.service.IMailService;
 import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.google.gson.Gson;
@@ -38,6 +37,8 @@ public class ListPageController {
         System.out.println("List page redirect");
         return "list";
     }
+
+    //TODO! reorganized (listData, getViewByName) (mast be one rest-service)
 
     // Provide sanding list data
     @RequestMapping(value = "/list/data", method = RequestMethod.GET)
@@ -120,5 +121,15 @@ public class ListPageController {
         }
 
         return new ModelAndView("excelView", "users", listOfUsers);
+    }
+
+    @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
+    public void addUser(HttpServletRequest request, HttpServletResponse response){
+        Object name = request.getParameter("user");
+        Object role = request.getParameter("role");
+
+        //TODO ! Real service
+
+        response.setStatus(200);
     }
 }

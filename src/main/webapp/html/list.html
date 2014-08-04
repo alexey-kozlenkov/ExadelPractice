@@ -34,7 +34,7 @@
              </button>
     </span>
 
-    <div id="headerScrollingBlock" class="list-header">
+    <div id="headerScrollingBlock" class="prj-list-header">
         <div class="central">
             <table id="headerFixed" class="table prj-table-striped student-table">
                 <colgroup>
@@ -140,7 +140,7 @@
                   onclick="closeDialog();"></span>
         </div>
 
-        <div class='dialog-content' dialog-number='1'>
+        <div class='dialog-content' dialog-name='1'>
             <div class="dialog-content-central">
                 <label for="sentMessage"> Message text: </label>
                 <textarea id="sentMessage" class="message-area">
@@ -152,7 +152,7 @@
             </div>
         </div>
 
-        <div class='dialog-content' dialog-number='2'>
+        <div class='dialog-content' dialog-name='2'>
             <div class="dialog-content-central">
                 <ul id="inaccessibleMailList">
                 </ul>
@@ -166,6 +166,15 @@
             </div>
             <div class="dialog-footer">
                 <button id='closeMessageButton' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
+                </button>
+            </div>
+        </div>
+        <div class='dialog-content' dialog-name='3'>
+            <div class="dialog-content-central">
+
+            </div>
+            <div class="dialog-footer">
+                <button id='createUser' class="btn prj-btn" onclick="closeDialog();"><span class="glyphicon glyphicon-ok"></span> Ok
                 </button>
             </div>
         </div>
