@@ -154,12 +154,12 @@ label,
 /****************************remove arrows from inputs***************************/
 /*input::-webkit-inner-spin-button,*/
 /*input::-webkit-outer-spin-button {*/
-    /*-webkit-appearance: none;*/
-    /*margin: 0px;*/
+/*-webkit-appearance: none;*/
+/*margin: 0px;*/
 /*}*/
 
 /*input {*/
-    /*-moz-appearance: textfield;*/
+/*-moz-appearance: textfield;*/
 /*}*/
 
 /**************************************************************************/
@@ -217,30 +217,34 @@ label,
     background-size: 100%;
     padding: 1pt;
 }
+
 .dialog-close:hover {
     color: #4A5D80;
 }
+
 .dialog-close:active {
     padding-top: 2pt;
     padding-right: 0;
 }
 
-.dialog-content-central{
+.dialog-content-central {
     width: 100%;
     height: auto;
 }
-.dialog-footer{
+
+.dialog-footer {
     height: 30pt;
     padding: 2pt;
     margin: 1pt;
 }
-.dialog-footer > *{
+
+.dialog-footer > * {
     float: right;
     margin-left: 6pt;
     margin-right: 6pt;
 }
 
-.dialog-input{
+.dialog-input {
     width: 98%;
     padding-right: 4pt;
     padding-left: 4pt;

@@ -23,10 +23,9 @@ public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
         Query query = getSession().createQuery("FROM User where login=:login");
         query.setParameter("login", login);
         List<User> executeResult = query.list();
-        if(executeResult.size() > 0) {
+        if (executeResult.size() > 0) {
             return executeResult.get(0);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -35,7 +34,7 @@ public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.getByLogin(username);
         final String[] roles = user.getRole().trim().split(";");
-        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>(roles.length){{
+        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>(roles.length) {{
             for (int i = 0; i < roles.length; i++) {
                 add(i, new SimpleGrantedAuthority(roles[i]));
             }

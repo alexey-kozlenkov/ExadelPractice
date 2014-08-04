@@ -2,7 +2,6 @@ package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -11,26 +10,26 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "CURATORING")
-public class Curatoring implements IEntity<Long>{
+public class Curatoring implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="student_id")
+    @Column(name = "student_id")
     private Long studentId;
 
-    @Column(name="employee_id")
+    @Column(name = "employee_id")
     private Long employeeId;
 
-    @Column(name="project_name")
+    @Column(name = "project_name")
     private String projectName;
 
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private Date startDate;
 
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private Date endDate;
 
     public Curatoring() {

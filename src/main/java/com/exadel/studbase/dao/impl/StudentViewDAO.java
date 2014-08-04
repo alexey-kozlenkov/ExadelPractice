@@ -2,13 +2,9 @@ package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IStudentViewDAO;
 import com.exadel.studbase.domain.impl.StudentView;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 
 /**

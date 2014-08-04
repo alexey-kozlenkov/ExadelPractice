@@ -2,16 +2,16 @@
  * Created by ala'n on 30.07.2014.
  */
 /* Close dialog on current page */
-function closeDialog(){
+function closeDialog() {
     $(".content-locker").fadeOut(500);
     $(".dialog-area").hide();
 }
 /* Show dialog with content [data-dialog_number='content_name'] on current page */
-function showDialog(content_name){
+function showDialog(content_name) {
     $(".content-locker").fadeIn(500);
     $(".dialog-area").show();
     $(".dialog-content").hide();
-    $(".dialog-content[data-dialog-name='"+content_name+"']").show();
+    $(".dialog-content[data-dialog-name='" + content_name + "']").show();
 }
 
 function setMenuLocationRelativeTo(menu, owner) {

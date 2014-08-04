@@ -17,14 +17,14 @@ public class CuratoringDAO extends GenericDAOImpl<Curatoring, Long> implements I
     @Override
     public Collection<Student> getAllStudentsForEmployee(Long employeeId) {
         Query query = getSession().createQuery(
-                "FROM Student where id IN(SELECT studentId FROM Curatoring WHERE employeeId="+employeeId+")");
+                "FROM Student where id IN(SELECT studentId FROM Curatoring WHERE employeeId=" + employeeId + ")");
         return query.list();
     }
 
     @Override
     public Collection<Employee> getAllMastersForStudent(Long studentId) {
         Query query = getSession().createQuery(
-                "FROM Employee where id IN(SELECT employeeId FROM Curatoring WHERE studentId="+studentId+")");
+                "FROM Employee where id IN(SELECT employeeId FROM Curatoring WHERE studentId=" + studentId + ")");
         return query.list();
     }
 }

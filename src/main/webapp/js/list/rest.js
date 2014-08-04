@@ -64,7 +64,7 @@ function loadTable() {
     promise = $.ajax({
         type: "GET",
         url: "/list/data",
-        cache:false,
+        cache: false,
         async: true,
         data: {
             'version': version,

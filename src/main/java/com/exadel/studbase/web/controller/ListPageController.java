@@ -34,35 +34,6 @@ public class ListPageController {
     @Autowired
     IMailService mailService;
 
-    public class StudResponse {
-        private Long version;
-        private Collection<StudentView> studentViews;
-
-        public StudResponse() {
-        }
-
-        public StudResponse(Long version, Collection<StudentView> studentViews) {
-            this.version = version;
-            this.studentViews = studentViews;
-        }
-
-        public Long getVersion() {
-            return version;
-        }
-
-        public void setVersion(Long version) {
-            this.version = version;
-        }
-
-        public Collection<StudentView> getStudentViews() {
-            return studentViews;
-        }
-
-        public void setStudentViews(Collection<StudentView> studentViews) {
-            this.studentViews = studentViews;
-        }
-    }
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
@@ -143,5 +114,34 @@ public class ListPageController {
         newStudent.setState(state);
         newUser.setStudentInfo(newStudent);
         userService.save(newUser);
+    }
+
+    public class StudResponse {
+        private Long version;
+        private Collection<StudentView> studentViews;
+
+        public StudResponse() {
+        }
+
+        public StudResponse(Long version, Collection<StudentView> studentViews) {
+            this.version = version;
+            this.studentViews = studentViews;
+        }
+
+        public Long getVersion() {
+            return version;
+        }
+
+        public void setVersion(Long version) {
+            this.version = version;
+        }
+
+        public Collection<StudentView> getStudentViews() {
+            return studentViews;
+        }
+
+        public void setStudentViews(Collection<StudentView> studentViews) {
+            this.studentViews = studentViews;
+        }
     }
 }

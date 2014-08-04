@@ -1,17 +1,14 @@
 package com.exadel.studbase.security;
 
-import com.exadel.studbase.domain.IEntity;
-import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 /**
  * Created by Алексей on 01.08.2014.
  */
-public class MySecurityUser extends User{
+public class MySecurityUser extends User {
 
     private Long id;
 

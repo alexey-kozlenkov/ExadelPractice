@@ -2,16 +2,13 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +29,7 @@ import java.util.Random;
 @RequestMapping("/test/")
 public class TestController {
 
+    public static List<User> testList;
     @Autowired
     IUserService userService;
     @Autowired
@@ -49,14 +47,13 @@ public class TestController {
     @Autowired
     IStudentViewService studentViewService;
 
-    public static List<User> testList;
-    public static List<User> getTestList(){
-        if(testList==null){
+    public static List<User> getTestList() {
+        if (testList == null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             testList = new ArrayList<User>();
             User st;
-            Random rand  =new Random();
-            for(int id_ = 1; id_<=1000; id_++) {
+            Random rand = new Random();
+            for (int id_ = 1; id_ <= 1000; id_++) {
                 st = new User();
 
                 st.setId(Long.valueOf(id_));
@@ -76,7 +73,7 @@ public class TestController {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(rand.nextBoolean())
+                if (rand.nextBoolean())
                     try {
                         st.getStudentInfo().setBillable(new Date(sdf.parse("02.09.2014").getTime()));
                     } catch (ParseException e) {
@@ -173,13 +170,13 @@ public class TestController {
         ModelAndView mv = new ModelAndView("studentInfo");
         User user_ = new User();
         //      mv.addObject("user", user_);
-        mv.addObject("id",id);
+        mv.addObject("id", id);
 //        ${user.name}
         return mv;
     }
 
-    @RequestMapping(value= "/test", method = RequestMethod.POST)
-    public void test(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public void test(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             System.out.println("Get post req.!!");
@@ -192,6 +189,7 @@ public class TestController {
         }
 
     }
+
     @RequestMapping(value = "/add")
     public void add() {
         User user = userService.getById(Long.parseLong("32"));

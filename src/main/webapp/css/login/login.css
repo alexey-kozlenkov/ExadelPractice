@@ -1,11 +1,13 @@
 body {
-    margin-left : 20%;
+    margin-left: 20%;
     font-size: 20px;
 }
-.first{
+
+.first {
     margin-top: 40px;
 }
-.form-control{
-    width : 60%;
+
+.form-control {
+    width: 60%;
 }
 
