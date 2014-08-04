@@ -34,16 +34,16 @@ public class Student implements IEntity<Long> {
     private String faculty;
 
     @Column(name = "course")
-    private int course;
+    private Integer course;
 
     @Column(name = "s_group")
-    private int group;
+    private Integer group;
 
     @Column(name = "graduation_date")
     private Date graduationDate;
 
     @Column(name = "working_hours")
-    private int workingHours;
+    private Integer workingHours;
 
     @Column(name = "billable")
     private Date billable;
