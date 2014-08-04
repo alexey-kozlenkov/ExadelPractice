@@ -32,6 +32,22 @@
         <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
             <span class="glyphicon glyphicon-filter"></span>
         </button>
+        <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
+        <script id="filterMenuTemplate" type="text/x-handlebars-template">
+            {{#each types}}
+            <li class='menu-item' data-filter-name='{{name}}'>
+                <a role='menuitem'>{{name}}</a>
+            </li>
+            {{/each}}
+        </script>
+
+        <script id="filterTemplate" type="text/x-handlebars-template">
+            {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
+            <div data-filter='{{name}}' class='btn-group input-group filter-item'>
+                <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
+
+            </div>
+        </script>
     </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
@@ -116,23 +132,6 @@
 
 <label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
 
-<ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
-<script id="filterMenuTemplate" type="text/x-handlebars-template">
-    {{#each types}}
-    <li class='menu-item' data-filter-name='{{name}}'>
-        <a role='menuitem'>{{name}}</a>
-    </li>
-    {{/each}}
-</script>
-
-<script id="filterTemplate" type="text/x-handlebars-template">
-    {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
-    <div data-filter='{{name}}' class='btn-group input-group filter-item'>
-        <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-
-    </div>
-</script>
-
 <div class='content-locker'>
     <div class='dialog-area'>
         <div class='dialog-header'>
@@ -143,8 +142,7 @@
         <div class='dialog-content' dialog-name='send-message'>
             <div class="dialog-content-central">
                 <label for="sentMessage"> Message text: </label>
-                <textarea id="sentMessage" class="message-area">
-                </textarea>
+                <textarea id="sentMessage" class="message-area"></textarea>
             </div>
             <div class="dialog-footer">
                 <button id='sendButton' class="btn prj-btn"><span class="glyphicon glyphicon-envelope"></span> Send

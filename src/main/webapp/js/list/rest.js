@@ -2,6 +2,7 @@
  * Created by ala'n on 14.07.2014.
  */
 
+var promise;
 $(document).ready(function () {
     bindMenuBlock();
     bindSearchBlock();
@@ -47,13 +48,14 @@ function bindDialog() {
 }
 
 function loadTable() {
+    //TODO!!! Multycall must update to valid result
     var search = $("#searchLine").val(),
         filter = pickFilters(),
         filterPack = JSON.stringify(filter);
 
     setTableLoadingState(true);
 
-    $.ajax({
+    promise = $.ajax({
         type: "GET",
         url: "/list/name",
         async: true,
@@ -61,14 +63,17 @@ function loadTable() {
             'searchName': search
             //'filter': filterPack
         }
-    }).done(function (data) {
+    });
+
+    promise.done(function (data) {
         var obj = JSON.parse(data);
         if (obj) {
             clearList();
             addAllStudents(obj);
             setTableLoadingState(false);
         }
-    }).fail(function () {
+    });
+    promise.fail(function () {
         alert("error");
         setTableLoadingState(false);
     });
@@ -97,6 +102,15 @@ function sendMessage(){
             showDialog('inaccessible-mail');
         } else {
             console.log("Done ! - ");
+//        $("#distributionMenuButton").animate({
+//            borderColor: '#090',
+//            backgroundColor: '#090'
+//        }, 100, function(){
+//            $(this).animate({
+//                borderColor: '#2D3E5C',
+//                backgroundColor: '#4A5D80'
+//            }, 2000);
+//        });
         }
     }).fail(function () {
         alert("Error");

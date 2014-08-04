@@ -5,12 +5,12 @@
 function closeDialog(){
     $(".content-locker").fadeOut(500);
     $(".dialog-area").hide();
-    $(".dialog-content").hide();
 }
 /* Show dialog with content [dialog_number='content_name'] on current page */
 function showDialog(content_name){
     $(".content-locker").fadeIn(500);
     $(".dialog-area").show();
+    $(".dialog-content").hide();
     $(".dialog-content[dialog-name='"+content_name+"']").show();
 }
 
