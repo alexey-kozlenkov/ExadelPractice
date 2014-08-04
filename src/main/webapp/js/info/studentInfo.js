@@ -2,6 +2,9 @@ var studentId;
 var MAX_NUMBER_TERMS = 10,
     MIN_MARK = 0,
     MAX_MARK = 10;
+//templates
+var templateTermMark = Handlebars.compile($('#termMarkTemplate').html());
+var templateDocument = Handlebars.compile($('#documentTemplate').html());
 
 $(window).ready(function () {
     //alert(window.location.search);
@@ -43,8 +46,18 @@ $(document).ready(function () {
         var editedCourse = $("#course").val();
         var editedGroup = $("#group").val();
         var editedGraduationDate = $("#graduationDate").val();
+        var editedTermMarks = "";
+        var numberTerms = $(".term-mark").length - 1;
+        $(".term-mark").each(function (index) {
+            if (index < numberTerms) {
+                editedTermMarks = editedTermMarks.concat($(this).val() + ";");
+            }
+            else {
+                editedTermMarks = editedTermMarks.concat($(this).val());
+            }
+        });
 
-        saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate);
+        saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate, editedTermMarks);
     });
 
     $("#saveExadelInformation").click(function () {
@@ -57,22 +70,30 @@ $(document).ready(function () {
 
         saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject);
     });
+
+
     //load documents
     $("#documentsHeader").click(function () {
-      $.ajax
+        $.ajax
         ({
             type: "GET",
             url: "/info/getDocuments",
             async: true,
+            cashe : false,
             data: {
                 "studentId": studentId
             },
-       success : function (data) {
-            alert("" + data);
-        },
-        error: function(){
-            alert("error");
-        }});
+            success: function (data) {
+               // alert("" + data);
+                $("#documents").empty();
+                var documents = JSON.parse(data);
+                jQuery.each(documents, function (index, value) {
+                    $("#documents").append(templateDocument(value));
+                });
+            },
+            error: function () {
+                alert("error");
+            }});
 
     });
 
@@ -84,11 +105,11 @@ $(document).ready(function () {
 
     $(".term-mark-list").on("change", 'input', function () {
         if (!validInputTermMark($(this).val())) {
-            $(this).addClass("termMarkInvalid", 1000);
+            $(this).addClass("term-mark-invalid", 1000);
             $(this).val(null);
         }
         else {
-            $(this).removeClass("termMarkInvalid", 200);
+            $(this).removeClass("term-mark-invalid", 200);
         }
     });
 
@@ -97,17 +118,13 @@ $(document).ready(function () {
         numberTerms = $("#termMarkList").children().length;
         var lastTerm;
         lastTerm = $(".term-mark-list li input").last();
-//        console.log(document.getElementById("termMarkList").lastElementChild.lastElementChild);
-//        console.log($(".termMarkList li input").last().val() + " is val");
+
         if (lastTerm.val() == MIN_MARK) {
             lastTerm.focus();
         }
         else {
             ++numberTerms;
-            var nextTerm;
-            nextTerm = "<li><input type=\"number\" class=\"termMark\" placeholder=\"10.00\"></li>";
-
-            $(nextTerm).appendTo("#termMarkList");
+            $("#termMarkList").append(templateTermMark);
 
             if (numberTerms === MAX_NUMBER_TERMS)
                 $("#addNextTerm").attr("disabled", "true");
@@ -119,24 +136,6 @@ function validInputTermMark(termMarkVal) {
     if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK)
         return false;
     return true;
-}
-
-function checkTermMark(termMark) {
-    if (!validInputTermMark(termMark.val())) {
-        termMark.animate({
-            'background-color': "red",
-            opacity: 0.5,
-            'color': 'black'
-        }, 1000);
-        termMark.val(null);
-    }
-    else {
-        termMark.animate({
-            'background-color': "#ffffff",
-            opacity: 1,
-            color: "#333"
-        }, 200);
-    }
 }
 
 function parseRequestForId(string) {
@@ -173,6 +172,7 @@ function fillManualInfo() {
         //SEND TO CONTROLLER
         url: "/info/getCommonInformation",
         async: true,
+        cashe : false,
         data: {
             "studentId": studentId
         },
@@ -201,6 +201,15 @@ function fillManualInfo() {
             $("#billable").val(gottenStudent.billable);
             $("#roleCurrentProject").val(gottenStudent.roleCurrentProject);
             $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
+
+            //termMarks
+            var marks = gottenStudent.termMarks;
+            marks = marks.split(";");
+            jQuery.each(marks, function (index, value) {
+                $("#termMarkList").append(templateTermMark);
+                $("#termMarkList li input").last().attr('value', value);
+            });
+
 
         }
     });
@@ -264,7 +273,7 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
     });
 }
 
-function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate) {
+function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate, editedTermMarks) {
     $.ajax
     ({
         type: "POST",
@@ -278,7 +287,8 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
             'studentSpeciality': editedSpeciality,
             'studentCourse': editedCourse,
             'studentGroup': editedGroup,
-            'studentGraduationDate': editedGraduationDate
+            'studentGraduationDate': editedGraduationDate,
+            'studentTermMarks': editedTermMarks
         },
         success: function () {
             $("#saveEducationInformation").text("Saved!");
@@ -302,7 +312,6 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
         }
     })
 }
-
 
 function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject) {
     var defferedPostExadel = $.ajax
