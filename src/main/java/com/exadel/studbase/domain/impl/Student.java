@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Алексей on 18.07.14.
@@ -54,6 +56,9 @@ public class Student implements IEntity<Long> {
 
     @Column(name = "english_level")
     private String englishLevel;
+
+    @Column(name="term_marks")
+    private String termMarks;
 
     public Student() {
     }
@@ -162,6 +167,23 @@ public class Student implements IEntity<Long> {
 
     public void setEnglishLevel(String englishLevel) {
         this.englishLevel = englishLevel;
+    }
+
+    public Collection<Integer> getTermMarks() {
+        String[] strTermMarks = termMarks.split(";");
+        ArrayList<Integer> intTermMarks= new ArrayList<Integer>();
+        for (String s: strTermMarks) {
+            intTermMarks.add(Integer.valueOf(s));
+        }
+        return intTermMarks;
+    }
+
+    public void setTermMarks(Collection<Integer> termMarks) {
+        String result ="";
+        for(Integer mark: termMarks) {
+            result+=mark+";";
+        }
+        this.termMarks = result;
     }
 
     @Override

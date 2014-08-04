@@ -1,13 +1,16 @@
-package com.exadel.studbase.service.mail;
+package com.exadel.studbase.service.impl;
 
+import com.exadel.studbase.service.IMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class MailServiceImpl implements MailService {
+public class MailServiceImpl implements IMailService {
     @Autowired
     private MailSender mailSender;
 
@@ -22,15 +25,19 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean sendMail(final String to, final String subject, final String body) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("<vasia.ermakov@gmail.com>");
         message.setTo(to);
+        message.setFrom("<vasia.ermakov@gmail.com>");
         message.setSubject(subject);
         message.setText(body);
+
         try {
             mailSender.send(message);
-        } catch (MailException e) {
+        } catch (MailException me) {
+            me.printStackTrace();
             return false;
         }
         return true;
