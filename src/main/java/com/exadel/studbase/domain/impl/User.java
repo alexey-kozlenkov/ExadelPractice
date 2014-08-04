@@ -40,6 +40,12 @@ public class User implements IEntity<Long> {
     @JoinColumn(name = "id")
     private Employee employeeInfo;
 
+    @Column(name="skype")
+    private String skype;
+
+    @Column(name="telephone")
+    private String telephone;
+
 
     public User() {
         password = "11111";
@@ -113,6 +119,22 @@ public class User implements IEntity<Long> {
 
     public void addRole(String addingRole) {
         setRole(getRole()+";"+addingRole);
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
     }
 
     @Override

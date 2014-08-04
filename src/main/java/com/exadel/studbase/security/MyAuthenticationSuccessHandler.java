@@ -35,7 +35,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             String role = userDetails.getAuthorities().isEmpty() ? null : userDetails.getAuthorities().toArray()[0].toString();
             String login = userDetails.getUsername();
             if(role.equals("ROLE_STUDENT")) {
-                targetUrl = "/redirectInfo?login="+login;
+                targetUrl = "/info/redirectInfo?login="+login;
             } else {
                 targetUrl = "/list";
             }
