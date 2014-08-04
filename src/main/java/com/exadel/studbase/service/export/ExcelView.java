@@ -14,6 +14,8 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,10 @@ public class ExcelView extends AbstractExcelView {
                                       HttpServletResponse response)
             throws Exception {
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=Report.xls");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
+        Date now = new Date();
+        String fileName = "Student report - " + simpleDateFormat.format(now) + ".xls";
+        response.setHeader("Content-disposition", "attachment; filename="+fileName);
 
         List<User> listOfUsers = (List<User>) model.get("users");
 
@@ -37,7 +42,7 @@ public class ExcelView extends AbstractExcelView {
         // create style for header cells
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
-        style.setFillForegroundColor(HSSFColor.BLUE.index);
+        style.setFillForegroundColor(HSSFColor.SEA_GREEN.index);
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         font.setColor(HSSFColor.WHITE.index);
