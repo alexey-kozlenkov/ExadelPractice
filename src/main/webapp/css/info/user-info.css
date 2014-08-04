@@ -9,7 +9,7 @@ h1 {
 
 .header {
     box-sizing: border-box;
-
+    margin-bottom : 10pt;
     border: 1px solid #616161;
     text-transform: uppercase;
 }
@@ -130,42 +130,75 @@ div ::selection {
 .form-control {
     width: auto;
 }
-.form-control input[type="date"]{
-    -mv-padding : 0;
+
+.form-control input[type="date"] {
+    -mv-padding: 0;
 }
-.list-inline{
-    display:inline-block;
+
+.list-inline {
+    display: inline-block;
 }
+
 #addNextTerm {
     padding: 5px;
     width: 24px;
     height: 24px;
 }
 
-.termMark{
-    width : 40px;
+.termMark {
+    width: 40px;
 }
 
-.termMarkList{
-    display : inline;
-    margin:0;
-    padding:0;
+.term-mark-list {
+    display: inline;
+    margin: 0;
+    padding: 0;
     padding-left: 0;
-    list-style-type: upper-roman;
-    list-style-position: inside
-    counter-reset : termNumber;
+    list-style-position: inside;
+    list-style-type: upper-roman counter-reset : termNumber;
 }
 
-.termMarkList > li{
+.term-mark-list > li {
     display: inline;
     padding-right: 5px;
     padding-left: 5px;
-    counter-increment : termNumber;
+    counter-increment: termNumber;
 }
-.termMarkList > li:before{
-    content:counter(termNumber, upper-roman) ".";
+
+.term-mark-list > li:before {
     padding-right: 0.25em;
+    content: counter(termNumber, upper-roman) ".";
 
 }
+
+.termMarkInvalid {
+    background-color: indianred;
+    color: #000000;
+    opacity : 0.5;
+}
+
+
+
+
+.savedSuccessfully{
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.savedFailed{
+    background-color: indianred;
+    border-color : darkred;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0px;
+}
+
+input[type="number"]{
+    -moz-appearance: textfield;
+}
+
 
 

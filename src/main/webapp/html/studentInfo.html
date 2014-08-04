@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+
     <title>Information</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/user-info.css"/>
+    <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
     <link href="../css/common.css" rel="stylesheet">
-</head>
-<body>
+    <link href="../css/info/user-info.css" rel="stylesheet"/>
 
+</head>
+
+
+<body>
 <div class="prj-header header">
     <h1 id="headerName">some student name</h1>
 </div>
@@ -26,29 +29,29 @@
                         <label for="name" class="col-sm-2 control-label">Name</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" placeholder="First & second name">
+                            <input type="text" class="form-control" id="name" placeholder="First & second name"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="login" class="col-sm-2 control-label">Login</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="login" placeholder="Login">
+                            <input type="text" class="form-control" id="login" placeholder="Login" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password"
-                                   placeholder="Password">
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,7 +74,7 @@
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="institution"
-                                   placeholder="Educational institution">
+                                   placeholder="Educational institution" required>
                         </div>
                     </div>
 
@@ -79,36 +82,37 @@
                         <label for="faculty" class="col-sm-2 control-label">Faculty</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="faculty" placeholder="Faculty">
+                            <input type="text" class="form-control" id="faculty" placeholder="Faculty" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="speciality" class="col-sm-2 control-label">Speciality</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="speciality" placeholder="Speciality">
+                            <input type="text" class="form-control" id="speciality" placeholder="Speciality" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="course" class="col-sm-2 control-label">Course</label>
 
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="course" placeholder="Course graduated">
+                            <input type="number" class="form-control" id="course" placeholder="Course graduated"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="group" class="col-sm-2 control-label">Group</label>
 
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="group" placeholder="Group number">
+                            <input type="text" class="form-control" id="group" placeholder="Group number" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="graduationDate" class="col-sm-2 control-label">Graduation date</label>
 
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="graduationDate"
-                                   placeholder="yyyy-mm-dd">
+                            <input type="date" class="form-control" id="graduationDate" placeholder="dd.mm.yyyy"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -116,15 +120,16 @@
 
                         <ul class="list-inline" id="averageMarks">
                             <li>
-                            <input type="image"  title="add next term" id="addNextTerm" class="btn prj-btn" src="../images/add.png"
-                                   alt="Add next term">
+                                <input type="image" title="add next term" id="addNextTerm" class="btn prj-btn"
+                                       src="../images/add.png"
+                                       alt="Add next term">
                             </li>
                             <li>
-                            <ol class="termMarkList" id="termMarkList">
-                                <li>
-                                    <input type="number" class="termMark" placeholder="10.00">
-                                </li>
-                            </ol>
+                                <ol class="term-mark-list" id="termMarkList">
+                                    <li>
+                                        <input type="number" class="termMark" placeholder="10.00">
+                                    </li>
+                                </ol>
                             </li>
                         </ul>
                     </div>
@@ -144,23 +149,40 @@
 
                         <div class="col-sm-10">
                             <input type="number" class="form-control" id="workingHours"
-                                   placeholder="Working hours (now)">
+                                   placeholder="Working hours (now)" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="hireDate" class="col-sm-2 control-label">Hire Date</label>
 
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="hireDate" disabled>
+                            <input type="date" class="form-control" id="hireDate" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="billable" class="col-sm-2 control-label">Billable</label>
+                        <label for="billable" class="col-sm-2 control-label">Billable from</label>
 
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="billable" disabled>
+                            <input type="date" class="form-control" id="billable" required>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="roleCurrentProject" class="col-sm-2 control-label">Role in the current
+                            project</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="roleCurrentProject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="techsCurrentProject" class="col-sm-2 control-label">Technologies used in the
+                            current project</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="techsCurrentProject" required>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <button id="saveExadelInformation" type="button" class="category-content-button  prj-btn">Save
                         </button>
@@ -169,10 +191,21 @@
             </div>
 
 
-            <div class="category-header">
+            <div class="category-header" id="documentsHeader">
                 <a href="#">Documents<span class="st-arrow">Open or Close</span></a>
             </div>
             <div class="category-content" id="documentsContent">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <ul class="list-inline documentsList">
+
+                        </ul>
+                    </div>
+                    <div class="form-group" id="documentFullInfo">
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -206,10 +239,11 @@
     </span>
 
 </div>
-<script src="../js/jquery-2.1.1.min.js"></script>
-<script src="../js/jquery.animate-colors-min.js"></script>
-<script src="../js/studentInfo.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="../js/lib/jquery-2.1.1.min.js"></script>
+<script src="../js/lib/jquery.animate-colors-min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+
+<script src="../js/info/studentInfo.js"></script>
 
 </body>
 </html>

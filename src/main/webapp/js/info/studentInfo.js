@@ -1,8 +1,7 @@
-
 var studentId;
-var MAX_NUMBER_TERMS = 10;
-var MIN_MARK = 0;
-var MAX_MARK = 10;
+var MAX_NUMBER_TERMS = 10,
+    MIN_MARK = 0,
+    MAX_MARK = 10;
 
 $(window).ready(function () {
     //alert(window.location.search);
@@ -13,7 +12,7 @@ $(window).ready(function () {
 
 $(document).ready(function () {
 
-    //hide content after manual
+    //hide content after manual information
     $(".category-list .category-content:gt(0)").hide();
 
     //toggle category-content
@@ -35,6 +34,7 @@ $(document).ready(function () {
 
         saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState);
     });
+
     $("#saveEducationInformation").click(function () {
         //collect data entered by users
         var editedUniversity = $("#institution").val();
@@ -44,40 +44,63 @@ $(document).ready(function () {
         var editedGroup = $("#group").val();
         var editedGraduationDate = $("#graduationDate").val();
 
-        saveEducationChanges(editedUniversity,editedFaculty,editedSpeciality,editedCourse,editedGroup,editedGraduationDate);
+        saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate);
     });
 
-    //handler for state select
+    $("#saveExadelInformation").click(function () {
+        //collect data entered by users
+        var editedHireDate = $("#hireDate").val();
+        var editedWorkingHours = $("#workingHours").val();
+        var editedBillable = $("#billable").val();
+        var editedRoleCurrentProject = $("#roleCurrentProject").val();
+        var editedTechsCurrentProject = $("#techsCurrentProject").val();
+
+        saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject);
+    });
+    //load documents
+    $("#documentsHeader").click(function () {
+      $.ajax
+        ({
+            type: "GET",
+            url: "/info/getDocuments",
+            async: true,
+            data: {
+                "studentId": studentId
+            },
+       success : function (data) {
+            alert("" + data);
+        },
+        error: function(){
+            alert("error");
+        }});
+
+    });
+
+//handler for state select
     $("#state").change(
         checkState
     );
-    //handler termMark changed
-   // $(".termMark").change(checkTermMark($(this)));
-    $(".termMark").on("change",function(){
-        if(!validInputTermMark($(this).val())){
-            $(this).animate({
-                'background-color' : "red",
-                opacity : 0.5,
-                'color' : 'black'
-            },1000);
+//handler termMark changed
+
+    $(".term-mark-list").on("change", 'input', function () {
+        if (!validInputTermMark($(this).val())) {
+            $(this).addClass("termMarkInvalid", 1000);
             $(this).val(null);
         }
-        else{
-            $(this).animate({
-                'background-color' : "#fff",
-                opacity : 1,
-                color : "#333"
-            },200);
+        else {
+            $(this).removeClass("termMarkInvalid", 200);
         }
     });
 
-    $("#addNextTerm").click(function(){
+    $("#addNextTerm").click(function () {
         var numberTerms;
         numberTerms = $("#termMarkList").children().length;
+        var lastTerm;
+        lastTerm = $(".term-mark-list li input").last();
 //        console.log(document.getElementById("termMarkList").lastElementChild.lastElementChild);
 //        console.log($(".termMarkList li input").last().val() + " is val");
-        if($(".termMarkList li input").last().val() == MIN_MARK){
-            $(".termMarkList li input").last().focus();
+        if (lastTerm.val() == MIN_MARK) {
+            lastTerm.focus();
         }
         else {
             ++numberTerms;
@@ -92,27 +115,27 @@ $(document).ready(function () {
     });
 
 });
-
-function validInputTermMark(termMarkVal){
-    if(termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK )
-       return false;
+function validInputTermMark(termMarkVal) {
+    if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK)
+        return false;
     return true;
-};
-function checkTermMark(termMark){
-    if(!validInputTermMark(termMark.val())){
+}
+
+function checkTermMark(termMark) {
+    if (!validInputTermMark(termMark.val())) {
         termMark.animate({
-            'background-color' : "red",
-            opacity : 0.5,
-            'color' : 'black'
-        },1000);
+            'background-color': "red",
+            opacity: 0.5,
+            'color': 'black'
+        }, 1000);
         termMark.val(null);
     }
-    else{
+    else {
         termMark.animate({
-            'background-color' : "#ffffff",
-            opacity : 1,
-            color : "#333"
-        },200);
+            'background-color': "#ffffff",
+            opacity: 1,
+            color: "#333"
+        }, 200);
     }
 }
 
@@ -122,7 +145,7 @@ function parseRequestForId(string) {
     gottenId = string.match(regExpForId);
     var regExp = /[0-9]+/;
     studentId = (gottenId[0].match(regExp))[0];
-};
+}
 
 function fillOptions() {
     $.ajax({
@@ -131,8 +154,6 @@ function fillOptions() {
         async: true,
         success: function (data) {
             // alert("" + data);
-
-
             $("#state").empty();
             //filling
             var options = JSON.parse(data);
@@ -150,37 +171,49 @@ function fillManualInfo() {
     ({
         type: "GET",
         //SEND TO CONTROLLER
-        url: "/info/getManualInformation",
+        url: "/info/getCommonInformation",
         async: true,
-        data: studentId,
+        data: {
+            "studentId": studentId
+        },
         success: function (data) {
-           //  alert("" + data);
-            var gottenStudent = JSON.parse(data);
-            $("#headerName").text(gottenStudent.name);
-            $("#name").val(gottenStudent.name);
-            $("#login").val(gottenStudent.login);
-            $("#password").val(gottenStudent.password);
-            $("#email").val(gottenStudent.email);
-            $("#state").find("option:contains(" + "\'" + gottenStudent.studentInfo.state + "\')").attr("selected", "selected");
+            // alert("" + data);
+            var gottenUser = JSON.parse(data);
+            var gottenStudent = gottenUser.studentInfo;
+
+            $("#headerName").text(gottenUser.name);
+            $("#name").val(gottenUser.name);
+            $("#login").val(gottenUser.login);
+            $("#password").val(gottenUser.password);
+            $("#email").val(gottenUser.email);
+            $("#state").find("option:contains(" + "\'" + gottenStudent.state + "\')").attr("selected", "selected");
             checkState();
-            $("#institution").val(gottenStudent.studentInfo.university);
-            $("#faculty").val(gottenStudent.studentInfo.faculty);
+
+            $("#institution").val(gottenStudent.university);
+            $("#faculty").val(gottenStudent.faculty);
             $("#speciality").val("applied maths");
-            $("#course").val(gottenStudent.studentInfo.course);
-            $("#group").val(gottenStudent.studentInfo.group);
-           $("#graduationDate").val(gottenStudent.studentInfo.graduationDate);
+            $("#course").val(gottenStudent.course);
+            $("#group").val(gottenStudent.group);
+            $("#graduationDate").val(gottenStudent.graduationDate);
+
+            $("#workingHours").val(gottenStudent.workingHours);
+            $("#hireDate").val(gottenStudent.hireDate);
+            $("#billable").val(gottenStudent.billable);
+            $("#roleCurrentProject").val(gottenStudent.roleCurrentProject);
+            $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
+
         }
     });
 }
 
-function checkState(){
+function checkState() {
     var state = $("#state :selected").text();
-    if(state == 'working'){
+    if (state == 'working') {
         $("#exadelHeader").show();
 
     }
-    else{
-        if($("#exadelContent").is(":visible")){
+    else {
+        if ($("#exadelContent").is(":visible")) {
             $("#exadelContent").slideToggle(100);
         }
         $("#exadelHeader").hide(200);
@@ -206,17 +239,17 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
             $("#saveManualInformation").text("Saved!");
             $("#saveManualInformation").animate({
                 backgroundColor: '#5cb85c',
-                borderColor : '#4cae4c'
+                borderColor: '#4cae4c'
             }, {
                 duration: 500,
                 easing: "swing",
                 complete: setTimeout(function () {
                     $("#saveManualInformation").animate({
                         backgroundColor: '#4A5D80',
-                        borderColor : '#2D3E5C'
+                        borderColor: '#2D3E5C'
                     }, 500);
                     $("#saveManualInformation").text("Save");
-                },1000)
+                }, 1000)
             });
 
             $("#headerName").text(editedName);
@@ -231,7 +264,7 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
     });
 }
 
-function saveEducationChanges(editedUniversity,editedFaculty,editedSpeciality,editedCourse,editedGroup,editedGraduationDate){
+function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate) {
     $.ajax
     ({
         type: "POST",
@@ -240,34 +273,88 @@ function saveEducationChanges(editedUniversity,editedFaculty,editedSpeciality,ed
         dataType: 'json', // from the server!
         data: {
             'studentId': studentId,
-            'studentUniversity' : editedUniversity,
-            'studentFaculty' : editedFaculty,
-            'studentSpeciality' : editedSpeciality,
-            'studentCourse' : editedCourse,
-            'studentGroup' : editedGroup,
-            'studentGraduationDate' : editedGraduationDate
+            'studentUniversity': editedUniversity,
+            'studentFaculty': editedFaculty,
+            'studentSpeciality': editedSpeciality,
+            'studentCourse': editedCourse,
+            'studentGroup': editedGroup,
+            'studentGraduationDate': editedGraduationDate
         },
         success: function () {
             $("#saveEducationInformation").text("Saved!");
             $("#saveEducationInformation").animate({
                 backgroundColor: '#5cb85c',
-                borderColor : '#4cae4c'
+                borderColor: '#4cae4c'
             }, {
                 duration: 500,
                 easing: "swing",
                 complete: setTimeout(function () {
                     $("#saveEducationInformation").animate({
                         backgroundColor: '#4A5D80',
-                        borderColor : '#2D3E5C'
+                        borderColor: '#2D3E5C'
                     }, 500);
                     $("#saveEducationInformation").text("Save");
-                },1000)
+                }, 1000)
             });
         },
         error: function () {
             alert("error");
         }
+    })
+}
+
+
+function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject) {
+    var defferedPostExadel = $.ajax
+    ({
+        type: "POST",
+        //SEND
+        url: "/info/postExadel",
+        dataType: 'json', // from the server!
+        data: {
+            'studentId': studentId,
+            'studentWorkingHours': editedWorkingHours,
+            'studentHireDate': editedHireDate,
+            'studentBillable': editedBillable,
+            'studentRoleCurrentProject': editedRoleCurrentProject,
+            'studentTechsCurrentProject': editedTechsCurrentProject
+        }});
+    defferedPostExadel.done(function () {
+        $("#saveExadelInformation").text("Saved!");
+        $("#saveExadelInformation").animate({
+            backgroundColor: '#5cb85c',
+            borderColor: '#4cae4c'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveExadelInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveExadelInformation").text("Save");
+            }, 1000)
+        });
     });
+    defferedPostExadel.fail(function () {
+        alert("error");
+        $("#saveExadelInformation").text("Check out!");
+        $("#saveExadelInformation").animate({
+            backgroundColor: '#CD5C5C',
+            borderColor: '#C16868'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveExadelInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveExadelInformation").text("Save");
+            }, 1000)
+        });
+    });
+
 }
 
 
