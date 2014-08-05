@@ -81,7 +81,7 @@ public class ExcelView extends AbstractExcelView {
             row.createCell(7).setCellValue(user.getStudentInfo().getCourse());
             row.createCell(8).setCellValue(user.getStudentInfo().getGroup());
             if (user.getStudentInfo().getGraduationDate() != null) {
-                row.createCell(9).setCellValue(user.getStudentInfo().getGraduationDate().toString());
+                row.createCell(9).setCellValue(user.getStudentInfo().getGraduationDate());
             }
             row.createCell(10).setCellValue(user.getStudentInfo().getWorkingHours());
             if (user.getStudentInfo().getBillable() != null) {
