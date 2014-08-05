@@ -20,6 +20,7 @@
 }
 
 .menu-button {
+    font-size: 16pt;
     padding: 1pt 1pt !important;
     width: 24pt;
     height: 24pt;
@@ -177,10 +178,9 @@
 }
 
 .filter-item {
-    display: inline-table;
+    display: inline-block;
 
-    padding: 0;
-    width: 120pt;
+    width: auto;
     height: 18pt;
 
     border: solid 1pt;
@@ -195,7 +195,9 @@
     padding-right: 1pt;
     padding-left: 1pt;
 
-    width: 40% !important;
+    height: 100%;
+    width: auto !important;
+
     white-space: nowrap;
 }
 
@@ -212,7 +214,7 @@
 .value-field {
     /*padding: 0;*/
     text-align: center;
-    width: 60% !important;
+    width: 60pt !important;
     height: 100%;
 }
 

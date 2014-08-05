@@ -23,7 +23,7 @@ import java.util.*;
  */
 @Controller
 @Secured({"ROLE_CURATOR", "ROLE_FEEDBACKER", "ROLE_SUPERADMIN", "ROLE_OFFICE"})
-@RequestMapping("/")
+@RequestMapping("/list")
 public class ListPageController {
     @Autowired
     IUserService userService;
@@ -34,19 +34,20 @@ public class ListPageController {
     @Autowired
     IMailService mailService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
         return "list";
     }
 
-    // Provide sanding list data
-    @RequestMapping(value = "/list/data", method = RequestMethod.GET)
+    @RequestMapping(value = "/data", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
                                        @RequestParam(value = "filter", required = false) String filter) {
+        //TODO: Optimise request queue (for big counts in short time)
+
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         Map<String, String[]> map = new HashMap<String, String[]>();
@@ -65,7 +66,7 @@ public class ListPageController {
     @Secured("ROLE_SUPERADMIN")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value = "/list/sendMail", method = RequestMethod.POST)
+    @RequestMapping(value = "/sendMail", method = RequestMethod.POST)
     public String sendMail(@RequestParam("students") String students,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam("message") String body) {
@@ -83,7 +84,7 @@ public class ListPageController {
         return gson.toJson(inaccessibleEmail);
     }
 
-    @RequestMapping(value = "/list/export", method = RequestMethod.GET)
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
     public ModelAndView export(@RequestParam("students") String students) {
         Gson gson = new Gson();
 
@@ -98,7 +99,7 @@ public class ListPageController {
     }
 
     @Secured("ROLE_SUPERADMIN")
-    @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "/quickAdd", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void addUser(@RequestParam("name") String name,
                         @RequestParam("login") String login,

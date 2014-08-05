@@ -13,12 +13,22 @@
     <div class="dividing-line"></div>
     <div class="form-inline first-header-line">
         <span id="utilityMenu" class="btn-menu">
-            <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
-                   alt="Add student" title="Add student">
-            <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
-                   alt="Export" title="Export to Excel Doc.">
-            <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
-                   src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
+            <button id="addMenuButton" class="btn prj-btn menu-button" title="Add student">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button id="exportMenuButton" class="btn prj-btn menu-button" title="Export to Excel Doc.">
+                <span class="glyphicon glyphicon-file"></span>
+            </button>
+            <button id="distributionMenuButton" class="btn prj-btn menu-button"
+                    title="Send message to selected students">
+                <span class="glyphicon glyphicon-envelope"></span>
+            </button>
+            <!--<input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"-->
+                   <!--alt="Add student" title="Add student">-->
+            <!--<input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"-->
+                   <!--alt="Export" title="Export to Excel Doc.">-->
+            <!--<input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"-->
+                   <!--src="../images/distribution.png" alt="Distribution" title="Send message to selected students">-->
         </span>
 
         <span class="btn-group input-group search-block">
@@ -41,12 +51,16 @@
             {{/each}}
         </script>
 
+        <script id="filterSeparator" type="text/x-handlebars-template">
+            <span class='static-green filter-separator'>and</span>
+        </script>
         <script id="filterTemplate" type="text/x-handlebars-template">
-            {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
             <div data-filter='{{name}}' class='btn-group input-group filter-item'>
                 <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-
             </div>
+        </script>
+        <script id="filterSimpleValueTemplate" type="text/x-handlebars-template">
+            <input class="value-field" type='{{type}}'>
         </script>
     </div>
 
