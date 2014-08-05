@@ -81,11 +81,8 @@ public class TestController {
                     }
                 else
                     st.getStudentInfo().setBillable(null);
-                try {
-                    st.getStudentInfo().setGraduationDate(new Date(sdf.parse("01.05.2018").getTime()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                st.getStudentInfo().setGraduationDate(2017);
+
                 st.getStudentInfo().setRoleCurrentProject(rand.nextBoolean() ? "developer" : "test");
                 st.getStudentInfo().setTechsCurrentProject(rand.nextBoolean() ? "java" : "php");
                 st.getStudentInfo().setEnglishLevel("advansed");
@@ -125,7 +122,7 @@ public class TestController {
         student.setFaculty("FAMCS");
         student.setCourse(3);
         student.setGroup(7);
-        student.setGraduationDate(java.sql.Date.valueOf("2017-07-01"));
+        student.setGraduationDate(2017);
         student.setRoleCurrentProject("Junior developer");
         student.setTechsCurrentProject("CSS, JS, JSON");
 

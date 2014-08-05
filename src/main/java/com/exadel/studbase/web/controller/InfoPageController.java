@@ -112,7 +112,7 @@ public class InfoPageController {
                                 @RequestParam("studentFaculty") String faculty,
                                 @RequestParam("studentCourse") int course,
                                 @RequestParam("studentGroup") int group,
-                                @RequestParam("studentGraduationDate") Date graduationDate,
+                                @RequestParam("studentGraduationDate") int graduationDate,
                                 @RequestParam("studentTermMarks") String termMarks) {
 
         Student editedStudent = studentService.getById(id);

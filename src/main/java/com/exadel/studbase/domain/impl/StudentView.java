@@ -38,7 +38,7 @@ public class StudentView implements IEntity<Long> {
     private Integer group;
 
     @Column(name = "graduation_date")
-    private Date graduationDate;
+    private Integer graduationDate;
 
     @Column(name = "working_hours")
     private Integer workingHours;
@@ -59,6 +59,7 @@ public class StudentView implements IEntity<Long> {
         course = 0;
         group = 0;
         workingHours = 0;
+        graduationDate = 0;
     }
 
     @Override
@@ -119,11 +120,11 @@ public class StudentView implements IEntity<Long> {
         this.group = group;
     }
 
-    public Date getGraduationDate() {
+    public Integer getGraduationDate() {
         return graduationDate;
     }
 
-    public void setGraduationDate(Date graduationDate) {
+    public void setGraduationDate(Integer graduationDate) {
         this.graduationDate = graduationDate;
     }
 
