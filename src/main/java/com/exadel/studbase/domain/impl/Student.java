@@ -129,14 +129,6 @@ public class Student implements IEntity<Long> {
         this.group = group;
     }
 
-    public Date getGraduationDate() {
-        return graduationDate;
-    }
-
-    public void setGraduationDate(Date graduationDate) {
-        this.graduationDate = graduationDate;
-    }
-
     public Integer getWorkingHours() {
         return workingHours;
     }
@@ -144,7 +136,13 @@ public class Student implements IEntity<Long> {
     public void setWorkingHours(Integer working_hours) {
         this.workingHours = working_hours;
     }
+    public Date getGraduationDate() {
+        return graduationDate;
+    }
 
+    public void setGraduationDate(Date graduationDate) {
+        this.graduationDate = graduationDate;
+    }
     public Date getBillable() {
         return billable;
     }

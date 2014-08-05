@@ -165,3 +165,12 @@ input[type="number"] {
     margin-left: 12.66666667%;
     }
 }
+.dialog-area{
+    width: 210pt;
+}
+.text-dialog{
+    width : 90%;
+}
+.col-sm-1{
+    padding-right: 60px;
+}

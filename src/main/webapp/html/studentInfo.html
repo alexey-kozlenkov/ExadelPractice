@@ -195,27 +195,33 @@
 <div class="category-content" id="documentsContent">
     <div class="form-horizontal">
         <div class="col-md-offset-2">
-        <div class="form-group">
-            <input type="image" title="add document" id="addDocument"
-                   class="btn prj-btn category-content-add-button"
-                   src="../images/add.png"
-                   alt="Add document">
-        </div>
-        <div class="form-group">
-            <table class="documents prj-table-striped">
-                <thead class="prj-list-header">
-                <tr>
-                    <th class="documents-list-column">Document type</th>
-                    <th class="documents-list-column">Issue date</th>
-                    <th class="documents-list-column">Expiration date</th>
-                    <th class="documents-list-column">Additional info</th>
-                </tr>
-                </thead>
-                <tbody class="documents-content" id="documents">
-                </tbody>
-            </table>
-
-        </div>
+            <div class="form-group">
+                <input type="image" title="add document" id="addDocument"
+                       class="btn prj-btn category-content-add-button"
+                       src="../images/add.png"
+                       alt="Add document">
+            </div>
+            <div class="form-group">
+                <table class="documents prj-table-striped">
+                    <thead class="prj-list-header">
+                    <tr>
+                        <th class="documents-list-column">Document type</th>
+                        <th class="documents-list-column">Issue date</th>
+                        <th class="documents-list-column">Expiration date</th>
+                        <th class="documents-list-column">Additional info</th>
+                    </tr>
+                    </thead>
+                    <tbody class="documents-content" id="documents">
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/first.png" class="first"/>
+                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+                    <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/next.png" class="next"/>
+                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/last.png" class="last"/>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <button id="saveDocumentsInformation" type="button" class="category-content-button  prj-btn">Save
@@ -229,6 +235,51 @@
 </div>
 </div>
 
+<div class='content-locker'>
+    <div class='dialog-area'>
+        <div class='dialog-header'>
+            <span id="closeDialog" class='glyphicon glyphicon-remove dialog-close'></span>
+        </div>
+
+        <div class='dialog-content' data-dialog-name='add-document'>
+            <div class="dialog-content-central">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="doctype" class="col-sm-1 control-label">Doctype</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="doctype" placeholder="Enter doctype">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="issueDate" class="col-sm-1 control-label">Issue date</label>
+
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="issueDate" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="expirationDate" class="col-sm-1 control-label">Expiration date</label>
+
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="expirationDate" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+
+                    <textarea class="text-dialog" id="info" placeholder="Enter some additional information..."
+                              rows="3"></textarea>
+
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button id='okButton' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-ok"></span>Ok
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script id="termMarkTemplate" type="text/x-handlebars-template">
     <li>
@@ -257,13 +308,12 @@
 </script>
 
 
-
-
 <script src="../js/lib/jquery-2.1.1.min.js"></script>
 <script src="../js/lib/jquery.animate-colors-min.js"></script>
 <script src="../js/lib/handlebars-v1.3.0.js"></script>
 
-<script src="../js/info/studentInfo.js"></script>
 
+<script src="../js/common.js"></script>
+<script src="../js/info/studentInfo.js"></script>
 </body>
 </html>

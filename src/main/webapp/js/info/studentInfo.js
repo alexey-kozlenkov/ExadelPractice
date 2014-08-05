@@ -97,6 +97,28 @@ $(document).ready(function () {
 
     });
 
+    //add document
+    $("#addDocument").click(function(){
+       showDialog("add-document");
+        $("#okButton").click(function(){
+            var doctype =  $("#doctype").val();
+            var issueDate =  $("#issueDate").val();
+            var expirationDate = $("#expirationDate").val();
+            var info = $("#info").val();
+            var newDocument = {
+                'doctype' : doctype,
+                'issueDate' : issueDate,
+                'expirationDate' : expirationDate,
+                'info' : info
+            };
+            closeDialog();
+            $("#documents").append(templateDocument(newDocument));
+        });
+    });
+    //close dialog
+    $("#closeDialog").click(function(){
+         closeDialog();
+    });
 //handler for state select
     $("#state").change(
         checkState
