@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -153,5 +154,15 @@ public class InfoPageController {
     public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
         return "redirect:/info?id=" + id;
+    }
+
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public ModelAndView export(/*@RequestParam("studentId") Long id*/) {
+        //Gson gson = new Gson();
+
+        //Long[] studentId = gson.fromJson(students, Long[].class);
+        User user = userService.getById(1L);
+
+        return new ModelAndView("pdfView", "user", user);
     }
 }
