@@ -67,19 +67,19 @@ public class Student implements IEntity<Long> {
     @Column(name = "project_manager_current_project")
     private Long projectManagerId;
 
-    @Column(name="training_before_working")
+    @Column(name = "training_before_working")
     private Boolean trainingBeforeStartWorking;
 
-    @Column(name="course_when_start_woking")
+    @Column(name = "course_when_start_woking")
     private Integer courseWhenStartWorking;
 
-    @Column(name="speciality")
+    @Column(name = "speciality")
     private String speciality;
 
-    @Column(name="wishes_hours_number")
+    @Column(name = "wishes_hours_number")
     private Integer wishesHoursNumber;
 
-    @Column(name="trainings_exadel")
+    @Column(name = "trainings_exadel")
     private String trainingsInExadel;
 
     public Student() {
@@ -147,7 +147,13 @@ public class Student implements IEntity<Long> {
         this.group = group;
     }
 
-   
+    public Integer getGraduationDate() {
+        return graduationDate;
+    }
+
+    public void setGraduationDate(Integer graduationDate) {
+        this.graduationDate = graduationDate;
+    }
 
     public Integer getWorkingHours() {
         return workingHours;
