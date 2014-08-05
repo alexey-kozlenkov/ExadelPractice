@@ -24,16 +24,16 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         String targetUrl = null;
-        if(authentication.getPrincipal() instanceof UserDetails) {
+        if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String role = userDetails.getAuthorities().isEmpty() ? null : userDetails.getAuthorities().toArray()[0].toString();
             String login = userDetails.getUsername();
-            if(role.equals("ROLE_STUDENT")) {
-                targetUrl = "/info/redirectInfo?login="+login;
+            if (role.equals("ROLE_STUDENT")) {
+                targetUrl = "/info/redirectInfo?login=" + login;
             } else {
                 targetUrl = "/list";
             }
-        redirectStrategy.sendRedirect(request, response, targetUrl);
+            redirectStrategy.sendRedirect(request, response, targetUrl);
         }
     }
 

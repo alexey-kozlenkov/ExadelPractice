@@ -32,16 +32,16 @@ public class StudentView implements IEntity<Long> {
     private String faculty;
 
     @Column(name = "course")
-    private int course;
+    private Integer course;
 
     @Column(name = "s_group")
-    private int group;
+    private Integer group;
 
     @Column(name = "graduation_date")
-    private Date graduationDate;
+    private Integer graduationDate;
 
     @Column(name = "working_hours")
-    private int workingHours;
+    private Integer workingHours;
 
     @Column(name = "billable")
     private Date billable;
@@ -56,6 +56,10 @@ public class StudentView implements IEntity<Long> {
     private String englishLevel;
 
     public StudentView() {
+        course = 0;
+        group = 0;
+        workingHours = 0;
+        graduationDate = 0;
     }
 
     @Override
@@ -100,35 +104,35 @@ public class StudentView implements IEntity<Long> {
         this.faculty = faculty;
     }
 
-    public int getCourse() {
+    public Integer getCourse() {
         return course;
     }
 
-    public void setCourse(int course) {
+    public void setCourse(Integer course) {
         this.course = course;
     }
 
-    public int getGroup() {
+    public Integer getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(Integer group) {
         this.group = group;
     }
 
-    public Date getGraduationDate() {
+    public Integer getGraduationDate() {
         return graduationDate;
     }
 
-    public void setGraduationDate(Date graduationDate) {
+    public void setGraduationDate(Integer graduationDate) {
         this.graduationDate = graduationDate;
     }
 
-    public int getWorkingHours() {
+    public Integer getWorkingHours() {
         return workingHours;
     }
 
-    public void setWorkingHours(int workingHours) {
+    public void setWorkingHours(Integer workingHours) {
         this.workingHours = workingHours;
     }
 

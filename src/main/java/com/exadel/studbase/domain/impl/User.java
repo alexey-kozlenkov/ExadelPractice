@@ -41,23 +41,18 @@ public class User implements IEntity<Long> {
     @JoinColumn(name = "id")
     private Employee employeeInfo;
 
-    @Column(name="skype")
+    @Column(name = "skype")
     private String skype;
 
-    @Column(name="telephone")
+    @Column(name = "telephone")
     private String telephone;
 
-    @Column(name="birthdate")
+    @Column(name = "birthdate")
     private Date birthdate;
 
 
     public User() {
-        password = "pas";
-    }
-    public User(String name, String login) {
-        super();
-        setName(name);
-        setLogin(login);
+        password = "11111";
     }
 
     @Override
@@ -127,7 +122,7 @@ public class User implements IEntity<Long> {
     }
 
     public void addRole(String addingRole) {
-        setRole(getRole()+";"+addingRole);
+        setRole(getRole() + ";" + addingRole);
     }
 
     public String getTelephone() {

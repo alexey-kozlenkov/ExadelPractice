@@ -79,12 +79,12 @@ $(document).ready(function () {
             type: "GET",
             url: "/info/getDocuments",
             async: true,
-            cashe : false,
+            cashe: false,
             data: {
                 "studentId": studentId
             },
             success: function (data) {
-               // alert("" + data);
+                // alert("" + data);
                 $("#documents").empty();
                 var documents = JSON.parse(data);
                 jQuery.each(documents, function (index, value) {
@@ -194,7 +194,7 @@ function fillManualInfo() {
         //SEND TO CONTROLLER
         url: "/info/getCommonInformation",
         async: true,
-        cashe : false,
+        cashe: false,
         data: {
             "studentId": studentId
         },

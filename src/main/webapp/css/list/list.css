@@ -30,9 +30,10 @@
     text-align: center;
 }
 
-#searchLine{
+#searchLine {
     width: 150pt;
 }
+
 .search-line {
     float: left;
     min-width: 150pt;
@@ -54,17 +55,17 @@
 }
 
 /*-------------------------------------*/
-#headerScrollingBlock{
+#headerScrollingBlock {
     overflow: hidden;
 }
 
-
-#headerFixed{
-    margin:0;
+#headerFixed {
+    margin: 0;
 }
+
 /***************************** Central *******************************/
 .central {
-/*  display: initial; */
+    /*  display: initial; */
     margin: 0 auto;
     width: 900pt;
     text-align: center;
@@ -91,47 +92,58 @@
 
 .student-table > tbody > tr > td {
     vertical-align: middle;
-           padding: 5pt 3pt;
+    padding: 5pt 3pt;
 
-/*        overflow: hidden; */
-/*     white-space: nowrap; */
-  /*-o-text-overflow: ellipsis;*/
-     /*text-overflow: ellipsis;*/
+    /*        overflow: hidden; */
+    /*     white-space: nowrap; */
+    /*-o-text-overflow: ellipsis;*/
+    /*text-overflow: ellipsis;*/
 }
 
 .header-column-0 {
     width: 40px;
 }
+
 .header-column-1 {
     width: 240px;
 }
+
 .header-column-2 {
     width: 90px;
 }
+
 .header-column-3 {
     width: 85px;
 }
+
 .header-column-4 {
     width: 65px;
 }
+
 .header-column-5 {
     width: 80px;
 }
+
 .header-column-6 {
     width: 65px;
 }
+
 .header-column-7 {
     width: 90px;
 }
+
 .header-column-8 {
     width: 90px;
 }
+
 .header-column-9 {
     width: auto;
 }
+
 .header-column-10 {
     width: 100px;
 }
+
 /*----------------------Load Image-----------------------*/
 
 .load-image-class {
@@ -163,15 +175,15 @@
 
 .filter-item {
     display: inline-table;
-    
+
     padding: 0;
     width: 120pt;
     height: 18pt;
-    
+
     border: solid 1pt;
     border-color: #2D3E5C;
     border-radius: 4pt;
-    
+
     margin: 1pt;
 }
 
@@ -201,10 +213,9 @@
     height: 100%;
 }
 
-
 /****************************************************************************/
 
-.message-area{
+.message-area {
     resize: none;
     height: 100pt;
     padding: 4pt;

@@ -38,7 +38,7 @@ public class Student implements IEntity<Long> {
     private Integer group;
 
     @Column(name = "graduation_date")
-    private Date graduationDate;
+    private Integer graduationDate;
 
     @Column(name = "working_hours")
     private Integer workingHours;
@@ -55,20 +55,38 @@ public class Student implements IEntity<Long> {
     @Column(name = "english_level")
     private String englishLevel;
 
-    @Column(name="term_marks")
+    @Column(name = "term_marks")
     private String termMarks;
 
-    @Column(name="current_project")
+    @Column(name = "current_project")
     private String currentProject;
 
-    @Column(name="team_lead_current_project")
+    @Column(name = "team_lead_current_project")
     private Long teamLeadId;
 
-    @Column(name="project_manager_current_project")
+    @Column(name = "project_manager_current_project")
     private Long projectManagerId;
 
+    @Column(name="training_before_working")
+    private Boolean trainingBeforeStartWorking;
+
+    @Column(name="course_when_start_woking")
+    private Integer courseWhenStartWorking;
+
+    @Column(name="speciality")
+    private String speciality;
+
+    @Column(name="wishes_hours_number")
+    private Integer wishesHoursNumber;
+
+    @Column(name="trainings_exadel")
+    private String trainingsInExadel;
 
     public Student() {
+        course = 0;
+        group = 0;
+        workingHours = 0;
+        graduationDate = 0;
     }
 
     @Override
@@ -129,6 +147,8 @@ public class Student implements IEntity<Long> {
         this.group = group;
     }
 
+   
+
     public Integer getWorkingHours() {
         return workingHours;
     }
@@ -136,13 +156,7 @@ public class Student implements IEntity<Long> {
     public void setWorkingHours(Integer working_hours) {
         this.workingHours = working_hours;
     }
-    public Date getGraduationDate() {
-        return graduationDate;
-    }
 
-    public void setGraduationDate(Date graduationDate) {
-        this.graduationDate = graduationDate;
-    }
     public Date getBillable() {
         return billable;
     }
@@ -205,6 +219,46 @@ public class Student implements IEntity<Long> {
 
     public void setProjectManagerId(Long projectManagerId) {
         this.projectManagerId = projectManagerId;
+    }
+
+    public Boolean getTrainingBeforeStartWorking() {
+        return trainingBeforeStartWorking;
+    }
+
+    public void setTrainingBeforeStartWorking(Boolean trainingBeforeStartWorking) {
+        this.trainingBeforeStartWorking = trainingBeforeStartWorking;
+    }
+
+    public Integer getCourseWhenStartWorking() {
+        return courseWhenStartWorking;
+    }
+
+    public void setCourseWhenStartWorking(Integer courseWhenStartWorking) {
+        this.courseWhenStartWorking = courseWhenStartWorking;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public Integer getWishesHoursNumber() {
+        return wishesHoursNumber;
+    }
+
+    public void setWishesHoursNumber(Integer wishesHoursNumber) {
+        this.wishesHoursNumber = wishesHoursNumber;
+    }
+
+    public String getTrainingsInExadel() {
+        return trainingsInExadel;
+    }
+
+    public void setTrainingsInExadel(String trainingsInExadel) {
+        this.trainingsInExadel = trainingsInExadel;
     }
 
     @Override

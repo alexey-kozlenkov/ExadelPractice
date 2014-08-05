@@ -5,7 +5,6 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -31,7 +30,7 @@ public class ExcelView extends AbstractExcelView {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
         Date now = new Date();
         String fileName = "Student report - " + simpleDateFormat.format(now) + ".xls";
-        response.setHeader("Content-disposition", "attachment; filename="+fileName);
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
         List<User> listOfUsers = (List<User>) model.get("users");
 
@@ -40,12 +39,13 @@ public class ExcelView extends AbstractExcelView {
         sheet.setDefaultColumnWidth(20);
 
         // create style for header cells
-        CellStyle style = workbook.createCellStyle();
+        CellStyle styleHeader = workbook.createCellStyle();
         Font font = workbook.createFont();
-        style.setFillForegroundColor(HSSFColor.SEA_GREEN.index);
-        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         font.setColor(HSSFColor.WHITE.index);
+        styleHeader.setFillForegroundColor(HSSFColor.SEA_GREEN.index);
+        styleHeader.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        styleHeader.setFont(font);
 
         header.createCell(0).setCellValue("Name");
         header.createCell(1).setCellValue("Email");
@@ -63,7 +63,7 @@ public class ExcelView extends AbstractExcelView {
         header.createCell(13).setCellValue("Technology current poject");
         header.createCell(14).setCellValue("English level");
         for (int cellNumber = 0; cellNumber < header.getLastCellNum(); cellNumber++) {
-            header.getCell(cellNumber).setCellStyle(style);
+            header.getCell(cellNumber).setCellStyle(styleHeader);
         }
 
         int rowCount = 1;
@@ -81,7 +81,7 @@ public class ExcelView extends AbstractExcelView {
             row.createCell(7).setCellValue(user.getStudentInfo().getCourse());
             row.createCell(8).setCellValue(user.getStudentInfo().getGroup());
             if (user.getStudentInfo().getGraduationDate() != null) {
-                row.createCell(9).setCellValue(user.getStudentInfo().getGraduationDate().toString());
+                row.createCell(9).setCellValue(user.getStudentInfo().getGraduationDate());
             }
             row.createCell(10).setCellValue(user.getStudentInfo().getWorkingHours());
             if (user.getStudentInfo().getBillable() != null) {
@@ -97,6 +97,6 @@ public class ExcelView extends AbstractExcelView {
         for (int cellNumber = 0; cellNumber < header.getLastCellNum(); cellNumber++) {
             sheet.autoSizeColumn(cellNumber);
         }
-        sheet.setColumnWidth(13, 20000);
+        sheet.setColumnWidth(13, 15000);
     }
 }

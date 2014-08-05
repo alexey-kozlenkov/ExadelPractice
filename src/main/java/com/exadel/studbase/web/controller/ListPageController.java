@@ -34,35 +34,6 @@ public class ListPageController {
     @Autowired
     IMailService mailService;
 
-    public class StudResponse {
-        private Long version;
-        private Collection<StudentView> studentViews;
-
-        public StudResponse() {
-        }
-
-        public StudResponse(Long version, Collection<StudentView> studentViews) {
-            this.version = version;
-            this.studentViews = studentViews;
-        }
-
-        public Long getVersion() {
-            return version;
-        }
-
-        public void setVersion(Long version) {
-            this.version = version;
-        }
-
-        public Collection<StudentView> getStudentViews() {
-            return studentViews;
-        }
-
-        public void setStudentViews(Collection<StudentView> studentViews) {
-            this.studentViews = studentViews;
-        }
-    }
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
@@ -126,15 +97,51 @@ public class ListPageController {
         return new ModelAndView("excelView", "users", listOfUsers);
     }
 
+    @Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/list/quickAdd", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void addUser(@RequestParam("name") String name,
                         @RequestParam("login") String login,
                         @RequestParam("state") String state) {
 
-        User user = new User(name, login);
-        user.setStudentInfo(new Student());
-        user.getStudentInfo().setState(state);
-        userService.save(user);
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setLogin(login);
+        newUser.setRole("ROLE_STUDENT");
+        userService.save(newUser);
+        Student newStudent = new Student();
+        newStudent.setId(newUser.getId());
+        newStudent.setState(state);
+        newUser.setStudentInfo(newStudent);
+        userService.save(newUser);
+    }
+
+    public class StudResponse {
+        private Long version;
+        private Collection<StudentView> studentViews;
+
+        public StudResponse() {
+        }
+
+        public StudResponse(Long version, Collection<StudentView> studentViews) {
+            this.version = version;
+            this.studentViews = studentViews;
+        }
+
+        public Long getVersion() {
+            return version;
+        }
+
+        public void setVersion(Long version) {
+            this.version = version;
+        }
+
+        public Collection<StudentView> getStudentViews() {
+            return studentViews;
+        }
+
+        public void setStudentViews(Collection<StudentView> studentViews) {
+            this.studentViews = studentViews;
+        }
     }
 }

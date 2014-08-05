@@ -20,8 +20,8 @@ h1 {
 }
 
 .form-horizontal .form-group {
-   margin-right : 0;
-    margin-left : 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .category-header a {
@@ -162,7 +162,7 @@ input[type="number"] {
 
 @media (min-width: 992px) {
     .col-md-offset-2 {
-    margin-left: 12.66666667%;
+        margin-left: 12.66666667%;
     }
 }
 .dialog-area{
