@@ -40,6 +40,8 @@ q:before, q:after {
 }
 
 table {
+    background: transparent;
+    text-align: center;
     border-collapse: collapse;
     border-spacing: 0;
     table-layout: fixed;
@@ -73,12 +75,13 @@ footer, header, menu, nav, section {
 }
 
 .dividing-line{
-    height: 4pt;
+    height: 16pt;
     background: -moz-linear-gradient(bottom, #f1f1f1, #d1d1d1);
     background: -ms-linear-gradient(bottom, #f1f1f1, #d1d1d1);
     background: -o-linear-gradient(bottom, #f1f1f1, #d1d1d1);
     background: -webkit-linear-gradient(bottom, #f1f1f1, #d1d1d1);
 }
+
 
 /****************************** Select *****************************************/
 select {

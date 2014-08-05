@@ -1,41 +1,38 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-var filter = (function () {
+var Filter = (function () {
 
     var MAX_FILTER_COUNT = 10,
-        filterDescription = {
-            changed: true,
-            types: [
-                {
-                    name: 'age',
-                    type: 'number'
-                },
-                {
-                    name: 'workingHours',
-                    type: 'number'
-                },
-                {
-                    name: 'billable',
-                    type: 'date'
-                },
-                {
-                    name: 'skill',
-                    type: 'leveled-list',
-                    values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-                    multiset: true
-                },
-                {
-                    name: 'english',
-                    type: 'list',
-                    values: ['1', '2', '3', '4', '5']
-                },
-                {
-                    name: 'date',
-                    type: 'date'
-                }
-            ]
-        };
+        filterDescription = [
+            {
+                name: 'age',
+                type: 'number'
+            },
+            {
+                name: 'workingHours',
+                type: 'number'
+            },
+            {
+                name: 'billable',
+                type: 'date'
+            },
+            {
+                name: 'skill',
+                type: 'list',
+                values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
+                multiset: true
+            },
+            {
+                name: 'english',
+                type: 'list',
+                values: ['1', '2', '3', '4', '5']
+            },
+            {
+                name: 'date',
+                type: 'date'
+            }
+        ];
 
     function toggleFilterChooseMenu() {
         var $menu = $("#filterMenu");
@@ -43,27 +40,35 @@ var filter = (function () {
             $menu.hide(300);
         } else {
             setMenuLocationRelativeTo($menu, $("#addFilterButton"));
-            if (filter.changed) {
-                filter.changed = false;
-                var filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
-                $menu.empty();
-                $menu.append(filterMenuTemplate(filter));
-            }
-            $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
+            $menu.animate({ opacity: 'toggle', height: 'toggle'}, 300);
         }
     }
 
     function addFilterAttribute(name) {
-        var filterElementTempl = Handlebars.compile($('#filterTemplate').html());
-        var filterSeparatorTempl = Handlebars.compile($('#filterSeparator').html());
-        var filterContext = _.find(filter.types, function (element) {
+        var filterElementTempl = Handlebars.compile($('#filterTemplate').html()),
+            filterSeparatorTempl = Handlebars.compile($('#filterSeparator').html()),
+            filterContext = _.find(filterDescription, function (element) {
             return element.name == name;
         });
         if (filterContext) {
-            var prev = $(".filter-item[data-filter='" + name + "']");
-            var filterEl = $(filterElementTempl({name: name}));
+            var prev = $(".filter-item[data-filter='" + name + "']"),
+                filterEl = $(filterElementTempl({name: name})),
+                template;
 
-
+            switch (filterContext.type){
+                case 'number':
+                    template = Handlebars.compile($('#filterNumberValueTemplate').html());
+                    break;
+                case 'date':
+                    template = Handlebars.compile($('#filterDataValueTemplate').html());
+                    break;
+                case 'list':
+                    template = Handlebars.compile($('#filterListValueTemplate').html());
+                    break;
+                default :
+                    break;
+            }
+            filterEl.append(template(filterContext));
             if (filterContext.multiset && prev.length > 0) {
                 prev.last().after(filterEl);
             } else {
@@ -76,18 +81,22 @@ var filter = (function () {
     }
 
     function checkFilterCount() {
-        var count = $(".filter-item").length;
-        var filterBtn = $("#addFilterButton");
+        var count = $(".filter-item").length,
+            filterBtn = $("#addFilterButton");
         if (count < MAX_FILTER_COUNT) {
             filterBtn.show();
         } else {
             filterBtn.hide();
         }
-        checkTopMarginOfList();
+        ListHeader.check();
     }
 
     return {
         init: function () {
+            var $menu = $("#filterMenu"),
+                filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
+            $menu.empty();
+            $menu.append(filterMenuTemplate({filter: filterDescription}));
             $("#filterMenu").mouseleave(function () {
                 $('#filterMenu').hide(400);
             });
@@ -153,6 +162,7 @@ var filter = (function () {
             return returnStatement;
         }
     }
-});
+}());
 
-$(window).ready(filter.init);
+$(document).ready(Filter.init);
+

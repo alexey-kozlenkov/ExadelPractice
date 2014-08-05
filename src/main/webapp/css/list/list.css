@@ -1,21 +1,27 @@
 /**************************** Header ***********************************/
 
-.header {
+.header-fixed-top {
     position: fixed;
     top: 0;
     width: 100%;
     text-align: center;
 }
 
+.logout-link {
+    float: right;
+    margin: 2pt 10pt;
+
+    font-size: 11pt;
+}
+
 /*-------------------------------------*/
-.first-header-line {
+.header-line {
     margin: 2pt;
     margin-bottom: 1pt;
 }
 
 .btn-menu {
     display: inline-block;
-    width: 100pt;
     text-align: center;
 }
 
@@ -26,17 +32,16 @@
     height: 24pt;
 }
 
-.search-block {   
-    display: inline-block;
-    text-align: center;
+.search-block {
+   display: inline-block;
+   margin: 1pt;
+   margin-left: 10pt;
 }
 
 #searchLine {
     width: 150pt;
 }
-
 .search-line {
-    float: left;
     min-width: 150pt;
     height: 24pt;
 }
@@ -65,18 +70,13 @@
 }
 
 /***************************** Central *******************************/
-.central {
-    /*  display: initial; */
+.list-content {
     margin: 0 auto;
     width: 900pt;
     text-align: center;
 }
 
 /*-------------------Table-----------------------------*/
-.student-table {
-    background: transparent;
-    text-align: center;
-}
 
 .student-table > thead {
     font-size: 12px;
@@ -160,16 +160,11 @@
 
 .filter-separator,
 .filter-button {
-    position: relative !important;
-    display: inline-block;
-    margin: 1pt;
-    margin-left: 2pt;
-    margin-right: 2pt;
-    padding: 0pt;
-    width: 18pt;
-    height: 18pt;
+    padding: 0;
+    margin: 1pt 2pt;
+    width: 20pt;
+    height: 20pt;
     border: 1px solid transparent;
-    vertical-align: middle;
     text-align: center;
 }
 
@@ -181,19 +176,20 @@
     display: inline-block;
 
     width: auto;
-    height: 18pt;
+    height: 20pt;
 
     border: solid 1pt;
     border-color: #2D3E5C;
-    border-radius: 4pt;
+    border-radius: 3pt;
+
 
     margin: 1pt;
 }
 
 .filter-name-btn {
     padding: 1pt;
-    padding-right: 1pt;
-    padding-left: 1pt;
+    padding-right: 3pt;
+    padding-left: 3pt;
 
     height: 100%;
     width: auto !important;
@@ -211,11 +207,23 @@
     text-decoration: line-through
 }
 
-.value-field {
-    /*padding: 0;*/
+.filter-value {
     text-align: center;
-    width: 60pt !important;
     height: 100%;
+    border-top-right-radius: 3pt;
+    border-bottom-right-radius: 3pt;
+    padding: 0;
+    border: none;
+}
+
+.number-filter-value{
+    width: 40pt;
+}
+.date-filter-value{
+    width: 110pt;
+}
+.list-filter-value{
+    width: auto;
 }
 
 /****************************************************************************/

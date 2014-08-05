@@ -4,10 +4,16 @@ body {
 }
 
 .first {
-    margin-top: 40px;
+    margin-top: 10px;
+    height: 40pt;
 }
 
 .form-control {
     width: 60%;
+}
+
+.err{
+    dialog: none;
+    width: 70%;
 }
 

@@ -73,12 +73,16 @@ public class ListPageController {
         Gson gson = new Gson();
 
         Long[] studentId = gson.fromJson(students, Long[].class);
-
         List<String> inaccessibleEmail = new ArrayList<String>();
         for (Long id : studentId) {
             User user = userService.getById(id);
-            if (!mailService.sendMail(user.getEmail(), subject, body)) {
-                inaccessibleEmail.add(user.getEmail());
+            String userName = user.getName();
+            if(user.getEmail() != null){
+                if (!mailService.sendMail(user.getEmail(), subject, body)) {
+                    inaccessibleEmail.add(userName + " ( " + user.getEmail() + " )");
+                }
+            }else{
+                inaccessibleEmail.add(userName + "( haven't mail )");
             }
         }
         return gson.toJson(inaccessibleEmail);
@@ -94,7 +98,6 @@ public class ListPageController {
             User user = userService.getById(id);
             listOfUsers.add(user);
         }
-
         return new ModelAndView("excelView", "users", listOfUsers);
     }
 
