@@ -6,8 +6,12 @@
     <title>Information</title>
 
     <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
+
     <link href="../css/common.css" rel="stylesheet">
     <link href="../css/info/user-info.css" rel="stylesheet"/>
+
+
+    <script src="../js/lib/jquery-2.1.1.min.js"></script>
 
 </head>
 
@@ -55,8 +59,11 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="state" class="col-sm-2 control-label">State</label>
 
-            <select class="category-content-select" id="state"></select>
+            <div class="col-sm-10">
+                <select class="category-content-select" id="state"></select>
+            </div>
         </div>
         <button id="saveManualInformation" type="button" class="category-content-button prj-btn">Save
         </button>
@@ -77,7 +84,6 @@
                        placeholder="Educational institution" required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="faculty" class="col-sm-2 control-label">Faculty</label>
 
@@ -96,7 +102,7 @@
             <label for="course" class="col-sm-2 control-label">Course</label>
 
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="course" placeholder="Course graduated"
+                <input type="number" class="form-control" id="course" placeholder="Course"
                        required>
             </div>
         </div>
@@ -202,7 +208,7 @@
                        alt="Add document">
             </div>
             <div class="form-group">
-                <table class="documents prj-table-striped">
+                <table class="documents prj-table-striped" id="documentTable">
                     <thead class="prj-list-header">
                     <tr>
                         <th class="documents-list-column">Document type</th>
@@ -214,13 +220,6 @@
                     <tbody class="documents-content" id="documents">
                     </tbody>
                 </table>
-                <div class="pager">
-                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/first.png" class="first"/>
-                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/prev.png" class="prev"/>
-                    <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
-                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/next.png" class="next"/>
-                    <img src="http://mottie.github.com/tablesorter/addons/pager/icons/last.png" class="last"/>
-                </div>
             </div>
         </div>
         <div class="form-group">
@@ -288,29 +287,20 @@
 </script>
 
 <script id="documentTemplate" type="text/x-handlebars-template">
-    <tr>
-        <td id="documentId" hidden>
-            {{id}}
-        </td>
-        <td class="documents-list-column">
-            {{doctype}}
-        </td>
-        <td class="documents-list-column">
-            {{issueDate}}
-        </td>
-        <td class="documents-list-column">
-            {{expirationDate}}
-        </td>
-        <td class="documents-list-column">
-            {{info}}
-        </td>
+    <tr data-id="{{id}}">
+
+        <td class="documents-list-column">{{doctype}}</td>
+        <td class="documents-list-column">{{issueDate}}</td>
+        <td class="documents-list-column">{{expirationDate}}</td>
+        <td class="documents-list-column">{{info}}</td>
     </tr>
 </script>
 
 
-<script src="../js/lib/jquery-2.1.1.min.js"></script>
+
 <script src="../js/lib/jquery.animate-colors-min.js"></script>
 <script src="../js/lib/handlebars-v1.3.0.js"></script>
+
 
 <script src="../js/common.js"></script>
 <script src="../js/info/studentInfo.js"></script>

@@ -149,9 +149,27 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/postDocuments", method = RequestMethod.POST)
+    public String editDocuments(@RequestParam("documents") String newDocuments) {
+
+          Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+          Document[] newDocs = gson.fromJson( newDocuments, Document[].class);
+
+            for(Document document : newDocs){
+                documentService.save(document);
+            }
+
+        return ("{\"post\":\"ok\"}");
+    }
+
+
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
         return "redirect:/info?id=" + id;
     }
+
 }

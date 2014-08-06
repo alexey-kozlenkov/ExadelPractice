@@ -89,7 +89,7 @@ h1 {
 
 .category-content-select {
     border-radius: 4px;
-    margin-left: 10%;
+    margin-top: 7px;
 
     color: #333;
     font-size: 15px;
@@ -173,4 +173,7 @@ input[type="number"] {
 }
 .col-sm-1{
     padding-right: 60px;
+}
+.new-document{
+    color: orange;
 }

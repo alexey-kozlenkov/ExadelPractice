@@ -2,6 +2,7 @@ var studentId;
 var MAX_NUMBER_TERMS = 10,
     MIN_MARK = 0,
     MAX_MARK = 10;
+
 //templates
 var templateTermMark = Handlebars.compile($('#termMarkTemplate').html());
 var templateDocument = Handlebars.compile($('#documentTemplate').html());
@@ -23,6 +24,18 @@ $(document).ready(function () {
         $(this).next(".category-content").slideToggle(500);
         return false;
     });
+
+    //export info
+    $("#exportInfoExcel").click(function () {
+        exportStudentExcel();
+    });
+
+    $("#exportInfoPDF").click(function () {
+        exportStudentPDF();
+    });
+
+    //sortable table
+   // $('#documentTable').tablesorter();
 });
 
 $(document).ready(function () {
@@ -72,6 +85,31 @@ $(document).ready(function () {
     });
 
 
+
+    $("#saveDocumentsInformation").click(function () {
+        var fields = ['doctype', 'issueDate', 'expirationDate', 'info'];
+        var newDocuments = [];
+        $(".new-document").each(function (index) {
+            var cells  = $(this).find("td"),
+                value = {};
+
+            for(var i=0;i<cells.length; i++){
+                value[fields[i]] = $(cells[i]).text();
+            }
+
+            value['studentId'] = studentId;
+
+            console.log(value);
+            newDocuments.push(value);
+            $(this).removeClass("new-document");
+        });
+
+        newDocuments = JSON.stringify(newDocuments);
+
+        saveDocumentsInformation(newDocuments);
+    });
+
+
     //load documents
     $("#documentsHeader").click(function () {
         $.ajax
@@ -98,26 +136,35 @@ $(document).ready(function () {
     });
 
     //add document
-    $("#addDocument").click(function(){
-       showDialog("add-document");
-        $("#okButton").click(function(){
-            var doctype =  $("#doctype").val();
-            var issueDate =  $("#issueDate").val();
-            var expirationDate = $("#expirationDate").val();
-            var info = $("#info").val();
-            var newDocument = {
-                'doctype' : doctype,
-                'issueDate' : issueDate,
-                'expirationDate' : expirationDate,
-                'info' : info
-            };
-            closeDialog();
-            $("#documents").append(templateDocument(newDocument));
-        });
+    $("#addDocument").click(function () {
+        showDialog("add-document");
+
+    });
+    $("#okButton").click(function () {
+        var doctype = $("#doctype").val();
+        var issueDate = $("#issueDate").val();
+        var expirationDate = $("#expirationDate").val();
+        var info = $("#info").val();
+        var newDocument = {
+            doctype: doctype,
+            issueDate: issueDate,
+            expirationDate: expirationDate,
+            info: info
+        };
+        closeDialog();
+        $("#documents").append(templateDocument(newDocument));
+        $("#documents tr").last().addClass("new-document");
+
+
+        $("#doctype").val("");
+        $("#issueDate").val("");
+        $("#expirationDate").val("");
+        $("#info").val("");
+
     });
     //close dialog
-    $("#closeDialog").click(function(){
-         closeDialog();
+    $("#closeDialog").click(function () {
+        closeDialog();
     });
 //handler for state select
     $("#state").change(
@@ -154,6 +201,8 @@ $(document).ready(function () {
     });
 
 });
+
+
 function validInputTermMark(termMarkVal) {
     if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK)
         return false;
@@ -166,6 +215,14 @@ function parseRequestForId(string) {
     gottenId = string.match(regExpForId);
     var regExp = /[0-9]+/;
     studentId = (gottenId[0].match(regExp))[0];
+}
+
+function exportStudentExcel(){
+    window.open("/info/exportExcel?studentId=" + studentId, "Export file");
+}
+
+function exportStudentPDF(){
+    window.open("/info/exportPDF?studentId=" + studentId, "Export file");
 }
 
 function fillOptions() {
@@ -388,6 +445,53 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
 
 }
 
+function saveDocumentsInformation(newDocuments) {
+    var defferedPostDocuments = $.ajax
+    ({
+        type: "POST",
+        //SEND
+        url: "/info/postDocuments",
+        dataType: 'json', // from the server!
+        data: {'documents' : newDocuments}
+
+    });
+    defferedPostDocuments.done(function () {
+        $("#saveDocumentsInformation").text("Saved!");
+        $("#saveDocumentsInformation").animate({
+            backgroundColor: '#5cb85c',
+            borderColor: '#4cae4c'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveDocumentsInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveDocumentsInformation").text("Save");
+            }, 1000)
+        });
+    });
+    defferedPostDocuments.fail(function () {
+        alert("error");
+        $("#saveDocumentsInformation").text("Check out!");
+        $("#saveDocumentsInformation").animate({
+            backgroundColor: '#CD5C5C',
+            borderColor: '#C16868'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveDocumentsInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveDocumentsInformation").text("Save");
+            }, 1000)
+        });
+    });
+
+}
 
 
 
