@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Controller
@@ -156,13 +158,16 @@ public class InfoPageController {
         return "redirect:/info?id=" + id;
     }
 
-    @RequestMapping(value = "/export", method = RequestMethod.GET)
-    public ModelAndView export(/*@RequestParam("studentId") Long id*/) {
-        //Gson gson = new Gson();
-
-        //Long[] studentId = gson.fromJson(students, Long[].class);
-        User user = userService.getById(1L);
-
+    @RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
+    public ModelAndView exportPdf(@RequestParam("studentId") Long id) {
+        User user = userService.getById(id);
         return new ModelAndView("pdfView", "user", user);
+    }
+
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public ModelAndView export(@RequestParam("studentId") Long id) {
+        List<User> listOfUsers = new ArrayList<User>();
+        listOfUsers.add(userService.getById(id));
+        return new ModelAndView("excelView", "users", listOfUsers);
     }
 }
