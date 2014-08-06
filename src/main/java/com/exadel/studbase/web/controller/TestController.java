@@ -1,7 +1,11 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
+import com.exadel.studbase.dao.filter.impl.EqualsFilter;
 import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by ala'n on 29.07.2014.
@@ -195,6 +197,28 @@ public class TestController {
 
         System.out.println(userService.save(user));
         System.out.println("blabla");
+    }
+
+    @RequestMapping(value = "/filter")
+    public void filter() {
+        Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
+        Map<String, String[]> filterSpecification = new HashMap<String, String[]>();
+        String paramName = "university";
+        String[] paramValue = new String[1];
+        paramValue[0] = "BSU";
+        filterSpecification.put(paramName, paramValue);
+        paramName = "graduation year";
+        String[] newParam = new String[1];
+        newParam[0] = "2017";
+        filterSpecification.put(paramName, newParam);
+        paramName = "billable";
+        String[] newNewParam = new String[1];
+        newNewParam[0] = "true";
+        filterSpecification.put(paramName, newNewParam);
+
+        FilterUtils.buildFilterToSpecification(filter, filterSpecification);
+        List<StudentView> list = studentViewService.getView(filter);
+        System.out.println("ну нихуя себе");
     }
 
 }

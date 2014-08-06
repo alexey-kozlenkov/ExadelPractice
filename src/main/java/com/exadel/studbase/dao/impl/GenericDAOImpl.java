@@ -1,9 +1,13 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.GenericDAO;
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.IEntity;
+import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -11,6 +15,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -48,5 +54,14 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
     @Override
     public void delete(CONTENT content) {
         this.getSession().delete(content);
+    }
+
+    @Override
+    public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
+        Criteria listCriteria = getSession().createCriteria(StudentView.class);
+        Criterion filterCriterion = FilterUtils.buildFilterCriterion(filterMap);
+        listCriteria.add(filterCriterion);
+        List<StudentView> result = listCriteria.list();
+        return result;
     }
 }
