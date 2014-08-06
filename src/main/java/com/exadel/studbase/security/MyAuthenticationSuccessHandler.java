@@ -1,5 +1,7 @@
 package com.exadel.studbase.security;
 
+import com.exadel.studbase.web.SessionEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -17,6 +19,8 @@ import java.io.IOException;
  */
 @Service
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    @Autowired
+    SessionEntity sessionEntity;
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -28,6 +32,14 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String role = userDetails.getAuthorities().isEmpty() ? null : userDetails.getAuthorities().toArray()[0].toString();
             String login = userDetails.getUsername();
+
+            String roles[] = role.split(";");
+            if (roles.length == 1) {
+                sessionEntity.setRole(roles[0]);
+            } else {
+                sessionEntity.setRole("ROLE_FEEDBACKER");
+            }
+
             if (role.equals("ROLE_STUDENT")) {
                 targetUrl = "/info/redirectInfo?login=" + login;
             } else {
@@ -35,6 +47,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             }
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }
+
     }
 
     public RedirectStrategy getRedirectStrategy() {

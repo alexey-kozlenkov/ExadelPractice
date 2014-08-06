@@ -86,14 +86,11 @@ public class ListPageController {
     @RequestMapping(value = "/list/export", method = RequestMethod.GET)
     public ModelAndView export(@RequestParam("students") String students) {
         Gson gson = new Gson();
-
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<User> listOfUsers = new ArrayList<User>();
         for (Long id : studentId) {
-            User user = userService.getById(id);
-            listOfUsers.add(user);
+            listOfUsers.add(userService.getById(id));
         }
-
         return new ModelAndView("excelView", "users", listOfUsers);
     }
 

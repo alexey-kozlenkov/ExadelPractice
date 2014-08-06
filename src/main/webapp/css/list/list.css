@@ -25,7 +25,7 @@
     height: 24pt;
 }
 
-.search-block {
+.search-block {   
     display: inline-block;
     text-align: center;
 }
@@ -153,6 +153,9 @@
 }
 
 /***************************** FILTER *******************************/
+#filter{
+    margin-bottom:1pt;
+}
 
 .filter-separator,
 .filter-button {
