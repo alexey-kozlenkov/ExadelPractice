@@ -6,31 +6,59 @@ var Filter = (function () {
     var MAX_FILTER_COUNT = 10,
         filterDescription = [
             {
-                name: 'age',
-                type: 'number'
+                field: 'age',
+                name: 'Age',
+                type: 'number',
+                minval: 1
             },
             {
-                name: 'workingHours',
-                type: 'number'
+                field: 'workingHours',
+                name: 'Working hours',
+                type: 'number',
+                minval: 0
             },
             {
-                name: 'billable',
-                type: 'date'
+                name: 'Billable',
+                type: 'boolean'
             },
             {
-                name: 'skill',
+                name: 'Skill',
                 type: 'list',
                 values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-                multiset: true
+                multiset: true,
+                placeholder: 'Tech.'
             },
             {
-                name: 'english',
+                name: 'English',
                 type: 'list',
-                values: ['1', '2', '3', '4', '5']
+                values: ['Begginer', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'],
+                placeholder: 'English level'
             },
             {
-                name: 'date',
-                type: 'date'
+                name: 'Curator',
+                type: 'text',
+                placeholder: ' name '
+            },
+            {
+                name: 'University',
+                type: 'text',
+                placeholder: ' ... '
+            },
+            {
+                name: 'Faculty',
+                type: 'text',
+                placeholder: ' ... '
+            },
+            {
+                name: 'Course',
+                type: 'list',
+                values: [1,2,3,4,5]
+            },
+            {
+                name: 'Grad. year',
+                type: 'number',
+                minval: 2000,
+                placeholder: '>2000'
             }
         ];
 
@@ -46,7 +74,6 @@ var Filter = (function () {
 
     function addFilterAttribute(name) {
         var filterElementTempl = Handlebars.compile($('#filterTemplate').html()),
-            filterSeparatorTempl = Handlebars.compile($('#filterSeparator').html()),
             filterContext = _.find(filterDescription, function (element) {
             return element.name == name;
         });
@@ -56,6 +83,12 @@ var Filter = (function () {
                 template;
 
             switch (filterContext.type){
+                case 'boolean':
+                    template = Handlebars.compile($('#filterBooleanValueTemplate').html());
+                    break;
+                case 'text':
+                    template = Handlebars.compile($('#filterTextValueTemplate').html());
+                    break;
                 case 'number':
                     template = Handlebars.compile($('#filterNumberValueTemplate').html());
                     break;
@@ -97,6 +130,7 @@ var Filter = (function () {
                 filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
             $menu.empty();
             $menu.append(filterMenuTemplate({filter: filterDescription}));
+
             $("#filterMenu").mouseleave(function () {
                 $('#filterMenu').hide(400);
             });
@@ -109,10 +143,10 @@ var Filter = (function () {
                 checkFilterCount();
             });
             $("#filter").on("click", ".filter-name-btn", function () {
-                var selfItem = $($(this).parent().get(0));
-                var prevItem = selfItem.prev();
-                var nextItem = selfItem.next();
-                var filterName = selfItem.attr("data-filter");
+                var selfItem = $($(this).parent().get(0)),
+                    prevItem = selfItem.prev(),
+                    nextItem = selfItem.next(),
+                    filterName = selfItem.attr("data-filter");
                 if (prevItem.is('.filter-separator')) {
                     prevItem.remove();
                 } else if (nextItem.is('.filter-separator')) {
@@ -124,40 +158,27 @@ var Filter = (function () {
             });
         },
         pick: function () {
-            var returnStatement = {};
-            var lastAtrName = "";
-
-            var filterItems = $("#filter").find(".filter-item");
+            var returnStatement = {},
+                filterItems = $("#filter").find(".filter-item");
 
             for (var i = 0; i < filterItems.length; i++) {
-                var element = $(filterItems[i]);
+                var $element = $(filterItems[i]),
+                    $valueElement = $($element.find(".filter-value")),
+                    atrName = $element.attr('data-filter'),
+                    value;
 
-                var atr_name = element.attr('data-filter');
-                var atr_value = $(element.find(".value-field")).val();
-
-                if (!returnStatement[atr_name])
-                    returnStatement[atr_name] = '';
+                if($valueElement.is("input[type='checkbox']"))
+                    value = $valueElement.is(':checked');
                 else
-                    returnStatement[atr_name] += '&';
+                if($valueElement.is("input[type='date'], input[type='text'], input[type='number'], select"))
+                    value = $valueElement.val();
+                else
+                    console.error("Filter value type not defined;");
 
-                switch (filterTypes.keyType[atr_name]) {
-                    case 'date':
-                        //TODO ! Date can be parsed as a long ( [RFC 3339] not god for working)
-                        returnStatement[atr_name] += atr_value;
-                        break;
-                    case 'number':
-                    case 'list':
-                        returnStatement[atr_name] += atr_value;
-                        break;
-                    case 'leveled-list':
-                        var atr_sub_value = $(element.find(".sub-value-field")).val();
-                        returnStatement[atr_name] += atr_value + '=' + atr_sub_value;
-                        break;
-                    default :
-                        console.error("Not defined filter type");
-                        break;
-                }
-                lastAtrName = atr_name;
+                if (returnStatement[atrName])
+                    returnStatement[atrName] += '&' + value;
+                else
+                    returnStatement[atrName] = value;
             }
             return returnStatement;
         }

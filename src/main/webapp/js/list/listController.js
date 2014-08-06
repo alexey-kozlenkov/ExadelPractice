@@ -15,27 +15,31 @@ var ListController = (function () {
 
         return{
             init: function () {
+                var $table = $("#studTable");
                 $("#checkAll").click(function () {
                     setCheckedAll($(this).prop("checked"));
                 });
-                $("#studTable").click(function () {
+                $table.click(function () {
                     updateInfoLabel();
                 });
+                $table.tablesorter();
                 updateInfoLabel();
             },
             addAllStudents: function (arrStudents) {
                 var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
                 $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+                $("#studTable").trigger("update");
                 updateInfoLabel();
             },
             clearList: function () {
                 $("#studTable > tbody").empty();
+                $("#studTable").trigger("update");
                 updateInfoLabel();
             },
 
             getCheckedRowsId: function () {
-                var checkedList = [];
-                var count = 0;
+                var checkedList = [],
+                    count = 0;
 
                 $('.item-checkbox:checked').each(function (index, element) {
                     checkedList[count] = Number($(element).attr("data-id"));

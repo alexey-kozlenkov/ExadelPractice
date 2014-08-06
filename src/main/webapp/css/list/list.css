@@ -216,8 +216,16 @@
     border: none;
 }
 
+.boolean-filter-value{
+    width: 14pt;
+    height: 14pt;
+    margin: 2pt !important;
+}
+.text-filter-value{
+    width: 100pt;
+}
 .number-filter-value{
-    width: 40pt;
+    width: 50pt;
 }
 .date-filter-value{
     width: 110pt;
