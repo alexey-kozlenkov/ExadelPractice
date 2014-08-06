@@ -7,6 +7,7 @@ $(document).ready(function () {
     bindMenuBlock();
     bindSearchBlock();
     bindDialog();
+
 });
 
 function bindMenuBlock() {

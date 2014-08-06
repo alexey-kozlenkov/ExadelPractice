@@ -36,6 +36,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             String roles[] = role.split(";");
             if (roles.length == 1) {
                 sessionEntity.setRole(roles[0]);
+                request.getSession(true).setAttribute("role2", roles[0]);
             } else {
                 sessionEntity.setRole("ROLE_FEEDBACKER");
             }

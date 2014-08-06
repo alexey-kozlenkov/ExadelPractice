@@ -158,7 +158,6 @@
     margin-bottom:1pt;
 }
 
-.filter-separator,
 .filter-button {
     padding: 0;
     margin: 1pt 2pt;
@@ -169,7 +168,10 @@
 }
 
 .filter-separator {
-    width: 24pt;
+    display: inline-block;
+    padding: 1pt;
+    width: auto;
+    height: 16pt;
 }
 
 .filter-item {
@@ -217,9 +219,9 @@
 }
 
 .boolean-filter-value{
-    width: 14pt;
-    height: 14pt;
-    margin: 2pt !important;
+    width: 12pt;
+    height: 12pt;
+    margin: 3pt !important;
 }
 .text-filter-value{
     width: 100pt;

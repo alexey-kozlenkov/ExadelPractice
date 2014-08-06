@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
 
@@ -195,6 +197,18 @@ public class TestController {
 
         System.out.println(userService.save(user));
         System.out.println("blabla");
+    }
+
+    @RequestMapping(value = "/session")
+    public void sessionTest(HttpServletRequest request, HttpServletResponse response) {
+        Enumeration<String> en = request.getSession().getAttributeNames();
+        while(en.hasMoreElements()){
+            System.out.println(" -- "+en.nextElement());
+        }
+        System.out.println("Session 'role': " + request.getSession().getAttribute("role"));
+        System.out.println("Session 'role2': " + request.getSession().getAttribute("role2"));
+
+        response.addCookie(new Cookie("role2", "test"));
     }
 
 }

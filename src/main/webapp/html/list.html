@@ -38,36 +38,53 @@
         <button id="addFilterButton" class="btn prj-btn filter-button" title="Add filter">
             <span class="glyphicon glyphicon-filter"></span>
         </button>
+        <button id="clearFilter" class="btn prj-btn filter-button" title="Clear filter">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
         <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
         <script id="filterMenuTemplate" type="text/x-handlebars-template">
-            {{#each filter}}
-            <li class='menu-item' data-filter-name='{{name}}'>
+            {{#each description}}
+            <li class='menu-item' data-filter='{{field}}'>
                 <a role='menuitem'>{{name}}</a>
             </li>
             {{/each}}
         </script>
 
-        <script id="filterSeparator" type="text/x-handlebars-template">
-            <span class='static-green filter-separator'>and</span>
-        </script>
         <script id="filterTemplate" type="text/x-handlebars-template">
-            <div data-filter='{{name}}' class='btn-group input-group filter-item'>
+            <div data-filter='{{field}}' class='btn-group input-group filter-item'>
                 <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
             </div>
         </script>
 
+        <script id="filterBooleanValueTemplate" type="text/x-handlebars-template">
+            <input class="filter-value boolean-filter-value" type='checkbox'>
+        </script>
+        <script id="filterTextValueTemplate" type="text/x-handlebars-template">
+            <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}">
+        </script>
         <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value number-filter-value" type='number'>
+            <input class="filter-value number-filter-value" type='number' min='{{minval}}' placeholder="{{placeholder}}">
         </script>
         <script id="filterDataValueTemplate" type="text/x-handlebars-template">
             <input class="filter-value date-filter-value" type='date'>
         </script>
-        <script id="filterListValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value">
+        <script id="filterEnumValueTemplate" type="text/x-handlebars-template">
+            <select class="filter-value list-filter-value" title="{{placeholder}}">
                 {{#each values}}
                 <option>{{this}}</option>
                 {{/each}}
             </select>
+        </script>
+        <script id="filterListValueTemplate" type="text/x-handlebars-template">
+            <select class="filter-value list-filter-value" title="{{placeholder}}">
+                {{#each values}}
+                <option value="{{@index}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </script>
+
+        <script id="filterSeparator" type="text/x-handlebars-template">
+            <span class='static-green filter-separator'>and</span>
         </script>
     </div>
 
@@ -223,7 +240,7 @@
 
 <script src="../js/list/listController.js"></script>
 <script src="../js/list/filter.js"></script>
-<script src="../js/list/utill.js"></script>
+<script src="../js/list/util.js"></script>
 
 <script src="../js/common.js"></script>
 
