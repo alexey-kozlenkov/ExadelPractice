@@ -1,152 +1,189 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
+var Filter = (function () {
 
-var MAX_FILTER_COUNT = 10,
-    filter = {
-        changed: true,
-        types: [
+    var MAX_FILTER_COUNT = 10,
+        filterDescription = [
             {
-                name: 'age',
-                type: 'number'
+                field: 'age',
+                name: 'Age',
+                type: 'number',
+                minval: 1
             },
             {
-                name: 'workingHours',
-                type: 'number'
+                field: 'workingHours',
+                name: 'Working hours',
+                type: 'number',
+                minval: 0
             },
             {
-                name: 'billable',
-                type: 'date'
+                name: 'Billable',
+                type: 'boolean'
             },
             {
-                name: 'skill',
-                type: 'leveled-list',
-                values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-                multiset: true
-            },
-            {
-                name: 'english',
+                name: 'Skill',
                 type: 'list',
-                values: ['1', '2', '3', '4', '5']
+                values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
+                multiset: true,
+                placeholder: 'Tech.'
             },
             {
-                name: 'date',
-                type: 'date'
+                name: 'English',
+                type: 'list',
+                values: ['Begginer', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'],
+                placeholder: 'English level'
+            },
+            {
+                name: 'Curator',
+                type: 'text',
+                placeholder: ' name '
+            },
+            {
+                name: 'University',
+                type: 'text',
+                placeholder: ' ... '
+            },
+            {
+                name: 'Faculty',
+                type: 'text',
+                placeholder: ' ... '
+            },
+            {
+                name: 'Course',
+                type: 'list',
+                values: [1,2,3,4,5]
+            },
+            {
+                name: 'Grad. year',
+                type: 'number',
+                minval: 2000,
+                placeholder: '>2000'
             }
-        ]
-    };
+        ];
 
-
-$(window).ready(function () {
-    $("#filterMenu").mouseleave(function () {
-        $('#filterMenu').hide(400);
-    });
-    $("#addFilterButton").click(function () {
-        toggleFilterChooseMenu();
-    });
-    $("#filterMenu").on("click", "a", function () {
-        $("#filterMenu").hide();
-        addFilterAttribute($(this).text());
-        checkFilterCount();
-    });
-    $("#filter").on("click", ".filter-name-btn", function () {
-        var selfItem = $($(this).parent().get(0));
-        var prevItem = selfItem.prev();
-        var nextItem = selfItem.next();
-        var filterName = selfItem.attr("data-filter");
-        if (prevItem.is('.filter-separator')) {
-            prevItem.remove();
-        } else if (nextItem.is('.filter-separator')) {
-            nextItem.remove();
-        }
-        selfItem.remove();
-        $("#filterMenu > li[data-filter-name='" + filterName + "']").show();
-        checkFilterCount();
-    });
-});
-
-function toggleFilterChooseMenu() {
-    var $menu = $("#filterMenu");
-    if ($menu.is(':visible')) {
-        $menu.hide(300);
-    } else {
-        setMenuLocationRelativeTo($menu, $("#addFilterButton"));
-        if (filter.changed) {
-            filter.changed = false;
-            var filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
-            $menu.empty();
-            $menu.append(filterMenuTemplate(filter));
-        }
-        $('#filterMenu').animate({ opacity: 'toggle', height: 'toggle'}, 300);
-    }
-}
-
-function addFilterAttribute(name) {
-    var filterElementTemplate = Handlebars.compile($('#filterTemplate').html());
-    var filterContext = _.find(filter.types, function (element) {
-        return element.name == name;
-    });
-    if (filterContext) {
-        if (filterContext.multiset) {
-            var filterEqType = $(".filter-item[data-filter='" + name + "']");
-            if (filterEqType && filterEqType.length > 0) {
-                filterEqType.last().after(filterElementTemplate({name: name, separate: true}));
-            } else {
-                $("#addFilterButton").before(filterElementTemplate({name: name}));
-            }
+    function toggleFilterChooseMenu() {
+        var $menu = $("#filterMenu");
+        if ($menu.is(':visible')) {
+            $menu.hide(300);
         } else {
-            $("#addFilterButton").before(filterElementTemplate({name: name}));
-            $("#filterMenu > li[data-filter-name='" + name + "']").hide();
+            setMenuLocationRelativeTo($menu, $("#addFilterButton"));
+            $menu.animate({ opacity: 'toggle', height: 'toggle'}, 300);
         }
     }
-}
 
-function checkFilterCount() {
-    var count = $(".filter-item").length;
-    var filterBtn = $("#addFilterButton");
-    if (count < MAX_FILTER_COUNT) {
-        filterBtn.show();
-    } else {
-        filterBtn.hide();
-    }
-    checkTopMarginOfList();
-}
+    function addFilterAttribute(name) {
+        var filterElementTempl = Handlebars.compile($('#filterTemplate').html()),
+            filterContext = _.find(filterDescription, function (element) {
+            return element.name == name;
+        });
+        if (filterContext) {
+            var prev = $(".filter-item[data-filter='" + name + "']"),
+                filterEl = $(filterElementTempl({name: name})),
+                template;
 
-function pickFilters() {
-    var returnStatement = {};
-    var lastAtrName = "";
-
-    var filterItems = $("#filter").find(".filter-item");
-
-    for (var i = 0; i < filterItems.length; i++) {
-        var element = $(filterItems[i]);
-
-        var atr_name = element.attr('data-filter');
-        var atr_value = $(element.find(".value-field")).val();
-
-        if (!returnStatement[atr_name])
-            returnStatement[atr_name] = '';
-        else
-            returnStatement[atr_name] += '&';
-
-        switch (filterTypes.keyType[atr_name]) {
-            case 'date':
-                //TODO ! Date can be parsed as a long ( [RFC 3339] not god for working)
-                returnStatement[atr_name] += atr_value;
-                break;
-            case 'number':
-            case 'list':
-                returnStatement[atr_name] += atr_value;
-                break;
-            case 'leveled-list':
-                var atr_sub_value = $(element.find(".sub-value-field")).val();
-                returnStatement[atr_name] += atr_value + '=' + atr_sub_value;
-                break;
-            default :
-                console.error("Not defined filter type");
-                break;
+            switch (filterContext.type){
+                case 'boolean':
+                    template = Handlebars.compile($('#filterBooleanValueTemplate').html());
+                    break;
+                case 'text':
+                    template = Handlebars.compile($('#filterTextValueTemplate').html());
+                    break;
+                case 'number':
+                    template = Handlebars.compile($('#filterNumberValueTemplate').html());
+                    break;
+                case 'date':
+                    template = Handlebars.compile($('#filterDataValueTemplate').html());
+                    break;
+                case 'list':
+                    template = Handlebars.compile($('#filterListValueTemplate').html());
+                    break;
+                default :
+                    break;
+            }
+            filterEl.append(template(filterContext));
+            if (filterContext.multiset && prev.length > 0) {
+                prev.last().after(filterEl);
+            } else {
+                $("#addFilterButton").before(filterEl);
+            }
+            if (!filterContext.multiset) {
+                $("#filterMenu > li[data-filter-name='" + name + "']").hide();
+            }
         }
-        lastAtrName = atr_name;
-    };
-    return returnStatement;
-}
+    }
+
+    function checkFilterCount() {
+        var count = $(".filter-item").length,
+            filterBtn = $("#addFilterButton");
+        if (count < MAX_FILTER_COUNT) {
+            filterBtn.show();
+        } else {
+            filterBtn.hide();
+        }
+        ListHeader.check();
+    }
+
+    return {
+        init: function () {
+            var $menu = $("#filterMenu"),
+                filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
+            $menu.empty();
+            $menu.append(filterMenuTemplate({filter: filterDescription}));
+
+            $("#filterMenu").mouseleave(function () {
+                $('#filterMenu').hide(400);
+            });
+            $("#addFilterButton").click(function () {
+                toggleFilterChooseMenu();
+            });
+            $("#filterMenu").on("click", "a", function () {
+                $("#filterMenu").hide();
+                addFilterAttribute($(this).text());
+                checkFilterCount();
+            });
+            $("#filter").on("click", ".filter-name-btn", function () {
+                var selfItem = $($(this).parent().get(0)),
+                    prevItem = selfItem.prev(),
+                    nextItem = selfItem.next(),
+                    filterName = selfItem.attr("data-filter");
+                if (prevItem.is('.filter-separator')) {
+                    prevItem.remove();
+                } else if (nextItem.is('.filter-separator')) {
+                    nextItem.remove();
+                }
+                selfItem.remove();
+                $("#filterMenu > li[data-filter-name='" + filterName + "']").show();
+                checkFilterCount();
+            });
+        },
+        pick: function () {
+            var returnStatement = {},
+                filterItems = $("#filter").find(".filter-item");
+
+            for (var i = 0; i < filterItems.length; i++) {
+                var $element = $(filterItems[i]),
+                    $valueElement = $($element.find(".filter-value")),
+                    atrName = $element.attr('data-filter'),
+                    value;
+
+                if($valueElement.is("input[type='checkbox']"))
+                    value = $valueElement.is(':checked');
+                else
+                if($valueElement.is("input[type='date'], input[type='text'], input[type='number'], select"))
+                    value = $valueElement.val();
+                else
+                    console.error("Filter value type not defined;");
+
+                if (returnStatement[atrName])
+                    returnStatement[atrName] += '&' + value;
+                else
+                    returnStatement[atrName] = value;
+            }
+            return returnStatement;
+        }
+    }
+}());
+
+$(document).ready(Filter.init);
+

@@ -11,7 +11,7 @@
         <security:form-login login-page="/html/login.html"
                              login-processing-url="/login"
                              authentication-success-handler-ref="myAuthenticationSuccessHandler"
-                             authentication-failure-url="/login.html?error=true"/>
+                             authentication-failure-url="/html/login.html?error=true"/>
         <security:logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
         <security:intercept-url pattern="/html/studentInfo.html" access="isAuthenticated()"/>
         <security:intercept-url pattern="/html/list.html" access="isAuthenticated()"/>

@@ -9,16 +9,22 @@
 </head>
 <body>
 
-<header id="header" class="header">
-    <div class="dividing-line"></div>
-    <div class="form-inline first-header-line">
+<header id="header" class="header-fixed-top">
+    <div class="dividing-line">
+        <a href="/logout" class="logout-link prj-link">Logout <span class="glyphicon glyphicon-off"></span></a>
+    </div>
+    <div class="form-inline header-line">
         <span id="utilityMenu" class="btn-menu">
-            <input type="image" id="addMenuButton" class="btn prj-btn menu-button" src="../images/add.png"
-                   alt="Add student" title="Add student">
-            <input type="image" id="exportMenuButton" class="btn prj-btn menu-button" src="../images/export.png"
-                   alt="Export" title="Export to Excel Doc.">
-            <input type="image" id="distributionMenuButton" class="btn prj-btn menu-button"
-                   src="../images/distribution.png" alt="Distribution" title="Send message to selected students">
+            <button id="addMenuButton" class="btn prj-btn menu-button" title="Add student">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button id="exportMenuButton" class="btn prj-btn menu-button" title="Export to Excel Doc.">
+                <span class="glyphicon glyphicon-file"></span>
+            </button>
+            <button id="distributionMenuButton" class="btn prj-btn menu-button"
+                    title="Send message to selected students">
+                <span class="glyphicon glyphicon-envelope"></span>
+            </button>
         </span>
 
         <span class="btn-group input-group search-block">
@@ -34,24 +40,39 @@
         </button>
         <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
         <script id="filterMenuTemplate" type="text/x-handlebars-template">
-            {{#each types}}
+            {{#each filter}}
             <li class='menu-item' data-filter-name='{{name}}'>
                 <a role='menuitem'>{{name}}</a>
             </li>
             {{/each}}
         </script>
 
+        <script id="filterSeparator" type="text/x-handlebars-template">
+            <span class='static-green filter-separator'>and</span>
+        </script>
         <script id="filterTemplate" type="text/x-handlebars-template">
-            {{#if separate}}<span class='static-green filter-separator'>and</span>{{/if}}
             <div data-filter='{{name}}' class='btn-group input-group filter-item'>
                 <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-
             </div>
+        </script>
+
+        <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
+            <input class="filter-value number-filter-value" type='number'>
+        </script>
+        <script id="filterDataValueTemplate" type="text/x-handlebars-template">
+            <input class="filter-value date-filter-value" type='date'>
+        </script>
+        <script id="filterListValueTemplate" type="text/x-handlebars-template">
+            <select class="filter-value list-filter-value">
+                {{#each values}}
+                <option>{{this}}</option>
+                {{/each}}
+            </select>
         </script>
     </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
-        <div class="central">
+        <div class="list-content">
             <table id="headerFixed" class="table prj-table-striped student-table">
                 <colgroup>
                     <col class="header-column-0">
@@ -86,7 +107,7 @@
     </div>
 </header>
 
-<div id="listContent" class="central">
+<div id="listContent" class="list-content">
     <table id="studTable" class="table prj-table-striped student-table">
         <colgroup>
             <col class="header-column-0">
@@ -151,12 +172,13 @@
         </div>
         <div class='dialog-content' data-dialog-name='inaccessible-mail'>
             <div class="dialog-content-central">
+                <label for="inaccessibleMailList"> Can't send to : </label>
                 <ul id="inaccessibleMailList">
                 </ul>
                 <script id="mailListTemplate" type="text/x-handlebars-template">
                     {{#each mails}}
                     <li>
-                        {{this}}
+                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}},
                     </li>
                     {{/each}}
                 </script>
@@ -201,7 +223,7 @@
 
 <script src="../js/list/listController.js"></script>
 <script src="../js/list/filter.js"></script>
-<script src="../js/list/rest.js"></script>
+<script src="../js/list/utill.js"></script>
 
 <script src="../js/common.js"></script>
 
