@@ -17,9 +17,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Controller
@@ -153,5 +156,18 @@ public class InfoPageController {
     public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
         return "redirect:/info?id=" + id;
+    }
+
+    @RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
+    public ModelAndView exportPdf(@RequestParam("studentId") Long id) {
+        User user = userService.getById(id);
+        return new ModelAndView("pdfView", "user", user);
+    }
+
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public ModelAndView export(@RequestParam("studentId") Long id) {
+        List<User> listOfUsers = new ArrayList<User>();
+        listOfUsers.add(userService.getById(id));
+        return new ModelAndView("excelView", "users", listOfUsers);
     }
 }

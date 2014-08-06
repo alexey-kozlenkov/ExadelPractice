@@ -35,6 +35,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             }
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }
+
     }
 
     public RedirectStrategy getRedirectStrategy() {
