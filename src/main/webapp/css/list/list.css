@@ -9,14 +9,14 @@
 
 .logout-link{
     float: right;
-    margin: 2pt 10pt;
+    margin: 4px 12px;
 
-    font-size: 11pt;
+    font-size: 15px;
 }
 /*-------------------------------------*/
 .header-line {
-    margin: 2pt;
-    margin-bottom: 1pt;
+    margin: 3px;
+    margin-bottom: 0;
 }
 
 .btn-menu {
@@ -25,36 +25,61 @@
 }
 
 .menu-button {
-    font-size: 16pt;
-    padding: 1pt 1pt !important;
-    width: 24pt;
-    height: 24pt;
+    font-size: 22px;
+    padding: 1px 1px !important;
+    width: 32px;
+    height: 32px;
 }
 
 .search-block {
    display: inline-block;
-   margin: 1pt;
-   margin-left: 10pt;
+   margin: 2px;
+   margin-left: 15px;
 }
 
 #searchLine {
-    width: 150pt;
+    width: 200px;
 }
 .search-line {
-    min-width: 150pt;
-    height: 24pt;
+    min-width: 200px;
+    height: 32px;
 }
 
 .search-button {
-    margin-left: -1pt;
-    width: 34pt;
-    height: 24pt;
+    width: 45px;
+    height: 32px;
+}
+
+.tab{
+    float: right;
+    position: absolute;
+    right: 5px;
+    top: 28px;
+    opacity: 0.3;
+    
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+}
+.tab:hover{
+    opacity: 1;
+}
+
+.tab-btn:active,
+.tab-btn:focus{
+    color: #ffff00;
+}
+
+#toggleNav{
+    float: left;
+    background: transparent;
+    border: none;
 }
 
 /*-------------------------------------*/
 
 .info-label {
-    margin: 2pt;
+    margin: 3px;
     text-align: center;
     font-weight: bold;
 }
@@ -71,7 +96,7 @@
 /***************************** Central *******************************/
 .list-content {
     margin: 0 auto;
-    width: 900pt;
+    width: 1200px;
     text-align: center;
 }
 
@@ -83,8 +108,8 @@
 }
 
 .student-table > thead > tr > th {
-    padding-top: 4pt;
-    padding-bottom: 2pt;
+    padding-top: 5px;
+    padding-bottom: 2px;
 
     vertical-align: middle;
     text-align: center;
@@ -92,7 +117,7 @@
 
 .student-table > tbody > tr > td {
     vertical-align: middle;
-    padding: 5pt 3pt;
+    padding: 6px 4px;
 
     /*        overflow: hidden; */
     /*     white-space: nowrap; */
@@ -148,49 +173,48 @@
 
 .load-image-class {
     display: none;
-    width: 320pt;
-    height: 320pt;
+    width: 400px;
+    height: 400px;
 }
 
 /***************************** FILTER *******************************/
 #filter{
-    margin-bottom:1pt;
+    margin: 2px;
 }
 
 .filter-button {
     padding: 0;
-    margin: 1pt 2pt;
-    width: 20pt;
-    height: 20pt;
+    margin: 1px 1px;
+    width: 24px;
+    height: 24px;
     border: 1px solid transparent;
     text-align: center;
 }
 
 .filter-separator {
     display: inline-block;
-    padding: 1pt;
+    padding: 0 3px;
     width: auto;
-    height: 16pt;
+    height: 22px;
 }
 
 .filter-item {
     display: inline-block;
 
     width: auto;
-    height: 20pt;
+    height: 24px;
 
-    border: solid 1pt;
-    border-color: #2D3E5C;
-    border-radius: 3pt;
+    border: #2D3E5C solid 1px;
+    border-radius: 5px;
 
 
-    margin: 1pt;
+    margin: 0 2px;
 }
 
 .filter-name-btn {
-    padding: 1pt;
-    padding-right: 3pt;
-    padding-left: 3pt;
+    padding: 1px;
+    padding-right: 5px;
+    padding-left: 3px;
 
     height: 100%;
     width: auto !important;
@@ -211,34 +235,35 @@
 .filter-value {
     text-align: center;
     height: 100%;
-    border-top-right-radius: 3pt;
-    border-bottom-right-radius: 3pt;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     padding: 0;
     border: none;
 }
 
 .boolean-filter-value{
-    width: 12pt;
-    height: 12pt;
-    margin: 3pt !important;
+    width: 16px;
+    height: 16px;
+    margin: 3px !important;
 }
 .text-filter-value{
-    width: 100pt;
+    width: 150px;
 }
 .number-filter-value{
-    width: 50pt;
+    width: 70px;
 }
 .date-filter-value{
-    width: 110pt;
+    width: 140px;
 }
 .list-filter-value{
     width: auto;
+    margin-right: 1px;
 }
 
 /****************************************************************************/
 
 .message-area {
     resize: none;
-    height: 100pt;
-    padding: 4pt;
+    height: 140px;
+    padding: 5px;
 }

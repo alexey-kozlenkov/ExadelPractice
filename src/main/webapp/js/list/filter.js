@@ -4,7 +4,7 @@
 var Filter = (function () {
 
     var shellTemplate = Handlebars.compile($('#filterTemplate').html()),
-        maxValueCount = 10,
+        maxValueCount = 8,
         description = [],
         model = {};
 
@@ -70,7 +70,7 @@ var Filter = (function () {
 
     function getValueEditorTemplate(type) {
         switch (type) {
-            case 'boolean':
+            case 'bool':
                 return Handlebars.compile($('#filterBooleanValueTemplate').html());
                 break;
             case 'text':
@@ -82,7 +82,7 @@ var Filter = (function () {
             case 'date':
                 return Handlebars.compile($('#filterDataValueTemplate').html());
                 break;
-            case 'enum':
+            case 'enumeration':
                 return Handlebars.compile($('#filterEnumValueTemplate').html());
                 break;
             case 'list':
@@ -140,6 +140,8 @@ var Filter = (function () {
 
     function rebuild(){
         $(".filter-item, .filter-separator").remove();
+        $("#filterMenu > li").show();
+        $("#addFilterButton").show();
         var keys = Object.keys(model);
         keys.forEach(function(key){
             var value = model[key];
@@ -160,7 +162,6 @@ var Filter = (function () {
         } else {
             filterBtn.hide();
         }
-        ListHeader.check();//TODO fix this depend.
     }
     function clear() {
         model = {};
@@ -219,7 +220,7 @@ $(document).ready(function () {
         },
         {
             field: 'billable',
-            type: 'boolean',
+            type: 'bool',
             name: 'Billable'
         },
         {
@@ -255,7 +256,7 @@ $(document).ready(function () {
         },
         {
             field: 'course',
-            type: 'enum',
+            type: 'enumeration',
             name: 'Course',
             values: [1, 2, 3, 4, 5]
         },
