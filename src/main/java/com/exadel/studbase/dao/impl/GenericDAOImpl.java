@@ -19,13 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 
-/**
- * Created by Алексей on 18.07.14.
- */
-public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<CONTENT, ID> {
+public abstract class GenericDAOImpl<CONTENT extends IEntity, VIEW extends IEntity, ID extends Serializable>
+        extends HibernateDaoSupport implements GenericDAO<CONTENT, VIEW,  ID> {
 
-    public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
+    private Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    private Class<VIEW> viewClass = (Class<VIEW>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     @Autowired
     @Qualifier("sessionFactory")
@@ -57,11 +55,11 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
     }
 
     @Override
-    public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
-        Criteria listCriteria = getSession().createCriteria(StudentView.class);
+    public List<VIEW> getView(Map<String, Filter<VIEW>> filterMap) {
+        Criteria listCriteria = getSession().createCriteria(viewClass);
         Criterion filterCriterion = FilterUtils.buildFilterCriterion(filterMap);
         listCriteria.add(filterCriterion);
-        List<StudentView> result = listCriteria.list();
+        List<VIEW> result = listCriteria.list();
         return result;
     }
 }

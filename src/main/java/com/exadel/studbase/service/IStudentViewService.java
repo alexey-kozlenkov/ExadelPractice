@@ -16,4 +16,6 @@ public interface IStudentViewService {
     public Collection<StudentView> getViewByStudentName(String desiredName);
 
     public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap);
+
+    public Collection<StudentView> filterBySkillTypeId (Long[] ids);
 }

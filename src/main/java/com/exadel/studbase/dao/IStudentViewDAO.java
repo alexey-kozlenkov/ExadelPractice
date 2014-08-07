@@ -7,6 +7,8 @@ import java.util.Collection;
 /**
  * Created by ala'n on 29.07.2014.
  */
-public interface IStudentViewDAO extends GenericDAO<StudentView, Long> {
+public interface IStudentViewDAO extends GenericDAO<StudentView, StudentView, Long> {
     public Collection<StudentView> getViewByStudentName(String desiredName);
+
+    public Collection<StudentView> filterBySkillTypeId (Long[] ids);
 }

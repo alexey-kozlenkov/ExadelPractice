@@ -3,16 +3,13 @@ package com.exadel.studbase.dao.filter;
 import com.exadel.studbase.dao.filter.impl.EqualsFilter;
 import com.exadel.studbase.dao.filter.impl.GreaterEqualsFilter;
 import com.exadel.studbase.dao.filter.impl.IsNotNullFilter;
-import com.exadel.studbase.dao.filter.impl.NumbersBetweenFilter;
+import com.exadel.studbase.domain.impl.SkillSet;
 import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.Map;
 
-/**
- * Created by Алексей on 05.08.2014.
- */
 public class FilterUtils {
     public static <T> Criterion buildFilterCriterion(Map<String, Filter<T>> filters) {
         if (filters == null || filters.isEmpty()) {
@@ -32,9 +29,6 @@ public class FilterUtils {
                 current = Restrictions.eq(propertyName, value);
             } else if (filterType instanceof GreaterEqualsFilter) {
                 current = Restrictions.ge(propertyName, value);
-            } else if (filterType instanceof NumbersBetweenFilter) {
-                NumbersBetweenFilter bf = (NumbersBetweenFilter) filterType;
-                current = Restrictions.between(propertyName, bf.getFromValue(), bf.getToValue());
             } else if (filterType instanceof IsNotNullFilter) {
                 current = Restrictions.isNotNull(propertyName);
             } else {
@@ -73,6 +67,9 @@ public class FilterUtils {
             } else if (paramName.equalsIgnoreCase("billable")) {
                 Filter filter = new IsNotNullFilter(paramValues[0]);
                 filters.put("billable", filter);
+            } else if (paramName.equalsIgnoreCase("english level")) {
+                Filter filter = new GreaterEqualsFilter(paramValues[0]);
+                filters.put("englishLevel", filter);
             }
         }
     }

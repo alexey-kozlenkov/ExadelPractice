@@ -2,12 +2,9 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.dao.filter.Filter;
 import com.exadel.studbase.dao.filter.FilterUtils;
-import com.exadel.studbase.dao.filter.impl.EqualsFilter;
-import com.exadel.studbase.domain.impl.Employee;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
-import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.service.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -201,8 +198,9 @@ public class TestController {
 
     @RequestMapping(value = "/filter")
     public void filter() {
-        Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
         Map<String, String[]> filterSpecification = new HashMap<String, String[]>();
+
+        Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
         String paramName = "university";
         String[] paramValue = new String[1];
         paramValue[0] = "BSU";
@@ -217,7 +215,12 @@ public class TestController {
         filterSpecification.put(paramName, newNewParam);
 
         FilterUtils.buildFilterToSpecification(filter, filterSpecification);
-        List<StudentView> list = studentViewService.getView(filter);
+        List<StudentView> mainFilter = studentViewService.getView(filter);
+
+        Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new Long[] {(long)5});
+
+        Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
+
         System.out.println("ну нихуя себе");
     }
 

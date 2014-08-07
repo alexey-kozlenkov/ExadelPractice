@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Алексей on 18.07.14.
  */
-public interface GenericDAO<CONTENT extends IEntity, ID extends Serializable> {
+public interface GenericDAO<CONTENT extends IEntity,  VIEW extends IEntity, ID extends Serializable> {
 
     public Collection<CONTENT> getAll();
 
@@ -22,5 +22,5 @@ public interface GenericDAO<CONTENT extends IEntity, ID extends Serializable> {
 
     public void delete(CONTENT content);
 
-    public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap);
+    public List<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
 }

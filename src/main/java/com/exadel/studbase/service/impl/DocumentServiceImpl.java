@@ -42,4 +42,5 @@ public class DocumentServiceImpl implements IDocumentService {
     public Collection<Document> getAllForUser(Long id) {
         return documentDAO.getAllForUser(id);
     }
+
 }

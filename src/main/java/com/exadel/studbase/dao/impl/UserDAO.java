@@ -1,6 +1,7 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IUserDAO;
+import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.security.MySecurityUser;
 import org.hibernate.Query;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Алексей on 18.07.14.
  */
 @Repository
-public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
+public class UserDAO extends GenericDAOImpl<User, StudentView, Long> implements IUserDAO {
 
     @Override
     public User getByLogin(String login) {

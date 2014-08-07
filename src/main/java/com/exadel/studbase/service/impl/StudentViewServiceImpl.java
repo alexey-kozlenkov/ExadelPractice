@@ -35,7 +35,14 @@ public class StudentViewServiceImpl implements IStudentViewService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
         return studentViewDAO.getView(filterMap);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<StudentView> filterBySkillTypeId(Long[] ids) {
+        return studentViewDAO.filterBySkillTypeId(ids);
     }
 }
