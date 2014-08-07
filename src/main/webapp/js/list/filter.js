@@ -3,66 +3,33 @@
  */
 var Filter = (function () {
 
-    var MAX_FILTER_COUNT = 10,
-        filterDescription = [
-            {
-                field: 'age',
-                name: 'Age',
-                type: 'number',
-                minval: 1
-            },
-            {
-                field: 'workingHours',
-                name: 'Working hours',
-                type: 'number',
-                minval: 0
-            },
-            {
-                name: 'Billable',
-                type: 'boolean'
-            },
-            {
-                name: 'Skill',
-                type: 'list',
-                values: ['java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
-                multiset: true,
-                placeholder: 'Tech.'
-            },
-            {
-                name: 'English',
-                type: 'list',
-                values: ['Begginer', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'],
-                placeholder: 'English level'
-            },
-            {
-                name: 'Curator',
-                type: 'text',
-                placeholder: ' name '
-            },
-            {
-                name: 'University',
-                type: 'text',
-                placeholder: ' ... '
-            },
-            {
-                name: 'Faculty',
-                type: 'text',
-                placeholder: ' ... '
-            },
-            {
-                name: 'Course',
-                type: 'list',
-                values: [1,2,3,4,5]
-            },
-            {
-                name: 'Grad. year',
-                type: 'number',
-                minval: 2000,
-                placeholder: '>2000'
-            }
-        ];
+    var shellTemplate = Handlebars.compile($('#filterTemplate').html()),
+        maxValueCount = 10,
+        description = [],
+        model = {};
 
-    function toggleFilterChooseMenu() {
+    function initMenu() {
+        var $menu = $("#filterMenu");
+        $menu.mouseleave(function () {
+            $('#filterMenu').hide(400);
+        });
+        $menu.on("click", "a", function () {
+            $("#filterMenu").hide();
+            var field = $(this).parent().attr("data-filter");
+            addValue(field);
+            updateValue(field);
+            checkValueCount();
+        });
+    }
+
+    function updateMenu() {
+        var $menu = $("#filterMenu"),
+            filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
+        $menu.empty();
+        $menu.append(filterMenuTemplate({description: description}));
+    }
+
+    function toggleMenu() {
         var $menu = $("#filterMenu");
         if ($menu.is(':visible')) {
             $menu.hide(300);
@@ -72,118 +39,235 @@ var Filter = (function () {
         }
     }
 
-    function addFilterAttribute(name) {
-        var filterElementTempl = Handlebars.compile($('#filterTemplate').html()),
-            filterContext = _.find(filterDescription, function (element) {
-            return element.name == name;
+    function addValue(field, value) {
+        var filterContext = _.find(description, function (element) {
+            return element.field == field;
         });
         if (filterContext) {
-            var prev = $(".filter-item[data-filter='" + name + "']"),
-                filterEl = $(filterElementTempl({name: name})),
-                template;
-
-            switch (filterContext.type){
-                case 'boolean':
-                    template = Handlebars.compile($('#filterBooleanValueTemplate').html());
-                    break;
-                case 'text':
-                    template = Handlebars.compile($('#filterTextValueTemplate').html());
-                    break;
-                case 'number':
-                    template = Handlebars.compile($('#filterNumberValueTemplate').html());
-                    break;
-                case 'date':
-                    template = Handlebars.compile($('#filterDataValueTemplate').html());
-                    break;
-                case 'list':
-                    template = Handlebars.compile($('#filterListValueTemplate').html());
-                    break;
-                default :
-                    break;
-            }
-            filterEl.append(template(filterContext));
-            if (filterContext.multiset && prev.length > 0) {
-                prev.last().after(filterEl);
+            var editorTemplate = getValueEditorTemplate(filterContext.type),
+                $shell = $(shellTemplate(filterContext)),
+                prev = $(".filter-item[data-filter='" + field + "']");
+            $shell.append(editorTemplate(filterContext));
+            if (prev.length > 0) {
+                prev.last().after($shell);
+                $shell.before($("#filterSeparator").html());
             } else {
-                $("#addFilterButton").before(filterEl);
+                $("#addFilterButton").before($shell);
             }
             if (!filterContext.multiset) {
-                $("#filterMenu > li[data-filter-name='" + name + "']").hide();
+                $("#filterMenu > li[data-filter='" + field + "']").hide();
             }
+            if (value) {
+                var $editorElement = $shell.find(".filter-value");
+                if ($editorElement.is("input[type='checkbox']"))
+                    $editorElement.attr('checked', value);
+                else
+                    $editorElement.val(value);
+            }
+            checkValueCount();
         }
     }
 
-    function checkFilterCount() {
+    function getValueEditorTemplate(type) {
+        switch (type) {
+            case 'boolean':
+                return Handlebars.compile($('#filterBooleanValueTemplate').html());
+                break;
+            case 'text':
+                return Handlebars.compile($('#filterTextValueTemplate').html());
+                break;
+            case 'number':
+                return Handlebars.compile($('#filterNumberValueTemplate').html());
+                break;
+            case 'date':
+                return Handlebars.compile($('#filterDataValueTemplate').html());
+                break;
+            case 'enum':
+                return Handlebars.compile($('#filterEnumValueTemplate').html());
+                break;
+            case 'list':
+                return Handlebars.compile($('#filterListValueTemplate').html());
+                break;
+            default :
+                break;
+        }
+    }
+
+    function pickValue(field) {
+        var elements = $(".filter-item[data-filter=" + field + "] .filter-value");
+        switch (elements.length) {
+            case 0:
+                return null;
+            case 1:
+                if (elements.is("input[type='checkbox']"))
+                    return elements.prop("checked");
+                else
+                    return elements.val();
+            default :
+                var returnVal = [];
+                elements.each(function (id, element) {
+                    returnVal.push($(element).val());
+                });
+                return returnVal;
+        }
+    }
+
+    function updateValue(field) {
+        var value = pickValue(field);
+        if (value != undefined)
+            model[field] = value;
+        else if (model[field] != undefined)
+            delete model[field];
+        sessionStorage.setItem('filter', JSON.stringify(model));
+        console.log(model);
+    }
+
+    function removeValue(ovner) {
+        var selfItem = $($(ovner).parent().get(0)),
+            prevItem = selfItem.prev(),
+            nextItem = selfItem.next(),
+            field = selfItem.attr("data-filter");
+        if (prevItem.is('.filter-separator')) {
+            prevItem.remove();
+        } else if (nextItem.is('.filter-separator')) {
+            nextItem.remove();
+        }
+        selfItem.remove();
+        $("#filterMenu > li[data-filter='" + field + "']").show();
+        updateValue(field);
+        checkValueCount();
+    }
+
+    function rebuild(){
+        $(".filter-item, .filter-separator").remove();
+        var keys = Object.keys(model);
+        keys.forEach(function(key){
+            var value = model[key];
+            if(Array.isArray(value))
+                value.forEach(function(subVal){
+                   addValue(key, subVal);
+                });
+            else
+                addValue(key, value);
+        });
+    }
+
+    function checkValueCount() {
         var count = $(".filter-item").length,
             filterBtn = $("#addFilterButton");
-        if (count < MAX_FILTER_COUNT) {
+        if (count < maxValueCount) {
             filterBtn.show();
         } else {
             filterBtn.hide();
         }
-        ListHeader.check();
+        ListHeader.check();//TODO fix this depend.
     }
-
+    function clear() {
+        model = {};
+        rebuild();
+        sessionStorage.removeItem('filter');
+    }
     return {
         init: function () {
-            var $menu = $("#filterMenu"),
-                filterMenuTemplate = Handlebars.compile($('#filterMenuTemplate').html());
-            $menu.empty();
-            $menu.append(filterMenuTemplate({filter: filterDescription}));
-
-            $("#filterMenu").mouseleave(function () {
-                $('#filterMenu').hide(400);
-            });
+            initMenu();
             $("#addFilterButton").click(function () {
-                toggleFilterChooseMenu();
+                toggleMenu();
             });
-            $("#filterMenu").on("click", "a", function () {
-                $("#filterMenu").hide();
-                addFilterAttribute($(this).text());
-                checkFilterCount();
+            $("#clearFilter").click(function () {
+                clear();
             });
             $("#filter").on("click", ".filter-name-btn", function () {
-                var selfItem = $($(this).parent().get(0)),
-                    prevItem = selfItem.prev(),
-                    nextItem = selfItem.next(),
-                    filterName = selfItem.attr("data-filter");
-                if (prevItem.is('.filter-separator')) {
-                    prevItem.remove();
-                } else if (nextItem.is('.filter-separator')) {
-                    nextItem.remove();
-                }
-                selfItem.remove();
-                $("#filterMenu > li[data-filter-name='" + filterName + "']").show();
-                checkFilterCount();
+                removeValue(this);
             });
+            $('#filter').on("change", ".filter-value", function () {
+                updateValue($(this).parent().attr("data-filter"));
+            });
+
         },
-        pick: function () {
-            var returnStatement = {},
-                filterItems = $("#filter").find(".filter-item");
-
-            for (var i = 0; i < filterItems.length; i++) {
-                var $element = $(filterItems[i]),
-                    $valueElement = $($element.find(".filter-value")),
-                    atrName = $element.attr('data-filter'),
-                    value;
-
-                if($valueElement.is("input[type='checkbox']"))
-                    value = $valueElement.is(':checked');
-                else
-                if($valueElement.is("input[type='date'], input[type='text'], input[type='number'], select"))
-                    value = $valueElement.val();
-                else
-                    console.error("Filter value type not defined;");
-
-                if (returnStatement[atrName])
-                    returnStatement[atrName] += '&' + value;
-                else
-                    returnStatement[atrName] = value;
+        descript: function (param) {
+            if (param) {
+                description = param;
+                updateMenu();
+            } else
+                return description;
+        },
+        values: function (filterData) {
+            if (filterData) {
+                model = filterData;
+                rebuild();
             }
-            return returnStatement;
+            else
+                return model;
         }
     }
 }());
 
-$(document).ready(Filter.init);
+$(document).ready(function () {
+    Filter.init();
+    Filter.descript([
+        {
+            field: 'age',
+            type: 'number',
+            name: 'Age',
+            minVal: 1
+        },
+        {
+            field: 'workingHours',
+            type: 'number',
+            name: 'Working hours',
+            minVal: 0
+        },
+        {
+            field: 'billable',
+            type: 'boolean',
+            name: 'Billable'
+        },
+        {
+            field: 'skill',
+            type: 'list',
+            name: 'Skill',
+            values: {101:'Java', 102:'C++', 103:'.NET', 104:'HTML', 105:'Mongo DB', 106:'SQL'},
+            multiset: true
+        },
+        {
+            field: 'english',
+            type: 'list',
+            name: 'English',
+            values: {1:'Begginer', 2:'Elementary', 3:'Pre-Intermediate', 4:'Intermediate', 5:'Upper-Intermediate', 6:'Advanced'}
+        },
+        {
+            field: 'curator',
+            type: 'text',
+            name: 'Curator',
+            placeholder: ' name '
+        },
+        {
+            field: 'university',
+            type: 'text',
+            name: 'University',
+            placeholder: ' ... '
+        },
+        {
+            field: 'faculty',
+            type: 'text',
+            name: 'Faculty',
+            placeholder: ' ... '
+        },
+        {
+            field: 'course',
+            type: 'enum',
+            name: 'Course',
+            values: [1, 2, 3, 4, 5]
+        },
+        {
+            field: 'graduationYear',
+            type: 'number',
+            name: 'Grad. year',
+            minVal: 2000
+        }
+    ]);
+    var filterStore = JSON.parse(sessionStorage.getItem('filter'));
+    if(filterStore)
+        Filter.values(filterStore);
+});
 

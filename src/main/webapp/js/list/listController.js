@@ -22,18 +22,15 @@ var ListController = (function () {
                 $table.click(function () {
                     updateInfoLabel();
                 });
-                $table.tablesorter();
                 updateInfoLabel();
             },
             addAllStudents: function (arrStudents) {
                 var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
                 $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
-                $("#studTable").trigger("update");
                 updateInfoLabel();
             },
             clearList: function () {
                 $("#studTable > tbody").empty();
-                $("#studTable").trigger("update");
                 updateInfoLabel();
             },
 

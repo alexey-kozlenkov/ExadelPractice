@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -195,6 +196,16 @@ public class TestController {
 
         System.out.println(userService.save(user));
         System.out.println("blabla");
+    }
+
+    @RequestMapping(value = "/cookieTest")
+    public void sessionTest(HttpServletRequest request, HttpServletResponse response) {
+        for (Cookie c : request.getCookies()){
+            System.out.println(c.getName() + " = " + c.getValue());
+        }
+        Cookie co = new Cookie("filter2", "New value!");
+        co.setHttpOnly(false);
+        response.addCookie(co);
     }
 
 }

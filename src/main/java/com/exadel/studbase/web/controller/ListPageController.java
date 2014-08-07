@@ -48,6 +48,8 @@ public class ListPageController {
                                        @RequestParam(value = "filter", required = false) String filter) {
         //TODO: Optimise request queue (for big counts in short time)
 
+
+
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         Map<String, String[]> map = new HashMap<String, String[]>();
@@ -146,4 +148,5 @@ public class ListPageController {
             this.studentViews = studentViews;
         }
     }
+
 }
