@@ -101,6 +101,7 @@ label,
     background: transparent;
 }
 
+
 /****************************** Buttons ****************************************/
 
 .prj-btn {
@@ -149,6 +150,8 @@ label,
     color: #4A5D80;
 }
 
+.logout-link {
+}
 /****************************** Table ******************************************/
 .prj-list-header {
     background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);

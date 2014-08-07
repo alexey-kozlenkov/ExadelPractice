@@ -63,7 +63,7 @@
             <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}">
         </script>
         <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value number-filter-value" type='number' min='{{minval}}' placeholder="{{placeholder}}">
+            <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}">
         </script>
         <script id="filterDataValueTemplate" type="text/x-handlebars-template">
             <input class="filter-value date-filter-value" type='date'>
@@ -78,7 +78,7 @@
         <script id="filterListValueTemplate" type="text/x-handlebars-template">
             <select class="filter-value list-filter-value" title="{{placeholder}}">
                 {{#each values}}
-                <option value="{{@index}}">{{this}}</option>
+                    <option value="{{@key}}">{{this}}</option>
                 {{/each}}
             </select>
         </script>

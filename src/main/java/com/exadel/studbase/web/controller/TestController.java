@@ -19,7 +19,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
 
@@ -199,16 +198,14 @@ public class TestController {
         System.out.println("blabla");
     }
 
-    @RequestMapping(value = "/session")
+    @RequestMapping(value = "/cookieTest")
     public void sessionTest(HttpServletRequest request, HttpServletResponse response) {
-        Enumeration<String> en = request.getSession().getAttributeNames();
-        while(en.hasMoreElements()){
-            System.out.println(" -- "+en.nextElement());
+        for (Cookie c : request.getCookies()){
+            System.out.println(c.getName() + " = " + c.getValue());
         }
-        System.out.println("Session 'role': " + request.getSession().getAttribute("role"));
-        System.out.println("Session 'role2': " + request.getSession().getAttribute("role2"));
-
-        response.addCookie(new Cookie("role2", "test"));
+        Cookie co = new Cookie("filter2", "New value!");
+        co.setHttpOnly(false);
+        response.addCookie(co);
     }
 
 }

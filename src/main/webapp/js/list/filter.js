@@ -119,6 +119,7 @@ var Filter = (function () {
         else if (model[field] != undefined)
             delete model[field];
         sessionStorage.setItem('filter', JSON.stringify(model));
+        console.log(model);
     }
 
     function removeValue(ovner) {
@@ -138,7 +139,7 @@ var Filter = (function () {
     }
 
     function rebuild(){
-        $(".filter-item").remove();
+        $(".filter-item, .filter-separator").remove();
         var keys = Object.keys(model);
         keys.forEach(function(key){
             var value = model[key];
@@ -223,16 +224,16 @@ $(document).ready(function () {
         },
         {
             field: 'skill',
-            type: 'enum',
+            type: 'list',
             name: 'Skill',
-            values: ['Java', 'C++', '.NET', 'HTML', 'Mongo DB', 'SQL'],
+            values: {101:'Java', 102:'C++', 103:'.NET', 104:'HTML', 105:'Mongo DB', 106:'SQL'},
             multiset: true
         },
         {
             field: 'english',
             type: 'list',
             name: 'English',
-            values: ['Begginer', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced']
+            values: {1:'Begginer', 2:'Elementary', 3:'Pre-Intermediate', 4:'Intermediate', 5:'Upper-Intermediate', 6:'Advanced'}
         },
         {
             field: 'curator',
@@ -262,7 +263,7 @@ $(document).ready(function () {
             field: 'graduationYear',
             type: 'number',
             name: 'Grad. year',
-            minval: 2000
+            minVal: 2000
         }
     ]);
     var filterStore = JSON.parse(sessionStorage.getItem('filter'));

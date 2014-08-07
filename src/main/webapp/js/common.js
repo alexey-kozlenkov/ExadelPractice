@@ -1,6 +1,15 @@
 /**
  * Created by ala'n on 30.07.2014.
  */
+
+$(document).ready(function(){
+    $(".logout-link").click(logout);
+});
+function logout(){
+    sessionStorage.removeItem("filter");
+}
+
+
 /* Close dialog on current page */
 function closeDialog(){
     $(".content-locker").fadeOut(500);
