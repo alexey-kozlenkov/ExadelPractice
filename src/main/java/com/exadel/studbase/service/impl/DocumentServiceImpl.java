@@ -39,8 +39,14 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Collection<Document> getAllForUser(Long id) {
-        return documentDAO.getAllForUser(id);
+    public Collection<Document> getActualForUser(Long id) {
+        return documentDAO.getActualForUser(id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<Document> getNotActualForUser(Long id) {
+        return documentDAO.getNotActualForUser(id);
     }
 
 }

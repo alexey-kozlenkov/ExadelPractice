@@ -1,84 +1,91 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
+var ListController = (function () {
+        function updateInfoLabel() {
+            var itCount = $("#studTable > tbody > tr").length;
+            if (itCount > 0) {
+                var selCount = $(".item-checkbox:checked").length;
+                $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
 
-$(window).ready(function () {
-    console.log("window.ready");
-    var pastHeaderHeight;// check on start
-    $(window).resize(function () {
-        var height = $("#header").outerHeight();
-        if (pastHeaderHeight != height) {
-            pastHeaderHeight = height;
-            checkTopMarginOfList();
+            } else {
+                $("#infoLabel").text("------------- List is empty -------------");
+            }
         }
-    });
-    // Correct header vertical position according to position of list on scrolling
-    $(window).scroll(function () {
-        $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
-    });
-    checkTopMarginOfList();
-});
 
-$(document).ready(function () {
-    console.log('doc.ready');
-    $("#checkAll").click(function () {
-        setCheckedAll($(this).prop("checked"));
-    });
-    $("#studTable").click(function () {
-        updateInfoLabel();
-    });
-    updateInfoLabel();
-    checkTopMarginOfList();
-});
+        return{
+            init: function () {
+                var $table = $("#studTable");
+                $("#checkAll").click(function () {
+                    setCheckedAll($(this).prop("checked"));
+                });
+                $table.click(function () {
+                    updateInfoLabel();
+                });
+                updateInfoLabel();
+            },
+            addAllStudents: function (arrStudents) {
+                var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
+                $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+                updateInfoLabel();
+            },
+            clearList: function () {
+                $("#studTable > tbody").empty();
+                updateInfoLabel();
+            },
 
-function checkTopMarginOfList() {
-    $("#listContent").css("margin-top", $("#header").height() + "px");
-}
+            getCheckedRowsId: function () {
+                var checkedList = [],
+                    count = 0;
 
-function addAllStudents(arrStudents) {
-    var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
-    $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
-    updateInfoLabel();
-}
-function clearList() {
-    $("#studTable > tbody").empty();
-    updateInfoLabel();
-}
-
-function getCheckedRowsId() {
-    var checkedList = [];
-    var count = 0;
-
-    $('.item-checkbox:checked').each(function (index, element) {
-        checkedList[count] = Number($(element).attr("data-id"));
-        count++;
-    });
-    return checkedList;
-};
-function setCheckedAll(state) {
-    $('.item-checkbox').each(function () {
-        this.checked = state;
-    });
-    updateInfoLabel();
-}
-
-function setTableLoadingState(loading) {
-    if (loading) {
-        $("#studTable").hide();
-        $("#loading_image").show();
-    } else {
-        $("#studTable").show();
-        $("#loading_image").hide();
+                $('.item-checkbox:checked').each(function (index, element) {
+                    checkedList[count] = Number($(element).attr("data-id"));
+                    count++;
+                });
+                return checkedList;
+            },
+            setCheckedAll: function (state) {
+                $('.item-checkbox').each(function () {
+                    this.checked = state;
+                });
+                updateInfoLabel();
+            },
+            setTableLoadingState: function (loading) {
+                if (loading) {
+                    $("#studTable").hide();
+                    $("#loading_image").show();
+                } else {
+                    $("#studTable").show();
+                    $("#loading_image").hide();
+                }
+            }
+        }
+    }());
+var ListHeader = (function(){
+    var pastHeaderHeight;
+    function checkTopMarginOfList() {
+        $("#listContent").css("margin-top", $("#header").height() + "px");
     }
-}
+    return {
+        init: function(){
+            $(window).resize(function () {
+                var height = $("#header").outerHeight();
+                if (pastHeaderHeight != height) {
+                    pastHeaderHeight = height;
+                    checkTopMarginOfList();
+                }
+            });
+            // Correct header vertical position according to position of list on scrolling
+            $(window).scroll(function () {
+                $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
+            });
+            checkTopMarginOfList();
+        },
+        check: checkTopMarginOfList
+    };
+}());
 
-function updateInfoLabel() {
-    var itCount = $("#studTable > tbody > tr").length;
-    if (itCount > 0) {
-        var selCount = $(".item-checkbox:checked").length;
-        $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
+$(document).ready(ListController.init());
+$(window).ready(ListHeader.init());
 
-    } else {
-        $("#infoLabel").text("------------- List is empty -------------");
-    }
-}
+

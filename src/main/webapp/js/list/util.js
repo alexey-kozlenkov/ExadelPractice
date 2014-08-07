@@ -7,6 +7,7 @@ $(document).ready(function () {
     bindMenuBlock();
     bindSearchBlock();
     bindDialog();
+
 });
 
 function bindMenuBlock() {
@@ -24,7 +25,6 @@ function bindMenuBlock() {
 function bindSearchBlock() {
     $("#startSearchButton").click(function () {
         loadTable();
-        updateInfoLabel();
     });
     $("#searchLine").focus(function () {
         $(this).animate({ width: "250pt"}, 1000);
@@ -54,18 +54,16 @@ function bindDialog() {
 }
 
 function loadTable() {
-    var version = Date.now();
-    search = $("#searchLine").val(),
-        filter = pickFilters(),
-        filterPack = "";// JSON.stringify(filter);
+    var version = Date.now(),
+         search = $("#searchLine").val(),
+         //filter = pickFilters(),
+         filterPack = "";// JSON.stringify(filter);
     actualVersion = version;
-    setTableLoadingState(true);
+    ListController.setTableLoadingState(true);
 
     promise = $.ajax({
-        type: "GET",
         url: "/list/data",
         cache: false,
-        async: true,
         data: {
             'version': version,
             'searchName': search,
@@ -78,16 +76,16 @@ function loadTable() {
     });
     promise.fail(function () {
         alert("error");
-        setTableLoadingState(false);
+        ListController.setTableLoadingState(false);
     });
 }
 
 function updateListByResponse(response) {
     if (actualVersion == response.version) {
         console.log("Get actual response (", actualVersion, ")");
-        clearList();
-        addAllStudents(response.studentViews);
-        setTableLoadingState(false);
+        ListController.clearList();
+        ListController.addAllStudents(response.studentViews);
+        ListController.setTableLoadingState(false);
     } else {
         console.log("Response (", response.version, ") was ignored; actual: ", actualVersion, "; now: ", Date.now());
     }
@@ -96,12 +94,11 @@ function updateListByResponse(response) {
 function sendMessage() {
     var subject = $("#subjectField").val(),
         messageText = $("#sentMessage").val(),
-        studIds = JSON.stringify(getCheckedRowsId());
+        studIds = JSON.stringify(ListController.getCheckedRowsId());
 
     $.ajax({
         type: "POST",
         url: "/list/sendMail",
-        async: true,
         data: {
             message: messageText,
             subject: subject,
@@ -133,7 +130,7 @@ function sendMessage() {
 }
 
 function exportExcel() {
-    var studIds = JSON.stringify(getCheckedRowsId());
+    var studIds = JSON.stringify(ListController.getCheckedRowsId());
     window.open("/list/export?students=" + studIds, "exportFile");
 }
 

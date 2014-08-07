@@ -15,5 +15,7 @@ public interface IDocumentService {
 
     void delete(Document document);
 
-    Collection<Document> getAllForUser(Long id);
+    Collection<Document> getActualForUser(Long id);
+
+    Collection<Document> getNotActualForUser(Long id);
 }

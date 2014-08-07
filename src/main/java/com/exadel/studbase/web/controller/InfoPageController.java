@@ -71,16 +71,15 @@ public class InfoPageController {
     public String manualData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         User user = userService.getById(studentId);
-        System.out.println(user.getStudentInfo().toString());
         return gson.toJson(user, User.class);
     }
 
-    @RequestMapping(value = "/getDocuments", method = RequestMethod.GET)
+    @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String documentsData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<Document> userDocuments = documentService.getAllForUser(studentId);
+        Collection<Document> userDocuments = documentService.getActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
 
@@ -90,15 +89,21 @@ public class InfoPageController {
     @ResponseBody
     public String editManualInformation(@RequestParam("studentId") Long id,
                                         @RequestParam("studentName") String name,
+                                        @RequestParam("studentBirthDate") Date birthDate,
                                         @RequestParam("studentLogin") String login,
                                         @RequestParam("studentPassword") String password,
                                         @RequestParam("studentEmail") String email,
+                                        @RequestParam("studentSkype") String skype,
+                                        @RequestParam("studentPhone") String phone,
                                         @RequestParam("studentState") String state) {
         User editedUser = userService.getById(id);
         editedUser.setName(name);
+        editedUser.setBirthdate(birthDate);
         editedUser.setLogin(login);
         editedUser.setPassword(password);
         editedUser.setEmail(email);
+        editedUser.setSkype(skype);
+        editedUser.setTelephone(phone);
         editedUser.getStudentInfo().setState(state);
 
         userService.save(editedUser);
@@ -113,6 +118,7 @@ public class InfoPageController {
     public String editEducation(@RequestParam("studentId") Long id,
                                 @RequestParam("studentUniversity") String university,
                                 @RequestParam("studentFaculty") String faculty,
+                                @RequestParam("studentSpeciality") String speciality,
                                 @RequestParam("studentCourse") int course,
                                 @RequestParam("studentGroup") int group,
                                 @RequestParam("studentGraduationDate") int graduationDate,
@@ -123,6 +129,7 @@ public class InfoPageController {
         editedStudent.setFaculty(faculty);
         editedStudent.setCourse(course);
         editedStudent.setGroup(group);
+        editedStudent.setSpeciality(speciality);
         editedStudent.setGraduationDate(graduationDate);
         editedStudent.setTermMarks(termMarks);
         studentService.save(editedStudent);
@@ -138,19 +145,56 @@ public class InfoPageController {
                              @RequestParam("studentWorkingHours") Integer workingHours,
                              @RequestParam("studentHireDate") Date hireDate,
                              @RequestParam("studentBillable") Date billable,
+                             @RequestParam(value = "studentWishingHours", required = false)  Integer wishingHours,
+                             @RequestParam(value = "studentCourseStartWorking", required = false) Integer courseStartWorking,
+                             @RequestParam("studentTrainingBeforeWorking") Boolean trainingBeforeWorking,
+                             @RequestParam("studentTrainingExadel") String trainingInExadel,
+                             @RequestParam("studentCurrentProject") String currentProject,
                              @RequestParam("studentRoleCurrentProject") String roleCurrentProject,
+                             @RequestParam("studentCurrentTeamLead") String currentTeamLead,
+                             @RequestParam("studentCurrentProjectManager") String currentProjectManager,
                              @RequestParam("studentTechsCurrentProject") String techsCurrentProject) {
 
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Student editedStudent = studentService.getById(id);
         editedStudent.setWorkingHours(workingHours);
         editedStudent.setHireDate(hireDate);
         editedStudent.setBillable(billable);
+        editedStudent.setWishesHoursNumber(wishingHours);
+        editedStudent.setCourseWhenStartWorking(courseStartWorking);
+        editedStudent.setTrainingBeforeStartWorking(trainingBeforeWorking);
+        editedStudent.setTrainingsInExadel(trainingInExadel);
+        editedStudent.setCurrentProject(currentProject);
         editedStudent.setRoleCurrentProject(roleCurrentProject);
+        //team-lead
+        //project-manager
         editedStudent.setTechsCurrentProject(techsCurrentProject);
         studentService.save(editedStudent);
 
+        System.out.println("*********************");
+        System.out.println(currentTeamLead);
+        System.out.println(currentProjectManager);
+        System.out.println("*********************");
+
         return ("{\"post\":\"ok\"}");
     }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/postDocuments", method = RequestMethod.POST)
+    public String editDocuments(@RequestParam("documents") String newDocuments) {
+
+          Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+          Document[] newDocs = gson.fromJson( newDocuments, Document[].class);
+
+            for(Document document : newDocs){
+                documentService.save(document);
+            }
+
+        return ("{\"post\":\"ok\"}");
+    }
+
 
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
@@ -170,4 +214,5 @@ public class InfoPageController {
         listOfUsers.add(userService.getById(id));
         return new ModelAndView("excelView", "users", listOfUsers);
     }
+
 }

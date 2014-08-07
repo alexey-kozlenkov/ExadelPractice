@@ -7,10 +7,10 @@ h1 {
 
 }
 
-.header {
+.info-header {
     box-sizing: border-box;
-    margin-bottom: 10pt;
-    border: 1px solid #616161;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #616161;
     text-transform: uppercase;
 }
 
@@ -33,7 +33,6 @@ h1 {
 
     color: #4A5D80;
     text-decoration: none;
-    text-shadow: .3px .3px .3px #fff;
     font-size: 22px;
     -webkit-transition: color .2s ease-in-out;
     -moz-transition: color .2s ease-in-out;
@@ -77,7 +76,7 @@ h1 {
     opacity: 1;
 }
 
-.category-content {
+.outer-category-content {
     margin-bottom: 10pt;
 }
 
@@ -88,8 +87,8 @@ h1 {
 }
 
 .category-content-select {
+    margin-top: 7px;
     border-radius: 4px;
-    margin-left: 10%;
 
     color: #333;
     font-size: 15px;
@@ -151,7 +150,7 @@ input[type="number"] {
 
 .documents-list-column {
     padding: 5px 10px 5px;
-    text-align: center;
+    text-align: left;
 }
 
 .category-content-add-button {
@@ -164,4 +163,109 @@ input[type="number"] {
     .col-md-offset-2 {
         margin-left: 12.66666667%;
     }
+}
+
+.dialog-area {
+    width: 210pt;
+}
+
+.text-dialog {
+    width: 90%;
+}
+
+.col-sm-1 {
+    padding-right: 60px;
+}
+
+.new-document {
+    color: orange;
+}
+
+.export {
+    /*float: right;*/
+    position: fixed;
+    right: 0%;
+    /*margin-right: 10px;*/
+}
+
+.export-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.export-btns {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+
+.export-btn {
+    float : right;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
+}
+.export-btn:hover{
+    width  : 45px;
+}
+
+.info-header-nav {
+    display: inline-block;
+    float: right;
+    padding-top: 10px;
+}
+
+.info-header-nav-link {
+    margin: 5px 0 5px;
+    list-style-type: none;
+    text-transform: none;
+
+}
+
+#headerName {
+    display: inline-block;
+}
+
+.employee-link {
+    padding-top: 10px;
+}
+
+.inner-category-header {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.inner-category-header a {
+    padding-left: 15px;
+
+    color: #333;
+    font-size: 17px;
+
+}
+
+.inline-input {
+    width: auto;
+}
+
+.inline-input-field {
+    width: 40px;
+    height: 28px;
+    line-height: 1;
+}
+
+.checkbox-inline {
+    position: relative;
+    padding-left: 35px;
+}
+
+.big-area {
+    padding: 3px 3px 3px;
+    height: 100px;
+    resize: none;
 }
