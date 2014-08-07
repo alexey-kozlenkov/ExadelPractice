@@ -44,6 +44,24 @@ public class Document implements IEntity<Long> {
         this.studentId = studentId;
     }
 
+    public Document(Long studentId, String doctype, Date issueDate, String info) {
+        this.id = null;
+        this.studentId = studentId;
+        this.doctype = doctype;
+        this.issueDate = issueDate;
+        this.expirationDate = null;
+        this.info = info;
+    }
+
+    public Document(Long studentId, String doctype, Date issueDate) {
+        this.id = null;
+        this.studentId = studentId;
+        this.doctype = doctype;
+        this.issueDate = issueDate;
+        this.expirationDate = null;
+        this.info = null;
+    }
+
     @Override
     public Long getId() {
         return id;

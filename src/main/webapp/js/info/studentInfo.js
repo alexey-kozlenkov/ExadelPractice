@@ -11,7 +11,7 @@ $(window).ready(function () {
     //alert(window.location.search);
     parseRequestForId(window.location.search);
     fillOptions();
-    fillManualInfo();
+    fillCommonInfo();
 });
 
 $(document).ready(function () {
@@ -35,7 +35,7 @@ $(document).ready(function () {
     });
 
     //sortable table
-   // $('#documentTable').tablesorter();
+    $('#documentTable').tablesorter();
 });
 
 $(document).ready(function () {
@@ -43,12 +43,15 @@ $(document).ready(function () {
     $("#saveManualInformation").click(function () {
         //collect data entered by users
         var editedName = $("#name").val();
+        var editedBirthDate = $("#birthDate").val();
         var editedLogin = $("#login").val();
         var editedEmail = $("#email").val();
+        var editedSkype = $("#skype").val();
+        var editedPhone = $("#phone").val();
         var editedPassword = $("#password").val();
         var editedState = $("#state :selected").val();
 
-        saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState);
+        saveManualInfoChanges(editedName,editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState);
     });
 
     $("#saveEducationInformation").click(function () {
@@ -78,10 +81,18 @@ $(document).ready(function () {
         var editedHireDate = $("#hireDate").val();
         var editedWorkingHours = $("#workingHours").val();
         var editedBillable = $("#billable").val();
+        var editedWishingHours = $("#wishingHours").val();
+        var editedCourseStartWorking = $("#courseStartWorking").val();
+        var editedTrainingBeforeWorking = $("#trainingBeforeWorking").is(':checked');
+        var editedTrainingExadel = $("#trainingExadel").val();
+
+        var editedCurrentProject = $("#currentProject").val();
         var editedRoleCurrentProject = $("#roleCurrentProject").val();
+        var editedCurrentTeamLead = $("#currentTeamLead").text();
+        var editedCurrentProjectManager = $("#currentProjectManager").text();
         var editedTechsCurrentProject = $("#techsCurrentProject").val();
 
-        saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject);
+        saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable,editedWishingHours,editedCourseStartWorking,editedTrainingBeforeWorking,editedTrainingExadel,editedCurrentProject, editedRoleCurrentProject,editedCurrentTeamLead,editedCurrentProjectManager, editedTechsCurrentProject);
     });
 
 
@@ -122,11 +133,11 @@ $(document).ready(function () {
                 "studentId": studentId
             },
             success: function (data) {
-                // alert("" + data);
                 $("#documents").empty();
                 var documents = JSON.parse(data);
                 jQuery.each(documents, function (index, value) {
                     $("#documents").append(templateDocument(value));
+                    $("#documentTable").trigger("update");
                 });
             },
             error: function () {
@@ -140,6 +151,8 @@ $(document).ready(function () {
         showDialog("add-document");
 
     });
+
+    ////TODO wtf dialog
     $("#okButton").click(function () {
         var doctype = $("#doctype").val();
         var issueDate = $("#issueDate").val();
@@ -154,7 +167,7 @@ $(document).ready(function () {
         closeDialog();
         $("#documents").append(templateDocument(newDocument));
         $("#documents tr").last().addClass("new-document");
-
+        $("#documentTable").trigger("update");
 
         $("#doctype").val("");
         $("#issueDate").val("");
@@ -244,7 +257,7 @@ function fillOptions() {
     });
 }
 
-function fillManualInfo() {
+function fillCommonInfo() {
     $.ajax
     ({
         type: "GET",
@@ -262,15 +275,18 @@ function fillManualInfo() {
 
             $("#headerName").text(gottenUser.name);
             $("#name").val(gottenUser.name);
+            $("#birthDate").val(gottenUser.birthdate);
             $("#login").val(gottenUser.login);
             $("#password").val(gottenUser.password);
             $("#email").val(gottenUser.email);
+            $("#skype").val(gottenUser.skype);
+            $("#phone").val(gottenUser.telephone);
             $("#state").find("option:contains(" + "\'" + gottenStudent.state + "\')").attr("selected", "selected");
             checkState();
 
             $("#institution").val(gottenStudent.university);
             $("#faculty").val(gottenStudent.faculty);
-            $("#speciality").val("applied maths");
+            $("#speciality").val(gottenStudent.speciality);
             $("#course").val(gottenStudent.course);
             $("#group").val(gottenStudent.group);
             $("#graduationDate").val(gottenStudent.graduationDate);
@@ -278,7 +294,16 @@ function fillManualInfo() {
             $("#workingHours").val(gottenStudent.workingHours);
             $("#hireDate").val(gottenStudent.hireDate);
             $("#billable").val(gottenStudent.billable);
+            $("#wishingHours").val(gottenStudent. wishesHoursNumber);
+            $("#courseStartWorking").val(gottenStudent.courseWhenStartWorking);
+            if(gottenStudent.trainingBeforeStartWorking){
+                $("#trainingBeforeWorking").attr('checked','checked');
+            }
+            $("#trainingExadel").val(gottenStudent.trainingsInExadel);
+            $("#currentProject").val(gottenStudent.currentProject);
             $("#roleCurrentProject").val(gottenStudent.roleCurrentProject);
+            $("#currentTeamLead").text(gottenStudent.teamLeadId);
+            $("#currentProjectManager").text(gottenStudent.projectManagerId);
             $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
 
             //termMarks
@@ -308,7 +333,7 @@ function checkState() {
     }
 }
 
-function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState) {
+function saveManualInfoChanges(editedName,editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState) {
     $.ajax
     ({
         type: "POST",
@@ -318,9 +343,12 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
         data: {
             'studentId': studentId,
             'studentName': editedName,
+            'studentBirthDate' : editedBirthDate,
             'studentLogin': editedLogin,
             'studentPassword': editedPassword,
             'studentEmail': editedEmail,
+            'studentSkype' : editedSkype,
+            'studentPhone' : editedPhone,
             'studentState': editedState
         },
         success: function () {
@@ -341,10 +369,6 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
             });
 
             $("#headerName").text(editedName);
-//            dimensionPopup($("#manualContent"));
-//            $("#saved").fadeIn(600);
-//            hidePopupSave();
-
         },
         error: function () {
             alert("error");
@@ -388,11 +412,12 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
         },
         error: function () {
             alert("error");
+            console.log(editedSpeciality);
         }
     })
 }
 
-function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject) {
+function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable,editedWishingHours,editedCourseStartWorking,editedTrainingBeforeWorking,editedTrainingExadel,editedCurrentProject, editedRoleCurrentProject,editedCurrentTeamLead,editedCurrentProjectManager, editedTechsCurrentProject) {
     var defferedPostExadel = $.ajax
     ({
         type: "POST",
@@ -404,7 +429,14 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
             'studentWorkingHours': editedWorkingHours,
             'studentHireDate': editedHireDate,
             'studentBillable': editedBillable,
+            'studentWishingHours': editedWishingHours,
+            'studentCourseStartWorking': editedCourseStartWorking,
+            'studentTrainingBeforeWorking': editedTrainingBeforeWorking,
+            'studentTrainingExadel': editedTrainingExadel,
+            'studentCurrentProject': editedCurrentProject,
             'studentRoleCurrentProject': editedRoleCurrentProject,
+            'studentCurrentTeamLead':editedCurrentTeamLead,
+            'studentCurrentProjectManager':editedCurrentProjectManager,
             'studentTechsCurrentProject': editedTechsCurrentProject
         }});
     defferedPostExadel.done(function () {
