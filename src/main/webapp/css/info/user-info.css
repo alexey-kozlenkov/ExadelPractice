@@ -150,7 +150,7 @@ input[type="number"] {
 
 .documents-list-column {
     padding: 5px 10px 5px;
-    text-align: center;
+    text-align: left;
 }
 
 .category-content-add-button {
@@ -185,23 +185,34 @@ input[type="number"] {
     /*float: right;*/
     position: fixed;
     right: 0%;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
 }
 
-.export-excel {
+.export-icon {
     width: 25px;
     height: 25px;
 }
 
-.export-pdf {
-    width: 25px;
-    height: 25px;
+.export-btns {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
+
 
 .export-btn {
+    float : right;
     padding: 0;
     width: 35px;
     height: 35px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
+}
+.export-btn:hover{
+    width  : 45px;
 }
 
 .info-header-nav {
@@ -213,6 +224,8 @@ input[type="number"] {
 .info-header-nav-link {
     margin: 5px 0 5px;
     list-style-type: none;
+    text-transform: none;
+
 }
 
 #headerName {
@@ -232,26 +245,27 @@ input[type="number"] {
     padding-left: 15px;
 
     color: #333;
-    font-size : 17px  ;
+    font-size: 17px;
 
 }
 
-.inline-input{
-    width : auto;
+.inline-input {
+    width: auto;
 }
 
-.inline-input-field{
-    width : 40px;
+.inline-input-field {
+    width: 40px;
     height: 28px;
     line-height: 1;
 }
 
-.checkbox-inline{
-    position : relative;
-    padding-left : 35px;
+.checkbox-inline {
+    position: relative;
+    padding-left: 35px;
 }
-.big-area{
+
+.big-area {
     padding: 3px 3px 3px;
+    height: 100px;
     resize: none;
-    height : 100px;
 }

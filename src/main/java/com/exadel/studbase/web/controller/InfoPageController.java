@@ -74,12 +74,12 @@ public class InfoPageController {
         return gson.toJson(user, User.class);
     }
 
-    @RequestMapping(value = "/getDocuments", method = RequestMethod.GET)
+    @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String documentsData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<Document> userDocuments = documentService.getAllForUser(studentId);
+        Collection<Document> userDocuments = documentService.getActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
 

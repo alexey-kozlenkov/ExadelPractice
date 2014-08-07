@@ -126,7 +126,7 @@ $(document).ready(function () {
         $.ajax
         ({
             type: "GET",
-            url: "/info/getDocuments",
+            url: "/info/getActualDocuments",
             async: true,
             cashe: false,
             data: {
@@ -164,15 +164,19 @@ $(document).ready(function () {
             expirationDate: expirationDate,
             info: info
         };
-        closeDialog();
-        $("#documents").append(templateDocument(newDocument));
-        $("#documents tr").last().addClass("new-document");
-        $("#documentTable").trigger("update");
 
         $("#doctype").val("");
         $("#issueDate").val("");
         $("#expirationDate").val("");
         $("#info").val("");
+        closeDialog();
+        $("#documents").prepend(templateDocument(newDocument));
+        $("#documents tr").first().addClass("new-document");
+        $("#documentTable").trigger("update");
+        var sorting = $("#documentTable").get(2).config.sortList;
+        $("#documentTable").trigger("sorton", [sorting]);
+
+
 
     });
     //close dialog
