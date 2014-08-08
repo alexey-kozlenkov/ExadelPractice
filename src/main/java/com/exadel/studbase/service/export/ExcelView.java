@@ -20,6 +20,13 @@ import java.util.Map;
 
 @Service
 public class ExcelView extends AbstractExcelView {
+    public String fillCell(Object value) {
+        if (value != null) {
+            return value.toString();
+        }
+        return "";
+    }
+
     @Override
     protected void buildExcelDocument(Map<String, Object> model,
                                       HSSFWorkbook workbook,
@@ -69,29 +76,25 @@ public class ExcelView extends AbstractExcelView {
         int rowCount = 1;
         for (User user : listOfUsers) {
             HSSFRow row = sheet.createRow(rowCount++);
-            row.createCell(0).setCellValue(user.getName());
-            row.createCell(1).setCellValue(user.getEmail());
-            row.createCell(2).setCellValue(user.getRole());
-            row.createCell(3).setCellValue(user.getStudentInfo().getState());
-            if (user.getStudentInfo().getHireDate() != null) {
-                row.createCell(4).setCellValue(user.getStudentInfo().getHireDate().toString());
-            }
-            row.createCell(5).setCellValue(user.getStudentInfo().getUniversity());
-            row.createCell(6).setCellValue(user.getStudentInfo().getFaculty());
-            row.createCell(7).setCellValue(user.getStudentInfo().getCourse());
-            row.createCell(8).setCellValue(user.getStudentInfo().getGroup());
-            if (user.getStudentInfo().getGraduationDate() != null) {
-                row.createCell(9).setCellValue(user.getStudentInfo().getGraduationDate());
-            }
-            row.createCell(10).setCellValue(user.getStudentInfo().getWorkingHours());
+            row.createCell(0).setCellValue(fillCell(user.getName()));
+            row.createCell(1).setCellValue(fillCell(user.getEmail()));
+            row.createCell(2).setCellValue(fillCell(user.getRole()));
+            row.createCell(3).setCellValue(fillCell(user.getStudentInfo().getState()));
+            row.createCell(4).setCellValue(fillCell(user.getStudentInfo().getHireDate()));
+            row.createCell(5).setCellValue(fillCell(user.getStudentInfo().getUniversity()));
+            row.createCell(6).setCellValue(fillCell(user.getStudentInfo().getFaculty()));
+            row.createCell(7).setCellValue(fillCell(user.getStudentInfo().getCourse()));
+            row.createCell(8).setCellValue(fillCell(user.getStudentInfo().getGroup()));
+            row.createCell(9).setCellValue(fillCell(user.getStudentInfo().getGraduationDate()));
+            row.createCell(10).setCellValue(fillCell(user.getStudentInfo().getWorkingHours()));
             if (user.getStudentInfo().getBillable() != null) {
                 row.createCell(11).setCellValue(user.getStudentInfo().getBillable().toString());
             } else {
                 row.createCell(11).setCellValue("false");
             }
-            row.createCell(12).setCellValue(user.getStudentInfo().getRoleCurrentProject());
-            row.createCell(13).setCellValue(user.getStudentInfo().getTechsCurrentProject());
-            row.createCell(14).setCellValue(user.getStudentInfo().getEnglishLevel());
+            row.createCell(12).setCellValue(fillCell(user.getStudentInfo().getRoleCurrentProject()));
+            row.createCell(13).setCellValue(fillCell(user.getStudentInfo().getTechsCurrentProject()));
+            row.createCell(14).setCellValue(fillCell(user.getStudentInfo().getEnglishLevel()));
         }
 
         for (int cellNumber = 0; cellNumber < header.getLastCellNum(); cellNumber++) {
