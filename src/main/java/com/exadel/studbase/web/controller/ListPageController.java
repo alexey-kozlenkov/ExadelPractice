@@ -77,12 +77,12 @@ public class ListPageController {
         boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
-        List<User> listOfUsers = (List)employeeService.getAllCurators();
+        Collection<User> listOfUsers = employeeService.getAllCurators();
         Map<Long, String> curators = new HashMap();
         for (User u : listOfUsers) {
             curators.put(u.getId(), u.getName());
         }
-        List<SkillType> listOfSkillTypes = (List)skillTypeService.getAll();
+        Collection<SkillType> listOfSkillTypes = skillTypeService.getAll();
         Map<Long, String> skills = new HashMap();
         for (SkillType st : listOfSkillTypes) {
             skills.put(st.getId(), st.getName());
