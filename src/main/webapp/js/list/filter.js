@@ -60,7 +60,7 @@ var Filter = (function () {
             if (value) {
                 var $editorElement = $shell.find(".filter-value");
                 if ($editorElement.is("input[type='checkbox']"))
-                    $editorElement.attr('checked', value);
+                    $editorElement.attr('checked', value=="true");
                 else
                     $editorElement.val(value);
             }
@@ -107,7 +107,7 @@ var Filter = (function () {
                return returnVal;
            }else{
                if (elements.is("input[type='checkbox']"))
-                   return elements.prop("checked");
+                   return String(elements.prop("checked"));
                else
                    return elements.val();
            }
@@ -219,71 +219,7 @@ $(document).ready(function () {
         var filterStore = JSON.parse(sessionStorage.getItem('filter'));
         if (filterStore)Filter.values(filterStore);
     }).fail(function () {
-        Filter.descript([
-            {
-                field: 'age',
-                type: 'number',
-                name: 'Age',
-                minVal: 1
-            },
-            {
-                field: 'workingHours',
-                type: 'number',
-                name: 'Working hours',
-                minVal: 0
-            },
-            {
-                field: 'billable',
-                type: 'bool',
-                name: 'Billable'
-            },
-            {
-                field: 'skill',
-                type: 'list',
-                name: 'Skill',
-                values: {101: 'Java', 102: 'C++', 103: '.NET', 104: 'HTML', 105: 'Mongo DB', 106: 'SQL'},
-                multiset: true
-            },
-            {
-                field: 'english',
-                type: 'list',
-                name: 'English',
-                values: {1: 'Begginer', 2: 'Elementary', 3: 'Pre-Intermediate', 4: 'Intermediate', 5: 'Upper-Intermediate', 6: 'Advanced'}
-            },
-            {
-                field: 'curator',
-                type: 'text',
-                name: 'Curator',
-                placeholder: ' name '
-            },
-            {
-                field: 'university',
-                type: 'text',
-                name: 'University',
-                placeholder: ' ... '
-            },
-            {
-                field: 'faculty',
-                type: 'text',
-                name: 'Faculty',
-                placeholder: ' ... '
-            },
-            {
-                field: 'course',
-                type: 'enumeration',
-                name: 'Course',
-                values: [1, 2, 3, 4, 5]
-            },
-            {
-                field: 'graduationYear',
-                type: 'number',
-                name: 'Grad. year',
-                minVal: 2000
-            }
-        ]);
         console.log("Fail to load filter description!");
-        var filterStore = JSON.parse(sessionStorage.getItem('filter'));
-        if (filterStore)Filter.values(filterStore);
     });
 });
 

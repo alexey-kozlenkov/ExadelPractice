@@ -1,6 +1,7 @@
 package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.IStudentViewDAO;
+import com.exadel.studbase.dao.filter.Filter;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.service.IStudentViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by ala'n on 29.07.2014.
@@ -29,5 +32,17 @@ public class StudentViewServiceImpl implements IStudentViewService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Collection<StudentView> getViewByStudentName(String desiredName) {
         return studentViewDAO.getViewByStudentName(desiredName);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
+        return studentViewDAO.getView(filterMap);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<StudentView> filterBySkillTypeId(ArrayList<String> ids) {
+        return studentViewDAO.filterBySkillTypeId(ids);
     }
 }

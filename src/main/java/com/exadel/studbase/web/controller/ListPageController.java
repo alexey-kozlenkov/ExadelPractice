@@ -1,5 +1,7 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
@@ -8,6 +10,7 @@ import com.exadel.studbase.service.*;
 import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -38,6 +41,8 @@ public class ListPageController {
     ISkillTypeService skillTypeService;
     @Autowired
     IMailService mailService;
+    @Autowired
+    ICuratoringService curatoringService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
@@ -50,24 +55,56 @@ public class ListPageController {
     @ResponseBody
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
-                                       @RequestParam(value = "filter", required = false) String filter) {
+                                       @RequestParam(value = "filter", required = false) String filterString) {
         //TODO: Optimise request queue (for big counts in short time)
-
 
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-        Map<String, String[]> map = new HashMap<String, String[]>();
-
         System.out.println("Version: " + version);
         System.out.println("Search name: " + desiredName);
-        System.out.println("Filter: " + filter);
-        //    System.out.println(gson.fromJson((String) filter, map.getClass()));
+        System.out.println("Filter: " + filterString);
 
-        StudResponse response = new StudResponse(version,
-                studentViewService.getViewByStudentName(desiredName));
 
-        return gson.toJson(response, StudResponse.class);
+        Collection result = null;
+
+        if (!filterString.equals("")) {
+            Map filterSpecification = new HashMap<String, Object>();
+            filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
+
+            Map<String, Filter<StudentView>> mainFilter = new HashMap<String, Filter<StudentView>>();
+            FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
+            if (mainFilter.size() > 0) {
+                result = studentViewService.getView(mainFilter);
+            }
+
+            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
+            if (skills != null) {
+                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
+                if (result != null) {
+                    result = CollectionUtils.intersection(result, viewBySkills);
+                } else {
+                    result = viewBySkills;
+                }
+            }
+
+            if (filterSpecification.get("curator") != null) {
+                Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
+                Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
+                if (result != null) {
+                    result = CollectionUtils.intersection(result, viewByCurator);
+                } else {
+                    result = viewByCurator;
+                }
+            }
+
+            StudResponse response = new StudResponse(version, result);
+            return gson.toJson(response, StudResponse.class);
+        } else {
+            StudResponse response = new StudResponse(version,
+                    studentViewService.getViewByStudentName(desiredName));
+            return gson.toJson(response, StudResponse.class);
+        }
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
@@ -78,12 +115,12 @@ public class ListPageController {
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
         Collection<User> listOfUsers = employeeService.getAllCurators();
-        Map<Long, String> curators = new HashMap();
+        Map<Long, String> curators = new HashMap<Long, String>();
         for (User u : listOfUsers) {
             curators.put(u.getId(), u.getName());
         }
         Collection<SkillType> listOfSkillTypes = skillTypeService.getAll();
-        Map<Long, String> skills = new HashMap();
+        Map<Long, String> skills = new HashMap<Long, String>();
         for (SkillType st : listOfSkillTypes) {
             skills.put(st.getId(), st.getName());
         }
@@ -111,11 +148,11 @@ public class ListPageController {
         for (Long id : studentId) {
             User user = userService.getById(id);
             String userName = user.getName();
-            if(user.getEmail() != null){
+            if (user.getEmail() != null) {
                 if (!mailService.sendMail(user.getEmail(), subject, body)) {
                     inaccessibleEmail.add(userName + " ( " + user.getEmail() + " )");
                 }
-            }else{
+            } else {
                 inaccessibleEmail.add(userName + "( haven't mail )");
             }
         }

@@ -20,14 +20,14 @@ public class FilterDescription {
         filterDescriptor.add(new ListFilter("skills", "Skill", skills, true));
         filterDescriptor.add(new ListFilter("englishLevel", "English level",
                 new String[]{
-                        "Begginer",
+                        "Beginner",
                         "Elementary",
                         "Pre-Intermediate",
                         "Intermediate",
                         "Upper-Intermediate",
                         "Advanced"}, false));
         if (!isCurator) {
-            filterDescriptor.add(new ListFilter("curators", "Curator", curators, false));
+            filterDescriptor.add(new ListFilter("curator", "Curator", curators, false));
         }
         return filterDescriptor;
     }
