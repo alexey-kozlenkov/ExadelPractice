@@ -73,7 +73,7 @@ public class ListPageController {
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getStudentsByRequest() {
+    public String getDescription() {
         boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
@@ -88,18 +88,12 @@ public class ListPageController {
             skills.put(st.getId(), st.getName());
         }
 
-        FilterDescription.createFilterDescription(isCurator, curators, skills);
+        List<FilterDescription.FilterDescriptor> description
+                = FilterDescription.createFilterDescription(isCurator, curators, skills);
 
-        /*Map<String, String[]> map = new HashMap<String, String[]>();
+        Gson gson = new Gson();
 
-
-        //    System.out.println(gson.fromJson((String) filter, map.getClass()));
-
-        StudResponse response = new StudResponse(version,
-                studentViewService.getViewByStudentName(desiredName));
-
-        return gson.toJson(response, StudResponse.class);*/
-        return "";
+        return gson.toJson(description);
     }
 
 

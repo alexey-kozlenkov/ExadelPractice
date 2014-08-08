@@ -66,7 +66,7 @@
             <input class="filter-value boolean-filter-value" type='checkbox'>
         </script>
         <script id="filterTextValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}">
+            <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}" data-multi = '{{multiset}}'>
         </script>
         <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
             <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}">
@@ -75,14 +75,14 @@
             <input class="filter-value date-filter-value" type='date'>
         </script>
         <script id="filterEnumValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}">
+            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
                 {{#each values}}
                 <option>{{this}}</option>
                 {{/each}}
             </select>
         </script>
         <script id="filterListValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}">
+            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
                 {{#each values}}
                     <option value="{{@key}}">{{this}}</option>
                 {{/each}}

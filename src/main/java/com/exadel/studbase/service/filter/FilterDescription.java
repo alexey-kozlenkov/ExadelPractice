@@ -18,16 +18,16 @@ public class FilterDescription {
         filterDescriptor.add(new NumberFilter("workingHours", "Working hours", 0));
         filterDescriptor.add(new BoolFilter("billable", "Billable"));
         filterDescriptor.add(new ListFilter("skills", "Skill", skills, true));
-        filterDescriptor.add(new EnumFilter("englishLevel", "English level",
+        filterDescriptor.add(new ListFilter("englishLevel", "English level",
                 new String[]{
                         "Begginer",
                         "Elementary",
                         "Pre-Intermediate",
                         "Intermediate",
                         "Upper-Intermediate",
-                        "Advanced"}, true));
+                        "Advanced"}, false));
         if (!isCurator) {
-            filterDescriptor.add(new ListFilter("curators", "Curator", curators, true));
+            filterDescriptor.add(new ListFilter("curators", "Curator", curators, false));
         }
         return filterDescriptor;
     }
@@ -43,14 +43,12 @@ public class FilterDescription {
 
         public final String field;
         public final FilterType type;
-        public Boolean multiset;
         public String name;
 
-        protected FilterDescriptor(String field, FilterType type, String name, Boolean multiset) {
+        protected FilterDescriptor(String field, FilterType type, String name) {
             this.field = field;
             this.type = type;
             this.name = name;
-            this.multiset = multiset;
         }
     }
 
@@ -58,60 +56,63 @@ public class FilterDescription {
         public Integer minVal;
 
         public NumberFilter(String field, String name, Integer minVal) {
-            super(field, FilterType.number, name, false);
+            super(field, FilterType.number, name);
             this.minVal = minVal;
         }
     }
 
     public static class BoolFilter extends FilterDescriptor {
         public BoolFilter(String field, String name) {
-            super(field, FilterType.bool, name, false);
+            super(field, FilterType.bool, name);
         }
     }
 
     public static class TextFilter extends FilterDescriptor {
         public String placeholder;
+        public Boolean multiset;
 
         public TextFilter(String field, String name, String placeholder) {
-            super(field, FilterType.text, name, false);
+            this(field, name, placeholder, false);
+        }
+        public TextFilter(String field, String name, String placeholder, Boolean multiset) {
+            super(field, FilterType.text, name);
             this.placeholder = placeholder;
+            this.multiset = multiset;
         }
     }
 
     public static class ListFilter extends FilterDescriptor {
+        public Boolean multiset;
         public Map<Long, String> values;
 
-        public ListFilter(String field, String name, Map<Long, String> values) {
-            super(field, FilterType.list, name, false);
-            this.values = values;
-        }
-
         public ListFilter(String field, String name, Map<Long, String> values, Boolean multiset) {
-            super(field, FilterType.list, name, multiset);
+            super(field, FilterType.list, name);
             this.values = values;
+            this.multiset = multiset;
         }
 
-        public ListFilter(String field, String name, Collection<String> values, Boolean multiset) {
-            super(field, FilterType.list, name, multiset);
+        public ListFilter(String field, String name, String[] values, Boolean multiset) {
+            super(field, FilterType.list, name);
+            this.multiset = multiset;
             this.values = new HashMap<Long, String>();
-            String[] value = (String[]) values.toArray();
-            for (int i = 0; i < values.size(); i++) {
-                this.values.put(Long.valueOf(i), value[i]);
+            for (int i = 0; i < values.length; i++) {
+                this.values.put(Long.valueOf(i), values[i]);
             }
         }
     }
 
     public static class EnumFilter extends FilterDescriptor {
+        public Boolean multiset;
         public Object[] values;
 
         public EnumFilter(String field, String name, Object[] minVal) {
-            super(field, FilterType.enumeration, name, false);
-            this.values = minVal;
+           this(field, name, minVal, false);
         }
 
         public EnumFilter(String field, String name, Object[] minVal, Boolean multiset) {
-            super(field, FilterType.enumeration, name, multiset);
+            super(field, FilterType.enumeration, name);
             this.values = minVal;
+            this.multiset = multiset;
         }
 
     }

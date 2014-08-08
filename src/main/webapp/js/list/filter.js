@@ -95,20 +95,22 @@ var Filter = (function () {
 
     function pickValue(field) {
         var elements = $(".filter-item[data-filter=" + field + "] .filter-value");
-        switch (elements.length) {
-            case 0:
-                return null;
-            case 1:
-                if (elements.is("input[type='checkbox']"))
-                    return elements.prop("checked");
-                else
-                    return elements.val();
-            default :
-                var returnVal = [];
-                elements.each(function (id, element) {
-                    returnVal.push($(element).val());
-                });
-                return returnVal;
+        if (elements.length == 0) {
+            return null;
+        }
+        else {
+           if(elements.is("[data-multi='true']")) {
+               var returnVal = [];
+               elements.each(function (id, element) {
+                   returnVal.push($(element).val());
+               });
+               return returnVal;
+           }else{
+               if (elements.is("input[type='checkbox']"))
+                   return elements.prop("checked");
+               else
+                   return elements.val();
+           }
         }
     }
 
@@ -138,16 +140,16 @@ var Filter = (function () {
         checkValueCount();
     }
 
-    function rebuild(){
+    function rebuild() {
         $(".filter-item, .filter-separator").remove();
         $("#filterMenu > li").show();
         $("#addFilterButton").show();
         var keys = Object.keys(model);
-        keys.forEach(function(key){
+        keys.forEach(function (key) {
             var value = model[key];
-            if(Array.isArray(value))
-                value.forEach(function(subVal){
-                   addValue(key, subVal);
+            if (Array.isArray(value))
+                value.forEach(function (subVal) {
+                    addValue(key, subVal);
                 });
             else
                 addValue(key, value);
@@ -163,11 +165,13 @@ var Filter = (function () {
             filterBtn.hide();
         }
     }
+
     function clear() {
         model = {};
         rebuild();
         sessionStorage.removeItem('filter');
     }
+
     return {
         init: function () {
             initMenu();
@@ -205,70 +209,82 @@ var Filter = (function () {
 
 $(document).ready(function () {
     Filter.init();
-    Filter.descript([
-        {
-            field: 'age',
-            type: 'number',
-            name: 'Age',
-            minVal: 1
-        },
-        {
-            field: 'workingHours',
-            type: 'number',
-            name: 'Working hours',
-            minVal: 0
-        },
-        {
-            field: 'billable',
-            type: 'bool',
-            name: 'Billable'
-        },
-        {
-            field: 'skill',
-            type: 'list',
-            name: 'Skill',
-            values: {101:'Java', 102:'C++', 103:'.NET', 104:'HTML', 105:'Mongo DB', 106:'SQL'},
-            multiset: true
-        },
-        {
-            field: 'english',
-            type: 'list',
-            name: 'English',
-            values: {1:'Begginer', 2:'Elementary', 3:'Pre-Intermediate', 4:'Intermediate', 5:'Upper-Intermediate', 6:'Advanced'}
-        },
-        {
-            field: 'curator',
-            type: 'text',
-            name: 'Curator',
-            placeholder: ' name '
-        },
-        {
-            field: 'university',
-            type: 'text',
-            name: 'University',
-            placeholder: ' ... '
-        },
-        {
-            field: 'faculty',
-            type: 'text',
-            name: 'Faculty',
-            placeholder: ' ... '
-        },
-        {
-            field: 'course',
-            type: 'enumeration',
-            name: 'Course',
-            values: [1, 2, 3, 4, 5]
-        },
-        {
-            field: 'graduationYear',
-            type: 'number',
-            name: 'Grad. year',
-            minVal: 2000
-        }
-    ]);
-    var filterStore = JSON.parse(sessionStorage.getItem('filter'));
-    if(filterStore)
-        Filter.values(filterStore);
+    $.ajax({
+        url: "/list/filterDescription",
+        data: {}
+    }).done(function (desc) {
+        var descParsed = JSON.parse(desc);
+        Filter.descript(descParsed);
+        console.log("Filter description load successfully!");
+        var filterStore = JSON.parse(sessionStorage.getItem('filter'));
+        if (filterStore)Filter.values(filterStore);
+    }).fail(function () {
+        Filter.descript([
+            {
+                field: 'age',
+                type: 'number',
+                name: 'Age',
+                minVal: 1
+            },
+            {
+                field: 'workingHours',
+                type: 'number',
+                name: 'Working hours',
+                minVal: 0
+            },
+            {
+                field: 'billable',
+                type: 'bool',
+                name: 'Billable'
+            },
+            {
+                field: 'skill',
+                type: 'list',
+                name: 'Skill',
+                values: {101: 'Java', 102: 'C++', 103: '.NET', 104: 'HTML', 105: 'Mongo DB', 106: 'SQL'},
+                multiset: true
+            },
+            {
+                field: 'english',
+                type: 'list',
+                name: 'English',
+                values: {1: 'Begginer', 2: 'Elementary', 3: 'Pre-Intermediate', 4: 'Intermediate', 5: 'Upper-Intermediate', 6: 'Advanced'}
+            },
+            {
+                field: 'curator',
+                type: 'text',
+                name: 'Curator',
+                placeholder: ' name '
+            },
+            {
+                field: 'university',
+                type: 'text',
+                name: 'University',
+                placeholder: ' ... '
+            },
+            {
+                field: 'faculty',
+                type: 'text',
+                name: 'Faculty',
+                placeholder: ' ... '
+            },
+            {
+                field: 'course',
+                type: 'enumeration',
+                name: 'Course',
+                values: [1, 2, 3, 4, 5]
+            },
+            {
+                field: 'graduationYear',
+                type: 'number',
+                name: 'Grad. year',
+                minVal: 2000
+            }
+        ]);
+        console.log("Fail to load filter description!");
+        var filterStore = JSON.parse(sessionStorage.getItem('filter'));
+        if (filterStore)Filter.values(filterStore);
+    });
 });
+
 
