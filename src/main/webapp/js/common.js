@@ -9,7 +9,6 @@ function logout(){
     sessionStorage.removeItem("filter");
 }
 
-
 /* Close dialog on current page */
 function closeDialog(){
     $(".content-locker").fadeOut(500);
