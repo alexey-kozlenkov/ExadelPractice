@@ -80,7 +80,7 @@ public class InfoPageController {
     @ResponseBody
     public String documentsData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<Document> userDocuments = documentService.getAllForUser(studentId);
+        Collection<Document> userDocuments = documentService.getActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
 
@@ -117,7 +117,6 @@ public class InfoPageController {
                                 @RequestParam("studentGroup") int group,
                                 @RequestParam("studentGraduationDate") int graduationDate,
                                 @RequestParam("studentTermMarks") String termMarks) {
-
         Student editedStudent = studentService.getById(id);
         editedStudent.setUniversity(university);
         editedStudent.setFaculty(faculty);
@@ -140,7 +139,6 @@ public class InfoPageController {
                              @RequestParam("studentBillable") Date billable,
                              @RequestParam("studentRoleCurrentProject") String roleCurrentProject,
                              @RequestParam("studentTechsCurrentProject") String techsCurrentProject) {
-
         Student editedStudent = studentService.getById(id);
         editedStudent.setWorkingHours(workingHours);
         editedStudent.setHireDate(hireDate);

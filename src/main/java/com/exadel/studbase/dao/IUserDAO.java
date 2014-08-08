@@ -10,5 +10,5 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public interface IUserDAO extends GenericDAO<User, Long> {
     User getByLogin(String login);
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

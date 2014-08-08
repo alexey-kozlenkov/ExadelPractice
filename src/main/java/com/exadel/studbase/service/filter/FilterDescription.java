@@ -7,6 +7,31 @@ import java.util.*;
  */
 
 public class FilterDescription {
+    public static List<FilterDescriptor> createFilterDescription(boolean isCurator,
+                                                                 Map<Long, String> curators,
+                                                                 Map<Long, String> skills) {
+        List<FilterDescriptor> filterDescriptor = new ArrayList();
+        filterDescriptor.add(new TextFilter("university", "University", "..."));
+        filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
+        filterDescriptor.add(new NumberFilter("cource", "Cource", 1));
+        filterDescriptor.add(new NumberFilter("graduationYear", "Grad. year", 2000));
+        filterDescriptor.add(new NumberFilter("workingHours", "Working hours", 0));
+        filterDescriptor.add(new BoolFilter("billable", "Billable"));
+        filterDescriptor.add(new ListFilter("skills", "Skill", skills, true));
+        filterDescriptor.add(new EnumFilter("englishLevel", "English level",
+                new String[]{
+                        "Begginer",
+                        "Elementary",
+                        "Pre-Intermediate",
+                        "Intermediate",
+                        "Upper-Intermediate",
+                        "Advanced"}, true));
+        if (!isCurator) {
+            filterDescriptor.add(new ListFilter("curators", "Curator", curators, true));
+        }
+        return filterDescriptor;
+    }
+
     public abstract static class FilterDescriptor {
         enum FilterType {
             number,
@@ -74,43 +99,21 @@ public class FilterDescription {
                 this.values.put(Long.valueOf(i), value[i]);
             }
         }
-
-        public static class EnumFilter extends FilterDescriptor {
-            public Object[] values;
-
-            public EnumFilter(String field, String name, Object[] minVal) {
-                super(field, FilterType.enumeration, name, false);
-                this.values = minVal;
-            }
-
-            public EnumFilter(String field, String name, Object[] minVal, Boolean multiset) {
-                super(field, FilterType.enumeration, name, multiset);
-                this.values = minVal;
-            }
-
-        }
-
-        public List<FilterDescriptor> createFilterDescription(String role, Map<Long, String> curators, Map<Long, String> skills) {
-            List<FilterDescriptor> filterDescriptor = new ArrayList();
-            filterDescriptor.add(new TextFilter("university", "University", "..."));
-            filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
-            filterDescriptor.add(new NumberFilter("cource", "Cource", 1));
-            filterDescriptor.add(new NumberFilter("graduationYear", "Grad. year", 2000));
-            filterDescriptor.add(new NumberFilter("workingHours", "Working hours", 0));
-            filterDescriptor.add(new BoolFilter("billable", "Billable"));
-            filterDescriptor.add(new ListFilter("skills", "Skill", skills, true));
-            filterDescriptor.add(new EnumFilter("englishLevel", "English level",
-                    new String[]{
-                    "Begginer",
-                    "Elementary",
-                    "Pre-Intermediate",
-                    "Intermediate",
-                    "Upper-Intermediate",
-                    "Advanced"}, true));
-            if(!role.equals("ROLE_CURATOR")) {
-                filterDescriptor.add(new ListFilter("curators", "Curator", curators, true));
-            }
-            return filterDescriptor;
-        }
     }
+
+    public static class EnumFilter extends FilterDescriptor {
+        public Object[] values;
+
+        public EnumFilter(String field, String name, Object[] minVal) {
+            super(field, FilterType.enumeration, name, false);
+            this.values = minVal;
+        }
+
+        public EnumFilter(String field, String name, Object[] minVal, Boolean multiset) {
+            super(field, FilterType.enumeration, name, multiset);
+            this.values = minVal;
+        }
+
+    }
+
 }
