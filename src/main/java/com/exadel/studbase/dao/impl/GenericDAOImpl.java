@@ -16,10 +16,10 @@ import java.util.Collection;
 /**
  * Created by Алексей on 18.07.14.
  */
-public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<CONTENT, ID> {
-
-    public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
+public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Serializable>
+        extends HibernateDaoSupport implements GenericDAO<CONTENT, ID> {
+    public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass()
+            .getGenericSuperclass()).getActualTypeArguments()[0];
 
     @Autowired
     @Qualifier("sessionFactory")
@@ -30,7 +30,8 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
     @Override
     public Collection<CONTENT> getAll() {
         Collection<CONTENT> result =
-                getSession().createCriteria(contentClass).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                getSession().createCriteria(contentClass)
+                        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return result;
     }
 

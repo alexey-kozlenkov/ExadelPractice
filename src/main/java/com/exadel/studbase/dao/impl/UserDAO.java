@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +18,6 @@ import java.util.List;
  */
 @Repository
 public class UserDAO extends GenericDAOImpl<User, Long> implements IUserDAO {
-
     @Override
     public User getByLogin(String login) {
         Query query = getSession().createQuery("FROM User where login=:login");
