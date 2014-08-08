@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,13 +35,13 @@ public class StudentViewServiceImpl implements IStudentViewService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
+    public Collection<StudentView> getView(Map<String, Filter<StudentView>> filterMap) {
         return studentViewDAO.getView(filterMap);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Collection<StudentView> filterBySkillTypeId(Long[] ids) {
+    public Collection<StudentView> filterBySkillTypeId(String[] ids) {
         return studentViewDAO.filterBySkillTypeId(ids);
     }
 }

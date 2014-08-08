@@ -22,5 +22,5 @@ public interface GenericDAO<CONTENT extends IEntity,  VIEW extends IEntity, ID e
 
     public void delete(CONTENT content);
 
-    public List<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
+    public Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
 }

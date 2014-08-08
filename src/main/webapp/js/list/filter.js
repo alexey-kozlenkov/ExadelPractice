@@ -100,7 +100,7 @@ var Filter = (function () {
                 return null;
             case 1:
                 if (elements.is("input[type='checkbox']"))
-                    return elements.prop("checked");
+                    return  String(elements.prop("checked"));
                 else
                     return elements.val();
             default :
@@ -227,14 +227,14 @@ $(document).ready(function () {
             field: 'skill',
             type: 'list',
             name: 'Skill',
-            values: {101:'Java', 102:'C++', 103:'.NET', 104:'HTML', 105:'Mongo DB', 106:'SQL'},
+            values: {1:'Java', 102:'C++', 103:'.NET', 104:'HTML', 105:'Mongo DB', 10:'SQL'},
             multiset: true
         },
         {
             field: 'english',
             type: 'list',
             name: 'English',
-            values: {1:'Begginer', 2:'Elementary', 3:'Pre-Intermediate', 4:'Intermediate', 5:'Upper-Intermediate', 6:'Advanced'}
+            values: {0:'Beginner', 1:'Elementary', 2:'Pre-Intermediate', 3:'Intermediate', 4:'Upper-Intermediate', 5:'Advanced'}
         },
         {
             field: 'curator',

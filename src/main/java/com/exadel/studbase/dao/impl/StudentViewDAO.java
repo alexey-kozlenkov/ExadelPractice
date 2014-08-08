@@ -21,7 +21,7 @@ public class StudentViewDAO extends GenericDAOImpl<StudentView, StudentView, Lon
     }
 
     @Override
-    public Collection<StudentView> filterBySkillTypeId(Long[] ids) {
+    public Collection<StudentView> filterBySkillTypeId(String[] ids) {
         String idsString = "";
         for (int i = 0; i < ids.length - 1; i++) {
             idsString += ids[i] + ",";

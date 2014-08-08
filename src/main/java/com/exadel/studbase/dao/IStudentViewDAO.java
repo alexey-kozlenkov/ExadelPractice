@@ -10,5 +10,5 @@ import java.util.Collection;
 public interface IStudentViewDAO extends GenericDAO<StudentView, StudentView, Long> {
     public Collection<StudentView> getViewByStudentName(String desiredName);
 
-    public Collection<StudentView> filterBySkillTypeId (Long[] ids);
+    public Collection<StudentView> filterBySkillTypeId (String[] ids);
 }

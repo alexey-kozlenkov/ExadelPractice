@@ -214,10 +214,10 @@ public class TestController {
         newNewParam[0] = "true";
         filterSpecification.put(paramName, newNewParam);
 
-        FilterUtils.buildFilterToSpecification(filter, filterSpecification);
-        List<StudentView> mainFilter = studentViewService.getView(filter);
+       // FilterUtils.buildFilterToSpecification(filter, filterSpecification);
+        Collection<StudentView> mainFilter = studentViewService.getView(filter);
 
-        Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new Long[] {(long)5});
+        Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
 
         Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
 

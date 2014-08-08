@@ -4,7 +4,6 @@ import com.exadel.studbase.dao.GenericDAO;
 import com.exadel.studbase.dao.filter.Filter;
 import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -55,11 +54,11 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, VIEW extends IEnti
     }
 
     @Override
-    public List<VIEW> getView(Map<String, Filter<VIEW>> filterMap) {
+    public Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap) {
         Criteria listCriteria = getSession().createCriteria(viewClass);
         Criterion filterCriterion = FilterUtils.buildFilterCriterion(filterMap);
         listCriteria.add(filterCriterion);
-        List<VIEW> result = listCriteria.list();
+        Collection<VIEW> result = listCriteria.list();
         return result;
     }
 }

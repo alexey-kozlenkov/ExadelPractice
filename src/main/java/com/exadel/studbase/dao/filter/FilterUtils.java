@@ -44,31 +44,31 @@ public class FilterUtils {
         return root;
     }
 
-    public static void buildFilterToSpecification(Map<String, Filter<StudentView>> filters, Map<String, String[]> params) {
-        for (Map.Entry<String, String[]> parameter : params.entrySet()) {
+    public static void buildFilterToSpecification(Map<String, Filter<StudentView>> filters, Map<String, Object> params) {
+        for (Map.Entry<String, Object> parameter : params.entrySet()) {
             String paramName = parameter.getKey();
-            String[] paramValues = parameter.getValue();
+            String paramValue = (String) parameter.getValue();
 
             if (paramName.equalsIgnoreCase("university")) {
-                Filter filter = new EqualsFilter(paramValues[0]);
+                Filter filter = new EqualsFilter(paramValue);
                 filters.put("university", filter);
             } else if (paramName.equalsIgnoreCase("faculty")) {
-                Filter filter = new EqualsFilter(paramValues[0]);
+                Filter filter = new EqualsFilter(paramValue);
                 filters.put("faculty", filter);
             } else if (paramName.equalsIgnoreCase("course")) {
-                Filter filter = new EqualsFilter(paramValues[0]);
+                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
                 filters.put("course", filter);
-            } else if (paramName.equalsIgnoreCase("graduation year")) {
-                Filter filter = new EqualsFilter(Integer.valueOf(paramValues[0]));
+            } else if (paramName.equalsIgnoreCase("graduationYear")) {
+                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
                 filters.put("graduationDate", filter);
-            } else if (paramName.equalsIgnoreCase("working hours")) {
-                Filter filter = new EqualsFilter(Integer.valueOf(paramValues[0]));
+            } else if (paramName.equalsIgnoreCase("workingHours")) {
+                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
                 filters.put("workingHours", filter);
             } else if (paramName.equalsIgnoreCase("billable")) {
-                Filter filter = new IsNotNullFilter(paramValues[0]);
+                Filter filter = new IsNotNullFilter(paramValue);
                 filters.put("billable", filter);
-            } else if (paramName.equalsIgnoreCase("english level")) {
-                Filter filter = new GreaterEqualsFilter(paramValues[0]);
+            } else if (paramName.equalsIgnoreCase("english")) {
+                Filter filter = new GreaterEqualsFilter(paramValue);
                 filters.put("englishLevel", filter);
             }
         }
