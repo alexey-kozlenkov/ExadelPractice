@@ -2,6 +2,7 @@ var studentId;
 var MAX_NUMBER_TERMS = 10,
     MIN_MARK = 0,
     MAX_MARK = 10;
+
 //templates
 var templateTermMark = Handlebars.compile($('#termMarkTemplate').html());
 var templateDocument = Handlebars.compile($('#documentTemplate').html());
@@ -10,7 +11,7 @@ $(window).ready(function () {
     //alert(window.location.search);
     parseRequestForId(window.location.search);
     fillOptions();
-    fillManualInfo();
+    fillCommonInfo();
 });
 
 $(document).ready(function () {
@@ -23,6 +24,18 @@ $(document).ready(function () {
         $(this).next(".category-content").slideToggle(500);
         return false;
     });
+
+    //export info
+    $("#exportInfoExcel").click(function () {
+        exportStudentExcel();
+    });
+
+    $("#exportInfoPDF").click(function () {
+        exportStudentPDF();
+    });
+
+    //sortable table
+    $('#documentTable').tablesorter();
 });
 
 $(document).ready(function () {
@@ -30,12 +43,15 @@ $(document).ready(function () {
     $("#saveManualInformation").click(function () {
         //collect data entered by users
         var editedName = $("#name").val();
+        var editedBirthDate = $("#birthDate").val();
         var editedLogin = $("#login").val();
         var editedEmail = $("#email").val();
+        var editedSkype = $("#skype").val();
+        var editedPhone = $("#phone").val();
         var editedPassword = $("#password").val();
         var editedState = $("#state :selected").val();
 
-        saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState);
+        saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState);
     });
 
     $("#saveEducationInformation").click(function () {
@@ -65,30 +81,65 @@ $(document).ready(function () {
         var editedHireDate = $("#hireDate").val();
         var editedWorkingHours = $("#workingHours").val();
         var editedBillable = $("#billable").val();
+        var editedWishingHours = $("#wishingHours").val();
+        var editedCourseStartWorking = $("#courseStartWorking").val();
+        var editedTrainingBeforeWorking = $("#trainingBeforeWorking").is(':checked');
+        var editedTrainingExadel = $("#trainingExadel").val();
+
+        var editedCurrentProject = $("#currentProject").val();
         var editedRoleCurrentProject = $("#roleCurrentProject").val();
+        var editedCurrentTeamLead = $("#currentTeamLead").text();
+        var editedCurrentProjectManager = $("#currentProjectManager").text();
         var editedTechsCurrentProject = $("#techsCurrentProject").val();
 
-        saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject);
+        saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedWishingHours, editedCourseStartWorking, editedTrainingBeforeWorking, editedTrainingExadel, editedCurrentProject, editedRoleCurrentProject, editedCurrentTeamLead, editedCurrentProjectManager, editedTechsCurrentProject);
     });
 
+    $("#saveDocumentsInformation").click(function () {
+        var fields = ['doctype', 'issueDate', 'expirationDate', 'info'];
+        var newDocuments = [];
+        $(".new-document").each(function (index) {
+            var cells = $(this).find("td"),
+                value = {};
+
+            for (var i = 0; i < cells.length; i++) {
+                value[fields[i]] = $(cells[i]).text();
+            }
+
+            value['studentId'] = studentId;
+
+            console.log(value);
+            newDocuments.push(value);
+            $(this).removeClass("new-document");
+        });
+
+        newDocuments = JSON.stringify(newDocuments);
+
+        saveDocumentsInformation(newDocuments);
+    });
 
     //load documents
     $("#documentsHeader").click(function () {
         $.ajax
         ({
             type: "GET",
-            url: "/info/getDocuments",
+            url: "/info/getActualDocuments",
             async: true,
             cashe: false,
             data: {
                 "studentId": studentId
             },
             success: function (data) {
-                // alert("" + data);
                 $("#documents").empty();
+
                 var documents = JSON.parse(data);
                 jQuery.each(documents, function (index, value) {
                     $("#documents").append(templateDocument(value));
+                    if (expiriedSoon(value.expirationDate)) {
+                        console.log('true');
+                        $("#documents tr").last().addClass("expiried-soon-document");
+                    }
+                    $("#documentTable").trigger("update");
                 });
             },
             error: function () {
@@ -97,12 +148,84 @@ $(document).ready(function () {
 
     });
 
-//handler for state select
+    // show/hide expiried docs
+    $("#expiriedDocs").click(function () {
+
+        var action = $("#expiriedDocs").attr('data-do');
+
+        if (action == 'show') {
+            $.ajax
+            ({
+                type: "GET",
+                url: "/info/getExpiriedDocuments",
+                async: true,
+                cashe: false,
+                data: {
+                    "studentId": studentId
+                },
+                success: function (data) {
+                    var documents = JSON.parse(data);
+
+                    jQuery.each(documents, function (index, value) {
+                        $("#documents").append(templateDocument(value));
+                        $("#documents tr").last().addClass("expiried-document");
+                        $("#documentTable").trigger("update");
+                    });
+                    $("#expiriedDocs").attr('data-do', 'hide');
+                    $("#expiriedDocs").text("Hide expired");
+                },
+                error: function () {
+                    alert("error");
+                }});
+        }
+        else if (action == 'hide') {
+            $(".expiried-document").each(function (index) {
+                $(this).remove();
+                $("#documentTable").trigger("update");
+            });
+            $("#expiriedDocs").attr('data-do', 'show');
+            $("#expiriedDocs").text("Show expired");
+        }
+    });
+
+    //add document
+    $("#addDocument").click(function () {
+        showDialog("add-document");
+
+    });
+
+    ////TODO wtf dialog
+    $("#okButton").click(function () {
+        var doctype = $("#doctype").val();
+        var issueDate = $("#issueDate").val();
+        var expirationDate = $("#expirationDate").val();
+        var info = $("#info").val();
+        var newDocument = {
+            doctype: doctype,
+            issueDate: issueDate,
+            expirationDate: expirationDate,
+            info: info
+        };
+
+        $("#doctype").val("");
+        $("#issueDate").val("");
+        $("#expirationDate").val("");
+        $("#info").val("");
+        closeDialog();
+        $("#documents").prepend(templateDocument(newDocument));
+        $("#documents tr").first().addClass("new-document");
+        $("#documentTable").trigger("update");
+    });
+    //close dialog
+    $("#closeDialog").click(function () {
+        closeDialog();
+    });
+    //handler for state select
     $("#state").change(
         checkState
     );
-//handler termMark changed
 
+//handler termMark changed
     $(".term-mark-list").on("change", 'input', function () {
         if (!validInputTermMark($(this).val())) {
             $(this).addClass("term-mark-invalid", 1000);
@@ -132,6 +255,8 @@ $(document).ready(function () {
     });
 
 });
+
+
 function validInputTermMark(termMarkVal) {
     if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK)
         return false;
@@ -144,6 +269,26 @@ function parseRequestForId(string) {
     gottenId = string.match(regExpForId);
     var regExp = /[0-9]+/;
     studentId = (gottenId[0].match(regExp))[0];
+}
+
+function expiriedSoon(expirationDate) {
+    var twoWeeks = 1000 * 60 * 60 * 24 * 14;
+    var twoWeeksAfterNow = Date.now() + twoWeeks;
+    expirationDate = Date.parse(expirationDate);
+    if (expirationDate <= twoWeeksAfterNow) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function exportStudentExcel() {
+    window.open("/info/exportExcel?studentId=" + studentId, "Export file");
+}
+
+function exportStudentPDF() {
+    window.open("/info/exportPDF?studentId=" + studentId, "Export file");
 }
 
 function fillOptions() {
@@ -165,7 +310,7 @@ function fillOptions() {
     });
 }
 
-function fillManualInfo() {
+function fillCommonInfo() {
     $.ajax
     ({
         type: "GET",
@@ -183,15 +328,18 @@ function fillManualInfo() {
 
             $("#headerName").text(gottenUser.name);
             $("#name").val(gottenUser.name);
+            $("#birthDate").val(gottenUser.birthdate);
             $("#login").val(gottenUser.login);
             $("#password").val(gottenUser.password);
             $("#email").val(gottenUser.email);
+            $("#skype").val(gottenUser.skype);
+            $("#phone").val(gottenUser.telephone);
             $("#state").find("option:contains(" + "\'" + gottenStudent.state + "\')").attr("selected", "selected");
             checkState();
 
             $("#institution").val(gottenStudent.university);
             $("#faculty").val(gottenStudent.faculty);
-            $("#speciality").val("applied maths");
+            $("#speciality").val(gottenStudent.speciality);
             $("#course").val(gottenStudent.course);
             $("#group").val(gottenStudent.group);
             $("#graduationDate").val(gottenStudent.graduationDate);
@@ -199,7 +347,16 @@ function fillManualInfo() {
             $("#workingHours").val(gottenStudent.workingHours);
             $("#hireDate").val(gottenStudent.hireDate);
             $("#billable").val(gottenStudent.billable);
+            $("#wishingHours").val(gottenStudent.wishesHoursNumber);
+            $("#courseStartWorking").val(gottenStudent.courseWhenStartWorking);
+            if (gottenStudent.trainingBeforeStartWorking) {
+                $("#trainingBeforeWorking").attr('checked', 'checked');
+            }
+            $("#trainingExadel").val(gottenStudent.trainingsInExadel);
+            $("#currentProject").val(gottenStudent.currentProject);
             $("#roleCurrentProject").val(gottenStudent.roleCurrentProject);
+            $("#currentTeamLead").text(gottenStudent.teamLeadId);
+            $("#currentProjectManager").text(gottenStudent.projectManagerId);
             $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
 
             //termMarks
@@ -229,7 +386,7 @@ function checkState() {
     }
 }
 
-function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassword, editedState) {
+function saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState) {
     $.ajax
     ({
         type: "POST",
@@ -239,9 +396,12 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
         data: {
             'studentId': studentId,
             'studentName': editedName,
+            'studentBirthDate': editedBirthDate,
             'studentLogin': editedLogin,
             'studentPassword': editedPassword,
             'studentEmail': editedEmail,
+            'studentSkype': editedSkype,
+            'studentPhone': editedPhone,
             'studentState': editedState
         },
         success: function () {
@@ -262,13 +422,23 @@ function saveManualInfoChanges(editedName, editedLogin, editedEmail, editedPassw
             });
 
             $("#headerName").text(editedName);
-//            dimensionPopup($("#manualContent"));
-//            $("#saved").fadeIn(600);
-//            hidePopupSave();
-
         },
         error: function () {
-            alert("error");
+            $("#saveManualInformation").text("Check out!");
+            $("#saveManualInformation").animate({
+                backgroundColor: '#CD5C5C',
+                borderColor: '#C16868'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveManualInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor: '#2D3E5C'
+                    }, 500);
+                    $("#saveManualInformation").text("Save");
+                }, 1000)
+            });
         }
     });
 }
@@ -308,12 +478,26 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
             });
         },
         error: function () {
-            alert("error");
+            $("#saveEducationInformation").text("Check out!");
+            $("#saveEducationInformation").animate({
+                backgroundColor: '#CD5C5C',
+                borderColor: '#C16868'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveEducationInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor: '#2D3E5C'
+                    }, 500);
+                    $("#saveEducationInformation").text("Save");
+                }, 1000)
+            });
         }
     })
 }
 
-function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedRoleCurrentProject, editedTechsCurrentProject) {
+function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedWishingHours, editedCourseStartWorking, editedTrainingBeforeWorking, editedTrainingExadel, editedCurrentProject, editedRoleCurrentProject, editedCurrentTeamLead, editedCurrentProjectManager, editedTechsCurrentProject) {
     var defferedPostExadel = $.ajax
     ({
         type: "POST",
@@ -325,7 +509,14 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
             'studentWorkingHours': editedWorkingHours,
             'studentHireDate': editedHireDate,
             'studentBillable': editedBillable,
+            'studentWishingHours': editedWishingHours,
+            'studentCourseStartWorking': editedCourseStartWorking,
+            'studentTrainingBeforeWorking': editedTrainingBeforeWorking,
+            'studentTrainingExadel': editedTrainingExadel,
+            'studentCurrentProject': editedCurrentProject,
             'studentRoleCurrentProject': editedRoleCurrentProject,
+            'studentCurrentTeamLead': editedCurrentTeamLead,
+            'studentCurrentProjectManager': editedCurrentProjectManager,
             'studentTechsCurrentProject': editedTechsCurrentProject
         }});
     defferedPostExadel.done(function () {
@@ -346,7 +537,6 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
         });
     });
     defferedPostExadel.fail(function () {
-        alert("error");
         $("#saveExadelInformation").text("Check out!");
         $("#saveExadelInformation").animate({
             backgroundColor: '#CD5C5C',
@@ -366,6 +556,53 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
 
 }
 
+function saveDocumentsInformation(newDocuments) {
+    var defferedPostDocuments = $.ajax
+    ({
+        type: "POST",
+        //SEND
+        url: "/info/postDocuments",
+        dataType: 'json', // from the server!
+        data: {'documents': newDocuments}
+
+    });
+    defferedPostDocuments.done(function () {
+        $("#saveDocumentsInformation").text("Saved!");
+        $("#saveDocumentsInformation").animate({
+            backgroundColor: '#5cb85c',
+            borderColor: '#4cae4c'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveDocumentsInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveDocumentsInformation").text("Save");
+            }, 1000)
+        });
+    });
+    defferedPostDocuments.fail(function () {
+        alert("error");
+        $("#saveDocumentsInformation").text("Check out!");
+        $("#saveDocumentsInformation").animate({
+            backgroundColor: '#CD5C5C',
+            borderColor: '#C16868'
+        }, {
+            duration: 500,
+            easing: "swing",
+            complete: setTimeout(function () {
+                $("#saveDocumentsInformation").animate({
+                    backgroundColor: '#4A5D80',
+                    borderColor: '#2D3E5C'
+                }, 500);
+                $("#saveDocumentsInformation").text("Save");
+            }, 1000)
+        });
+    });
+
+}
 
 
 

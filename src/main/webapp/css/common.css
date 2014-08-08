@@ -146,6 +146,14 @@ label,
     color: #333;
 }
 
+.nav-link {
+    float: right;
+    margin: 2pt 10pt;
+
+    font-size: 11pt;
+}
+
+
 .prj-link:hover {
     color: #4A5D80;
 }
@@ -153,7 +161,8 @@ label,
 .logout-link {
 }
 /****************************** Table ******************************************/
-.prj-list-header {
+.prj-list-header,
+.prj-list-footer{
     background: -moz-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
     background: -ms-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);
     background: -o-linear-gradient(bottom, #e1e1e1, #f1f1f1 30%, #d1d1d1);

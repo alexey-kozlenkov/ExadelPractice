@@ -2,10 +2,7 @@ package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -67,19 +64,19 @@ public class Student implements IEntity<Long> {
     @Column(name = "project_manager_current_project")
     private Long projectManagerId;
 
-    @Column(name="training_before_working")
+    @Column(name = "training_before_working")
     private Boolean trainingBeforeStartWorking;
 
-    @Column(name="course_when_start_woking")
+    @Column(name = "course_when_start_woking")
     private Integer courseWhenStartWorking;
 
-    @Column(name="speciality")
+    @Column(name = "speciality")
     private String speciality;
 
-    @Column(name="wishes_hours_number")
+    @Column(name = "wishes_hours_number")
     private Integer wishesHoursNumber;
 
-    @Column(name="trainings_exadel")
+    @Column(name = "trainings_exadel")
     private String trainingsInExadel;
 
     public Student() {
