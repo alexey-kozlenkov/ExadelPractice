@@ -11,7 +11,8 @@
 
 <header id="header" class="header-fixed-top">
     <div class="dividing-line">
-        <a href="/logout" class="nav-link prj-link">Logout <span class="glyphicon glyphicon-off"></span></a>
+        <button id="toggleNav"><span class="glyphicon glyphicon-ok-sign"></span></button>
+        <a href="/logout" class="logout-link prj-link">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     </div>
     <div class="form-inline header-line">
         <span id="utilityMenu" class="btn-menu">
@@ -19,7 +20,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
             <button id="exportMenuButton" class="btn prj-btn menu-button" title="Export to Excel Doc.">
-                <span class="glyphicon glyphicon-file"></span>
+                <img src="../images/excel-icon.png" alt="Export" class="menu-icon">
             </button>
             <button id="distributionMenuButton" class="btn prj-btn menu-button"
                     title="Send message to selected students">
@@ -31,6 +32,11 @@
             <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name">
             <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
                    alt="Find!" title="Search!">
+        </span>
+
+        <span class="btn-group tab">
+            <button class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
+            <button class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
 
@@ -234,7 +240,6 @@
 </div>
 
 <script src="../js/lib/jquery-2.1.1.min.js"></script>
-<script src="../js/lib/jquery.tablesorter.min.js"></script>
 <script src="../js/lib/jquery.animate-colors-min.js"></script>
 <script src="../js/lib/underscore-min.js"></script>
 <script src="../js/lib/handlebars-v1.3.0.js"></script>
