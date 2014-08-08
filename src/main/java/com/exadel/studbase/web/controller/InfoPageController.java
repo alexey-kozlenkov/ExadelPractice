@@ -77,9 +77,18 @@ public class InfoPageController {
     @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String documentsData(@RequestParam("studentId") Long studentId) {
+    public String documentsActualData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection<Document> userDocuments = documentService.getActualForUser(studentId);
+        return gson.toJson(userDocuments);
+    }
+
+    @RequestMapping(value = "/getExpiriedDocuments", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String documentsExpiriedData(@RequestParam("studentId") Long studentId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
 
