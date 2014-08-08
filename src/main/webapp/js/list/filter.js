@@ -1,7 +1,7 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-var Filter = (function () {
+define(["jquery", "underscore", "handlebars", "Util"], function ($, _, Handlebars, util) {
     "use strict";
     var shellTemplate = Handlebars.compile($('#filterTemplate').html()),
         maxValueCount = 8,
@@ -34,7 +34,7 @@ var Filter = (function () {
         if ($menu.is(':visible')) {
             $menu.hide(300);
         } else {
-            setMenuLocationRelativeTo($menu, $("#addFilterButton"));
+            util.menuLocationRelativeTo($menu, $("#addFilterButton"));
             $menu.animate({ opacity: 'toggle', height: 'toggle'}, 300);
         }
     }
@@ -180,6 +180,27 @@ var Filter = (function () {
         sessionStorage.removeItem('filter');
     }
 
+    function loadDecription(url) {
+        $.ajax({
+            url: url,
+            data: {}
+        }).done(function (desc) {
+            var descParsed = JSON.parse(desc),
+                filterStore;
+            if (descParsed) {
+                description = descParsed;
+                updateMenu();
+            }
+            filterStore = JSON.parse(sessionStorage.getItem('filter'));
+            if (filterStore) {
+                model = filterStore;
+                rebuild();
+            }
+        }).fail(function () {
+            console.log("Fail to load filter description!");
+        });
+    }
+
     return {
         init: function () {
             initMenu();
@@ -213,27 +234,12 @@ var Filter = (function () {
             else {
                 return model;
             }
-        }
-    };
-}());
+        },
 
-$(document).ready(function () {
-    "use strict";
-    Filter.init();
-    $.ajax({
-        url: "/list/filterDescription",
-        data: {}
-    }).done(function (desc) {
-        var descParsed = JSON.parse(desc),
-            filterStore;
-        Filter.descript(descParsed);
-        filterStore = JSON.parse(sessionStorage.getItem('filter'));
-        if (filterStore) {
-            Filter.values(filterStore);
-        }
-    }).fail(function () {
-        console.log("Fail to load filter description!");
-    });
+        loadDescription: loadDecription
+    };
 });
+
+
 
 

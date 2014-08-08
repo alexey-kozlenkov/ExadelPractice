@@ -4,41 +4,22 @@
 
 $(document).ready(function () {
     "use strict";
-    $(".logout-link").click(logout);
+    require(["jquery", "Util"], function ($, util) {
+        $(".logout-link").click(util.logout);
+    });
 });
-function logout() {
-    "use strict";
-    sessionStorage.removeItem("filter");
-}
 
 /* Close dialog on current page */
 function closeDialog() {
     "use strict";
-    $(".content-locker").fadeOut(500);
+    require(["Dialog"], function (dialog) {
+        dialog.closeDialog();
+    });
 }
 /* Show dialog with content [data-dialog_number='content_name'] on current page */
 function showDialog(contentName) {
     "use strict";
-    $(".content-locker").fadeIn(500);
-    $(".dialog-content").hide();
-    $(".dialog-content[data-dialog-name='" + contentName + "']").show();
-}
-
-function setMenuLocationRelativeTo(menu, owner) {
-    "use strict";
-    //TODO optimize!
-    var winOffsetW = $(window).width(),
-        position = owner.offset(),
-        left = position.left,
-        top = position.top + owner.height(),
-        space = position.left + menu.width() - winOffsetW + 4;
-    if (space > 0) {
-        top -= space;
-    }
-    menu.css(
-        {
-            left: left,
-            top: top
-        }
-    );
+    require(["Dialog"], function (dialog) {
+        dialog.showDialog();
+    });
 }

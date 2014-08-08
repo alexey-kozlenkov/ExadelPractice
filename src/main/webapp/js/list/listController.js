@@ -1,7 +1,7 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-var ListController = (function () {
+define(["jquery", "handlebars"], function ($, Handlebars) {
     "use strict";
 
     function init() {
@@ -16,11 +16,13 @@ var ListController = (function () {
     }
 
     function addAllStudents(arrStudents) {
-        var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
-        $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+        require(["js/lib/text!html/templates/user-list-template.html"], function (template) {
+            $("#studTable > tbody").append(Handlebars.compile(template)({list: arrStudents}));
+        });
         $("#checkAll").attr('checked', false);
         updateInfoLabel();
     }
+
     function clearList() {
         $("#studTable > tbody").empty();
         updateInfoLabel();
@@ -36,6 +38,7 @@ var ListController = (function () {
         });
         return checkedList;
     }
+
     function setCheckedAll(state) {
         $('.item-checkbox').each(function () {
             this.checked = state;
@@ -74,39 +77,5 @@ var ListController = (function () {
         setCheckedAll: setCheckedAll,
         setTableLoadingState: setTableLoadingState
     };
-}());
-
-var ListHeader = (function () {
-    "use strict";
-
-    var pastHeaderHeight;
-
-    function init() {
-        $(window).resize(function () {
-            var height = $("#header").outerHeight();
-            if (pastHeaderHeight !== height) {
-                pastHeaderHeight = height;
-                checkTopMarginOfList();
-            }
-        });
-        // Correct header vertical position according to position of list on scrolling
-        $(window).scroll(function () {
-            $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
-        });
-        checkTopMarginOfList();
-    }
-
-    function checkTopMarginOfList() {
-        $("#listContent").css("margin-top", $("#header").height() + "px");
-    }
-
-    return {
-        init: init,
-        check: checkTopMarginOfList
-    };
-}());
-
-$(document).ready(ListController.init());
-$(window).ready(ListHeader.init());
-
+});
 

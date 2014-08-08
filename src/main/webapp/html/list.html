@@ -148,28 +148,6 @@
 
         <tbody>
         </tbody>
-
-        <script id="listContentTemplate" type="text/x-handlebars-template">
-            {{#each list}}
-            <tr>
-                <td>
-                    <input type='checkbox' class='item-checkbox' data-id="{{id}}">
-                </td>
-                <td>
-                    <a href='/info?id={{id}}'>{{name}}</a>
-                </td>
-                <td>{{hireDate}}</td>
-                <td>{{faculty}}</td>
-                <td>{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
-                <td>{{graduationDate}}</td>
-                <td>{{workingHours}}</td>
-                <td>{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
-                <td>{{roleCurrentProject}}</td>
-                <td>{{techsCurrentProject}}</td>
-                <td>{{englishLevel}}</td>
-            </tr>
-            {{/each}}
-        </script>
     </table>
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
@@ -239,16 +217,7 @@
     </section>
 </div>
 
-<script src="../js/lib/jquery-2.1.1.min.js"></script>
-<script src="../js/lib/jquery.animate-colors-min.js"></script>
-<script src="../js/lib/underscore-min.js"></script>
-<script src="../js/lib/handlebars-v1.3.0.js"></script>
-
-<script src="../js/list/listController.js"></script>
-<script src="../js/list/filter.js"></script>
-<script src="../js/list/util.js"></script>
-
-<script src="../js/common.js"></script>
+<script data-main="../js/list/main.js" src="../js/lib/require.js"></script>
 
 </body>
 </html>
