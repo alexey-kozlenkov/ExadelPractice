@@ -2,6 +2,7 @@ package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.IDocumentDAO;
 import com.exadel.studbase.domain.impl.Document;
+import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import java.util.Collection;
  * Created by Алексей on 23.07.14.
  */
 @Repository
-public class DocumentDAO extends GenericDAOImpl<Document, Long> implements IDocumentDAO {
+public class DocumentDAO extends GenericDAOImpl<Document, StudentView, Long> implements IDocumentDAO {
     @Override
     public Collection<Document> getActualForUser(Long id) {
         Query query = getSession().createQuery("FROM Document WHERE studentId=" + id

@@ -1,5 +1,7 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
@@ -8,6 +10,7 @@ import com.exadel.studbase.service.*;
 import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -50,7 +53,7 @@ public class ListPageController {
     @ResponseBody
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
-                                       @RequestParam(value = "filter", required = false) String filter) {
+                                       @RequestParam(value = "filter", required = false) String filterString) {
         //TODO: Optimise request queue (for big counts in short time)
 
 
@@ -61,13 +64,34 @@ public class ListPageController {
 
         System.out.println("Version: " + version);
         System.out.println("Search name: " + desiredName);
-        System.out.println("Filter: " + filter);
-        //    System.out.println(gson.fromJson((String) filter, map.getClass()));
+        System.out.println("Filter: " + filterString);
 
-        StudResponse response = new StudResponse(version,
+
+        Collection<StudentView> result;
+
+        if(!filterString.equals("")) {
+            Map<String, Object> filterSpecification = new HashMap<String, Object>();
+            filterSpecification = gson.fromJson((String) filterString, filterSpecification.getClass());
+
+            Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
+            FilterUtils.buildFilterToSpecification(filter, filterSpecification);
+            Collection<StudentView> viewByMainFilter = studentViewService.getView(filter);
+
+            result = viewByMainFilter;
+
+            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
+            if(skills!=null) {
+                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
+                result = CollectionUtils.intersection(result, viewBySkills);
+            }
+
+            StudResponse response = new StudResponse(version, result);
+            return gson.toJson(response, StudResponse.class);
+        } else {
+            StudResponse response = new StudResponse(version,
                 studentViewService.getViewByStudentName(desiredName));
-
-        return gson.toJson(response, StudResponse.class);
+            return gson.toJson(response, StudResponse.class);
+        }
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)

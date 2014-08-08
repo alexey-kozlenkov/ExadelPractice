@@ -16,7 +16,7 @@ public interface ICuratoringService {
 
     Collection<Curatoring> getAll();
 
-    Collection<Student> getAllStudentsForEmployee(Long employeeId);
+    Collection<com.exadel.studbase.domain.impl.StudentView> getAllStudentsForEmployee(Long employeeId);
 
     Collection<Employee> getAllMastersForStudent(Long studentId);
 }

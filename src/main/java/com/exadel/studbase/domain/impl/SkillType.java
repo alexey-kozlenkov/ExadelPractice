@@ -20,10 +20,6 @@ public class SkillType implements IEntity<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "skillType", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SkillSet> skillSets;
-
-
     public SkillType() {
     }
 
@@ -43,15 +39,5 @@ public class SkillType implements IEntity<Long> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<SkillSet> getSkillSets() {
-        return skillSets;
-
-
-    }
-
-    public void setSkillSets(Set<SkillSet> skillSets) {
-        this.skillSets = skillSets;
     }
 }

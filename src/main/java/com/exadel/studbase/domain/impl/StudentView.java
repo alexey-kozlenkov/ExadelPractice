@@ -53,7 +53,7 @@ public class StudentView implements IEntity<Long> {
     private String techsCurrentProject;
 
     @Column(name = "english_level")
-    private String englishLevel;
+    private Integer englishLevel;
 
     public StudentView() {
         course = 0;
@@ -161,13 +161,43 @@ public class StudentView implements IEntity<Long> {
     }
 
     public String getEnglishLevel() {
-        return englishLevel;
+        switch (englishLevel) {
+            case 0:
+                return "Beginner";
+            case 1:
+                return "Elementary";
+            case 2:
+                return "Pre-Intermediate";
+            case 3:
+                return "Intermediate";
+            case 4:
+                return "Upper-Intermediate";
+            case 5:
+                return "Advanced";
+            default:
+                return "undefined";
+        }
     }
 
     public void setEnglishLevel(String englishLevel) {
-        this.englishLevel = englishLevel;
 
+        englishLevel = englishLevel.toLowerCase();
 
+        if (englishLevel.equals("beginner")) {
+            this.englishLevel = 0;
+        } else if (englishLevel.equals("elementary")) {
+            this.englishLevel = 1;
+        } else if (englishLevel.equals("pre-intermediate")) {
+            this.englishLevel = 2;
+        } else if (englishLevel.equals("intermediate")) {
+            this.englishLevel = 3;
+        } else if (englishLevel.equals("upper-intermediate")) {
+            this.englishLevel = 4;
+        } else if (englishLevel.equals("advanced")) {
+            this.englishLevel = 5;
+        } else {
+            this.englishLevel = -1;
+        }
     }
 
     @Override
