@@ -186,6 +186,9 @@ public class Student implements IEntity<Long> {
     }
 
     public String getEnglishLevel() {
+        if (englishLevel == null) {
+            return "undefined";
+        }
         switch (englishLevel) {
             case 0:
                 return "Beginner";
@@ -205,7 +208,6 @@ public class Student implements IEntity<Long> {
     }
 
     public void setEnglishLevel(String englishLevel) {
-
         englishLevel = englishLevel.toLowerCase();
 
         if (englishLevel.equals("beginner")) {
