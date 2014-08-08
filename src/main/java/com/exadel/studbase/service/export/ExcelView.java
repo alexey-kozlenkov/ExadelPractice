@@ -13,8 +13,8 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +35,7 @@ public class ExcelView extends AbstractExcelView {
             throws Exception {
         response.setContentType("application/vnd.ms-excel");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
-        Date now = new Date();
-        String fileName = "Student report - " + simpleDateFormat.format(now) + ".xls";
+        String fileName = "Student list report - " + simpleDateFormat.format(new Date()) + ".xls";
         response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
         List<User> listOfUsers = (List<User>) model.get("users");
