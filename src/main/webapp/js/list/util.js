@@ -174,9 +174,10 @@ $(document).ready(function () {
             var f =  $("#filter");
             if(f.is(":visible"))
                 f.fadeOut(500, ListHeader.check);
-            else
-                f.fadeIn(500, ListHeader.check);
-
+            else {
+                f.fadeIn(500);
+                ListHeader.check();
+            }
         }
     );
 });

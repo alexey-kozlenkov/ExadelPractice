@@ -50,6 +50,11 @@
     height: 32px;
 }
 
+.menu-icon{
+    width: 24px;
+    height: 24px;
+}
+
 .tab{
     float: right;
     position: absolute;
