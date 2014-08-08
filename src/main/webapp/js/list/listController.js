@@ -2,85 +2,100 @@
  * Created by ala'n on 31.07.2014.
  */
 var ListController = (function () {
-        function updateInfoLabel() {
-            var itCount = $("#studTable > tbody > tr").length;
-            if (itCount > 0) {
-                var selCount = $(".item-checkbox:checked").length;
-                $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
+    function init() {
+        var $table = $("#studTable");
+        $("#checkAll").click(function () {
+            setCheckedAll($(this).prop("checked"));
+        });
+        $table.click(function () {
+            updateInfoLabel();
+        });
+        updateInfoLabel();
+    }
 
-            } else {
-                $("#infoLabel").text("------------- List is empty -------------");
-            }
+    function addAllStudents(arrStudents) {
+        var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
+        $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+        updateInfoLabel();
+    }
+    function clearList() {
+        $("#studTable > tbody").empty();
+        updateInfoLabel();
+    }
+
+    function getCheckedRowsId() {
+        var checkedList = [],
+            count = 0;
+
+        $('.item-checkbox:checked').each(function (index, element) {
+            checkedList[count] = Number($(element).attr("data-id"));
+            count++;
+        });
+        return checkedList;
+    }
+    function setCheckedAll(state) {
+        $('.item-checkbox').each(function () {
+            this.checked = state;
+        });
+        updateInfoLabel();
+    }
+
+    function setTableLoadingState(loading) {
+        if (loading) {
+            $("#studTable").hide();
+            $("#loading_image").show();
+        } else {
+            $("#studTable").show();
+            $("#loading_image").hide();
         }
+    }
 
-        return{
-            init: function () {
-                var $table = $("#studTable");
-                $("#checkAll").click(function () {
-                    setCheckedAll($(this).prop("checked"));
-                });
-                $table.click(function () {
-                    updateInfoLabel();
-                });
-                updateInfoLabel();
-            },
-            addAllStudents: function (arrStudents) {
-                var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
-                $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
-                updateInfoLabel();
-            },
-            clearList: function () {
-                $("#studTable > tbody").empty();
-                updateInfoLabel();
-            },
+    function updateInfoLabel() {
+        var itCount = $("#studTable > tbody > tr").length;
+        if (itCount > 0) {
+            var selCount = $(".item-checkbox:checked").length;
+            $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
 
-            getCheckedRowsId: function () {
-                var checkedList = [],
-                    count = 0;
-
-                $('.item-checkbox:checked').each(function (index, element) {
-                    checkedList[count] = Number($(element).attr("data-id"));
-                    count++;
-                });
-                return checkedList;
-            },
-            setCheckedAll: function (state) {
-                $('.item-checkbox').each(function () {
-                    this.checked = state;
-                });
-                updateInfoLabel();
-            },
-            setTableLoadingState: function (loading) {
-                if (loading) {
-                    $("#studTable").hide();
-                    $("#loading_image").show();
-                } else {
-                    $("#studTable").show();
-                    $("#loading_image").hide();
-                }
-            }
+        } else {
+            $("#infoLabel").text("------------- List is empty -------------");
         }
-    }());
-var ListHeader = (function(){
+    }
+
+    return{
+        init: init,
+        addAllStudents: addAllStudents,
+        clearList: clearList,
+
+        getCheckedRowsId: getCheckedRowsId,
+        setCheckedAll: setCheckedAll,
+        setTableLoadingState: setTableLoadingState
+    }
+}());
+
+var ListHeader = (function () {
     var pastHeaderHeight;
+
+    function init() {
+        $(window).resize(function () {
+            var height = $("#header").outerHeight();
+            if (pastHeaderHeight != height) {
+                pastHeaderHeight = height;
+                checkTopMarginOfList();
+            }
+        });
+        // Correct header vertical position according to position of list on scrolling
+        $(window).scroll(function () {
+            $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
+        });
+        checkTopMarginOfList();
+    }
+
     function checkTopMarginOfList() {
         $("#listContent").css("margin-top", $("#header").height() + "px");
     }
+
     return {
-        init: function(){
-            $(window).resize(function () {
-                var height = $("#header").outerHeight();
-                if (pastHeaderHeight != height) {
-                    pastHeaderHeight = height;
-                    checkTopMarginOfList();
-                }
-            });
-            // Correct header vertical position according to position of list on scrolling
-            $(window).scroll(function () {
-                $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
-            });
-            checkTopMarginOfList();
-        },
+        init: init,
         check: checkTopMarginOfList
     };
 }());
