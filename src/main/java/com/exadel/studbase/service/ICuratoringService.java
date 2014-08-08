@@ -10,11 +10,11 @@ import java.util.Collection;
  * Created by Алексей on 03.08.2014.
  */
 public interface ICuratoringService {
-    public Curatoring save(Curatoring curatoring);
+    Curatoring save(Curatoring curatoring);
 
-    public void delete(Curatoring curatoring);
+    void delete(Curatoring curatoring);
 
-    public Collection<Curatoring> getAll();
+    Collection<Curatoring> getAll();
 
     Collection<Student> getAllStudentsForEmployee(Long employeeId);
 

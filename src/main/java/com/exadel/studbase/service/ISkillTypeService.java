@@ -8,11 +8,11 @@ import java.util.Collection;
  * Created by Алексей on 24.07.14.
  */
 public interface ISkillTypeService {
-    public SkillType save(SkillType skillType);
+    SkillType save(SkillType skillType);
 
-    public SkillType getById(Long id);
+    SkillType getById(Long id);
 
-    public void delete(SkillType skillType);
+    void delete(SkillType skillType);
 
-    public Collection<SkillType> getAll();
+    Collection<SkillType> getAll();
 }

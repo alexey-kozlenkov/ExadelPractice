@@ -12,7 +12,6 @@ import java.util.Collection;
  */
 @Repository
 public class FeedbackDAO extends GenericDAOImpl<Feedback, Long> implements IFeedbackDAO {
-
     @Override
     public Collection<Feedback> getAllAboutStudent(Long id) {
         Query query = getSession().createQuery("FROM Feedback WHERE studentId=" + id);

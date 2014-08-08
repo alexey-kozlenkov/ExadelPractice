@@ -1,17 +1,18 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
-import com.exadel.studbase.service.IMailService;
-import com.exadel.studbase.service.IStudentService;
-import com.exadel.studbase.service.IStudentViewService;
-import com.exadel.studbase.service.IUserService;
+import com.exadel.studbase.service.*;
+import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +31,11 @@ public class ListPageController {
     @Autowired
     IStudentService studentService;
     @Autowired
+    IEmployeeService employeeService;
+    @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    ISkillTypeService skillTypeService;
     @Autowired
     IMailService mailService;
 
@@ -64,6 +69,33 @@ public class ListPageController {
 
         return gson.toJson(response, StudResponse.class);
     }
+
+    @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getDescription() {
+        boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
+
+        Collection<User> listOfUsers = employeeService.getAllCurators();
+        Map<Long, String> curators = new HashMap();
+        for (User u : listOfUsers) {
+            curators.put(u.getId(), u.getName());
+        }
+        Collection<SkillType> listOfSkillTypes = skillTypeService.getAll();
+        Map<Long, String> skills = new HashMap();
+        for (SkillType st : listOfSkillTypes) {
+            skills.put(st.getId(), st.getName());
+        }
+
+        List<FilterDescription.FilterDescriptor> description
+                = FilterDescription.createFilterDescription(isCurator, curators, skills);
+
+        Gson gson = new Gson();
+
+        return gson.toJson(description);
+    }
+
 
     @Secured("ROLE_SUPERADMIN")
     @ResponseStatus(HttpStatus.OK)
