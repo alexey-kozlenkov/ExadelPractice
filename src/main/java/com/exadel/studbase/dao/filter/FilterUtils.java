@@ -47,7 +47,7 @@ public class FilterUtils {
     public static void buildFilterToSpecification(Map<String, Filter<StudentView>> filters, Map<String, Object> params) {
         for (Map.Entry<String, Object> parameter : params.entrySet()) {
             String paramName = parameter.getKey();
-            String paramValue = (String) parameter.getValue();
+            Object paramValue = parameter.getValue();
 
             if (paramName.equalsIgnoreCase("university")) {
                 Filter filter = new EqualsFilter(paramValue);
@@ -56,13 +56,13 @@ public class FilterUtils {
                 Filter filter = new EqualsFilter(paramValue);
                 filters.put("faculty", filter);
             } else if (paramName.equalsIgnoreCase("course")) {
-                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
+                Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("course", filter);
             } else if (paramName.equalsIgnoreCase("graduationYear")) {
-                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
+                Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("graduationDate", filter);
             } else if (paramName.equalsIgnoreCase("workingHours")) {
-                Filter filter = new EqualsFilter(Integer.valueOf(paramValue));
+                Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("workingHours", filter);
             } else if (paramName.equalsIgnoreCase("billable")) {
                 Filter filter = new IsNotNullFilter(paramValue);

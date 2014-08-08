@@ -73,18 +73,17 @@ public class ListPageController {
             Map<String, Object> filterSpecification = new HashMap<String, Object>();
             filterSpecification = gson.fromJson((String) filterString, filterSpecification.getClass());
 
-            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
-            if(skills!=null) {
-                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
-                result =  viewBySkills;
-                filterSpecification.remove("skills");
-            }
-
             Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
             FilterUtils.buildFilterToSpecification(filter, filterSpecification);
             Collection<StudentView> viewByMainFilter = studentViewService.getView(filter);
 
             result = viewByMainFilter;
+
+            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
+            if(skills!=null) {
+                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
+                result = CollectionUtils.intersection(result, viewBySkills);
+            }
 
             StudResponse response = new StudResponse(version, result);
             return gson.toJson(response, StudResponse.class);
