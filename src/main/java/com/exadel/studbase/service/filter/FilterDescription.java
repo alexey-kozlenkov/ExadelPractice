@@ -13,14 +13,14 @@ public class FilterDescription {
         List<FilterDescriptor> filterDescriptor = new ArrayList();
         filterDescriptor.add(new TextFilter("university", "University", "..."));
         filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
-        filterDescriptor.add(new NumberFilter("cource", "Cource", 1));
+        filterDescriptor.add(new NumberFilter("course", "Course", 1));
         filterDescriptor.add(new NumberFilter("graduationYear", "Grad. year", 2000));
         filterDescriptor.add(new NumberFilter("workingHours", "Working hours", 0));
         filterDescriptor.add(new BoolFilter("billable", "Billable"));
         filterDescriptor.add(new ListFilter("skills", "Skill", skills, true));
         filterDescriptor.add(new ListFilter("englishLevel", "English level",
                 new String[]{
-                        "Begginer",
+                        "Beginner",
                         "Elementary",
                         "Pre-Intermediate",
                         "Intermediate",
