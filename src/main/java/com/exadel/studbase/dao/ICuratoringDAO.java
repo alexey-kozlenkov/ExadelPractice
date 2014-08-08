@@ -11,7 +11,7 @@ import java.util.Collection;
  * Created by Алексей on 03.08.2014.
  */
 public interface ICuratoringDAO extends GenericDAO<Curatoring, StudentView,  Long> {
-    Collection<Student> getAllStudentsForEmployee(Long employeeId);
+    Collection<StudentView> getAllStudentsForEmployee(Long employeeId);
 
     Collection<Employee> getAllMastersForStudent(Long studentId);
 }

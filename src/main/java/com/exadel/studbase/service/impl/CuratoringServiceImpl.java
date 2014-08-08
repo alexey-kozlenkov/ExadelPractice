@@ -3,7 +3,6 @@ package com.exadel.studbase.service.impl;
 import com.exadel.studbase.dao.ICuratoringDAO;
 import com.exadel.studbase.domain.impl.Curatoring;
 import com.exadel.studbase.domain.impl.Employee;
-import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.service.ICuratoringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ public class CuratoringServiceImpl implements ICuratoringService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Collection<Student> getAllStudentsForEmployee(Long employeeId) {
+    public Collection<com.exadel.studbase.domain.impl.StudentView> getAllStudentsForEmployee(Long employeeId) {
         return curatoringDAO.getAllStudentsForEmployee(employeeId);
     }
 

@@ -84,6 +84,7 @@ public class Student implements IEntity<Long> {
         group = 0;
         workingHours = 0;
         graduationDate = 0;
+        englishLevel = 0;
     }
 
     @Override
