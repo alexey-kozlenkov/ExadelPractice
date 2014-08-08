@@ -2,6 +2,7 @@ package com.exadel.studbase.service.impl;
 
 import com.exadel.studbase.dao.IEmployeeDAO;
 import com.exadel.studbase.domain.impl.Employee;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import java.util.Collection;
  */
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
-
     @Autowired
     private IEmployeeDAO employeeDAO;
 
@@ -35,6 +35,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(Employee employee) {
         employeeDAO.delete(employee);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<User> getAllCurators() {
+        return employeeDAO.getAllCurators();
     }
 
     @Override
