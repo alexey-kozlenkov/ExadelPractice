@@ -248,7 +248,7 @@ $(document).ready(function () {
                 field: 'english',
                 type: 'list',
                 name: 'English',
-                values: {1: 'Begginer', 2: 'Elementary', 3: 'Pre-Intermediate', 4: 'Intermediate', 5: 'Upper-Intermediate', 6: 'Advanced'}
+                values: {1: 'Beginner', 2: 'Elementary', 3: 'Pre-Intermediate', 4: 'Intermediate', 5: 'Upper-Intermediate', 6: 'Advanced'}
             },
             {
                 field: 'curator',

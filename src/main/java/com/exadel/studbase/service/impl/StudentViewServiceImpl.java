@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class StudentViewServiceImpl implements IStudentViewService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Collection<StudentView> filterBySkillTypeId(String[] ids) {
+    public Collection<StudentView> filterBySkillTypeId(ArrayList<String> ids) {
         return studentViewDAO.filterBySkillTypeId(ids);
     }
 }

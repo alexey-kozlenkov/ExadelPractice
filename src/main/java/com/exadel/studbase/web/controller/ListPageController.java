@@ -1,17 +1,21 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
+import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
-import com.exadel.studbase.service.IMailService;
-import com.exadel.studbase.service.IStudentService;
-import com.exadel.studbase.service.IStudentViewService;
-import com.exadel.studbase.service.IUserService;
+import com.exadel.studbase.service.*;
+import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,17 +73,18 @@ public class ListPageController {
             Map<String, Object> filterSpecification = new HashMap<String, Object>();
             filterSpecification = gson.fromJson((String) filterString, filterSpecification.getClass());
 
+            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
+            if(skills!=null) {
+                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
+                result =  viewBySkills;
+                filterSpecification.remove("skills");
+            }
+
             Map<String, Filter<StudentView>> filter = new HashMap<String, Filter<StudentView>>();
             FilterUtils.buildFilterToSpecification(filter, filterSpecification);
             Collection<StudentView> viewByMainFilter = studentViewService.getView(filter);
 
             result = viewByMainFilter;
-
-            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skill");
-            if(skills!=null) {
-                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId((String[]) skills.toArray());
-                result =  CollectionUtils.intersection(viewByMainFilter, viewBySkills);
-            }
 
             StudResponse response = new StudResponse(version, result);
             return gson.toJson(response, StudResponse.class);

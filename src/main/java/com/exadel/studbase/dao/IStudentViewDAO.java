@@ -2,6 +2,7 @@ package com.exadel.studbase.dao;
 
 import com.exadel.studbase.domain.impl.StudentView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -10,5 +11,5 @@ import java.util.Collection;
 public interface IStudentViewDAO extends GenericDAO<StudentView, StudentView, Long> {
     public Collection<StudentView> getViewByStudentName(String desiredName);
 
-    public Collection<StudentView> filterBySkillTypeId (String[] ids);
+    public Collection<StudentView> filterBySkillTypeId (ArrayList<String> ids);
 }

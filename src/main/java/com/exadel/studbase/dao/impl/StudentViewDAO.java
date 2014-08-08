@@ -5,6 +5,7 @@ import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -21,16 +22,16 @@ public class StudentViewDAO extends GenericDAOImpl<StudentView, StudentView, Lon
     }
 
     @Override
-    public Collection<StudentView> filterBySkillTypeId(String[] ids) {
+    public Collection<StudentView> filterBySkillTypeId(ArrayList<String> ids) {
         String idsString = "";
-        for (int i = 0; i < ids.length - 1; i++) {
-            idsString += ids[i] + ",";
+        for (String s : ids) {
+            idsString += s + ",";
         }
-        idsString += ids[ids.length - 1];
+        idsString += ids.get(ids.size()-1);
         Query query = getSession().createSQLQuery(
                 "SELECT * FROM \"STUDENT_VIEW\" AS STV INNER JOIN " +
                         "(SELECT user_id FROM \"SKILL_SET\" WHERE skill_type_id IN (" + idsString + ") GROUP BY user_id " +
-                        "HAVING COUNT(*)=" + ids.length + ") AS skillFilter ON STV.id = skillFilter.user_id")
+                        "HAVING COUNT(*)=" + ids.size() + ") AS skillFilter ON STV.id = skillFilter.user_id")
                 .addEntity("STV", StudentView.class);
         return query.list();
     }

@@ -217,9 +217,9 @@ public class TestController {
        // FilterUtils.buildFilterToSpecification(filter, filterSpecification);
         Collection<StudentView> mainFilter = studentViewService.getView(filter);
 
-        Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
+       // Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
 
-        Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
+        //Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
 
         System.out.println("ну нихуя себе");
     }
