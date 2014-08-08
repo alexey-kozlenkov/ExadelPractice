@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 03.08.2014.
- */
 @Repository
 public class CuratoringDAO extends GenericDAOImpl<Curatoring, StudentView, Long> implements ICuratoringDAO {
     @Override
