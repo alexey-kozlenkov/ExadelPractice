@@ -69,17 +69,17 @@
     color: darkgreen;
 }
 
-.expiried-document {
+.expired-document {
     background-color: #ffffff;
     color : gray;
 }
 
-.prj-table-striped > tbody > .expiried-document:nth-child(even) > td {
+.prj-table-striped > tbody > .expired-document:nth-child(even) > td {
     background-color: #f5f5f5;
     color : gray;
 }
 
-.expiried-soon-document {
+.expired-soon-document {
     color : red;
 }
 

@@ -9,22 +9,14 @@ var templateDocument = Handlebars.compile($('#documentTemplate').html());
 
 $(window).ready(function () {
     //alert(window.location.search);
+    "use strict";
     parseRequestForId(window.location.search);
     fillOptions();
     fillCommonInfo();
 });
 
 $(document).ready(function () {
-
-    //hide content after manual information
-    $(".category-list .category-content:gt(0)").hide();
-
-    //toggle category-content
-    $(".category-header").click(function () {
-        $(this).next(".category-content").slideToggle(500);
-        return false;
-    });
-
+    "use strict";
     //export info
     $("#exportInfoExcel").click(function () {
         exportStudentExcel();
@@ -39,32 +31,34 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    "use strict";
     //event handlers for submit button save
     $("#saveManualInformation").click(function () {
         //collect data entered by users
-        var editedName = $("#name").val();
-        var editedBirthDate = $("#birthDate").val();
-        var editedLogin = $("#login").val();
-        var editedEmail = $("#email").val();
-        var editedSkype = $("#skype").val();
-        var editedPhone = $("#phone").val();
-        var editedPassword = $("#password").val();
-        var editedState = $("#state :selected").val();
+        var editedName = $("#name").val(),
+            editedBirthDate = $("#birthDate").val(),
+            editedLogin = $("#login").val(),
+            editedEmail = $("#email").val(),
+            editedSkype = $("#skype").val(),
+            editedPhone = $("#phone").val(),
+            editedPassword = $("#password").val(),
+            editedState = $("#state :selected").val();
 
         saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState);
     });
 
     $("#saveEducationInformation").click(function () {
         //collect data entered by users
-        var editedUniversity = $("#institution").val();
-        var editedFaculty = $("#faculty").val();
-        var editedSpeciality = $("#speciality").val();
-        var editedCourse = $("#course").val();
-        var editedGroup = $("#group").val();
-        var editedGraduationDate = $("#graduationDate").val();
-        var editedTermMarks = "";
-        var numberTerms = $(".term-mark").length - 1;
-        $(".term-mark").each(function (index) {
+        var $termMark = $(".term-mark"),
+            editedUniversity = $("#institution").val(),
+            editedFaculty = $("#faculty").val(),
+            editedSpeciality = $("#speciality").val(),
+            editedCourse = $("#course").val(),
+            editedGroup = $("#group").val(),
+            editedGraduationDate = $("#graduationDate").val(),
+            editedTermMarks = "",
+            numberTerms = $termMark.length - 1;
+        $termMark.each(function (index) {
             if (index < numberTerms) {
                 editedTermMarks = editedTermMarks.concat($(this).val() + ";");
             }
@@ -78,39 +72,42 @@ $(document).ready(function () {
 
     $("#saveExadelInformation").click(function () {
         //collect data entered by users
-        var editedHireDate = $("#hireDate").val();
-        var editedWorkingHours = $("#workingHours").val();
-        var editedBillable = $("#billable").val();
-        var editedWishingHours = $("#wishingHours").val();
-        var editedCourseStartWorking = $("#courseStartWorking").val();
-        var editedTrainingBeforeWorking = $("#trainingBeforeWorking").is(':checked');
-        var editedTrainingExadel = $("#trainingExadel").val();
+        var editedHireDate = $("#hireDate").val(),
+            editedWorkingHours = $("#workingHours").val(),
+            editedBillable = $("#billable").val(),
+            editedWishingHours = $("#wishingHours").val(),
+            editedCourseStartWorking = $("#courseStartWorking").val(),
+            editedTrainingBeforeWorking = $("#trainingBeforeWorking").is(':checked'),
+            editedTrainingExadel = $("#trainingExadel").val(),
 
-        var editedCurrentProject = $("#currentProject").val();
-        var editedRoleCurrentProject = $("#roleCurrentProject").val();
-        var editedCurrentTeamLead = $("#currentTeamLead").text();
-        var editedCurrentProjectManager = $("#currentProjectManager").text();
-        var editedTechsCurrentProject = $("#techsCurrentProject").val();
+            editedCurrentProject = $("#currentProject").val(),
+            editedRoleCurrentProject = $("#roleCurrentProject").val(),
+            editedCurrentTeamLead = $("#currentTeamLead").text(),
+            editedCurrentProjectManager = $("#currentProjectManager").text(),
+            editedTechsCurrentProject = $("#techsCurrentProject").val();
 
         saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedWishingHours, editedCourseStartWorking, editedTrainingBeforeWorking, editedTrainingExadel, editedCurrentProject, editedRoleCurrentProject, editedCurrentTeamLead, editedCurrentProjectManager, editedTechsCurrentProject);
     });
 
     $("#saveDocumentsInformation").click(function () {
-        var fields = ['doctype', 'issueDate', 'expirationDate', 'info'];
-        var newDocuments = [];
-        $(".new-document").each(function (index) {
-            var cells = $(this).find("td"),
-                value = {};
+        var fields = ['doctype', 'issueDate', 'expirationDate', 'info'],
+         newDocuments = [];
+        $(".new-document").each(function () {
+            var $this = $(this),
+                cells = $this.find("td"),
+                value = {},
+                i,
+                cellsLength = cells.length;
 
-            for (var i = 0; i < cells.length; i++) {
+            for (i = 0; i < cellsLength; i++) {
                 value[fields[i]] = $(cells[i]).text();
             }
 
-            value['studentId'] = studentId;
+            value.studentId = studentId;
 
             console.log(value);
             newDocuments.push(value);
-            $(this).removeClass("new-document");
+            $this.removeClass("new-document");
         });
 
         newDocuments = JSON.stringify(newDocuments);
@@ -120,11 +117,9 @@ $(document).ready(function () {
 
     //load documents
     $("#documentsHeader").click(function () {
-        $.ajax
-        ({
+        $.ajax({
             type: "GET",
             url: "/info/getActualDocuments",
-            async: true,
             cashe: false,
             data: {
                 "studentId": studentId
@@ -135,30 +130,28 @@ $(document).ready(function () {
                 var documents = JSON.parse(data);
                 jQuery.each(documents, function (index, value) {
                     $("#documents").append(templateDocument(value));
-                    if (expiriedSoon(value.expirationDate)) {
-                        console.log('true');
-                        $("#documents tr").last().addClass("expiried-soon-document");
+                    if (expiredSoon(value.expirationDate)) {
+                        $("#documents tr").last().addClass("expired-soon-document");
                     }
                     $("#documentTable").trigger("update");
                 });
             },
             error: function () {
                 alert("error");
-            }});
+            }
+        });
 
     });
 
-    // show/hide expiried docs
-    $("#expiriedDocs").click(function () {
+    // show/hide expired docs
+    $("#expiredDocs").click(function () {
+        var $expiredDocs = $("#expiredDocs"),
+            action = $expiredDocs.attr('data-do');
 
-        var action = $("#expiriedDocs").attr('data-do');
-
-        if (action == 'show') {
-            $.ajax
-            ({
+        if (action === 'show') {
+            $.ajax({
                 type: "GET",
-                url: "/info/getExpiriedDocuments",
-                async: true,
+                url: "/info/getExpiredDocuments",
                 cashe: false,
                 data: {
                     "studentId": studentId
@@ -168,23 +161,24 @@ $(document).ready(function () {
 
                     jQuery.each(documents, function (index, value) {
                         $("#documents").append(templateDocument(value));
-                        $("#documents tr").last().addClass("expiried-document");
+                        $("#documents tr").last().addClass("expired-document");
                         $("#documentTable").trigger("update");
                     });
-                    $("#expiriedDocs").attr('data-do', 'hide');
-                    $("#expiriedDocs").text("Hide expired");
+                    $expiredDocs.attr('data-do', 'hide');
+                    $expiredDocs.text("Hide expired");
                 },
                 error: function () {
                     alert("error");
-                }});
+                }
+            });
         }
-        else if (action == 'hide') {
-            $(".expiried-document").each(function (index) {
+        else if (action === 'hide') {
+            $(".expired-document").each(function () {
                 $(this).remove();
                 $("#documentTable").trigger("update");
             });
-            $("#expiriedDocs").attr('data-do', 'show');
-            $("#expiriedDocs").text("Show expired");
+            $expiredDocs.attr('data-do', 'show');
+            $expiredDocs.text("Show expired");
         }
     });
 
@@ -196,16 +190,16 @@ $(document).ready(function () {
 
     ////TODO wtf dialog
     $("#okButton").click(function () {
-        var doctype = $("#doctype").val();
-        var issueDate = $("#issueDate").val();
-        var expirationDate = $("#expirationDate").val();
-        var info = $("#info").val();
-        var newDocument = {
-            doctype: doctype,
-            issueDate: issueDate,
-            expirationDate: expirationDate,
-            info: info
-        };
+        var doctype = $("#doctype").val(),
+            issueDate = $("#issueDate").val(),
+            expirationDate = $("#expirationDate").val(),
+            info = $("#info").val(),
+            newDocument = {
+                doctype: doctype,
+                issueDate: issueDate,
+                expirationDate: expirationDate,
+                info: info
+            };
 
         $("#doctype").val("");
         $("#issueDate").val("");
@@ -227,30 +221,31 @@ $(document).ready(function () {
 
 //handler termMark changed
     $(".term-mark-list").on("change", 'input', function () {
-        if (!validInputTermMark($(this).val())) {
-            $(this).addClass("term-mark-invalid", 1000);
-            $(this).val(null);
+        var $this = $(this);
+        if (!validInputTermMark($this.val())) {
+            $this.addClass("term-mark-invalid", 1000);
+            $this.val(null);
         }
         else {
-            $(this).removeClass("term-mark-invalid", 200);
+            $this.removeClass("term-mark-invalid", 200);
         }
     });
 
     $("#addNextTerm").click(function () {
-        var numberTerms;
-        numberTerms = $("#termMarkList").children().length;
-        var lastTerm;
+        var numberTerms = $("#termMarkList").children().length,
+            lastTerm;
         lastTerm = $(".term-mark-list li input").last();
 
-        if (lastTerm.val() == MIN_MARK) {
+        if (lastTerm.val() === "") {
             lastTerm.focus();
         }
         else {
             ++numberTerms;
             $("#termMarkList").append(templateTermMark);
 
-            if (numberTerms === MAX_NUMBER_TERMS)
+            if (numberTerms === MAX_NUMBER_TERMS) {
                 $("#addNextTerm").attr("disabled", "true");
+            }
         }
     });
 
@@ -258,22 +253,27 @@ $(document).ready(function () {
 
 
 function validInputTermMark(termMarkVal) {
-    if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK)
+    "use strict";
+    if (termMarkVal <= MIN_MARK || termMarkVal > MAX_MARK) {
         return false;
+    }
     return true;
 }
 
 function parseRequestForId(string) {
-    var gottenId;
-    var regExpForId = /id=[0-9]+/;
+    "use strict";
+    var gottenId,
+        regExpForId = /id=[0-9]+/,
+        regExp = /[0-9]+/;
+
     gottenId = string.match(regExpForId);
-    var regExp = /[0-9]+/;
     studentId = (gottenId[0].match(regExp))[0];
 }
 
-function expiriedSoon(expirationDate) {
-    var twoWeeks = 1000 * 60 * 60 * 24 * 14;
-    var twoWeeksAfterNow = Date.now() + twoWeeks;
+function expiredSoon(expirationDate) {
+    "use strict";
+    var twoWeeks = 1000 * 60 * 60 * 24 * 14,
+        twoWeeksAfterNow = Date.now() + twoWeeks;
     expirationDate = Date.parse(expirationDate);
     if (expirationDate <= twoWeeksAfterNow) {
         return true;
@@ -284,14 +284,17 @@ function expiriedSoon(expirationDate) {
 }
 
 function exportStudentExcel() {
+    "use strict";
     window.open("/info/exportExcel?studentId=" + studentId, "Export file");
 }
 
 function exportStudentPDF() {
+    "use strict";
     window.open("/info/exportPDF?studentId=" + studentId, "Export file");
 }
 
 function fillOptions() {
+    "use strict";
     $.ajax({
         type: "GET",
         url: "/info/getOptions",
@@ -300,31 +303,30 @@ function fillOptions() {
             // alert("" + data);
             $("#state").empty();
             //filling
-            var options = JSON.parse(data);
-
-            var stateOptions = options.states;
-            stateOptions.forEach(function (element, index, array) {
+            var options = JSON.parse(data),
+                stateOptions = options.states;
+            stateOptions.forEach(function (element) {
                 $("#state").append($("<option value=" + element + ">" + element + "</option>"));
-            })
+            });
         }
     });
 }
 
 function fillCommonInfo() {
-    $.ajax
-    ({
+    "use strict";
+    $.ajax({
         type: "GET",
         //SEND TO CONTROLLER
         url: "/info/getCommonInformation",
-        async: true,
         cashe: false,
         data: {
             "studentId": studentId
         },
         success: function (data) {
             // alert("" + data);
-            var gottenUser = JSON.parse(data);
-            var gottenStudent = gottenUser.studentInfo;
+            var gottenUser = JSON.parse(data),
+                gottenStudent = gottenUser.studentInfo,
+                marks;
 
             $("#headerName").text(gottenUser.name);
             $("#name").val(gottenUser.name);
@@ -360,7 +362,7 @@ function fillCommonInfo() {
             $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
 
             //termMarks
-            var marks = gottenStudent.termMarks;
+            marks = gottenStudent.termMarks;
             marks = marks.split(";");
             jQuery.each(marks, function (index, value) {
                 $("#termMarkList").append(templateTermMark);
@@ -373,8 +375,9 @@ function fillCommonInfo() {
 }
 
 function checkState() {
+    "use strict";
     var state = $("#state :selected").text();
-    if (state == 'working') {
+    if (state === 'working') {
         $("#exadelHeader").show();
 
     }
@@ -387,8 +390,8 @@ function checkState() {
 }
 
 function saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState) {
-    $.ajax
-    ({
+    "use strict";
+    $.ajax({
         type: "POST",
         //SEND
         url: "/info/postManualInformation",
@@ -444,8 +447,8 @@ function saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedE
 }
 
 function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality, editedCourse, editedGroup, editedGraduationDate, editedTermMarks) {
-    $.ajax
-    ({
+    "use strict";
+    $.ajax({
         type: "POST",
         //SEND
         url: "/info/postEducation",
@@ -494,12 +497,12 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
                 }, 1000)
             });
         }
-    })
+    });
 }
 
 function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedWishingHours, editedCourseStartWorking, editedTrainingBeforeWorking, editedTrainingExadel, editedCurrentProject, editedRoleCurrentProject, editedCurrentTeamLead, editedCurrentProjectManager, editedTechsCurrentProject) {
-    var defferedPostExadel = $.ajax
-    ({
+    "use strict";
+    var defferedPostExadel = $.ajax({
         type: "POST",
         //SEND
         url: "/info/postExadel",
@@ -518,7 +521,8 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
             'studentCurrentTeamLead': editedCurrentTeamLead,
             'studentCurrentProjectManager': editedCurrentProjectManager,
             'studentTechsCurrentProject': editedTechsCurrentProject
-        }});
+        }
+    });
     defferedPostExadel.done(function () {
         $("#saveExadelInformation").text("Saved!");
         $("#saveExadelInformation").animate({
@@ -557,8 +561,8 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
 }
 
 function saveDocumentsInformation(newDocuments) {
-    var defferedPostDocuments = $.ajax
-    ({
+    "use strict";
+    var defferedPostDocuments = $.ajax({
         type: "POST",
         //SEND
         url: "/info/postDocuments",
