@@ -13,15 +13,15 @@ import java.util.Map;
  * Created by Алексей on 24.07.14.
  */
 public interface ISkillSetService {
-    public SkillSet save(SkillSet skillSet);
+    SkillSet save(SkillSet skillSet);
 
-    public SkillSet getById(Long id);
+    SkillSet getById(Long id);
 
-    public void delete(SkillSet skillSet);
+    void delete(SkillSet skillSet);
 
-    public Collection<SkillSet> getAll();
+    Collection<SkillSet> getAll();
 
-    public Collection<User> getAllWithSkill(Long skillTypeId);
+    Collection<User> getAllWithSkill(Long skillTypeId);
 
-    public Collection<SkillType> getAllForUser(Long userId);
+    Collection<SkillType> getAllForUser(Long userId);
 }

@@ -3,9 +3,9 @@ package com.exadel.studbase.service;
 import org.springframework.mail.MailSender;
 
 public interface IMailService {
-    public MailSender getMailSender();
+    MailSender getMailSender();
 
-    public void setMailSender(MailSender mailSender);
+    void setMailSender(MailSender mailSender);
 
-    public boolean sendMail(String to, String subject, String body);
+    boolean sendMail(String to, String subject, String body);
 }

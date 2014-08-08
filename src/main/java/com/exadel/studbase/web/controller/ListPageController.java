@@ -1,7 +1,5 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.filter.Filter;
-import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
@@ -11,7 +9,6 @@ import com.exadel.studbase.service.IStudentViewService;
 import com.exadel.studbase.service.IUserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -33,7 +30,11 @@ public class ListPageController {
     @Autowired
     IStudentService studentService;
     @Autowired
+    IEmployeeService employeeService;
+    @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    ISkillTypeService skillTypeService;
     @Autowired
     IMailService mailService;
 
@@ -52,8 +53,10 @@ public class ListPageController {
         //TODO: Optimise request queue (for big counts in short time)
 
 
+
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
+        Map<String, String[]> map = new HashMap<String, String[]>();
 
         System.out.println("Version: " + version);
         System.out.println("Search name: " + desiredName);
@@ -85,8 +88,34 @@ public class ListPageController {
                 studentViewService.getViewByStudentName(desiredName));
             return gson.toJson(response, StudResponse.class);
         }
-
     }
+
+    @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getDescription() {
+        boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
+
+        List<User> listOfUsers = (List)employeeService.getAllCurators();
+        Map<Long, String> curators = new HashMap();
+        for (User u : listOfUsers) {
+            curators.put(u.getId(), u.getName());
+        }
+        List<SkillType> listOfSkillTypes = (List)skillTypeService.getAll();
+        Map<Long, String> skills = new HashMap();
+        for (SkillType st : listOfSkillTypes) {
+            skills.put(st.getId(), st.getName());
+        }
+
+        List<FilterDescription.FilterDescriptor> description
+                = FilterDescription.createFilterDescription(isCurator, curators, skills);
+
+        Gson gson = new Gson();
+
+        return gson.toJson(description);
+    }
+
 
     @Secured("ROLE_SUPERADMIN")
     @ResponseStatus(HttpStatus.OK)
@@ -102,11 +131,11 @@ public class ListPageController {
         for (Long id : studentId) {
             User user = userService.getById(id);
             String userName = user.getName();
-            if (user.getEmail() != null) {
+            if(user.getEmail() != null){
                 if (!mailService.sendMail(user.getEmail(), subject, body)) {
                     inaccessibleEmail.add(userName + " ( " + user.getEmail() + " )");
                 }
-            } else {
+            }else{
                 inaccessibleEmail.add(userName + "( haven't mail )");
             }
         }
