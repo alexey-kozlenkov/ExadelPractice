@@ -2,8 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
+
     <link href="../css/common.css" rel="stylesheet">
-    <link href="../css/info/user-info.css" rel="stylesheet">
+    <link href="../css/info/common-info.css" rel="stylesheet">
     <title>Information</title>
 </head>
 <body>
@@ -25,12 +27,18 @@
     </ul>
 </div>
 <div class="export">
-    <button class="prj-btn export-btn" id="exportInfoExcel" title="Export in Excel">
-        <img src="../images/excel-icon.png" alt="Export in Excel" class="export-excel">
-    </button>
-    <button class="prj-btn export-btn" id="exportInfoPDF" title="Export in PDF">
-        <img src="../images/pdf-icon.png" alt="Export in PDF" class="export-pdf">
-    </button>
+    <ul>
+        <li class="export-btns">
+            <button class="prj-btn export-btn" id="exportInfoExcel" title="Export in Excel">
+                <img src="../images/excel-icon.png" alt="Export in Excel" class="export-icon">
+            </button>
+        </li>
+        <li class="export-btns">
+            <button class="prj-btn export-btn" id="exportInfoPDF" title="Export in PDF">
+                <img src="../images/pdf-icon.png" alt="Export in PDF" class="export-icon">
+            </button>
+        </li>
+    </ul>
 </div>
 <div class="container prj-content">
     <div class="wrapper">
@@ -39,7 +47,7 @@
             <div class="category-header">
                 <a href="#">Manual information<span class="st-arrow category-header-span">Open or Close</span></a>
             </div>
-            <div class="category-content">
+            <div class="category-content outer-category-content">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
@@ -61,6 +69,7 @@
 <script src="../js/lib/jquery.animate-colors-min.js"></script>
 
 <script src="../js/common.js"></script>
-<script src="../js/info/studentInfo.js"></script>
+<script src="../js/info/toogleContent.js"></script>
+<script src="../js/info/employeeInfo.js"></script>
 </body>
 </html>
