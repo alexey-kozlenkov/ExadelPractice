@@ -2,7 +2,7 @@
  * Created by ala'n on 31.07.2014.
  */
 var Filter = (function () {
-
+    "use strict";
     var shellTemplate = Handlebars.compile($('#filterTemplate').html()),
         maxValueCount = 8,
         description = [],
@@ -40,13 +40,18 @@ var Filter = (function () {
     }
 
     function addValue(field, value) {
-        var filterContext = _.find(description, function (element) {
-            return element.field == field;
+        var filterContext,
+            editorTemplate,
+            $shell,
+            prev,
+            $editorElement;
+        filterContext = _.find(description, function (element) {
+            return element.field === field;
         });
         if (filterContext) {
-            var editorTemplate = getValueEditorTemplate(filterContext.type),
-                $shell = $(shellTemplate(filterContext)),
-                prev = $(".filter-item[data-filter='" + field + "']");
+            editorTemplate = getValueEditorTemplate(filterContext.type);
+            $shell = $(shellTemplate(filterContext));
+            prev = $(".filter-item[data-filter='" + field + "']");
             $shell.append(editorTemplate(filterContext));
             if (prev.length > 0) {
                 prev.last().after($shell);
@@ -58,11 +63,13 @@ var Filter = (function () {
                 $("#filterMenu > li[data-filter='" + field + "']").hide();
             }
             if (value) {
-                var $editorElement = $shell.find(".filter-value");
-                if ($editorElement.is("input[type='checkbox']"))
-                    $editorElement.attr('checked', value=="true");
-                else
+                $editorElement = $shell.find(".filter-value");
+                if ($editorElement.is("input[type='checkbox']")) {
+                    $editorElement.attr('checked', value === "true");
+                }
+                else {
                     $editorElement.val(value);
+                }
             }
             checkValueCount();
         }
@@ -72,56 +79,55 @@ var Filter = (function () {
         switch (type) {
             case 'bool':
                 return Handlebars.compile($('#filterBooleanValueTemplate').html());
-                break;
             case 'text':
                 return Handlebars.compile($('#filterTextValueTemplate').html());
-                break;
             case 'number':
                 return Handlebars.compile($('#filterNumberValueTemplate').html());
-                break;
             case 'date':
                 return Handlebars.compile($('#filterDataValueTemplate').html());
-                break;
             case 'enumeration':
                 return Handlebars.compile($('#filterEnumValueTemplate').html());
-                break;
             case 'list':
                 return Handlebars.compile($('#filterListValueTemplate').html());
-                break;
             default :
-                break;
+                return null;
         }
     }
 
     function pickValue(field) {
-        var elements = $(".filter-item[data-filter=" + field + "] .filter-value");
-        if (elements.length == 0) {
+        var elements,
+            returnVal;
+        elements = $(".filter-item[data-filter=" + field + "] .filter-value");
+        if (elements.length === 0) {
             return null;
         }
         else {
-           if(elements.is("[data-multi='true']")) {
-               var returnVal = [];
-               elements.each(function (id, element) {
-                   returnVal.push($(element).val());
-               });
-               return returnVal;
-           }else{
-               if (elements.is("input[type='checkbox']"))
-                   return String(elements.prop("checked"));
-               else
-                   return elements.val();
-           }
+            if (elements.is("[data-multi='true']")) {
+                returnVal = [];
+                elements.each(function (id, element) {
+                    returnVal.push($(element).val());
+                });
+                return returnVal;
+            } else {
+                if (elements.is("input[type='checkbox']")) {
+                    return String(elements.prop("checked"));
+                }
+                else {
+                    return elements.val();
+                }
+            }
         }
     }
 
     function updateValue(field) {
         var value = pickValue(field);
-        if (value != undefined)
+        if (value !== undefined) {
             model[field] = value;
-        else if (model[field] != undefined)
+        }
+        else if (model[field] !== undefined) {
             delete model[field];
+        }
         sessionStorage.setItem('filter', JSON.stringify(model));
-        console.log(model);
     }
 
     function removeValue(ovner) {
@@ -147,12 +153,14 @@ var Filter = (function () {
         var keys = Object.keys(model);
         keys.forEach(function (key) {
             var value = model[key];
-            if (Array.isArray(value))
+            if (Array.isArray(value)) {
                 value.forEach(function (subVal) {
                     addValue(key, subVal);
                 });
-            else
+            }
+            else {
                 addValue(key, value);
+            }
         });
     }
 
@@ -193,31 +201,36 @@ var Filter = (function () {
             if (param) {
                 description = param;
                 updateMenu();
-            } else
+            } else {
                 return description;
+            }
         },
         values: function (filterData) {
             if (filterData) {
                 model = filterData;
                 rebuild();
             }
-            else
+            else {
                 return model;
+            }
         }
-    }
+    };
 }());
 
 $(document).ready(function () {
+    "use strict";
     Filter.init();
     $.ajax({
         url: "/list/filterDescription",
         data: {}
     }).done(function (desc) {
-        var descParsed = JSON.parse(desc);
+        var descParsed = JSON.parse(desc),
+            filterStore;
         Filter.descript(descParsed);
-        console.log("Filter description load successfully!");
-        var filterStore = JSON.parse(sessionStorage.getItem('filter'));
-        if (filterStore)Filter.values(filterStore);
+        filterStore = JSON.parse(sessionStorage.getItem('filter'));
+        if (filterStore) {
+            Filter.values(filterStore);
+        }
     }).fail(function () {
         console.log("Fail to load filter description!");
     });

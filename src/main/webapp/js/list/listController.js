@@ -2,6 +2,8 @@
  * Created by ala'n on 31.07.2014.
  */
 var ListController = (function () {
+    "use strict";
+
     function init() {
         var $table = $("#studTable");
         $("#checkAll").click(function () {
@@ -16,6 +18,7 @@ var ListController = (function () {
     function addAllStudents(arrStudents) {
         var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
         $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+        $("#checkAll").attr('checked', false);
         updateInfoLabel();
     }
     function clearList() {
@@ -51,9 +54,10 @@ var ListController = (function () {
     }
 
     function updateInfoLabel() {
-        var itCount = $("#studTable > tbody > tr").length;
+        var itCount = $("#studTable > tbody > tr").length,
+            selCount;
         if (itCount > 0) {
-            var selCount = $(".item-checkbox:checked").length;
+            selCount = $(".item-checkbox:checked").length;
             $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
 
         } else {
@@ -61,7 +65,7 @@ var ListController = (function () {
         }
     }
 
-    return{
+    return {
         init: init,
         addAllStudents: addAllStudents,
         clearList: clearList,
@@ -69,16 +73,18 @@ var ListController = (function () {
         getCheckedRowsId: getCheckedRowsId,
         setCheckedAll: setCheckedAll,
         setTableLoadingState: setTableLoadingState
-    }
+    };
 }());
 
 var ListHeader = (function () {
+    "use strict";
+
     var pastHeaderHeight;
 
     function init() {
         $(window).resize(function () {
             var height = $("#header").outerHeight();
-            if (pastHeaderHeight != height) {
+            if (pastHeaderHeight !== height) {
                 pastHeaderHeight = height;
                 checkTopMarginOfList();
             }

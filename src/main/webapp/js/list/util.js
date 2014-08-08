@@ -2,7 +2,8 @@
  * Created by ala'n on 14.07.2014.
  */
 
-var ListUtil = (function(){
+var ListUtil = (function () {
+    "use strict";
     function bindMenuBtn() {
         $("#addMenuButton").click(function () {
             showDialog("add-student");
@@ -93,14 +94,15 @@ var ListUtil = (function(){
     }
 
     return {
-        init: function(){
+        init: function () {
             bindMenuBtn();
             bindDialog();
         }
     };
 }());
 
-var ListLoader = (function(){
+var ListLoader = (function () {
+    "use strict";
     var actualVersion = 0;
 
     function initSearchLine() {
@@ -120,7 +122,8 @@ var ListLoader = (function(){
     function loadTable() {
         var version = Date.now(),
             search = $("#searchLine").val(),
-            filter = sessionStorage.getItem("filter");
+            filter = sessionStorage.getItem("filter"),
+            promise;
 
         ListController.setTableLoadingState(true);
         actualVersion = version;
@@ -145,7 +148,7 @@ var ListLoader = (function(){
     }
 
     function updateListByResponse(response) {
-        if (actualVersion == response.version) {
+        if (actualVersion === response.version) {
             console.log("Get actual response (", actualVersion, ")");
             ListController.clearList();
             ListController.addAllStudents(response.studentViews);
@@ -155,25 +158,23 @@ var ListLoader = (function(){
         }
     }
 
-    return{
-        init: function(){
-            initSearchLine();
-        },
-        load: function(){
-            loadTable();
-        }
+    return {
+        init: initSearchLine,
+        load: loadTable
     };
 }());
 
 $(document).ready(function () {
+    "use strict";
     ListLoader.init();
     ListUtil.init();
 
     $("#toggleNav").click(
-        function(){
+        function () {
             var f =  $("#filter");
-            if(f.is(":visible"))
+            if (f.is(":visible")) {
                 f.fadeOut(500, ListHeader.check);
+            }
             else {
                 f.fadeIn(500);
                 ListHeader.check();
