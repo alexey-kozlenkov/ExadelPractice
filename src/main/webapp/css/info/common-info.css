@@ -1,0 +1,156 @@
+h1 {
+    margin: 0;
+    padding: 20px;
+
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.info-header {
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #616161;
+    text-transform: uppercase;
+}
+
+.info-header-nav {
+    display: inline-block;
+    float: right;
+    padding-top: 10px;
+}
+
+.info-header-nav-link {
+    margin: 5px 0 5px;
+    list-style-type: none;
+    text-transform: none;
+
+}
+
+#headerName {
+    display: inline-block;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.category-header a {
+    position: relative;
+
+    display: block;
+
+    outline: none;
+
+    color: #4A5D80;
+    text-decoration: none;
+    font-size: 22px;
+    -webkit-transition: color .2s ease-in-out;
+    -moz-transition: color .2s ease-in-out;
+
+    -ms-transition: color .2s ease-in-out;
+    -o-transition: color .2s ease-in-out;
+    transition: color .2s ease-in-out;
+}
+
+.category-header a:hover {
+    color: #428bca;
+}
+
+.category-header-span {
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    margin-top: -7px;
+    margin-right: 58%;
+    width: 26px;
+    height: 14px;
+
+    background: transparent url(../../images/down.png) no-repeat center center;
+    text-indent: -9000px;
+    opacity: 0;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.form-control {
+    color: black;
+    width: auto;
+}
+
+.form-control input[type="date"] {
+    -mv-padding: 0;
+}
+
+.category-header a:hover span {
+    right: 10px;
+
+    opacity: 1;
+}
+
+.outer-category-content {
+    margin-bottom: 10pt;
+}
+
+.category-content-button {
+    margin-left: 35%;
+
+    font-weight: bold;
+}
+
+.category-content-add-button {
+    padding: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+.export {
+    position: fixed;
+    right: 0%;
+}
+
+.export-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.export-btns {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.export-btn {
+    float : right;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
+}
+
+.export-btn:hover{
+    width  : 45px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    margin: 0px;
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
