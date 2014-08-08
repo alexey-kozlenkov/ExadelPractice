@@ -17,7 +17,7 @@ public class DocumentDAO extends GenericDAOImpl<Document, StudentView, Long> imp
     @Override
     public Collection<Document> getActualForUser(Long id) {
         Query query = getSession().createQuery("FROM Document WHERE studentId=" + id
-                + " AND expirationDate > \'" + new Date(System.currentTimeMillis()) + "' OR expirationDate IS NULL ORDER BY expirationDate ASC");
+                + " AND (expirationDate > \'" + new Date(System.currentTimeMillis()) + "' OR expirationDate IS NULL) ORDER BY expirationDate ASC");
         return query.list();
     }
 
