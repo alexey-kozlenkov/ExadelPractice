@@ -35,7 +35,8 @@
         </span>
 
         <span class="btn-group tab">
-            <button class="btn prj-btn menu-button tab-btn"><img src="../images/ico-students.png" class = "menu-icon"></button>
+            <button class="btn prj-btn menu-button tab-btn"><img src="../images/ico-students.png" class="menu-icon">
+            </button>
             <button class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
@@ -48,50 +49,6 @@
             <span class="glyphicon glyphicon-trash"></span>
         </button>
         <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
-        <script id="filterMenuTemplate" type="text/x-handlebars-template">
-            {{#each description}}
-            <li class='menu-item' data-filter='{{field}}'>
-                <a role='menuitem'>{{name}}</a>
-            </li>
-            {{/each}}
-        </script>
-
-        <script id="filterTemplate" type="text/x-handlebars-template">
-            <div data-filter='{{field}}' class='btn-group input-group filter-item'>
-                <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-            </div>
-        </script>
-
-        <script id="filterBooleanValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value boolean-filter-value" type='checkbox'>
-        </script>
-        <script id="filterTextValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}" data-multi = '{{multiset}}'>
-        </script>
-        <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}">
-        </script>
-        <script id="filterDataValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value date-filter-value" type='date'>
-        </script>
-        <script id="filterEnumValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
-                {{#each values}}
-                <option>{{this}}</option>
-                {{/each}}
-            </select>
-        </script>
-        <script id="filterListValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
-                {{#each values}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            </select>
-        </script>
-
-        <script id="filterSeparator" type="text/x-handlebars-template">
-            <span class='static-green filter-separator'>and</span>
-        </script>
     </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
@@ -217,7 +174,43 @@
     </section>
 </div>
 
-<script data-main="../js/list/main.js" src="../js/lib/require.js"></script>
+<script src="../js/lib/require.js"></script>
+<script>
+    require(["../js/main.js"], function () {
+        require(["jquery", "ListHeader", "ListController", "Filter",
+                    "ListLoader", "ListUtil", "Util"],
+                function ($, ListHeader, ListController, Filter, ListLoader, ListUtil, util) {
+                    "use strict";
+                    $(window).ready(function () {
+                        ListHeader.init();
+                    });
+                    $(document).ready(function () {
+                        $(".logout-link").click(util.logout);
 
+                        ListController.init();
+                        Filter.init();
+                        Filter.loadDescription("/list/filterDescription");
+                        ListLoader.init();
+                        ListUtil.init();
+                    });
+
+                    $(document).ready(function () {
+                        $("#toggleNav").click(
+                                function () {
+                                    var f = $("#filter");
+                                    if (f.is(":visible")) {
+                                        f.fadeOut(500, ListHeader.check);
+                                    }
+                                    else {
+                                        f.fadeIn(500);
+                                        ListHeader.check();
+                                    }
+                                }
+                        );
+                    });
+                }
+        );
+    });
+</script>
 </body>
 </html>

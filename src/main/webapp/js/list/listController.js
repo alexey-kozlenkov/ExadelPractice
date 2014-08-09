@@ -1,7 +1,7 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-define(["jquery", "handlebars"], function ($, Handlebars) {
+define(["jquery"], function ($, Handlebars) {
     "use strict";
 
     function init() {
@@ -16,9 +16,11 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
     }
 
     function addAllStudents(arrStudents) {
-        require(["js/lib/text!html/templates/user-list-template.html"], function (template) {
-            $("#studTable > tbody").append(Handlebars.compile(template)({list: arrStudents}));
-        });
+        require(["handlebars", "text!templates/user-list-template.html"],
+            function (Handlebars, template) {
+                $("#studTable > tbody").append(Handlebars.compile(template)({list: arrStudents}));
+            }
+        );
         $("#checkAll").attr('checked', false);
         updateInfoLabel();
     }
