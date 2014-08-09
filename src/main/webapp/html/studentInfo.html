@@ -295,7 +295,7 @@
                     <label for="currentProjectManager" class="col-sm-2 control-label">Project manager</label>
 
                     <div class="col-sm-10 employee-link">
-                        <a href="#" target="_blank" id="currentProjectManager">Project Manager</a>
+                        <a href="../html/employeeInfo.html" target="_blank" id="currentProjectManager">Project Manager</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -315,7 +315,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="category-header" id="documentsHeader">
     <a href="#">Documents<span class="st-arrow category-header-span">Open or Close</span></a>
@@ -346,7 +345,7 @@
                     <td></td>
                     <td></td>
                     <td class="documents-list-column">
-                        <a href="#" class="prj-link" data-do="show" id="expiriedDocs">Show expiried</a>
+                        <a href="#" class="prj-link" data-do="show" id="expiredDocs">Show expired</a>
                     </td>
                     </tfoot>
                 </table>
@@ -359,6 +358,32 @@
             </button>
         </div>
 
+    </div>
+</div>
+
+<div class="category-header">
+    <a href="#">Feedbacks<span class="st-arrow category-header-span">Open or Close</span></a>
+</div>
+<div class="category-content outer-category-content" id="feedbacksContent">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Write your feedback</label>
+            <button class="prj-btn" id="writeFeedback" title="Write feedback">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </div>
+        <div>
+                <h3>Feedbacker</h3>
+                <dl class="dl-horizontal">
+                    <dt>Professional quality</dt>
+                        <dd>High</dd>
+                    <dt>Relevant to work</dt>
+                        <dd>Kitties</dd>
+                    <dt>Relationship with staff</dt>
+                        <dd>Good</dd>
+                </dl>
+
+        </div>
     </div>
 </div>
 
@@ -436,6 +461,7 @@
 
 
 <script src="../js/common.js"></script>
+<script src="../js/info/toogleContent.js"></script>
 <script src="../js/info/studentInfo.js"></script>
 </body>
 </html>

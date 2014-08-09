@@ -1,9 +1,12 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.GenericDAO;
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.IEntity;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -11,15 +14,15 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 
-/**
- * Created by Алексей on 18.07.14.
- */
-public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Serializable>
-        extends HibernateDaoSupport implements GenericDAO<CONTENT, ID> {
-    public Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass()
-            .getGenericSuperclass()).getActualTypeArguments()[0];
+public abstract class GenericDAOImpl<CONTENT extends IEntity, VIEW extends IEntity, ID extends Serializable>
+        extends HibernateDaoSupport implements GenericDAO<CONTENT, VIEW,  ID> {
+
+    private Class<CONTENT> contentClass = (Class<CONTENT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    private Class<VIEW> viewClass = (Class<VIEW>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     @Autowired
     @Qualifier("sessionFactory")
@@ -30,8 +33,7 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
     @Override
     public Collection<CONTENT> getAll() {
         Collection<CONTENT> result =
-                getSession().createCriteria(contentClass)
-                        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                getSession().createCriteria(contentClass).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return result;
     }
 
@@ -49,5 +51,14 @@ public abstract class GenericDAOImpl<CONTENT extends IEntity, ID extends Seriali
     @Override
     public void delete(CONTENT content) {
         this.getSession().delete(content);
+    }
+
+    @Override
+    public Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap) {
+        Criteria listCriteria = getSession().createCriteria(viewClass);
+        Criterion filterCriterion = FilterUtils.buildFilterCriterion(filterMap);
+        listCriteria.add(filterCriterion);
+        Collection<VIEW> result = listCriteria.list();
+        return result;
     }
 }

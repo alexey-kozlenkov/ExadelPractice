@@ -48,4 +48,5 @@ public class DocumentServiceImpl implements IDocumentService {
     public Collection<Document> getNotActualForUser(Long id) {
         return documentDAO.getNotActualForUser(id);
     }
+
 }

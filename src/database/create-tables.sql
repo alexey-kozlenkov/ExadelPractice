@@ -1,30 +1,44 @@
 CREATE TABLE IF NOT EXISTS "USER"
 (
-  id       BIGSERIAL PRIMARY KEY,
-  name     TEXT                  NOT NULL,
-  email    TEXT                  NOT NULL,
-  login    CHARACTER VARYING(64) NOT NULL UNIQUE,
-  password CHARACTER VARYING(32) NOT NULL DEFAULT 'pass',
-  role     CHARACTER VARYING(32) NOT NULL
+  id        BIGSERIAL PRIMARY KEY,
+  name      TEXT                  NOT NULL,
+  email     TEXT,
+  login     CHARACTER VARYING(64) NOT NULL UNIQUE,
+  password  CHARACTER VARYING(32) NOT NULL DEFAULT 'pass',
+  role      CHARACTER VARYING(32) NOT NULL,
+  skype     TEXT,
+  telephone TEXT,
+  birthdate DATE
 );
 CREATE INDEX id_index ON "USER" (id);
 
 CREATE TABLE IF NOT EXISTS "STUDENT"
 (
-  id                    BIGINT PRIMARY KEY,
-  state                 TEXT,
-  hire_date             DATE,
-  university            TEXT,
-  faculty               TEXT,
-  course                INT DEFAULT 0,
-  s_group               INT DEFAULT 0,
-  graduation_date       DATE,
-  working_hours         INT DEFAULT 0,
-  billable              DATE,
-  role_current_project  TEXT,
-  techs_current_project TEXT,
-  english_level         TEXT,
-  FOREIGN KEY (id) REFERENCES "USER" (id)
+  id                              BIGINT PRIMARY KEY,
+  state                           TEXT,
+  hire_date                       DATE,
+  university                      TEXT,
+  faculty                         TEXT,
+  course                          INT DEFAULT 0,
+  s_group                         INT DEFAULT 0,
+  graduation_date                 INT DEFAULT 0,
+  working_hours                   INT DEFAULT 0,
+  billable                        DATE,
+  role_current_project            TEXT,
+  techs_current_project           TEXT,
+  english_level                   INT,
+  term_marks                      TEXT,
+  current_project                 TEXT,
+  team_lead_current_project       BIGINT,
+  project_manager_current_project BIGINT,
+  training_before_working         BOOL,
+  course_when_start_working       INT,
+  speciality                      TEXT,
+  wishes_hours_number             INT,
+  trainings_exadel                TEXT,
+  FOREIGN KEY (id) REFERENCES "USER" (id),
+  FOREIGN KEY (team_lead_current_project) REFERENCES "EMPLOYEE" (id),
+  FOREIGN KEY (project_manager_current_project) REFERENCES "EMPLOYEE" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "EMPLOYEE"
@@ -154,4 +168,16 @@ CREATE TABLE IF NOT EXISTS "DOCUMENT" (
   issue_date      DATE   NOT NULL,
   expiration_date DATE,
   info            TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "CURATORING"
+(
+  id           BIGSERIAL PRIMARY KEY,
+  student_id   BIGINT NOT NULL,
+  employee_id  BIGINT NOT NULL,
+  project_name TEXT,
+  start_date   DATE,
+  end_date     DATE,
+  FOREIGN KEY (student_id) REFERENCES "STUDENT" (id),
+  FOREIGN KEY (employee_id) REFERENCES "EMPLOYEE" (id)
 );
