@@ -30,7 +30,6 @@ public class MailServiceImpl implements IMailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("<vasia.ermakov@gmail.com>");
         message.setTo(to);
-        message.setFrom("<vasia.ermakov@gmail.com>");
         message.setSubject(subject);
         message.setText(body);
 

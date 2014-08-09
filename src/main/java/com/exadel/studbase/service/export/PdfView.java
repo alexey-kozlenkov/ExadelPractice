@@ -46,32 +46,40 @@ public class PdfView extends AbstractPdfView {
         Font headerFont = new Font(FontFactory.getFont(FontFactory.TIMES_ITALIC, 14));
         Font contentFont = new Font(FontFactory.getFont(FontFactory.HELVETICA, 14));
 
-
         table.setWidths(width);
         table.addCell(createCell("Name", headerFont));
         table.addCell(createCell(user.getName(), contentFont));
+        table.addCell(createCell("Birth date", headerFont));
+        table.addCell(createCell(user.getBirthdate(), contentFont));
+        table.addCell(createCell("State", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getState(), contentFont));
         table.addCell(createCell("Email", headerFont));
         table.addCell(createCell(user.getEmail(), contentFont));
+        table.addCell(createCell("Skype", headerFont));
+        table.addCell(createCell(user.getSkype(), contentFont));
+        table.addCell(createCell("Phone number", headerFont));
+        table.addCell(createCell(user.getTelephone(), contentFont));
         document.add(table);
 
         document.add(new Paragraph(new Chunk("Education", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
 
         table = new PdfPTable(2);
         table.setWidths(width);
-        table.addCell(createCell("University", headerFont));
+        table.addCell(createCell("Educational institution", headerFont));
         table.addCell(createCell(user.getStudentInfo().getUniversity(), contentFont));
         table.addCell(createCell("Faculty", headerFont));
         table.addCell(createCell(user.getStudentInfo().getFaculty(), contentFont));
         table.addCell(createCell("Speciality", headerFont));
         table.addCell(createCell(user.getStudentInfo().getSpeciality(), contentFont));
-        table.addCell(createCell("Cource", headerFont));
+        table.addCell(createCell("Course", headerFont));
         table.addCell(createCell(user.getStudentInfo().getCourse(), contentFont));
         table.addCell(createCell("Group", headerFont));
         table.addCell(createCell(user.getStudentInfo().getGroup(), contentFont));
         table.addCell(createCell("Graduation date", headerFont));
         table.addCell(createCell(user.getStudentInfo().getGraduationDate(), contentFont));
+        table.addCell(createCell("Average marks", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getTermMarks().replaceAll(";", ";  "), contentFont));
         document.add(table);
-
         document.add(new Paragraph(new Chunk("Exadel", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
 
         table = new PdfPTable(2);
@@ -80,7 +88,7 @@ public class PdfView extends AbstractPdfView {
         table.addCell(createCell(user.getStudentInfo().getWorkingHours(), contentFont));
         table.addCell(createCell("Hire date", headerFont));
         table.addCell(createCell(user.getStudentInfo().getHireDate(), contentFont));
-        table.addCell(createCell("Billable", headerFont));
+        table.addCell(createCell("Billable from", headerFont));
         PdfPCell cell = new PdfPCell();
         if (user.getStudentInfo().getBillable() != null) {
             cell.addElement(new Chunk(user.getStudentInfo().getBillable().toString(), contentFont));
@@ -90,9 +98,19 @@ public class PdfView extends AbstractPdfView {
         cell.setBorder(PdfPCell.NO_BORDER);
         cell.setPaddingRight(cellLeftPadding);
         table.addCell(cell);
-        table.addCell(createCell("Role in the current project", headerFont));
+        table.addCell(createCell("Working hours you want", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getWishesHoursNumber(), contentFont));
+        table.addCell(createCell("Working from", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getCourseWhenStartWorking(), contentFont));
+        table.addCell(createCell("Training before working", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getTrainingBeforeStartWorking(), contentFont));
+        table.addCell(createCell("Training in Exadel", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getTrainingsInExadel(), contentFont));
+        table.addCell(createCell("Current project", headerFont));
+        table.addCell(createCell(user.getStudentInfo().getCurrentProject(), contentFont));
+        table.addCell(createCell("Role in the project", headerFont));
         table.addCell(createCell(user.getStudentInfo().getRoleCurrentProject(), contentFont));
-        table.addCell(createCell("Technologies used in the current project", headerFont));
+        table.addCell(createCell("Technologies used", headerFont));
         table.addCell(createCell(user.getStudentInfo().getTechsCurrentProject(), contentFont));
         document.add(table);
     }

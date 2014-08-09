@@ -27,7 +27,7 @@ public class FilterDescription {
                         "Upper-Intermediate",
                         "Advanced"}, false));
         if (!isCurator) {
-            filterDescriptor.add(new ListFilter("curators", "Curator", curators, false));
+            filterDescriptor.add(new ListFilter("curator", "Curator", curators, false));
         }
         return filterDescriptor;
     }

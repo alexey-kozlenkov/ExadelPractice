@@ -83,10 +83,10 @@ public class InfoPageController {
         return gson.toJson(userDocuments);
     }
 
-    @RequestMapping(value = "/getExpiriedDocuments", method = RequestMethod.GET)
+    @RequestMapping(value = "/getExpiredDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String documentsExpiriedData(@RequestParam("studentId") Long studentId) {
+    public String documentsExpiredData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
@@ -154,8 +154,8 @@ public class InfoPageController {
                              @RequestParam("studentWorkingHours") Integer workingHours,
                              @RequestParam("studentHireDate") Date hireDate,
                              @RequestParam("studentBillable") Date billable,
-                             @RequestParam(value = "studentWishingHours", required = false)  Integer wishingHours,
-                             @RequestParam(value = "studentCourseStartWorking", required = false) Integer courseStartWorking,
+                             @RequestParam(value = "studentWishingHours")  Integer wishingHours,
+                             @RequestParam(value = "studentCourseStartWorking") Integer courseStartWorking,
                              @RequestParam("studentTrainingBeforeWorking") Boolean trainingBeforeWorking,
                              @RequestParam("studentTrainingExadel") String trainingInExadel,
                              @RequestParam("studentCurrentProject") String currentProject,

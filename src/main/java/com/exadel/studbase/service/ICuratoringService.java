@@ -3,6 +3,7 @@ package com.exadel.studbase.service;
 import com.exadel.studbase.domain.impl.Curatoring;
 import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.StudentView;
 
 import java.util.Collection;
 
@@ -16,7 +17,7 @@ public interface ICuratoringService {
 
     Collection<Curatoring> getAll();
 
-    Collection<Student> getAllStudentsForEmployee(Long employeeId);
+    Collection<StudentView> getAllStudentsForEmployee(Long employeeId);
 
     Collection<Employee> getAllMastersForStudent(Long studentId);
 }
