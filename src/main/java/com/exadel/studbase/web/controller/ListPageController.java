@@ -97,14 +97,14 @@ public class ListPageController {
                     result = viewByCurator;
                 }
             }
-
-            StudResponse response = new StudResponse(version, result);
-            return gson.toJson(response, StudResponse.class);
-        } else {
-            StudResponse response = new StudResponse(version,
-                    studentViewService.getViewByStudentName(desiredName));
-            return gson.toJson(response, StudResponse.class);
         }
+
+        Collection search = studentViewService.getViewByStudentName(desiredName);
+
+        result = result !=null && search!=null ? CollectionUtils.intersection(result, search) :
+                result != null ? result : search;
+        StudResponse response = new StudResponse(version, result);
+        return gson.toJson(response, StudResponse.class);
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
@@ -115,7 +115,7 @@ public class ListPageController {
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
         Map<Long, String> curators = null;
-        if(!isCurator) {
+        if (!isCurator) {
             Collection<User> listOfUsers = employeeService.getAllCurators();
             curators = new HashMap<Long, String>();
             for (User u : listOfUsers) {
