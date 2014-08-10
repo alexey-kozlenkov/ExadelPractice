@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.impl.User;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 public interface IEmployeeService {
     Employee save(Employee employee);
 
