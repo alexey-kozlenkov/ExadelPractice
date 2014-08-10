@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.IEntity;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by on 23.07.14.
- */
 @Entity
 @Table(name = "\"DOCUMENT\"")
 public class Document implements IEntity<Long> {

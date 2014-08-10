@@ -8,26 +8,23 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by ala'n on 29.07.2014.
- */
 @Repository
 public class StudentViewDAO extends GenericDAOImpl<StudentView, StudentView, Long> implements IStudentViewDAO {
     @Override
     public Collection<StudentView> getViewByStudentName(String desiredName) {
         Query query = getSession()
-                .createSQLQuery("SELECT a.* FROM find_student_by_name('" + desiredName + "' ) as a")
+                .createSQLQuery("SELECT a.* FROM find_student_by_name('" + desiredName + "') as a")
                 .addEntity("a", StudentView.class);
         return query.list();
     }
 
     @Override
-    public Collection<StudentView> filterBySkillTypeId(ArrayList<String> ids) {
+    public Collection<StudentView> getViewBySkills(ArrayList<String> ids) {
         String idsString = "";
         for (String s : ids) {
             idsString += s + ",";
         }
-        idsString += ids.get(ids.size()-1);
+        idsString += ids.get(ids.size() - 1);
         Query query = getSession().createSQLQuery(
                 "SELECT * FROM \"STUDENT_VIEW\" AS STV INNER JOIN " +
                         "(SELECT user_id FROM \"SKILL_SET\" WHERE skill_type_id IN (" + idsString + ") GROUP BY user_id " +

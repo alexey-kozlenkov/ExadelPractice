@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.IEntity;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by Алексей on 03.08.2014.
- */
 @Entity
 @Table(name = "\"CURATORING\"")
 public class Curatoring implements IEntity<Long> {

@@ -7,9 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 @Entity
 @Table(name = "\"EMPLOYEE\"")
 public class Employee implements IEntity<Long> {

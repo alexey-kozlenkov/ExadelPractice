@@ -2,10 +2,6 @@ package com.exadel.studbase.service.filter;
 
 import java.util.*;
 
-/**
- * Created by ala'n on 07.08.2014.
- */
-
 public class FilterDescription {
     public static List<FilterDescriptor> createFilterDescription(boolean isCurator,
                                                                  Map<Long, String> curators,

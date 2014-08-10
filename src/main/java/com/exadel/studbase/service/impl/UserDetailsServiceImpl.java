@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by Алексей on 30.07.2014.
- */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

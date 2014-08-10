@@ -1,10 +1,8 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.filter.Filter;
-import com.exadel.studbase.dao.filter.FilterUtils;
+import com.exadel.studbase.service.filter.Filter;
 import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.service.*;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by ala'n on 29.07.2014.
- */
+
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/test/")
@@ -217,7 +213,7 @@ public class TestController {
        // FilterUtils.buildFilterToSpecification(filter, filterSpecification);
         Collection<StudentView> mainFilter = studentViewService.getView(filter);
 
-       // Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
+       // Collection<StudentView> filterBySkills = studentViewService.getViewBySkills(new String[] {"5"});
 
         //Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
 

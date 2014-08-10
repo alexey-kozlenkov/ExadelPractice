@@ -1,10 +1,7 @@
-package com.exadel.studbase.dao.filter.impl;
+package com.exadel.studbase.service.filter.impl;
 
-import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.service.filter.Filter;
 
-/**
- * Created by Алексей on 05.08.2014.
- */
 public abstract class SingleValueFilter<TYPE> implements Filter<TYPE> {
     private TYPE value;
 
