@@ -363,13 +363,13 @@ function fillCommonInfo() {
 
             //termMarks
             marks = gottenStudent.termMarks;
-            marks = marks.split(";");
-            jQuery.each(marks, function (index, value) {
-                $("#termMarkList").append(templateTermMark);
-                $("#termMarkList li input").last().attr('value', value);
-            });
-
-
+            if (marks) {
+                marks = marks.split(";");
+                jQuery.each(marks, function (index, value) {
+                    $("#termMarkList").append(templateTermMark);
+                    $("#termMarkList li input").last().attr('value', value);
+                });
+            }
         }
     });
 }

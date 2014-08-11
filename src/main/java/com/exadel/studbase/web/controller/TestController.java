@@ -1,13 +1,15 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.service.filter.Filter;
-import com.exadel.studbase.domain.impl.*;
+import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.domain.impl.Employee;
+import com.exadel.studbase.domain.impl.Student;
+import com.exadel.studbase.domain.impl.StudentView;
+import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
+/**
+ * Created by ala'n on 29.07.2014.
+ */
 @Controller
 //@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/test/")
@@ -213,11 +217,19 @@ public class TestController {
        // FilterUtils.buildFilterToSpecification(filter, filterSpecification);
         Collection<StudentView> mainFilter = studentViewService.getView(filter);
 
-       // Collection<StudentView> filterBySkills = studentViewService.getViewBySkills(new String[] {"5"});
+       // Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
 
         //Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
 
         System.out.println("ну нихуя себе");
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/mega", method = RequestMethod.POST)
+    public String megaF(@RequestParam(value = "message", required = false) String mess) {
+        System.out.println(mess);
+        return "Good";
     }
 
 }
