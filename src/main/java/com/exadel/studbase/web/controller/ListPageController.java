@@ -1,11 +1,8 @@
 package com.exadel.studbase.web.controller;
 
+import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.service.filter.Filter;
 import com.exadel.studbase.service.filter.FilterUtils;
-import com.exadel.studbase.domain.impl.SkillType;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
-import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
 import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
@@ -97,11 +94,13 @@ public class ListPageController {
                     (result != null) ? result : search;
             ListResponse response = new ListResponse(version, result);
             return gson.toJson(response, ListResponse.class);
-        }
+        } else {
 
-        result = employeeViewService.getAll();
-        ListResponse response = new ListResponse(version, result);
-        return gson.toJson(response, ListResponse.class);
+            result = employeeViewService.getAll();
+            reformatRoles(result);
+            ListResponse response = new ListResponse(version, result);
+            return gson.toJson(response, ListResponse.class);
+        }
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
@@ -220,6 +219,25 @@ public class ListPageController {
 
         public void setViews(Collection views) {
             this.views = views;
+        }
+    }
+
+    private void reformatRoles(Collection<EmployeeView> view) {
+        for(EmployeeView employeeView: view) {
+            String[] roles = employeeView.getRole().split(";");
+            String resultRole ="";
+            for(String role: roles) {
+                if (role.equalsIgnoreCase("ROLE_CURATOR")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Curator" : ", Curator";
+                } else if (role.equalsIgnoreCase("ROLE_FEEDBACKER")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Feedbacker" : ", Feedbacker";
+                } else if (role.equalsIgnoreCase("ROLE_OFFICE")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Personnel officer" : ", Personal officer";
+                } else if (role.equalsIgnoreCase("ROLE_SUPERADMIN")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "SUPERADMIN" : ", SUPERADMIN";
+                }
+            }
+            employeeView.setRole(resultRole);
         }
     }
 }

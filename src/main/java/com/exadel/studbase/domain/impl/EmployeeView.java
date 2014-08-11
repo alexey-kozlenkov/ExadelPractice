@@ -24,6 +24,9 @@ public class EmployeeView implements IEntity<Long>{
     @Column(name = "skype")
     private String skype;
 
+    @Column(name = "telephone")
+    private String telephone;
+
     @Column(name = "role")
     private String role;
 
@@ -70,6 +73,14 @@ public class EmployeeView implements IEntity<Long>{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     @Override
