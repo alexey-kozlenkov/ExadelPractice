@@ -4,11 +4,27 @@
 
 define(["jquery", "ListController"], function ($, ListController) {
     "use strict";
-    var actualVersion = 0;
+    var TIME_DELAY = 200,
+        actualVersion = 0,
+        isStudents = true,
+        sendTimeout;
 
-    function initSearchLine() {
+    function init() {
+        bindSearchLine();
+        $("body").on("searchOrFieldUpdate", onSearchOrFieldUpdate);
+        $("#studTab").click(function () {
+            isStudents = true;
+            updateList();
+        });
+        $("#emplTab").click(function () {
+            isStudents = false;
+            updateList();
+        });
+    }
+    function bindSearchLine() {
         $("#startSearchButton").click(function () {
-            loadTable();
+            $("body").trigger("searchOrFieldUpdate", {type: "all"});
+            sessionStorage.setItem("search", $(this).val());
         });
         $("#searchLine").focus(function () {
             $(this).animate({ width: "250pt"}, 1000);
@@ -16,46 +32,53 @@ define(["jquery", "ListController"], function ($, ListController) {
             $(this).animate({ width: "150pt"}, 500);
         });
         $('#searchLine').on('input', function () {
-            loadTable();
+            $("body").trigger("searchOrFieldUpdate", {type: "search"});
+            sessionStorage.setItem("search", $(this).val());
         });
     }
 
-    function loadTable() {
+    function onSearchOrFieldUpdate(e) {
+        console.log("# search or filter update #");
+        if (sendTimeout) {
+            clearTimeout(sendTimeout);
+        }
+        sendTimeout = setTimeout(updateList, TIME_DELAY);
+    }
+
+    function updateList() {
+        console.log('------- update list -------');
         var version = Date.now(),
-            search = $("#searchLine").val(),
+            search = sessionStorage.getItem("search"),
             filter = sessionStorage.getItem("filter"),
             promise;
-
         ListController.setTableLoadingState(true);
         actualVersion = version;
-
         promise = $.ajax({
             url: "/list/data",
             cache: false,
             data: {
                 'version': version,
                 'searchName': search,
-                'filter': filter
+                'filter': filter,
+                'isStudent': isStudents
             }
         });
 
         promise.done(function (data) {
-            updateListByResponse(JSON.parse(data));
+            var state = updateListByResponse(JSON.parse(data));
+            ListController.setTableLoadingState(false);
         });
         promise.fail(function () {
-            alert("error");
+            console.error("data not get!");
             ListController.setTableLoadingState(false);
         });
     }
-
     function updateListByResponse(response) {
         if (actualVersion === response.version) {
             console.log("Get actual response (", actualVersion, ")");
             ListController.clearList();
-//            response.studentViews = response.studentViews.sort(function (v1, v2) {
-//                return (v1.name > v2.name) ? 1 : ((v1.name < v2.name) ? -1 : 0);
-//            });
-            ListController.addAll(response.studentViews);
+            ListController.addAll(response.views, isStudents);
+
             ListController.setTableLoadingState(false);
         } else {
             console.log("Response (", response.version, ") was ignored; actual: ", actualVersion, "; now: ", Date.now());
@@ -63,7 +86,10 @@ define(["jquery", "ListController"], function ($, ListController) {
     }
 
     return {
-        init: initSearchLine,
-        load: loadTable
+        init: init,
+        forseUpdate: updateList,
+        update: function () {
+            $("body").trigger("searchOrFieldUpdate");
+        }
     };
 });

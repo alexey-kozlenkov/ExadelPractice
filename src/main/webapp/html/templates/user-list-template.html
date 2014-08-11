@@ -1,19 +1,34 @@
-{{#each list}}
-<tr>
-    <td class="list-column-0">
-        <input type='checkbox' class='item-checkbox' data-id="{{id}}">
-    </td>
-    <td class="student-column-1">
-        <a href='/info?id={{id}}'>{{name}}</a>
-    </td>
-    <td class="student-column-2">{{hireDate}}</td>
-    <td class="student-column-3">{{faculty}}</td>
-    <td class="student-column-4">{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
-    <td class="student-column-5">{{graduationDate}}</td>
-    <td class="student-column-6">{{workingHours}}</td>
-    <td class="student-column-7">{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
-    <td class="student-column-8">{{roleCurrentProject}}</td>
-    <td class="student-column-9">{{techsCurrentProject}}</td>
-    <td class="student-column-10">{{englishLevel}}</td>
-</tr>
-{{/each}}
+{{#if isStudents}}
+    {{#each list}}
+    <tr>
+        <td class="list-column-0">
+            <input type='checkbox' class='item-checkbox' data-id="{{id}}">
+        </td>
+        <td class="student-column-1">
+            <a href='/info?id={{id}}'>{{name}}</a>
+        </td>
+        <td class="student-column-2">{{hireDate}}</td>
+        <td class="student-column-3">{{faculty}}</td>
+        <td class="student-column-4">{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
+        <td class="student-column-5">{{graduationDate}}</td>
+        <td class="student-column-6">{{workingHours}}</td>
+        <td class="student-column-7">{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
+        <td class="student-column-8">{{roleCurrentProject}}</td>
+        <td class="student-column-9">{{techsCurrentProject}}</td>
+        <td class="student-column-10">{{englishLevel}}</td>
+    </tr>
+    {{/each}}
+{{else}}
+    {{#each list}}
+    <tr>
+        <td class="list-column-0">
+            <input type='checkbox' class='item-checkbox' data-id="{{id}}">
+        </td>
+        <td class="empl-column-1">
+            <a href='/info?id={{id}}'>{{name}}</a>
+        </td>
+        <td class="empl-column-2">{{email}}</td>
+        <td class="empl-column-3">{{skype}}</td>
+    </tr>
+    {{/each}}
+{{/if}}

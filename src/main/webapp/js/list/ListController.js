@@ -4,9 +4,11 @@
 define(["jquery"], function ($, Handlebars) {
     "use strict";
 
+    var viewStudents = undefined;
+
     function init() {
         var $table = $("#studTable");
-        initHeader(true);
+//        initHeader(true);
         $("#listHeader").on("click", "#checkAll", function () {//input[type=checkbox]
             setCheckedAll($(this).prop("checked"));
         });
@@ -29,13 +31,17 @@ define(["jquery"], function ($, Handlebars) {
         );
     }
 
-    function addAll(arrStudents) {
+    function addAll(data, isStudents) {
+        if (viewStudents !== isStudents) {
+            viewStudents = isStudents;
+            initHeader(isStudents);
+        }
         require(["handlebars", "text!templates/user-list-template.html"],
             function (Handlebars, template) {
                 $("#studTable > tbody").append(Handlebars.compile(template)(
                     {
-                        list: arrStudents,
-                        isStudents: true
+                        isStudents: isStudents,
+                        list: data
                     }
                 ));
                 $("#checkAll").attr('checked', false);

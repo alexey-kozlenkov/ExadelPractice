@@ -149,6 +149,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             delete filterValue[field];
         }
         sessionStorage.setItem('filter', JSON.stringify(filterValue));
+        $("body").trigger("searchOrFieldUpdate", {type: "filter"});
     }
     function removeValue(ovner) {
         var selfItem = $($(ovner).parent().get(0)),
