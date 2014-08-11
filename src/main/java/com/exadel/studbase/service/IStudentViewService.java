@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface IStudentViewService {
-    public Collection<StudentView> getAll();
+    Collection<StudentView> getAll();
 
-    public Collection<StudentView> getViewByStudentName(String desiredName);
+    Collection<StudentView> getViewByStudentName(String desiredName);
 
-    public Collection<StudentView> getView(Map<String, Filter<StudentView>> filterMap);
+    Collection<StudentView> getView(Map<String, Filter<StudentView>> filterMap);
 
-    public Collection<StudentView> getViewBySkills(ArrayList<String> ids);
+    Collection<StudentView> getViewBySkills(ArrayList<String> ids);
 }

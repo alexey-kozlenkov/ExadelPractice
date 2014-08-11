@@ -36,6 +36,12 @@ public class EmployeeViewServiceImpl implements IEmployeeViewService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<EmployeeView> getViewByEmployeeName(String desiredName) {
+        return employeeViewDAO.getViewByEmployeeName(desiredName);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Collection<EmployeeView> getAll() {
         return employeeViewDAO.getAll();
     }

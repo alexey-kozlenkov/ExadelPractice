@@ -95,8 +95,7 @@ public class ListPageController {
             ListResponse response = new ListResponse(version, result);
             return gson.toJson(response, ListResponse.class);
         } else {
-
-            result = employeeViewService.getAll();
+            result = employeeViewService.getViewByEmployeeName(desiredName);
             reformatRoles(result);
             ListResponse response = new ListResponse(version, result);
             return gson.toJson(response, ListResponse.class);
@@ -223,10 +222,10 @@ public class ListPageController {
     }
 
     private void reformatRoles(Collection<EmployeeView> view) {
-        for(EmployeeView employeeView: view) {
+        for (EmployeeView employeeView : view) {
             String[] roles = employeeView.getRole().split(";");
-            String resultRole ="";
-            for(String role: roles) {
+            String resultRole = "";
+            for (String role : roles) {
                 if (role.equalsIgnoreCase("ROLE_CURATOR")) {
                     resultRole += resultRole.equalsIgnoreCase("") ? "Curator" : ", Curator";
                 } else if (role.equalsIgnoreCase("ROLE_FEEDBACKER")) {

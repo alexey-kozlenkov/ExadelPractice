@@ -11,5 +11,7 @@ public interface IEmployeeViewService {
 
     void delete (EmployeeView employeeView);
 
+    Collection<EmployeeView> getViewByEmployeeName(String desiredName);
+
     Collection<EmployeeView> getAll();
 }
