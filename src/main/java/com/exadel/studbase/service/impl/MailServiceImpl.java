@@ -23,7 +23,8 @@ public class MailServiceImpl implements IMailService {
     @Override
     public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        /*message.setFrom("<vasia.ermakov@gmail.com>");*/
+
+        message.setFrom("<" + javaMailSender.getUsername() + ">");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
@@ -38,10 +39,11 @@ public class MailServiceImpl implements IMailService {
 
     @Override
     public boolean sendMail(String from, String password, String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
         javaMailSender.setUsername(from);
         javaMailSender.setPassword(password);
-        SimpleMailMessage message = new SimpleMailMessage();
-        /*message.setFrom("<vasia.ermakov@gmail.com>");*/
+        message.setFrom("<" + from + ">");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
