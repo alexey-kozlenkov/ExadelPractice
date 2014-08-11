@@ -97,14 +97,14 @@ public class ListPageController {
                     result = viewByCurator;
                 }
             }
-
-            StudResponse response = new StudResponse(version, result);
-            return gson.toJson(response, StudResponse.class);
-        } else {
-            StudResponse response = new StudResponse(version,
-                    studentViewService.getViewByStudentName(desiredName));
-            return gson.toJson(response, StudResponse.class);
         }
+
+        Collection search = studentViewService.getViewByStudentName(desiredName);
+
+        result = result !=null && search!=null ? CollectionUtils.intersection(result, search) :
+                result != null ? result : search;
+        StudResponse response = new StudResponse(version, result);
+        return gson.toJson(response, StudResponse.class);
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
@@ -114,10 +114,13 @@ public class ListPageController {
         boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
-        Collection<User> listOfUsers = employeeService.getAllCurators();
-        Map<Long, String> curators = new HashMap<Long, String>();
-        for (User u : listOfUsers) {
-            curators.put(u.getId(), u.getName());
+        Map<Long, String> curators = null;
+        if (!isCurator) {
+            Collection<User> listOfUsers = employeeService.getAllCurators();
+            curators = new HashMap<Long, String>();
+            for (User u : listOfUsers) {
+                curators.put(u.getId(), u.getName());
+            }
         }
         Collection<SkillType> listOfSkillTypes = skillTypeService.getAll();
         Map<Long, String> skills = new HashMap<Long, String>();

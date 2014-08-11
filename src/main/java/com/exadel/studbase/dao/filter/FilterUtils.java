@@ -3,7 +3,7 @@ package com.exadel.studbase.dao.filter;
 import com.exadel.studbase.dao.filter.impl.EqualsFilter;
 import com.exadel.studbase.dao.filter.impl.GreaterEqualsFilter;
 import com.exadel.studbase.dao.filter.impl.IsNotNullFilter;
-import com.exadel.studbase.domain.impl.SkillSet;
+import com.exadel.studbase.dao.filter.impl.IsNullFilter;
 import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -19,8 +19,8 @@ public class FilterUtils {
         Criterion root = null;
         for (Map.Entry<String, Filter<T>> e : filters.entrySet()) {
             String propertyName = e.getKey();
-            Filter filterType = e.getValue();
-            Object value = filterType.getValue();
+            Filter<T> filterType = e.getValue();
+            T value = filterType.getValue();
             Criterion current;
 
             if (value == null) {
@@ -31,7 +31,10 @@ public class FilterUtils {
                 current = Restrictions.ge(propertyName, value);
             } else if (filterType instanceof IsNotNullFilter) {
                 current = Restrictions.isNotNull(propertyName);
-            } else {
+            } else if (filterType instanceof IsNullFilter) {
+                current = Restrictions.isNull(propertyName);
+            }
+            else {
                 throw new RuntimeException("Unexpected filter class: " + filterType.getClass().getName());
             }
 
@@ -65,7 +68,8 @@ public class FilterUtils {
                 Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("workingHours", filter);
             } else if (paramName.equalsIgnoreCase("billable")) {
-                Filter filter = new IsNotNullFilter(paramValue);
+                Boolean isBillable = Boolean.valueOf((String) paramValue);
+                Filter filter = isBillable ?  new IsNotNullFilter(paramValue) : new IsNullFilter(paramValue);
                 filters.put("billable", filter);
             } else if (paramName.equalsIgnoreCase("english")) {
                 Filter filter = new GreaterEqualsFilter(paramValue);

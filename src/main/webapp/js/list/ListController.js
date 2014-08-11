@@ -1,7 +1,9 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-var ListController = (function () {
+define(["jquery"], function ($, Handlebars) {
+    "use strict";
+
     function init() {
         var $table = $("#studTable");
         $("#checkAll").click(function () {
@@ -14,10 +16,15 @@ var ListController = (function () {
     }
 
     function addAllStudents(arrStudents) {
-        var rowTemplate = Handlebars.compile($('#listContentTemplate').html());
-        $("#studTable > tbody").append(rowTemplate({list: arrStudents}));
+        require(["handlebars", "text!templates/user-list-template.html"],
+            function (Handlebars, template) {
+                $("#studTable > tbody").append(Handlebars.compile(template)({list: arrStudents}));
+            }
+        );
+        $("#checkAll").attr('checked', false);
         updateInfoLabel();
     }
+
     function clearList() {
         $("#studTable > tbody").empty();
         updateInfoLabel();
@@ -33,6 +40,7 @@ var ListController = (function () {
         });
         return checkedList;
     }
+
     function setCheckedAll(state) {
         $('.item-checkbox').each(function () {
             this.checked = state;
@@ -51,9 +59,10 @@ var ListController = (function () {
     }
 
     function updateInfoLabel() {
-        var itCount = $("#studTable > tbody > tr").length;
+        var itCount = $("#studTable > tbody > tr").length,
+            selCount;
         if (itCount > 0) {
-            var selCount = $(".item-checkbox:checked").length;
+            selCount = $(".item-checkbox:checked").length;
             $("#infoLabel").text("------------- " + itCount + " item in list " + selCount + " selected -------------");
 
         } else {
@@ -61,7 +70,7 @@ var ListController = (function () {
         }
     }
 
-    return{
+    return {
         init: init,
         addAllStudents: addAllStudents,
         clearList: clearList,
@@ -69,38 +78,6 @@ var ListController = (function () {
         getCheckedRowsId: getCheckedRowsId,
         setCheckedAll: setCheckedAll,
         setTableLoadingState: setTableLoadingState
-    }
-}());
-
-var ListHeader = (function () {
-    var pastHeaderHeight;
-
-    function init() {
-        $(window).resize(function () {
-            var height = $("#header").outerHeight();
-            if (pastHeaderHeight != height) {
-                pastHeaderHeight = height;
-                checkTopMarginOfList();
-            }
-        });
-        // Correct header vertical position according to position of list on scrolling
-        $(window).scroll(function () {
-            $("#headerScrollingBlock").scrollLeft($(this).scrollLeft());
-        });
-        checkTopMarginOfList();
-    }
-
-    function checkTopMarginOfList() {
-        $("#listContent").css("margin-top", $("#header").height() + "px");
-    }
-
-    return {
-        init: init,
-        check: checkTopMarginOfList
     };
-}());
-
-$(document).ready(ListController.init());
-$(window).ready(ListHeader.init());
-
+});
 

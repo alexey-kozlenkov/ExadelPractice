@@ -1,0 +1,19 @@
+{{#each list}}
+<tr>
+    <td>
+        <input type='checkbox' class='item-checkbox' data-id="{{id}}">
+    </td>
+    <td>
+        <a href='/info?id={{id}}'>{{name}}</a>
+    </td>
+    <td>{{hireDate}}</td>
+    <td>{{faculty}}</td>
+    <td>{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
+    <td>{{graduationDate}}</td>
+    <td>{{workingHours}}</td>
+    <td>{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
+    <td>{{roleCurrentProject}}</td>
+    <td>{{techsCurrentProject}}</td>
+    <td>{{englishLevel}}</td>
+</tr>
+{{/each}}
