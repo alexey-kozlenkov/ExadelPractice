@@ -24,6 +24,12 @@ public class EmployeeView implements IEntity<Long>{
     @Column(name = "skype")
     private String skype;
 
+    @Column(name = "telephone")
+    private String telephone;
+
+    @Column(name = "role")
+    private String role;
+
     public EmployeeView() {
     }
 
@@ -59,5 +65,38 @@ public class EmployeeView implements IEntity<Long>{
 
     public void setSkype(String skype) {
         this.skype = skype;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EmployeeView that = (EmployeeView) o;
+
+        if (!id.equals(that.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
