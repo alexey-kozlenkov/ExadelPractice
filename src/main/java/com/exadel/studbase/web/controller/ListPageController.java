@@ -55,7 +55,7 @@ public class ListPageController {
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
                                        @RequestParam(value = "filter", required = false) String filterString,
-                                       @RequestParam(value = "isStudent") boolean isStudent) {
+                                       @RequestParam(value = "isStudent", required = false) boolean isStudent) {
         //TODO: Optimise request queue (for big counts in short time)
 
         System.out.println("Version: " + version);
@@ -63,35 +63,32 @@ public class ListPageController {
         System.out.println("Filter: " + filterString);
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<StudentView> result = null;
-        Collection<StudentView> search = studentViewService.getViewByStudentName(desiredName);
+        Collection result = null;
+        Collection search = studentViewService.getViewByStudentName(desiredName);
 
-        if (isStudent) {
+        if (!isStudent) {
             if (!filterString.equals("")) {
-                Map<String, Object> filterSpecification = new HashMap<String, Object>();
-                Map<String, Filter<StudentView>> mainFilter = new HashMap<String, Filter<StudentView>>();
-                ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
-
+                Map filterSpecification = new HashMap<String, Object>();
                 filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
+
+                Map mainFilter = new HashMap<String, Filter<StudentView>>();
                 FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
 
                 if (mainFilter.size() > 0) {
                     result = studentViewService.getView(mainFilter);
                 }
 
+                ArrayList skills = (ArrayList<String>) filterSpecification.get("skills");
                 if (skills != null) {
                     Collection<StudentView> viewBySkills = studentViewService.getViewBySkills(skills);
-
-                    result = (result != null) ? CollectionUtils.intersection(result, viewBySkills)
-                            : viewBySkills;
+                    result = (result != null) ? CollectionUtils.intersection(result, viewBySkills) : viewBySkills;
                 }
 
                 if (filterSpecification.get("curator") != null) {
                     Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
                     Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
 
-                    result = (result != null) ? CollectionUtils.intersection(result, viewByCurator)
-                            : viewByCurator;
+                    result = (result != null) ? CollectionUtils.intersection(result, viewByCurator) : viewByCurator;
                 }
             }
 

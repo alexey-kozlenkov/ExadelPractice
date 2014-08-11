@@ -15,11 +15,11 @@ public class SkillSet implements IEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "skill_type_id")
-    private SkillType skillTypeId;
+    private SkillType skillType;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name = "level")
     private Integer level;
@@ -40,20 +40,20 @@ public class SkillSet implements IEntity<Long> {
         this.id = id;
     }
 
-    public SkillType getSkillTypeId() {
-        return skillTypeId;
+    public SkillType getSkillType() {
+        return skillType;
     }
 
-    public void setSkillTypeId(SkillType skillTypeId) {
-        this.skillTypeId = skillTypeId;
+    public void setSkillType(SkillType skillType) {
+        this.skillType = skillType;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
     public void setLevel(Integer level) {
