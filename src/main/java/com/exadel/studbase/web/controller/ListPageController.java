@@ -35,6 +35,8 @@ public class ListPageController {
     @Autowired
     IStudentViewService studentViewService;
     @Autowired
+    IStudentViewService employeeViewService;
+    @Autowired
     ISkillTypeService skillTypeService;
     @Autowired
     IMailService mailService;
@@ -52,54 +54,54 @@ public class ListPageController {
     @ResponseBody
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
-                                       @RequestParam(value = "filter", required = false) String filterString) {
+                                       @RequestParam(value = "filter", required = false) String filterString,
+                                       @RequestParam(value = "isStudent") boolean isStudent) {
         //TODO: Optimise request queue (for big counts in short time)
-
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         System.out.println("Version: " + version);
         System.out.println("Search name: " + desiredName);
         System.out.println("Filter: " + filterString);
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<StudentView> result = null;
+        Collection<StudentView> search = studentViewService.getViewByStudentName(desiredName);
 
-        Collection result = null;
+        if (isStudent) {
+            if (!filterString.equals("")) {
+                Map<String, Object> filterSpecification = new HashMap<String, Object>();
+                Map<String, Filter<StudentView>> mainFilter = new HashMap<String, Filter<StudentView>>();
+                ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
 
-        if (!filterString.equals("")) {
-            Map filterSpecification = new HashMap<String, Object>();
-            filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
+                filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
+                FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
 
-            Map<String, Filter<StudentView>> mainFilter = new HashMap<String, Filter<StudentView>>();
-            FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
-            if (mainFilter.size() > 0) {
-                result = studentViewService.getView(mainFilter);
-            }
+                if (mainFilter.size() > 0) {
+                    result = studentViewService.getView(mainFilter);
+                }
 
-            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
-            if (skills != null) {
-                Collection<StudentView> viewBySkills = studentViewService.getViewBySkills(skills);
-                if (result != null) {
-                    result = CollectionUtils.intersection(result, viewBySkills);
-                } else {
-                    result = viewBySkills;
+                if (skills != null) {
+                    Collection<StudentView> viewBySkills = studentViewService.getViewBySkills(skills);
+
+                    result = (result != null) ? CollectionUtils.intersection(result, viewBySkills)
+                            : viewBySkills;
+                }
+
+                if (filterSpecification.get("curator") != null) {
+                    Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
+                    Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
+
+                    result = (result != null) ? CollectionUtils.intersection(result, viewByCurator)
+                            : viewByCurator;
                 }
             }
 
-            if (filterSpecification.get("curator") != null) {
-                Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
-                Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
-                if (result != null) {
-                    result = CollectionUtils.intersection(result, viewByCurator);
-                } else {
-                    result = viewByCurator;
-                }
-            }
+            result = (result != null && search != null) ? CollectionUtils.intersection(result, search) :
+                    (result != null) ? result : search;
+            StudResponse response = new StudResponse(version, result);
+            return gson.toJson(response, StudResponse.class);
         }
 
-        Collection search = studentViewService.getViewByStudentName(desiredName);
-
-        result = result !=null && search!=null ? CollectionUtils.intersection(result, search) :
-                result != null ? result : search;
+        result = employeeViewService.getAll();
         StudResponse response = new StudResponse(version, result);
         return gson.toJson(response, StudResponse.class);
     }
