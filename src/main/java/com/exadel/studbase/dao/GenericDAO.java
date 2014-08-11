@@ -8,14 +8,13 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface GenericDAO<CONTENT extends IEntity,  VIEW extends IEntity, ID extends Serializable> {
+    Collection<CONTENT> getAll();
 
-    public Collection<CONTENT> getAll();
+    CONTENT find(ID id);
 
-    public CONTENT find(ID id);
+    CONTENT saveOrUpdate(CONTENT content);
 
-    public CONTENT saveOrUpdate(CONTENT content);
+    void delete(CONTENT content);
 
-    public void delete(CONTENT content);
-
-    public Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
+    Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
 }
