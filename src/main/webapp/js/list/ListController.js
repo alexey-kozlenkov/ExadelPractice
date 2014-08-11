@@ -7,7 +7,7 @@ define(["jquery"], function ($, Handlebars) {
     function init() {
         var $table = $("#studTable");
         initHeader(true);
-        $("#listHeader").on("click", ".checkAll", function () {
+        $("#listHeader").on("click", "#checkAll", function () {//input[type=checkbox]
             setCheckedAll($(this).prop("checked"));
         });
         $table.click(function () {
@@ -38,7 +38,7 @@ define(["jquery"], function ($, Handlebars) {
                         isStudents: true
                     }
                 ));
-                $(".checkAll").attr('checked', false);
+                $("#checkAll").attr('checked', false);
                 updateInfoLabel();
             }
         );

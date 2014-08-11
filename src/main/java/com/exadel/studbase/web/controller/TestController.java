@@ -1,11 +1,11 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.filter.Filter;
 import com.exadel.studbase.domain.impl.Employee;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.service.*;
+import com.exadel.studbase.service.filter.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
