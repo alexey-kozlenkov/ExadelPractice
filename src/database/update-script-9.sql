@@ -1,0 +1,30 @@
+CREATE OR REPLACE FUNCTION find_employee_by_name(desired_name TEXT)
+  RETURNS SETOF "EMPLOYEE_VIEW"
+AS
+  $BODY$
+  DECLARE
+    line                 "EMPLOYEE_VIEW"%ROWTYPE;
+    max_similarity_value REAL;
+  BEGIN
+    max_similarity_value := 0;
+    FOR line IN (SELECT
+                   *
+                 FROM "EMPLOYEE_VIEW" ORDER BY similarity(name, $1)  DESC) LOOP
+      IF  desired_name =''
+      THEN RETURN NEXT line;
+      ELSE
+        IF similarity(line.name, $1) > max_similarity_value
+        THEN
+          max_similarity_value = similarity(line.name, $1);
+          RETURN NEXT line;
+        ELSE
+          IF 4 * similarity(line.name, $1) > max_similarity_value
+          THEN
+            RETURN NEXT line;
+          END IF;
+        END IF;
+      END IF;
+    END LOOP;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
