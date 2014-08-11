@@ -20,6 +20,7 @@
     {{/each}}
 {{else}}
     {{#each list}}
+    <tr>
         <td class="list-column-0">
             <input type='checkbox' class='item-checkbox' data-id="{{id}}">
         </td>
@@ -28,5 +29,6 @@
         </td>
         <td class="empl-column-2">{{email}}</td>
         <td class="empl-column-3">{{skype}}</td>
+    </tr>
     {{/each}}
 {{/if}}
