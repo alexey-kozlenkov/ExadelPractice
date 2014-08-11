@@ -64,9 +64,10 @@ public class ListPageController {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection result = null;
-        Collection search = studentViewService.getViewByStudentName(desiredName);
 
         if (!isStudent) {
+            Collection search = studentViewService.getViewByStudentName(desiredName);
+
             if (!filterString.equals("")) {
                 Map filterSpecification = new HashMap<String, Object>();
                 filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
