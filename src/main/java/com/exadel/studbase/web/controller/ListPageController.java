@@ -145,20 +145,24 @@ public class ListPageController {
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam("message") String body) {
         Gson gson = new Gson();
-
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<String> inaccessibleEmail = new ArrayList<String>();
+
         for (Long id : studentId) {
             User user = userService.getById(id);
-            String userName = user.getName();
+
             if (user.getEmail() != null) {
                 if (!mailService.sendMail(user.getEmail(), subject, body)) {
-                    inaccessibleEmail.add(userName + " ( " + user.getEmail() + " )");
+                    inaccessibleEmail.add(user.getName() + " ( " + user.getEmail() + " )");
                 }
             } else {
-                inaccessibleEmail.add(userName + "( haven't mail )");
+                inaccessibleEmail.add(user.getName() + "( haven't mail )");
             }
         }
+
+        /*User user = userService.getById(4L);
+        mailService.sendMail("vasia-94@tut.by", "xxxPASSWORD", user.getEmail(), "s", "b");*/
+
         return gson.toJson(inaccessibleEmail);
     }
 
@@ -167,6 +171,7 @@ public class ListPageController {
         Gson gson = new Gson();
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<User> listOfUsers = new ArrayList<User>();
+
         for (Long id : studentId) {
             listOfUsers.add(userService.getById(id));
         }
@@ -220,5 +225,4 @@ public class ListPageController {
             this.studentViews = studentViews;
         }
     }
-
 }
