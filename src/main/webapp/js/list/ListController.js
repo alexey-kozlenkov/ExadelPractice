@@ -6,7 +6,8 @@ define(["jquery"], function ($, Handlebars) {
 
     function init() {
         var $table = $("#studTable");
-        $("#checkAll").click(function () {
+        initHeader(true);
+        $("#listHeader").on("click", "#checkAll", function () {//input[type=checkbox]
             setCheckedAll($(this).prop("checked"));
         });
         $table.click(function () {
@@ -15,14 +16,32 @@ define(["jquery"], function ($, Handlebars) {
         updateInfoLabel();
     }
 
-    function addAllStudents(arrStudents) {
-        require(["handlebars", "text!templates/user-list-template.html"],
-            function (Handlebars, template) {
-                $("#studTable > tbody").append(Handlebars.compile(template)({list: arrStudents}));
+    function initHeader(isStudents) {
+        require(["handlebars", "text!templates/header-list-template.html", "ListHeader"],
+            function (Handlebars, template, header) {
+                $("#listHeader").html(Handlebars.compile(template)(
+                    {
+                        isStudents: isStudents
+                    }
+                ));
+                header.check();
             }
         );
-        $("#checkAll").attr('checked', false);
-        updateInfoLabel();
+    }
+
+    function addAll(arrStudents) {
+        require(["handlebars", "text!templates/user-list-template.html"],
+            function (Handlebars, template) {
+                $("#studTable > tbody").append(Handlebars.compile(template)(
+                    {
+                        list: arrStudents,
+                        isStudents: true
+                    }
+                ));
+                $("#checkAll").attr('checked', false);
+                updateInfoLabel();
+            }
+        );
     }
 
     function clearList() {
@@ -72,7 +91,7 @@ define(["jquery"], function ($, Handlebars) {
 
     return {
         init: init,
-        addAllStudents: addAllStudents,
+        addAll: addAll,
         clearList: clearList,
 
         getCheckedRowsId: getCheckedRowsId,
