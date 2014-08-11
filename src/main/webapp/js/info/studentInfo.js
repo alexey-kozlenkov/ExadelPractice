@@ -4,8 +4,9 @@ var MAX_NUMBER_TERMS = 10,
     MAX_MARK = 10;
 
 //templates
-var templateTermMark = Handlebars.compile($('#termMarkTemplate').html());
-var templateDocument = Handlebars.compile($('#documentTemplate').html());
+var templateTermMark = Handlebars.compile($('#termMarkTemplate').html()),
+    templateDocument = Handlebars.compile($('#documentTemplate').html()),
+    templateFeedback = Handlebars.compile($('#feedbackTemplate').html());
 
 $(window).ready(function () {
     //alert(window.location.search);
@@ -117,32 +118,81 @@ $(document).ready(function () {
 
     //load documents
     $("#documentsHeader").click(function () {
-        $.ajax({
-            type: "GET",
-            url: "/info/getActualDocuments",
-            cashe: false,
-            data: {
-                "studentId": studentId
-            },
-            success: function (data) {
-                $("#documents").empty();
+        if ($("#documentsHeader").attr("data-visible") === "false") {
+            $.ajax({
+                type: "GET",
+                url: "/info/getActualDocuments",
+                cashe: false,
+                data: {
+                    "studentId": studentId
+                },
+                success: function (data) {
+                    $("#documents").empty();
 
-                var documents = JSON.parse(data);
-                jQuery.each(documents, function (index, value) {
-                    $("#documents").append(templateDocument(value));
-                    if (expiredSoon(value.expirationDate)) {
-                        $("#documents tr").last().addClass("expired-soon-document");
-                    }
-                    $("#documentTable").trigger("update");
-                });
-            },
-            error: function () {
-                alert("error");
-            }
-        });
+                    var documents = JSON.parse(data);
+                    jQuery.each(documents, function (index, value) {
+                        $("#documents").append(templateDocument(value));
+                        if (expiredSoon(value.expirationDate)) {
+                            $("#documents tr").last().addClass("expired-soon-document");
+                        }
+                        $("#documentTable").trigger("update");
+                    });
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+            $("#documentsHeader").attr("data-visible", "true");
+        }
+        else {
+            $("#documentsHeader").attr("data-visible", "false");
+        }
 
     });
+    //load feedbacks
+    $("#feedbacksHeader").click(function () {
+        if ($("#feedbacksHeader").attr("data-visible") === "false") {
 
+            var getFeedbacks =  $.ajax({
+                type: "GET",
+                url: "/info/getFeedbacks",
+                cashe: false,
+                data: {
+                    "studentId": studentId
+                }
+            });
+            getFeedbacks.done(function (data) {
+                $(".feedback-list").empty();
+
+                var feedbacks = JSON.parse(data);
+                jQuery.each(feedbacks, function (index, value) {
+                    var date = new Date(value.feedbackDate),
+                        feedback = {
+                            feedbacker : value.feedbackerId,
+                            professionalQuality : value.professionalCompetence,
+                            relevantToWork : value.attitudeToWork,
+                            relationshipWithStaff : value.collectiveRelations,
+                            professionalGrowth : value.professionalProgress,
+                            needMoreHours : value.needMoreHours,
+                            realProject : value.isOnProject,
+                            additionalInfo : value.content,
+                            feedbackDate : formatDate(date)
+                        };
+                    $(".feedback-list").prepend(templateFeedback(feedback));
+                });
+            });
+            getFeedbacks.fail(function () {
+                alert("error");
+            });
+
+
+            $("#feedbacksHeader").attr("data-visible", "true");
+        }
+        else {
+            $("#feedbacksHeader").attr("data-visible", "false");
+        }
+
+    });
     // show/hide expired docs
     $("#expiredDocs").click(function () {
         var $expiredDocs = $("#expiredDocs"),
@@ -183,13 +233,11 @@ $(document).ready(function () {
     });
 
     //add document
-    $("#addDocument").click(function () {
+    $("#addNewDocument").click(function () {
         showDialog("add-document");
 
     });
-
-    ////TODO wtf dialog
-    $("#okButton").click(function () {
+    $("#addDocument").click(function () {
         var doctype = $("#doctype").val(),
             issueDate = $("#issueDate").val(),
             expirationDate = $("#expirationDate").val(),
@@ -210,10 +258,31 @@ $(document).ready(function () {
         $("#documents tr").first().addClass("new-document");
         $("#documentTable").trigger("update");
     });
-    //close dialog
+    //write or edit feedback
+    $("#writeFeedback").click(function () {
+        showDialog("add-feedback");
+    });
+    $("#addFeedback").click(function () {
+        var date = new Date(Date.now()),
+            data = {
+                feedbacker : "John White",
+                professionalQuality : "ok quality",
+                relevantToWork : "ok relevant",
+                relationshipWithStaff : "ok relationship",
+                professionalGrowth : "ok progress",
+                needMoreHours : "yes need",
+                realProject : "no project",
+                additionalInfo : "comment",
+                feedbackDate : formatDate(date)
+            };
+        $(".feedback-list").prepend(templateFeedback(data));
+        closeDialog();
+    });
+    // close any dialog
     $("#closeDialog").click(function () {
         closeDialog();
     });
+
     //handler for state select
     $("#state").change(
         checkState
@@ -249,6 +318,8 @@ $(document).ready(function () {
         }
     });
 
+
+
 });
 
 
@@ -268,6 +339,20 @@ function parseRequestForId(string) {
 
     gottenId = string.match(regExpForId);
     studentId = (gottenId[0].match(regExp))[0];
+}
+
+function formatDate(date) {
+    "use strict";
+    var DD = date.getDate(),
+        MM = date.getMonth() + 1,
+        YYYY = date.getFullYear();
+    if (DD < 10) {
+        DD = '0' + DD;
+    }
+    if (MM < 10) {
+        MM = '0' + MM;
+    }
+    return YYYY + "-" + MM + "-" + DD;
 }
 
 function expiredSoon(expirationDate) {
@@ -363,12 +448,13 @@ function fillCommonInfo() {
 
             //termMarks
             marks = gottenStudent.termMarks;
-            marks = marks.split(";");
-            jQuery.each(marks, function (index, value) {
-                $("#termMarkList").append(templateTermMark);
-                $("#termMarkList li input").last().attr('value', value);
-            });
-
+            if (marks !== "") {
+                marks = marks.split(";");
+                jQuery.each(marks, function (index, value) {
+                    $("#termMarkList").append(templateTermMark);
+                    $("#termMarkList li input").last().attr('value', value);
+                });
+            }
 
         }
     });
@@ -502,7 +588,7 @@ function saveEducationChanges(editedUniversity, editedFaculty, editedSpeciality,
 
 function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, editedWishingHours, editedCourseStartWorking, editedTrainingBeforeWorking, editedTrainingExadel, editedCurrentProject, editedRoleCurrentProject, editedCurrentTeamLead, editedCurrentProjectManager, editedTechsCurrentProject) {
     "use strict";
-    var defferedPostExadel = $.ajax({
+    var postExadel = $.ajax({
         type: "POST",
         //SEND
         url: "/info/postExadel",
@@ -523,7 +609,7 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
             'studentTechsCurrentProject': editedTechsCurrentProject
         }
     });
-    defferedPostExadel.done(function () {
+    postExadel.done(function () {
         $("#saveExadelInformation").text("Saved!");
         $("#saveExadelInformation").animate({
             backgroundColor: '#5cb85c',
@@ -540,7 +626,7 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
             }, 1000)
         });
     });
-    defferedPostExadel.fail(function () {
+    postExadel.fail(function () {
         $("#saveExadelInformation").text("Check out!");
         $("#saveExadelInformation").animate({
             backgroundColor: '#CD5C5C',
@@ -562,7 +648,7 @@ function saveExadelChanges(editedWorkingHours, editedHireDate, editedBillable, e
 
 function saveDocumentsInformation(newDocuments) {
     "use strict";
-    var defferedPostDocuments = $.ajax({
+    var postDocuments = $.ajax({
         type: "POST",
         //SEND
         url: "/info/postDocuments",
@@ -570,7 +656,7 @@ function saveDocumentsInformation(newDocuments) {
         data: {'documents': newDocuments}
 
     });
-    defferedPostDocuments.done(function () {
+    postDocuments.done(function () {
         $("#saveDocumentsInformation").text("Saved!");
         $("#saveDocumentsInformation").animate({
             backgroundColor: '#5cb85c',
@@ -587,8 +673,7 @@ function saveDocumentsInformation(newDocuments) {
             }, 1000)
         });
     });
-    defferedPostDocuments.fail(function () {
-        alert("error");
+    postDocuments.fail(function () {
         $("#saveDocumentsInformation").text("Check out!");
         $("#saveDocumentsInformation").animate({
             backgroundColor: '#CD5C5C',
