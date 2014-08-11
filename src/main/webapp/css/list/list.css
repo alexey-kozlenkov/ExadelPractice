@@ -94,7 +94,7 @@
     overflow: hidden;
 }
 
-#headerFixed {
+#listHeader {
     margin: 0;
 }
 
@@ -113,11 +113,13 @@
 }
 
 .student-table > thead > tr > th {
-    padding-top: 5px;
+    padding-top: 4px;
     padding-bottom: 2px;
 
     vertical-align: middle;
     text-align: center;
+
+    border-bottom: 1px solid transparent;
 }
 
 .student-table > tbody > tr > td {
@@ -130,48 +132,59 @@
     /*text-overflow: ellipsis;*/
 }
 
-.header-column-0 {
+.list-column-0 {
     width: 40px;
 }
 
-.header-column-1 {
-    width: 240px;
+.student-column-1 {
+    width: 230px;
 }
 
-.header-column-2 {
+.student-column-2 {
     width: 90px;
 }
 
-.header-column-3 {
+.student-column-3 {
     width: 85px;
 }
 
-.header-column-4 {
+.student-column-4 {
     width: 65px;
 }
 
-.header-column-5 {
+.student-column-5 {
     width: 80px;
 }
 
-.header-column-6 {
+.student-column-6 {
     width: 65px;
 }
 
-.header-column-7 {
+.student-column-7 {
     width: 90px;
 }
 
-.header-column-8 {
-    width: 90px;
+.student-column-8 {
+    width: 120px;
 }
 
-.header-column-9 {
+.student-column-9 {
     width: auto;
 }
 
-.header-column-10 {
+.student-column-10 {
     width: 100px;
+}
+
+.curator-column-1 {
+    width: auto;
+}
+
+.curator-column-2 {
+    width: 250px;
+}
+.curator-column-3 {
+    width: 200px;
 }
 
 /*----------------------Load Image-----------------------*/
