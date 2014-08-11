@@ -77,12 +77,8 @@ define(["jquery", "ListController"], function ($, ListController) {
         if (actualVersion === response.version) {
             console.log("Get actual response (", actualVersion, ")");
             ListController.clearList();
-            if (isStudents) {
-                ListController.addAll(response.studentViews, true);
-            }
-            else {
-                ListController.addAll(response.employeeViews, false);
-            }
+            ListController.addAll(response.views, isStudents);
+
             ListController.setTableLoadingState(false);
         } else {
             console.log("Response (", response.version, ") was ignored; actual: ", actualVersion, "; now: ", Date.now());

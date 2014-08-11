@@ -35,7 +35,7 @@ public class ListPageController {
     @Autowired
     IStudentViewService studentViewService;
     @Autowired
-    IStudentViewService employeeViewService;
+    IEmployeeViewService employeeViewService;
     @Autowired
     ISkillTypeService skillTypeService;
     @Autowired
@@ -64,9 +64,10 @@ public class ListPageController {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection result = null;
-        Collection search = studentViewService.getViewByStudentName(desiredName);
 
-        if (!isStudent) {
+        if (isStudent) {
+            Collection search = studentViewService.getViewByStudentName(desiredName);
+
             if (!filterString.equals("")) {
                 Map filterSpecification = new HashMap<String, Object>();
                 filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
@@ -94,13 +95,13 @@ public class ListPageController {
 
             result = (result != null && search != null) ? CollectionUtils.intersection(result, search) :
                     (result != null) ? result : search;
-            StudResponse response = new StudResponse(version, result);
-            return gson.toJson(response, StudResponse.class);
+            ListResponse response = new ListResponse(version, result);
+            return gson.toJson(response, ListResponse.class);
         }
 
         result = employeeViewService.getAll();
-        StudResponse response = new StudResponse(version, result);
-        return gson.toJson(response, StudResponse.class);
+        ListResponse response = new ListResponse(version, result);
+        return gson.toJson(response, ListResponse.class);
     }
 
     @RequestMapping(value = "/filterDescription", method = RequestMethod.GET)
@@ -193,16 +194,16 @@ public class ListPageController {
         userService.save(newUser);
     }
 
-    public class StudResponse {
+    public class ListResponse {
         private Long version;
-        private Collection<StudentView> studentViews;
+        private Collection views;
 
-        public StudResponse() {
+        public ListResponse() {
         }
 
-        public StudResponse(Long version, Collection<StudentView> studentViews) {
+        public ListResponse(Long version, Collection studentViews) {
             this.version = version;
-            this.studentViews = studentViews;
+            this.views = studentViews;
         }
 
         public Long getVersion() {
@@ -213,12 +214,12 @@ public class ListPageController {
             this.version = version;
         }
 
-        public Collection<StudentView> getStudentViews() {
-            return studentViews;
+        public Collection getViews() {
+            return views;
         }
 
-        public void setStudentViews(Collection<StudentView> studentViews) {
-            this.studentViews = studentViews;
+        public void setViews(Collection views) {
+            this.views = views;
         }
     }
 }
