@@ -13,11 +13,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Алексей on 18.07.14.
- */
 @Repository
-public class UserDAO extends GenericDAOImpl<User, StudentView, Long> implements IUserDAO {
+public class UserDAOImpl extends GenericDAOImpl<User, StudentView, Long> implements IUserDAO {
 
     @Override
     public User getByLogin(String login) {

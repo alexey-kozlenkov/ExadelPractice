@@ -1,7 +1,7 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.filter.Filter;
-import com.exadel.studbase.dao.filter.FilterUtils;
+import com.exadel.studbase.service.filter.Filter;
+import com.exadel.studbase.service.filter.FilterUtils;
 import com.exadel.studbase.domain.impl.SkillType;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.StudentView;
@@ -22,9 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 
-/**
- * Created by ala'n on 29.07.2014.
- */
 @Controller
 @Secured({"ROLE_CURATOR", "ROLE_FEEDBACKER", "ROLE_SUPERADMIN", "ROLE_OFFICE"})
 @RequestMapping("/list")
@@ -80,7 +77,7 @@ public class ListPageController {
 
             ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
             if (skills != null) {
-                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
+                Collection<StudentView> viewBySkills = studentViewService.getViewBySkills(skills);
                 if (result != null) {
                     result = CollectionUtils.intersection(result, viewBySkills);
                 } else {

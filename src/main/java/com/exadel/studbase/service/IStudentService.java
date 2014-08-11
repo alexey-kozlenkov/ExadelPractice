@@ -4,9 +4,6 @@ import com.exadel.studbase.domain.impl.Student;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 18.07.14.
- */
 public interface IStudentService {
     Student save(Student student);
 

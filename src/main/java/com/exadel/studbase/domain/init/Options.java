@@ -1,8 +1,5 @@
 package com.exadel.studbase.domain.init;
 
-/**
- * Created by Administrator on 21.07.2014.
- */
 public class Options {
     final String[] roles = {"student", "employee"};
     final String[] states = {"training", "working"};

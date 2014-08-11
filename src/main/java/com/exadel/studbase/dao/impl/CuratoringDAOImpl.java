@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class CuratoringDAO extends GenericDAOImpl<Curatoring, StudentView, Long> implements ICuratoringDAO {
+public class CuratoringDAOImpl extends GenericDAOImpl<Curatoring, StudentView, Long> implements ICuratoringDAO {
     @Override
     public Collection<StudentView> getAllStudentsForEmployee(Long employeeId) {
         Query query = getSession().createQuery(

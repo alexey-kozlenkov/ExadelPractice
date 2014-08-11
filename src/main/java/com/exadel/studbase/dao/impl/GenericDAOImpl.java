@@ -1,9 +1,9 @@
 package com.exadel.studbase.dao.impl;
 
 import com.exadel.studbase.dao.GenericDAO;
-import com.exadel.studbase.dao.filter.Filter;
-import com.exadel.studbase.dao.filter.FilterUtils;
 import com.exadel.studbase.domain.IEntity;
+import com.exadel.studbase.service.filter.Filter;
+import com.exadel.studbase.service.filter.FilterUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -14,9 +14,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-
 
 public abstract class GenericDAOImpl<CONTENT extends IEntity, VIEW extends IEntity, ID extends Serializable>
         extends HibernateDaoSupport implements GenericDAO<CONTENT, VIEW,  ID> {

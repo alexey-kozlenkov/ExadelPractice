@@ -4,9 +4,6 @@ import com.exadel.studbase.domain.impl.Document;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 23.07.14.
- */
 public interface IDocumentService {
 
     Document save(Document document);

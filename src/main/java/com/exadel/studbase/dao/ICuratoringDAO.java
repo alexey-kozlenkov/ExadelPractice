@@ -7,9 +7,6 @@ import com.exadel.studbase.domain.impl.StudentView;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 03.08.2014.
- */
 public interface ICuratoringDAO extends GenericDAO<Curatoring, StudentView,  Long> {
     Collection<StudentView> getAllStudentsForEmployee(Long employeeId);
 

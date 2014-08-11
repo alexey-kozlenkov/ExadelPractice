@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- * Created by Алексей on 28.07.2014.
- */
 @Entity
 @Table(name = "\"STUDENT_VIEW\"")
 public class StudentView implements IEntity<Long> {

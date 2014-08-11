@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 @Service
 public class FeedbackServiceImpl implements IFeedbackService {
 

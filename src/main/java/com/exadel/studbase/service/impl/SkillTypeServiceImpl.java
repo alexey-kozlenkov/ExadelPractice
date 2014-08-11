@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 24.07.14.
- */
 @Service
 public class SkillTypeServiceImpl implements ISkillTypeService {
 

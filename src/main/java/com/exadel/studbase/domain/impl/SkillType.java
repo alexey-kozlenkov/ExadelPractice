@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.IEntity;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by Алексей on 24.07.14.
- */
 @Entity
 @Table(name = "\"SKILL_TYPE\"")
 public class SkillType implements IEntity<Long> {

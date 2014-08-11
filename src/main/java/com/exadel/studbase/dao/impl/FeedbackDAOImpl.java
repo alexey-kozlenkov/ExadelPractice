@@ -8,11 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 @Repository
-public class FeedbackDAO extends GenericDAOImpl<Feedback, StudentView, Long> implements IFeedbackDAO {
+public class FeedbackDAOImpl extends GenericDAOImpl<Feedback, StudentView, Long> implements IFeedbackDAO {
 
     @Override
     public Collection<Feedback> getAllAboutStudent(Long id) {

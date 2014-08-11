@@ -4,9 +4,6 @@ import com.exadel.studbase.domain.impl.Feedback;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 public interface IFeedbackService {
     Feedback save(Feedback feedback);
 

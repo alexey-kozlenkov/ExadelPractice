@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.IEntity;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 @Entity
 @Table(name = "\"FEEDBACK\"")
 public class Feedback implements IEntity<Long> {
