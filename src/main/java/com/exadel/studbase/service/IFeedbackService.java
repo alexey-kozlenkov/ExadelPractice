@@ -12,4 +12,6 @@ public interface IFeedbackService {
     void delete(Feedback feedback);
 
     Collection<Feedback> getAllAboutStudent(Long studentId);
+
+    Collection<Feedback> getAllByEmployee(Long employeeId);
 }

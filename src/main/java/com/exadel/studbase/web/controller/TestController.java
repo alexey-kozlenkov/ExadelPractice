@@ -1,9 +1,6 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.impl.Employee;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
-import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.service.*;
 import com.exadel.studbase.service.filter.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,6 +227,20 @@ public class TestController {
     public String megaF(@RequestParam(value = "message", required = false) String mess) {
         System.out.println(mess);
         return "Good";
+    }
+
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
+    public void feedback () {
+        Student student = studentService.getById(17L);
+        Feedback feedback = new Feedback();
+        feedback.setStudent(student);
+        feedback.setAttitudeToWork("test");
+        feedback.setCollectiveRelations("test test");
+
+        feedbackService.save(feedback);
+
+        Feedback getFed = feedbackService.getById(feedback.getId());
+        System.out.println(getFed);
     }
 
 }

@@ -14,11 +14,13 @@ public class Feedback implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "student_id")
-    private Long studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-    @Column(name = "employee_id")
-    private Long feedbackerId;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee feedbacker;
 
     @Column(name = "content")
     private String content;
@@ -57,20 +59,20 @@ public class Feedback implements IEntity<Long> {
         this.id = id;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Long getFeedbackerId() {
-        return feedbackerId;
+    public Employee getFeedbacker() {
+        return feedbacker;
     }
 
-    public void setFeedbacker(Long feedbackerId) {
-        this.feedbackerId = feedbackerId;
+    public void setFeedbacker(Employee feedbacker) {
+        this.feedbacker = feedbacker;
     }
 
     public String getContent() {

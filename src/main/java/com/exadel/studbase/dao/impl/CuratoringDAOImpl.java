@@ -14,14 +14,14 @@ public class CuratoringDAOImpl extends GenericDAOImpl<Curatoring, StudentView, L
     @Override
     public Collection<StudentView> getAllStudentsForEmployee(Long employeeId) {
         Query query = getSession().createQuery(
-                "FROM StudentView where id IN(SELECT studentId FROM Curatoring WHERE employeeId=" + employeeId + ")");
+                "FROM StudentView where id IN(SELECT student.id FROM Curatoring WHERE employee.id =" + employeeId + ")");
         return query.list();
     }
 
     @Override
     public Collection<Employee> getAllMastersForStudent(Long studentId) {
         Query query = getSession().createQuery(
-                "FROM Employee where id IN(SELECT employeeId FROM Curatoring WHERE studentId=" + studentId + ")");
+                "FROM EmployeeView where id IN(SELECT employee.id FROM Curatoring WHERE student.id =" + studentId + ")");
         return query.list();
     }
 }
