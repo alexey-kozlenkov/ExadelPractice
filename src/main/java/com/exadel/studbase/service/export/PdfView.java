@@ -78,7 +78,9 @@ public class PdfView extends AbstractPdfView {
         table.addCell(createCell("Graduation date", headerFont));
         table.addCell(createCell(user.getStudentInfo().getGraduationDate(), contentFont));
         table.addCell(createCell("Average marks", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getTermMarks().replaceAll(";", ";  "), contentFont));
+        if (user.getStudentInfo().getTermMarks() != null) {
+            table.addCell(createCell(user.getStudentInfo().getTermMarks().replaceAll(";", ";  "), contentFont));
+        }
         document.add(table);
         document.add(new Paragraph(new Chunk("Exadel", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
 
