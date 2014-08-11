@@ -7,6 +7,7 @@ require.config({
     paths: {
         "jquery": "js/lib/jquery-2.1.1.min",
         "jquery-animate-colors": "js/lib/jquery.animate-colors-min",
+        "jquery-tablesorter": "js/lib/jquery.tablesorter.min",
         "handlebars": "js/lib/handlebars-v1.3.0",
 
         "text":             "js/lib/text",
@@ -25,6 +26,14 @@ require.config({
     shim: {
         'handlebars': {
             exports: 'Handlebars'
+        },
+        'jquery-animate-colors': {
+            exports: '$',
+            deps: ['jquery']
+        },
+        'jquery-tablesorter': {
+            expopts: '$',
+            deps: ['jquery']
         }
     }
 });

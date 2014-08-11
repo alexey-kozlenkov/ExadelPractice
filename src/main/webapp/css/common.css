@@ -110,6 +110,7 @@ label,
     background-color: #4A5D80;
     color: #ffffff;
 
+
 }
 
 .prj-btn:hover,
@@ -127,6 +128,7 @@ label,
 .prj-btn[disabled]:active {
     color: gray;
 }
+
 
 .static-green {
     border-color: #4b954b;

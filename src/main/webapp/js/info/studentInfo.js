@@ -175,6 +175,7 @@ $(document).ready(function () {
         else if (action === 'hide') {
             $(".expired-document").each(function () {
                 $(this).remove();
+
                 $("#documentTable").trigger("update");
             });
             $expiredDocs.attr('data-do', 'show');
