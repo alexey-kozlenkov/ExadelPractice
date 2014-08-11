@@ -38,7 +38,7 @@ public class MailServiceImpl implements IMailService {
 
     @Override
     public boolean sendMail(String from, String password, String to, String subject, String body) {
-        javaMailSender.setUsername("<" + from + ">");
+        javaMailSender.setUsername(from);
         javaMailSender.setPassword(password);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("<" + from + ">");
