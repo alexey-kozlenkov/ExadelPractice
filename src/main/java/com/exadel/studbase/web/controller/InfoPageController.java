@@ -194,8 +194,8 @@ public class InfoPageController {
     @RequestMapping(value = "/postDocuments", method = RequestMethod.POST)
     public String editDocuments(@RequestParam("documents") String newDocuments) {
 
-          Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-          Document[] newDocs = gson.fromJson( newDocuments, Document[].class);
+          Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+          Document[] newDocs = gson.fromJson(newDocuments, Document[].class);
 
             for(Document document : newDocs){
                 documentService.save(document);
@@ -227,17 +227,9 @@ public class InfoPageController {
     @ResponseBody
     private <T> T formatField (String value, Class<T> pClass) {
         if(pClass == Integer.class) {
-            if(value.equals("")) {
-                return null;
-            } else {
-                return (T) Integer.valueOf(value);
-            }
+            return value.equals("") ? null : (T) Integer.valueOf(value);
         } else if (pClass == Date.class ) {
-            if(value.equals("")) {
-                return null;
-            } else {
-                return (T) Date.valueOf(value);
-            }
+            return value.equals("") ? null : (T) Date.valueOf(value);
         }
         return null;
     }

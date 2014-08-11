@@ -52,7 +52,7 @@ public class ListPageController {
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
                                        @RequestParam(value = "filter", required = false) String filterString,
-                                       @RequestParam(value = "isStudent", required = false) boolean isStudent) {
+                                       @RequestParam(value = "isStudent") boolean isStudent) {
         //TODO: Optimise request queue (for big counts in short time)
 
         System.out.println("Version: " + version);
