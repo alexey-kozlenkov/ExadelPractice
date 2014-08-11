@@ -6,7 +6,10 @@ define(["jquery"], function () {
 
     function logout() {
         sessionStorage.removeItem("filter");
+        sessionStorage.removeItem("search");
+        sessionStorage.removeItem("isStudent");
     }
+
     function logoutBind() {
         $(document).ready(function () {
             $(".logout-link").click(logout);

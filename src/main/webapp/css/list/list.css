@@ -59,7 +59,7 @@
     float: right;
     position: absolute;
     right: 5px;
-    top: 28px;
+    top: 25px;
     opacity: 0.3;
     
     -webkit-transition: opacity 0.3s ease-in-out;
@@ -101,7 +101,7 @@
 /***************************** Central *******************************/
 .list-content {
     margin: 0 auto;
-    width: 1200px;
+    width: 1280px;
     text-align: center;
 }
 
@@ -126,18 +126,18 @@
     vertical-align: middle;
     padding: 6px 4px;
 
-    /*        overflow: hidden; */
-    /*     white-space: nowrap; */
-    /*-o-text-overflow: ellipsis;*/
-    /*text-overflow: ellipsis;*/
+    max-height: 40px;
+
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 .list-column-0 {
-    width: 40px;
+    width: 36px;
 }
 
 .student-column-1 {
-    width: 230px;
+    width: 240px;
 }
 
 .student-column-2 {
@@ -145,15 +145,15 @@
 }
 
 .student-column-3 {
-    width: 85px;
+    width: 90px;
 }
 
 .student-column-4 {
-    width: 65px;
+    width: 60px;
 }
 
 .student-column-5 {
-    width: 80px;
+    width: 74px;
 }
 
 .student-column-6 {
@@ -165,7 +165,7 @@
 }
 
 .student-column-8 {
-    width: 120px;
+    width: 140px;
 }
 
 .student-column-9 {
@@ -173,7 +173,7 @@
 }
 
 .student-column-10 {
-    width: 100px;
+    width: 145px;
 }
 
 .empl-column-1 {

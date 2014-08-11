@@ -11,7 +11,7 @@
 
 <header id="header" class="header-fixed-top">
     <div class="dividing-line">
-        <button id="toggleNav"><span class="glyphicon glyphicon-ok-sign"></span></button>
+        <button id="toggleNav" ><span class="glyphicon glyphicon-ok-sign"></span></button>
         <a href="/logout" class="logout-link prj-link">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     </div>
     <div class="form-inline header-line">
@@ -149,21 +149,6 @@
                         Filter.loadDescription("/list/filterDescription");
                         ListLoader.init();
                         ListUtil.init();
-                    });
-
-                    $(document).ready(function () {
-                        $("#toggleNav").click(
-                                function () {
-                                    var f = $("#filter");
-                                    if (f.is(":visible")) {
-                                        f.fadeOut(500, ListHeader.check);
-                                    }
-                                    else {
-                                        f.fadeIn(500);
-                                        ListHeader.check();
-                                    }
-                                }
-                        );
                     });
                 }
         );
