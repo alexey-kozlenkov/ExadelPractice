@@ -101,7 +101,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         promise.done(function (data) {
             var resp = JSON.parse(data),
                 state;
-            resp.sorted = (search != "");
+            resp.sorted = (search);
             state = updateListByResponse(resp);
             ListController.setTableLoadingState(false);
         });
