@@ -101,9 +101,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
 
         promise.done(function (data) {
             var resp = JSON.parse(data),
-                state;
-            resp.sorted = (search);
-            state = updateListByResponse(resp);
+                state = updateListByResponse(resp);
             ListController.setTableLoadingState(false);
         });
         promise.fail(function () {
@@ -116,15 +114,8 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
             console.log("Get actual response (", actualVersion, ")");
             ListController.clearList();
 
-            if(response.sorted) {
-                ListController.addAll(response.views, isStudents);
-            }
-            else {
-                var comparator = function (v1, v2) {
-                    return v1.name > v2.name;
-                };
-                ListController.addAll(response.views.sort(comparator), isStudents);
-            }
+            ListController.addAll(response.views, isStudents);
+
             ListController.setTableLoadingState(false);
         } else {
             console.log("Response (", response.version, ") was ignored; actual: ", actualVersion, "; now: ", Date.now());
