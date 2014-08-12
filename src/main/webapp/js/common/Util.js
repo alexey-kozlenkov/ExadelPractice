@@ -48,7 +48,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 return;
         }
         if (stateText) {
-            btn.val(stateText);
+            btn.text(stateText);
         }
         btn.animate(stateColors, options);
     }
