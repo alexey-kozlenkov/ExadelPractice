@@ -1,7 +1,7 @@
 /**
  * Created by ala'n on 08.08.2014.
  */
-define(["jquery", "jquery-animate-colors"], function ($) {
+define(["jquery"], function ($) {
     "use strict";
 
     function logout() {
@@ -36,11 +36,11 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         }, 1000);
 
         switch (state) {
-            case 'good':
+            case 'success':
                 stateColors.backgroundColor = '#5cb85c';
                 stateColors.borderColor = '#4cae4c';
                 break;
-            case 'bad':
+            case 'fail':
                 stateColors.backgroundColor = '#CD5C5C';
                 stateColors.borderColor = '#C16868';
                 break;
@@ -48,7 +48,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 return;
         }
         if (stateText) {
-            btn.text(stateText);
+            btn.val(stateText);
         }
         btn.animate(stateColors, options);
     }
@@ -70,7 +70,6 @@ define(["jquery", "jquery-animate-colors"], function ($) {
             }
         );
     }
-
     function formatDate(date) {
         var DD = date.getDate(),
             MM = date.getMonth() + 1,
@@ -83,11 +82,11 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         }
         return YYYY + "-" + MM + "-" + DD;
     }
-
     return {
         logout: logout,
-        stateAnimate: btnStateAnimate,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
-        formatDate: formatDate
+        formatDate : formatDate,
+        stateAnimate: btnStateAnimate
+       
     };
 });

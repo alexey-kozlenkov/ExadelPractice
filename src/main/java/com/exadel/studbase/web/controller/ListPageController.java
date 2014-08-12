@@ -1,6 +1,7 @@
 package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.domain.impl.*;
+import com.exadel.studbase.security.MySecurityUser;
 import com.exadel.studbase.service.filter.Filter;
 import com.exadel.studbase.service.filter.FilterUtils;
 import com.exadel.studbase.service.*;
@@ -88,6 +89,15 @@ public class ListPageController {
 
                     result = (result != null) ? CollectionUtils.intersection(result, viewByCurator) : viewByCurator;
                 }
+            }
+
+            MySecurityUser principal = (MySecurityUser) SecurityContextHolder.getContext().getAuthentication().
+                    getPrincipal();
+
+            if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"))) {
+                Long curatorId = principal.getId();
+                Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
+                result = (result != null) ? CollectionUtils.intersection(result, viewByCurator) : viewByCurator;
             }
 
             result = (result != null && search != null) ? CollectionUtils.intersection(result, search) :

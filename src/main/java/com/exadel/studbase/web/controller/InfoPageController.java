@@ -2,6 +2,7 @@ package com.exadel.studbase.web.controller;
 
 import com.exadel.studbase.dao.ICuratoringDAO;
 import com.exadel.studbase.domain.impl.Document;
+import com.exadel.studbase.domain.impl.Feedback;
 import com.exadel.studbase.domain.impl.Student;
 import com.exadel.studbase.domain.impl.User;
 import com.exadel.studbase.domain.init.Options;
@@ -90,6 +91,15 @@ public class InfoPageController {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
+    }
+
+    @RequestMapping(value = "/getFeedbacks", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String feedbacksData(@RequestParam("studentId") Long studentId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<Feedback> userFeedbacks = feedbackService.getAllAboutStudent(studentId);
+        return gson.toJson(userFeedbacks);
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})

@@ -84,7 +84,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
 
         $("#saveDocumentsInformation").click(function () {
             var fields = ['doctype', 'issueDate', 'expirationDate', 'info'],
-                newDocuments = [];
+                newDocuments = [],
+                cellValue;
             $(".new-document").each(function () {
                 var $this = $(this),
                     cells = $this.find("td"),
@@ -93,9 +94,12 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     cellsLength = cells.length;
 
                 for (i = 0; i < cellsLength; i++) {
-                    value[fields[i]] = $(cells[i]).text();
+                    cellValue = $(cells[i]).text();
+                    if (i === 2) {
+                        cellValue = (cellValue === "") ? undefined : cellValue;
+                    }
+                    value[fields[i]] = cellValue;
                 }
-
                 value.studentId = fillBasic.studentId;
 
                 console.log(value);
@@ -241,7 +245,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
 
         //add document
         $("#addNewDocument").click(function () {
-            dialog.showDialog("add-document", "210px");
+            dialog.showDialog("add-document", "280px");
         });
 
         $("#addDocument").click(function () {

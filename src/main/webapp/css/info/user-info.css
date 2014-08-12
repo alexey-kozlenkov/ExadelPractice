@@ -54,7 +54,7 @@
 }
 
 .dialog-area {
-    width: 210pt;
+    width: 230pt;
 }
 
 .text-dialog {
@@ -114,8 +114,37 @@
     padding-left: 35px;
 }
 
+.dialog-feedback-label {
+    margin-right : 20px;
+}
+
 .big-textarea {
     padding: 3px 3px 3px;
     height: 100px;
     resize: none;
+}
+
+.feedback {
+    background-color: #f1f1f1;
+}
+
+.feedback-list > .feedback:nth-child(even) {
+    background-color : #ffffff;
+}
+
+.feedbacker {
+    color: black;
+    font-size: 20px;
+}
+
+.item-feedback {
+    margin: 0 4px 3px;
+    color: black;
+}
+
+.dl-horizontal > dd {
+    max-width: 350px;
+}
+.dl-horizontal > dd:last-child{
+    margin-top : 10px;
 }
