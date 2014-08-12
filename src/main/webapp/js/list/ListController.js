@@ -1,10 +1,10 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-define(["jquery"], function ($, Handlebars) {
+define(["jquery"], function ($) {
     "use strict";
 
-    var viewStudents = undefined;
+    var viewStudents;
 
     function init() {
         var $table = $("#studTable");

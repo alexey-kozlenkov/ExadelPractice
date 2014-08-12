@@ -37,6 +37,6 @@ public class UserDAOImpl extends GenericDAOImpl<User, StudentView, Long> impleme
                 add(i, new SimpleGrantedAuthority(roles[i]));
             }
         }};
-        return new MySecurityUser(user.getId(), user.getLogin(), user.getPassword(), authorities);
+        return new MySecurityUser(user.getId(), user.getLogin(), user.getPassword(), user.getName(),authorities);
     }
 }

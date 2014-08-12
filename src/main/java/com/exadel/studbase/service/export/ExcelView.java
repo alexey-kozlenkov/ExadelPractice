@@ -13,8 +13,8 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,26 +27,32 @@ public class ExcelView extends AbstractExcelView {
         return "";
     }
 
+    public Double fillCell(Number value) {
+        if (value != null) {
+            value.doubleValue();
+        }
+        return 0d;
+    }
+
     @Override
     protected void buildExcelDocument(Map<String, Object> model,
                                       HSSFWorkbook workbook,
                                       HttpServletRequest request,
                                       HttpServletResponse response)
             throws Exception {
-        response.setContentType("application/vnd.ms-excel");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
-        String fileName = "Student list report - " + simpleDateFormat.format(new Date()) + ".xls";
-        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-
         List<User> listOfUsers = (List<User>) model.get("users");
-
         HSSFSheet sheet = workbook.createSheet();
         HSSFRow header = sheet.createRow(0);
-        sheet.setDefaultColumnWidth(20);
-
-        // create style for header cells
         CellStyle styleHeader = workbook.createCellStyle();
         Font font = workbook.createFont();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
+        String fileName = "Student list report - " + simpleDateFormat.format(new Date()) + ".xls";
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+
+        sheet.setDefaultColumnWidth(20);
+
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         font.setColor(HSSFColor.WHITE.index);
         styleHeader.setFillForegroundColor(HSSFColor.SEA_GREEN.index);

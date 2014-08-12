@@ -52,7 +52,7 @@ public class ListPageController {
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
                                        @RequestParam(value = "filter", required = false) String filterString,
-                                       @RequestParam(value = "isStudent", required = false) boolean isStudent) {
+                                       @RequestParam(value = "isStudent") boolean isStudent) {
         //TODO: Optimise request queue (for big counts in short time)
 
         System.out.println("Version: " + version);
@@ -227,13 +227,13 @@ public class ListPageController {
             String resultRole = "";
             for (String role : roles) {
                 if (role.equalsIgnoreCase("ROLE_CURATOR")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Curator" : ", Curator";
+                    resultRole += resultRole.equals("") ? "Curator" : ", Curator";
                 } else if (role.equalsIgnoreCase("ROLE_FEEDBACKER")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Feedbacker" : ", Feedbacker";
+                    resultRole += resultRole.equals("") ? "Feedbacker" : ", Feedbacker";
                 } else if (role.equalsIgnoreCase("ROLE_OFFICE")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Personnel officer" : ", Personal officer";
+                    resultRole += resultRole.equals("") ? "Personnel officer" : ", Personal officer";
                 } else if (role.equalsIgnoreCase("ROLE_SUPERADMIN")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "SUPERADMIN" : ", SUPERADMIN";
+                    resultRole += resultRole.equals("") ? "SUPERADMIN" : ", SUPERADMIN";
                 }
             }
             employeeView.setRole(resultRole);

@@ -101,7 +101,11 @@ $(document).ready(function () {
                 cellsLength = cells.length;
 
             for (i = 0; i < cellsLength; i++) {
-                value[fields[i]] = $(cells[i]).text();
+                var cellValue = $(cells[i]).text();
+                if(i === 2){
+                    cellValue = (cellValue == "") ? undefined : cellValue;
+                }
+                value[fields[i]] = cellValue;
             }
 
             value.studentId = studentId;
@@ -225,6 +229,7 @@ $(document).ready(function () {
         else if (action === 'hide') {
             $(".expired-document").each(function () {
                 $(this).remove();
+
                 $("#documentTable").trigger("update");
             });
             $expiredDocs.attr('data-do', 'show');
@@ -239,7 +244,7 @@ $(document).ready(function () {
     });
     $("#addDocument").click(function () {
         var doctype = $("#doctype").val(),
-            issueDate = $("#issueDate").val(),
+            issueDate =  $("#issueDate").val(),
             expirationDate = $("#expirationDate").val(),
             info = $("#info").val(),
             newDocument = {
@@ -694,10 +699,3 @@ function saveDocumentsInformation(newDocuments) {
     });
 
 }
-
-
-
-
-
-
-

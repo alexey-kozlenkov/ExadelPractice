@@ -138,18 +138,18 @@ public class InfoPageController {
                                 @RequestParam("studentUniversity") String university,
                                 @RequestParam("studentFaculty") String faculty,
                                 @RequestParam("studentSpeciality") String speciality,
-                                @RequestParam("studentCourse") int course,
-                                @RequestParam("studentGroup") int group,
-                                @RequestParam("studentGraduationDate") int graduationDate,
+                                @RequestParam("studentCourse") String course,
+                                @RequestParam("studentGroup") String group,
+                                @RequestParam("studentGraduationDate") String graduationDate,
                                 @RequestParam("studentTermMarks") String termMarks) {
 
         Student editedStudent = studentService.getById(id);
         editedStudent.setUniversity(university);
         editedStudent.setFaculty(faculty);
-        editedStudent.setCourse(course);
-        editedStudent.setGroup(group);
+        editedStudent.setCourse(formatField(course, Integer.class));
+        editedStudent.setGroup(formatField(group, Integer.class));
         editedStudent.setSpeciality(speciality);
-        editedStudent.setGraduationDate(graduationDate);
+        editedStudent.setGraduationDate(formatField(graduationDate, Integer.class));
         editedStudent.setTermMarks(termMarks);
         studentService.save(editedStudent);
 
@@ -163,9 +163,9 @@ public class InfoPageController {
     public String editExadel(@RequestParam("studentId") Long id,
                              @RequestParam("studentWorkingHours") Integer workingHours,
                              @RequestParam("studentHireDate") Date hireDate,
-                             @RequestParam("studentBillable") Date billable,
-                             @RequestParam(value = "studentWishingHours")  Integer wishingHours,
-                             @RequestParam(value = "studentCourseStartWorking") Integer courseStartWorking,
+                             @RequestParam("studentBillable") String billable,
+                             @RequestParam("studentWishingHours")  String wishingHours,
+                             @RequestParam("studentCourseStartWorking") String courseStartWorking,
                              @RequestParam("studentTrainingBeforeWorking") Boolean trainingBeforeWorking,
                              @RequestParam("studentTrainingExadel") String trainingInExadel,
                              @RequestParam("studentCurrentProject") String currentProject,
@@ -178,9 +178,9 @@ public class InfoPageController {
         Student editedStudent = studentService.getById(id);
         editedStudent.setWorkingHours(workingHours);
         editedStudent.setHireDate(hireDate);
-        editedStudent.setBillable(billable);
-        editedStudent.setWishesHoursNumber(wishingHours);
-        editedStudent.setCourseWhenStartWorking(courseStartWorking);
+        editedStudent.setBillable(formatField(billable, Date.class));
+        editedStudent.setWishesHoursNumber(formatField(wishingHours, Integer.class));
+        editedStudent.setCourseWhenStartWorking(formatField(courseStartWorking, Integer.class));
         editedStudent.setTrainingBeforeStartWorking(trainingBeforeWorking);
         editedStudent.setTrainingsInExadel(trainingInExadel);
         editedStudent.setCurrentProject(currentProject);
@@ -204,8 +204,8 @@ public class InfoPageController {
     @RequestMapping(value = "/postDocuments", method = RequestMethod.POST)
     public String editDocuments(@RequestParam("documents") String newDocuments) {
 
-          Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-          Document[] newDocs = gson.fromJson( newDocuments, Document[].class);
+          Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+          Document[] newDocs = gson.fromJson(newDocuments, Document[].class);
 
             for(Document document : newDocs){
                 documentService.save(document);
@@ -234,4 +234,13 @@ public class InfoPageController {
         return new ModelAndView("excelView", "users", listOfUsers);
     }
 
+    @ResponseBody
+    private <T> T formatField (String value, Class<T> pClass) {
+        if(pClass == Integer.class) {
+            return value.equals("") ? null : (T) Integer.valueOf(value);
+        } else if (pClass == Date.class ) {
+            return value.equals("") ? null : (T) Date.valueOf(value);
+        }
+        return null;
+    }
 }
