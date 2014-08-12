@@ -240,6 +240,8 @@ public class TestController {
         feedbackService.save(feedback);
 
         Feedback getFed = feedbackService.getById(feedback.getId());
+
+        Collection<Feedback> feedbacks = feedbackService.getAllAboutStudent(17L);
         System.out.println(getFed);
     }
 
