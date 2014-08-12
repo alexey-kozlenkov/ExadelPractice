@@ -109,13 +109,15 @@ label,
     border-radius: 4px;
     background-color: #4A5D80;
     color: #ffffff;
-
-
 }
 
 .prj-btn:hover,
 .prj-btn:active {
     opacity: 0.5;
+    color: #ffffff;
+}
+.prj-btn:focus {
+    color: #ffffff;
 }
 
 .prj-btn.disabled,

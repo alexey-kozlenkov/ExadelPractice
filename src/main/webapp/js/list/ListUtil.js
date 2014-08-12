@@ -2,9 +2,10 @@
  * Created by ala'n on 14.07.2014.
  */
 
-define(["jquery", "handlebars", "ListController", "Dialog", "jquery-animate-colors"],
-    function ($, Handlebars, ListController, Dialog) {
+define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
+    function ($, Handlebars, ListController, Dialog, Util) {
         "use strict";
+
         function bindMenuBtn() {
             $("#addMenuButton").click(function () {
                 Dialog.showDialog("add-student");
@@ -15,22 +16,15 @@ define(["jquery", "handlebars", "ListController", "Dialog", "jquery-animate-colo
                     exportExcel(students);
                 }
                 else {
-                    $("#exportMenuButton").animate({
-                        backgroundColor: '#ff3030',
-                        borderColor: '#ff3030'
-                    }, {
-                        duration: 500,
-                        easing: "swing",
-                        complete: setTimeout(function () {
-                            $("#exportMenuButton").animate({
-                                backgroundColor: '#4A5D80',
-                                borderColor: '#2D3E5C'
-                            }, 500);
-                        }, 1000)
-                    });
+                    Util.stateAnimate($("#exportMenuButton"), 'bad');
                 }
             });
             $("#distributionMenuButton").click(function () {
+                var students = ListController.getCheckedRowsId();
+                if (students.length <= 0) {
+                    Util.stateAnimate($(this), 'bad', 'empty');
+                    return;
+                }
                 Dialog.showDialog('send-message');
             });
         }
