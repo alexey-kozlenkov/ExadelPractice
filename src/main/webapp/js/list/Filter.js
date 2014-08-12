@@ -237,7 +237,3 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         loadDescription: loadDescription
     };
 });
-
-
-
-
