@@ -2,7 +2,7 @@
  * Created by Administrator on 08.08.2014.
  */
 
-var Accordion = (function () {
+define(["jquery"], function ($) {
     "use strict";
     function init() {
         //hide content after manual information
@@ -17,6 +17,6 @@ var Accordion = (function () {
     return {
         init: init
     };
-}());
+});
 
 

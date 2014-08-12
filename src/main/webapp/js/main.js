@@ -19,8 +19,11 @@ require.config({
         "ListController":   "js/list/ListController",
         "ListLoader":       "js/list/ListLoader",
         "Filter"   :        "js/list/Filter",
-        "ListUtil" :        "js/list/ListUtil"
+        "ListUtil" :        "js/list/ListUtil",
 
+        "Accordion" :       "js/info/Accordion",
+        "FillBasic" :       "js/info/student/FillBasic",
+        "Rest"      :       "js/info/student/Rest"
     },
     shim: {
         'handlebars': {

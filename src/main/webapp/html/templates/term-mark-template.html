@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+{{#if values}}
+{{#each values}}
+<li>
+    <input type="number" class="term-mark" placeholder="10.00" value = "{{value}}">
+</li>
+{{/each}}
+{{else}}
+<li>
+    <input type="number" class="term-mark" placeholder="10.00">
+</li>
+{{/if}}

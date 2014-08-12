@@ -254,7 +254,7 @@ $(document).ready(function () {
         $("#expirationDate").val("");
         $("#info").val("");
         closeDialog();
-        $("#documents").prepend(templateDocument(newDocument));
+        $("#documents").prepend(templateDocument({documents: [newDocument]}));
         $("#documents tr").first().addClass("new-document");
         $("#documentTable").trigger("update");
     });
@@ -378,6 +378,8 @@ function exportStudentPDF() {
     window.open("/info/exportPDF?studentId=" + studentId, "Export file");
 }
 
+
+
 function fillOptions() {
     "use strict";
     $.ajax({
@@ -448,7 +450,7 @@ function fillCommonInfo() {
 
             //termMarks
             marks = gottenStudent.termMarks;
-            if (marks !== "") {
+            if (marks) {
                 marks = marks.split(";");
                 jQuery.each(marks, function (index, value) {
                     $("#termMarkList").append(templateTermMark);

@@ -30,9 +30,21 @@ define(["jquery"], function () {
             }
         );
     }
-
+    function formatDate(date) {
+        var DD = date.getDate(),
+            MM = date.getMonth() + 1,
+            YYYY = date.getFullYear();
+        if (DD < 10) {
+            DD = '0' + DD;
+        }
+        if (MM < 10) {
+            MM = '0' + MM;
+        }
+        return YYYY + "-" + MM + "-" + DD;
+    }
     return {
         logout: logout,
-        menuLocationRelativeTo : setMenuLocationRelativeTo
+        menuLocationRelativeTo : setMenuLocationRelativeTo,
+        formatDate : formatDate
     };
 });
