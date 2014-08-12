@@ -51,7 +51,8 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
             updateList();
         }
     }
-    function lockUnusedButton() {
+
+    function updateButtons() {
         if (isStudents) {
             $("#exportMenuButton").fadeIn(100);
             $("#filter").fadeIn(100, ListHeader.check);
@@ -66,7 +67,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         if (isStud !== undefined && isStud !== null) {
             isStudents = isStud;
             sessionStorage.setItem("isStudent", isStud);
-            lockUnusedButton();
+            updateButtons();
         }
         return isStudents;
     }

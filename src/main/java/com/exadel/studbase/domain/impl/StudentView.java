@@ -1,7 +1,6 @@
 package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.enumeration.EnglishLevel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,7 +50,7 @@ public class StudentView implements IEntity<Long> {
     private String techsCurrentProject;
 
     @Column(name = "english_level")
-    private EnglishLevel englishLevel;
+    private Integer englishLevel;
 
     public StudentView() {
         course = 0;
