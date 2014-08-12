@@ -1,7 +1,6 @@
 package com.exadel.studbase.domain.impl;
 
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.enumeration.EnglishLevel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "\"STUDENT_VIEW\"")
-public class StudentView implements IEntity<Long> {
+public class StudentView implements IEntity<Long>, Comparable<StudentView> {
 
     @Id
     @Column(name = "id")
@@ -51,7 +50,7 @@ public class StudentView implements IEntity<Long> {
     private String techsCurrentProject;
 
     @Column(name = "english_level")
-    private EnglishLevel englishLevel;
+    private Integer englishLevel;
 
     public StudentView() {
         course = 0;
@@ -158,6 +157,7 @@ public class StudentView implements IEntity<Long> {
         this.techsCurrentProject = techsCurrentProject;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -175,5 +175,8 @@ public class StudentView implements IEntity<Long> {
         return id.hashCode();
     }
 
-
+    @Override
+    public int compareTo(StudentView anotherStudent) {
+        return this.getName().compareToIgnoreCase(anotherStudent.getName());
+    }
 }
