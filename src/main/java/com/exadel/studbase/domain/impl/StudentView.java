@@ -10,7 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "\"STUDENT_VIEW\"")
-public class StudentView implements IEntity<Long> {
+public class StudentView implements IEntity<Long>, Comparable<StudentView> {
 
     @Id
     @Column(name = "id")
@@ -157,6 +157,7 @@ public class StudentView implements IEntity<Long> {
         this.techsCurrentProject = techsCurrentProject;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -174,5 +175,8 @@ public class StudentView implements IEntity<Long> {
         return id.hashCode();
     }
 
-
+    @Override
+    public int compareTo(StudentView anotherStudent) {
+        return this.getName().compareToIgnoreCase(anotherStudent.getName());
+    }
 }
