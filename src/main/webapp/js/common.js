@@ -2,41 +2,43 @@
  * Created by ala'n on 30.07.2014.
  */
 
-$(document).ready(function(){
+$(document).ready(function () {
+    "use strict";
     $(".logout-link").click(logout);
 });
-function logout(){
+function logout() {
+    "use strict";
     sessionStorage.removeItem("filter");
 }
 
 /* Close dialog on current page */
-function closeDialog(){
+function closeDialog() {
+    "use strict";
     $(".content-locker").fadeOut(500);
- //   $(".dialog-area").hide();
 }
 /* Show dialog with content [data-dialog_number='content_name'] on current page */
-function showDialog(content_name) {
+function showDialog(contentName) {
+    "use strict";
     $(".content-locker").fadeIn(500);
-//    $(".dialog-area").show();
     $(".dialog-content").hide();
-    $(".dialog-content[data-dialog-name='" + content_name + "']").show();
+    $(".dialog-content[data-dialog-name='" + contentName + "']").show();
 }
 
 function setMenuLocationRelativeTo(menu, owner) {
-    var winOffsetW = $(window).width();
-
-    var pos = owner.offset();
-
-    var x = pos.left;
-    var space = pos.left + menu.width() - winOffsetW + 4;
-    if (space > 0)
-        x -= space;
-    var y = pos.top + owner.height();
-
+    "use strict";
+    //TODO optimize!
+    var winOffsetW = $(window).width(),
+        position = owner.offset(),
+        left = position.left,
+        top = position.top + owner.height(),
+        space = position.left + menu.width() - winOffsetW + 4;
+    if (space > 0) {
+        top -= space;
+    }
     menu.css(
         {
-            left: x,
-            top: y
+            left: left,
+            top: top
         }
     );
 }

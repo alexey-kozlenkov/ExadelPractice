@@ -5,9 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by Алексей on 05.08.2014.
- */
 @Controller
 @RequestMapping("/login")
 public class LoginController {

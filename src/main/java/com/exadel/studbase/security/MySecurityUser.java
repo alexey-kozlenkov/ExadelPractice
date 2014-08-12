@@ -5,9 +5,6 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 01.08.2014.
- */
 public class MySecurityUser extends User {
 
     private Long id;

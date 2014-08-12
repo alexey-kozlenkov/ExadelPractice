@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 21.07.14.
- */
 @Service
 public class FeedbackServiceImpl implements IFeedbackService {
 
@@ -41,5 +38,11 @@ public class FeedbackServiceImpl implements IFeedbackService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Collection<Feedback> getAllAboutStudent(Long studentId) {
         return feedbackDAO.getAllAboutStudent(studentId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<Feedback> getAllByEmployee(Long employeeId) {
+        return feedbackDAO.getAllByEmployee(employeeId);
     }
 }

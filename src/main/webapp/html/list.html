@@ -35,8 +35,9 @@
         </span>
 
         <span class="btn-group tab">
-            <button class="btn prj-btn menu-button tab-btn"><img src="../images/ico-students.png" class = "menu-icon"></button>
-            <button class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
+            <button id="studTab" class="btn prj-btn menu-button tab-btn"><img src="../images/ico-students.png" class="menu-icon">
+            </button>
+            <button id="emplTab" class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
 
@@ -48,128 +49,19 @@
             <span class="glyphicon glyphicon-trash"></span>
         </button>
         <ul id="filterMenu" class="dropdown-menu" role="menu"></ul>
-        <script id="filterMenuTemplate" type="text/x-handlebars-template">
-            {{#each description}}
-            <li class='menu-item' data-filter='{{field}}'>
-                <a role='menuitem'>{{name}}</a>
-            </li>
-            {{/each}}
-        </script>
-
-        <script id="filterTemplate" type="text/x-handlebars-template">
-            <div data-filter='{{field}}' class='btn-group input-group filter-item'>
-                <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
-            </div>
-        </script>
-
-        <script id="filterBooleanValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value boolean-filter-value" type='checkbox'>
-        </script>
-        <script id="filterTextValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}" data-multi = '{{multiset}}'>
-        </script>
-        <script id="filterNumberValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}">
-        </script>
-        <script id="filterDataValueTemplate" type="text/x-handlebars-template">
-            <input class="filter-value date-filter-value" type='date'>
-        </script>
-        <script id="filterEnumValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
-                {{#each values}}
-                <option>{{this}}</option>
-                {{/each}}
-            </select>
-        </script>
-        <script id="filterListValueTemplate" type="text/x-handlebars-template">
-            <select class="filter-value list-filter-value" title="{{placeholder}}" data-multi = '{{multiset}}'>
-                {{#each values}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            </select>
-        </script>
-
-        <script id="filterSeparator" type="text/x-handlebars-template">
-            <span class='static-green filter-separator'>and</span>
-        </script>
     </div>
 
     <div id="headerScrollingBlock" class="prj-list-header">
         <div class="list-content">
-            <table id="headerFixed" class="table prj-table-striped student-table">
-                <colgroup>
-                    <col class="header-column-0">
-                    <col class="header-column-1">
-                    <col class="header-column-2">
-                    <col class="header-column-3">
-                    <col class="header-column-4">
-                    <col class="header-column-5">
-                    <col class="header-column-6">
-                    <col class="header-column-7">
-                    <col class="header-column-8">
-                    <col class="header-column-9">
-                    <col class="header-column-10">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th><input id="checkAll" type="checkbox" title="check/uncheck all"></th>
-                    <th>Name</th>
-                    <th>Date(work)</th>
-                    <th>Faculty</th>
-                    <th>Course/<br>Group</th>
-                    <th>Graduated</th>
-                    <th>Working<br>hour</th>
-                    <th>Billable</th>
-                    <th>Role on prj.</th>
-                    <th>Current<br>technology</th>
-                    <th>English</th>
-                </tr>
-                </thead>
-            </table>
+            <table id="listHeader" class="table prj-table-striped student-table"></table>
         </div>
     </div>
 </header>
 
 <div id="listContent" class="list-content">
     <table id="studTable" class="table prj-table-striped student-table">
-        <colgroup>
-            <col class="header-column-0">
-            <col class="header-column-1">
-            <col class="header-column-2">
-            <col class="header-column-3">
-            <col class="header-column-4">
-            <col class="header-column-5">
-            <col class="header-column-6">
-            <col class="header-column-7">
-            <col class="header-column-8">
-            <col class="header-column-9">
-            <col class="header-column-10">
-        </colgroup>
-
         <tbody>
         </tbody>
-
-        <script id="listContentTemplate" type="text/x-handlebars-template">
-            {{#each list}}
-            <tr>
-                <td>
-                    <input type='checkbox' class='item-checkbox' data-id="{{id}}">
-                </td>
-                <td>
-                    <a href='/info?id={{id}}'>{{name}}</a>
-                </td>
-                <td>{{hireDate}}</td>
-                <td>{{faculty}}</td>
-                <td>{{#if course}}{{course}}{{else}}?{{/if}}/{{#if group}}{{group}}{{else}}?{{/if}}</td>
-                <td>{{graduationDate}}</td>
-                <td>{{workingHours}}</td>
-                <td>{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
-                <td>{{roleCurrentProject}}</td>
-                <td>{{techsCurrentProject}}</td>
-                <td>{{englishLevel}}</td>
-            </tr>
-            {{/each}}
-        </script>
     </table>
     <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
 </div>
@@ -239,16 +131,43 @@
     </section>
 </div>
 
-<script src="../js/lib/jquery-2.1.1.min.js"></script>
-<script src="../js/lib/jquery.animate-colors-min.js"></script>
-<script src="../js/lib/underscore-min.js"></script>
-<script src="../js/lib/handlebars-v1.3.0.js"></script>
+<script src="../js/lib/require.js"></script>
+<script>
+    require(["../js/main.js"], function () {
+        require(["jquery", "ListHeader", "ListController", "Filter",
+                    "ListLoader", "ListUtil", "Util"],
+                function ($, ListHeader, ListController, Filter, ListLoader, ListUtil, util) {
+                    "use strict";
+                    $(window).ready(function () {
+                        ListHeader.init();
+                    });
+                    $(document).ready(function () {
+                        $(".logout-link").click(util.logout);
 
-<script src="../js/list/listController.js"></script>
-<script src="../js/list/filter.js"></script>
-<script src="../js/list/util.js"></script>
+                        ListController.init();
+                        Filter.init();
+                        Filter.loadDescription("/list/filterDescription");
+                        ListLoader.init();
+                        ListUtil.init();
+                    });
 
-<script src="../js/common.js"></script>
-
+                    $(document).ready(function () {
+                        $("#toggleNav").click(
+                                function () {
+                                    var f = $("#filter");
+                                    if (f.is(":visible")) {
+                                        f.fadeOut(500, ListHeader.check);
+                                    }
+                                    else {
+                                        f.fadeIn(500);
+                                        ListHeader.check();
+                                    }
+                                }
+                        );
+                    });
+                }
+        );
+    });
+</script>
 </body>
 </html>

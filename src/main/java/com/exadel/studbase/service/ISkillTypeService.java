@@ -4,9 +4,6 @@ import com.exadel.studbase.domain.impl.SkillType;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 24.07.14.
- */
 public interface ISkillTypeService {
     SkillType save(SkillType skillType);
 

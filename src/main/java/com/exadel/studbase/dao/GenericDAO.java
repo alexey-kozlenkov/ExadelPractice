@@ -1,26 +1,20 @@
 package com.exadel.studbase.dao;
 
-import com.exadel.studbase.dao.filter.Filter;
+import com.exadel.studbase.service.filter.Filter;
 import com.exadel.studbase.domain.IEntity;
-import com.exadel.studbase.domain.impl.StudentView;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Алексей on 18.07.14.
- */
 public interface GenericDAO<CONTENT extends IEntity,  VIEW extends IEntity, ID extends Serializable> {
+    Collection<CONTENT> getAll();
 
-    public Collection<CONTENT> getAll();
+    CONTENT find(ID id);
 
-    public CONTENT find(ID id);
+    CONTENT saveOrUpdate(CONTENT content);
 
-    public CONTENT saveOrUpdate(CONTENT content);
+    void delete(CONTENT content);
 
-    public void delete(CONTENT content);
-
-    public Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
+    Collection<VIEW> getView(Map<String, Filter<VIEW>> filterMap);
 }

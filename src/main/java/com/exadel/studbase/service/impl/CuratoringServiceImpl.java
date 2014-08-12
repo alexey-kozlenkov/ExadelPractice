@@ -11,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 03.08.2014.
- */
 @Service
 public class CuratoringServiceImpl implements ICuratoringService {
 

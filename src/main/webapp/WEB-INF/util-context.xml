@@ -5,7 +5,7 @@
                            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
 
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com"/>
         <property name="username" value="vasia.ermakov@gmail.com"/>
         <property name="password" value="631136631"/>

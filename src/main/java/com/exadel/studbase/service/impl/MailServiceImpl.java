@@ -3,40 +3,54 @@ package com.exadel.studbase.service.impl;
 import com.exadel.studbase.service.IMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MailServiceImpl implements IMailService {
     @Autowired
-    private MailSender mailSender;
+    private JavaMailSenderImpl javaMailSender;
 
-    @Override
-    public MailSender getMailSender() {
-        return mailSender;
+    public JavaMailSenderImpl getJavaMailSender() {
+        return javaMailSender;
+    }
+
+    public void setJavaMailSender(JavaMailSenderImpl javaMailSender) {
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
-    public void setMailSender(MailSender mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public boolean sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("<vasia.ermakov@gmail.com>");
+
+        message.setFrom("<" + javaMailSender.getUsername() + ">");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
 
         try {
-            mailSender.send(message);
-        } catch (MailException me) {
-            me.printStackTrace();
+            javaMailSender.send(message);
+        } catch (MailException e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean sendMail(String from, String password, String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        javaMailSender.setUsername(from);
+        javaMailSender.setPassword(password);
+        message.setFrom("<" + from + ">");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body);
+
+        try {
+            javaMailSender.send(message);
+        } catch (MailException e) {
             return false;
         }
         return true;

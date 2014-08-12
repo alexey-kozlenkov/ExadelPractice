@@ -5,9 +5,6 @@ import com.exadel.studbase.domain.IEntity;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by Алексей on 03.08.2014.
- */
 @Entity
 @Table(name = "\"CURATORING\"")
 public class Curatoring implements IEntity<Long> {
@@ -17,11 +14,13 @@ public class Curatoring implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "student_id")
-    private Long studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-    @Column(name = "employee_id")
-    private Long employeeId;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @Column(name = "project_name")
     private String projectName;
@@ -43,20 +42,20 @@ public class Curatoring implements IEntity<Long> {
         this.id = id;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getProjectName() {

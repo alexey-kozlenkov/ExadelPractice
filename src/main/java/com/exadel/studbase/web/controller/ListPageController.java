@@ -1,11 +1,8 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.filter.Filter;
-import com.exadel.studbase.dao.filter.FilterUtils;
-import com.exadel.studbase.domain.impl.SkillType;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.StudentView;
-import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.impl.*;
+import com.exadel.studbase.service.filter.Filter;
+import com.exadel.studbase.service.filter.FilterUtils;
 import com.exadel.studbase.service.*;
 import com.exadel.studbase.service.filter.FilterDescription;
 import com.google.gson.Gson;
@@ -22,9 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 
-/**
- * Created by ala'n on 29.07.2014.
- */
 @Controller
 @Secured({"ROLE_CURATOR", "ROLE_FEEDBACKER", "ROLE_SUPERADMIN", "ROLE_OFFICE"})
 @RequestMapping("/list")
@@ -37,6 +31,8 @@ public class ListPageController {
     IEmployeeService employeeService;
     @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    IEmployeeViewService employeeViewService;
     @Autowired
     ISkillTypeService skillTypeService;
     @Autowired
@@ -55,55 +51,54 @@ public class ListPageController {
     @ResponseBody
     public String getStudentsByRequest(@RequestParam("version") Long version,
                                        @RequestParam(value = "searchName", required = false) String desiredName,
-                                       @RequestParam(value = "filter", required = false) String filterString) {
+                                       @RequestParam(value = "filter", required = false) String filterString,
+                                       @RequestParam(value = "isStudent", required = false) boolean isStudent) {
         //TODO: Optimise request queue (for big counts in short time)
-
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
         System.out.println("Version: " + version);
         System.out.println("Search name: " + desiredName);
         System.out.println("Filter: " + filterString);
 
-
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection result = null;
 
-        if (!filterString.equals("")) {
-            Map filterSpecification = new HashMap<String, Object>();
-            filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
+        if (isStudent) {
+            Collection search = studentViewService.getViewByStudentName(desiredName);
 
-            Map<String, Filter<StudentView>> mainFilter = new HashMap<String, Filter<StudentView>>();
-            FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
-            if (mainFilter.size() > 0) {
-                result = studentViewService.getView(mainFilter);
-            }
+            if (!filterString.equals("")) {
+                Map filterSpecification = new HashMap<String, Object>();
+                filterSpecification = gson.fromJson(filterString, filterSpecification.getClass());
 
-            ArrayList<String> skills = (ArrayList<String>) filterSpecification.get("skills");
-            if (skills != null) {
-                Collection<StudentView> viewBySkills = studentViewService.filterBySkillTypeId(skills);
-                if (result != null) {
-                    result = CollectionUtils.intersection(result, viewBySkills);
-                } else {
-                    result = viewBySkills;
+                Map mainFilter = new HashMap<String, Filter<StudentView>>();
+                FilterUtils.buildFilterToSpecification(mainFilter, filterSpecification);
+
+                if (mainFilter.size() > 0) {
+                    result = studentViewService.getView(mainFilter);
+                }
+
+                ArrayList skills = (ArrayList<String>) filterSpecification.get("skills");
+                if (skills != null) {
+                    Collection<StudentView> viewBySkills = studentViewService.getViewBySkills(skills);
+                    result = (result != null) ? CollectionUtils.intersection(result, viewBySkills) : viewBySkills;
+                }
+
+                if (filterSpecification.get("curator") != null) {
+                    Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
+                    Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
+
+                    result = (result != null) ? CollectionUtils.intersection(result, viewByCurator) : viewByCurator;
                 }
             }
 
-            if (filterSpecification.get("curator") != null) {
-                Long curatorId = (Long.parseLong((String) filterSpecification.get("curator")));
-                Collection<StudentView> viewByCurator = curatoringService.getAllStudentsForEmployee(curatorId);
-                if (result != null) {
-                    result = CollectionUtils.intersection(result, viewByCurator);
-                } else {
-                    result = viewByCurator;
-                }
-            }
-
-            StudResponse response = new StudResponse(version, result);
-            return gson.toJson(response, StudResponse.class);
+            result = (result != null && search != null) ? CollectionUtils.intersection(result, search) :
+                    (result != null) ? result : search;
+            ListResponse response = new ListResponse(version, result);
+            return gson.toJson(response, ListResponse.class);
         } else {
-            StudResponse response = new StudResponse(version,
-                    studentViewService.getViewByStudentName(desiredName));
-            return gson.toJson(response, StudResponse.class);
+            result = employeeViewService.getViewByEmployeeName(desiredName);
+            reformatRoles(result);
+            ListResponse response = new ListResponse(version, result);
+            return gson.toJson(response, ListResponse.class);
         }
     }
 
@@ -114,10 +109,13 @@ public class ListPageController {
         boolean isCurator = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CURATOR"));
 
-        Collection<User> listOfUsers = employeeService.getAllCurators();
-        Map<Long, String> curators = new HashMap<Long, String>();
-        for (User u : listOfUsers) {
-            curators.put(u.getId(), u.getName());
+        Map<Long, String> curators = null;
+        if (!isCurator) {
+            Collection<User> listOfUsers = employeeService.getAllCurators();
+            curators = new HashMap<Long, String>();
+            for (User u : listOfUsers) {
+                curators.put(u.getId(), u.getName());
+            }
         }
         Collection<SkillType> listOfSkillTypes = skillTypeService.getAll();
         Map<Long, String> skills = new HashMap<Long, String>();
@@ -142,20 +140,24 @@ public class ListPageController {
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam("message") String body) {
         Gson gson = new Gson();
-
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<String> inaccessibleEmail = new ArrayList<String>();
+
         for (Long id : studentId) {
             User user = userService.getById(id);
-            String userName = user.getName();
+
             if (user.getEmail() != null) {
                 if (!mailService.sendMail(user.getEmail(), subject, body)) {
-                    inaccessibleEmail.add(userName + " ( " + user.getEmail() + " )");
+                    inaccessibleEmail.add(user.getName() + " ( " + user.getEmail() + " )");
                 }
             } else {
-                inaccessibleEmail.add(userName + "( haven't mail )");
+                inaccessibleEmail.add(user.getName() + "( haven't mail )");
             }
         }
+
+        /*User user = userService.getById(4L);
+        mailService.sendMail("vasia-94@tut.by", "xxxPASSWORD", user.getEmail(), "s", "b");*/
+
         return gson.toJson(inaccessibleEmail);
     }
 
@@ -164,6 +166,7 @@ public class ListPageController {
         Gson gson = new Gson();
         Long[] studentId = gson.fromJson(students, Long[].class);
         List<User> listOfUsers = new ArrayList<User>();
+
         for (Long id : studentId) {
             listOfUsers.add(userService.getById(id));
         }
@@ -189,16 +192,16 @@ public class ListPageController {
         userService.save(newUser);
     }
 
-    public class StudResponse {
+    public class ListResponse {
         private Long version;
-        private Collection<StudentView> studentViews;
+        private Collection views;
 
-        public StudResponse() {
+        public ListResponse() {
         }
 
-        public StudResponse(Long version, Collection<StudentView> studentViews) {
+        public ListResponse(Long version, Collection studentViews) {
             this.version = version;
-            this.studentViews = studentViews;
+            this.views = studentViews;
         }
 
         public Long getVersion() {
@@ -209,13 +212,31 @@ public class ListPageController {
             this.version = version;
         }
 
-        public Collection<StudentView> getStudentViews() {
-            return studentViews;
+        public Collection getViews() {
+            return views;
         }
 
-        public void setStudentViews(Collection<StudentView> studentViews) {
-            this.studentViews = studentViews;
+        public void setViews(Collection views) {
+            this.views = views;
         }
     }
 
+    private void reformatRoles(Collection<EmployeeView> view) {
+        for (EmployeeView employeeView : view) {
+            String[] roles = employeeView.getRole().split(";");
+            String resultRole = "";
+            for (String role : roles) {
+                if (role.equalsIgnoreCase("ROLE_CURATOR")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Curator" : ", Curator";
+                } else if (role.equalsIgnoreCase("ROLE_FEEDBACKER")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Feedbacker" : ", Feedbacker";
+                } else if (role.equalsIgnoreCase("ROLE_OFFICE")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "Personnel officer" : ", Personal officer";
+                } else if (role.equalsIgnoreCase("ROLE_SUPERADMIN")) {
+                    resultRole += resultRole.equalsIgnoreCase("") ? "SUPERADMIN" : ", SUPERADMIN";
+                }
+            }
+            employeeView.setRole(resultRole);
+        }
+    }
 }

@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-/**
- * Created by Алексей on 18.07.14.
- */
+
 @Service
 public class UserServiceImpl implements IUserService {
 

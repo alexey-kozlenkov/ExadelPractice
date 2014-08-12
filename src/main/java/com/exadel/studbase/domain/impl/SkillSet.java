@@ -4,9 +4,6 @@ import com.exadel.studbase.domain.IEntity;
 
 import javax.persistence.*;
 
-/**
- * Created by Алексей on 24.07.14.
- */
 @Entity
 @Table(name = "\"SKILL_SET\"")
 public class SkillSet implements IEntity<Long> {
@@ -16,17 +13,22 @@ public class SkillSet implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "skill_type_id")
-    private Long skillTypeId;
+    @ManyToOne
+    @JoinColumn(name = "skill_type_id")
+    private SkillType skillType;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "level")
     private Integer level;
 
     @Column(name = "info")
     private String info;
+
+    public SkillSet() {
+    }
 
     @Override
     public Long getId() {
@@ -38,20 +40,24 @@ public class SkillSet implements IEntity<Long> {
         this.id = id;
     }
 
-    public Long getSkillTypeId() {
-        return skillTypeId;
+    public SkillType getSkillType() {
+        return skillType;
     }
 
-    public void setSkillType(Long skillTypeid) {
-        this.skillTypeId = skillTypeId;
+    public void setSkillType(SkillType skillType) {
+        this.skillType = skillType;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(Long userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public int getLevel() {
