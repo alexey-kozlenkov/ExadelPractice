@@ -16,6 +16,10 @@ require.config({
         "Dialog":           "js/common/Dialog",
         "Util":             "js/common/Util",
 
+        "Accordion":        "js/info/Accordion",
+        "Rest":             "js/info/student/Rest",
+        "FillBasic":        "js/info/student/FillBasic",
+
         "ListHeader":       "js/list/ListHeader",
         "ListController":   "js/list/ListController",
         "ListLoader":       "js/list/ListLoader",

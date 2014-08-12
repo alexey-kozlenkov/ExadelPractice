@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="graduationDate" class="col-sm-2 control-label">Graduation date</label>
+            <label for="graduationDate" class="col-sm-2 control-label">Graduation year</label>
 
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="graduationDate" placeholder="yyyy"
@@ -316,14 +316,14 @@
     </div>
 </div>
 
-<div class="category-header" id="documentsHeader">
+<div class="category-header" id="documentsHeader" data-visible = "false">
     <a href="#">Documents<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
 <div class="category-content outer-category-content" id="documentsContent">
     <div class="form-horizontal">
         <div class="col-md-offset-2">
             <div class="form-group">
-                <input type="image" title="add document" id="addDocument"
+                <input type="image" title="add document" id="addNewDocument"
                        class="btn prj-btn category-content-add-button"
                        src="../images/add.png"
                        alt="Add document">
@@ -361,7 +361,7 @@
     </div>
 </div>
 
-<div class="category-header">
+<div class="category-header" id="feedbacksHeader" data-visible = "false">
     <a href="#">Feedbacks<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
 <div class="category-content outer-category-content" id="feedbacksContent">
@@ -372,18 +372,7 @@
                 <span class="glyphicon glyphicon-pencil"></span>
             </button>
         </div>
-        <div>
-                <h3>Feedbacker</h3>
-                <dl class="dl-horizontal">
-                    <dt>Professional quality</dt>
-                        <dd>High</dd>
-                    <dt>Relevant to work</dt>
-                        <dd>Kitties</dd>
-                    <dt>Relationship with staff</dt>
-                        <dd>Good</dd>
-                </dl>
-
-        </div>
+        <ul class="feedback-list"></ul>
     </div>
 </div>
 
@@ -392,7 +381,7 @@
 </div>
 
 <div class='content-locker'>
-    <div class='dialog-area'>
+    <section class='dialog-area'>
         <div class='dialog-header'>
             <span id="closeDialog" class='glyphicon glyphicon-remove dialog-close'></span>
         </div>
@@ -424,44 +413,139 @@
 
                     <textarea class="text-dialog" id="info" placeholder="Enter some additional information..."
                               rows="3"></textarea>
-
                 </div>
             </div>
             <div class="dialog-footer">
-                <button id='okButton' class="btn prj-btn">
+                <button id='addDocument' class="btn prj-btn">
                     <span class="glyphicon glyphicon-ok"></span>Ok
                 </button>
             </div>
         </div>
 
-    </div>
+        <div class='dialog-content' data-dialog-name='add-feedback'>
+            <div class="dialog-content-central">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="professionalQuality" class="col-sm-1 control-label dialog-feedback-label">Professional quality</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="professionalQuality"
+                                   placeholder="Professional quality">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="relevantToWork" class="col-sm-1 control-label dialog-feedback-label">Relevant to work</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="relevantToWork" placeholder="Relevant to work">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="relationshipWithStaff" class="col-sm-1 control-label dialog-feedback-label">Relationship with staff</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="relationshipWithStaff" placeholder="Relationship with staff">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="professionalGrowth" class="col-sm-1 control-label dialog-feedback-label">Professional growth</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="professionalGrowth" placeholder="Professional growth">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="needMoreHours" class="col-sm-1 control-label dialog-feedback-label">Need more hours</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="needMoreHours" placeholder="yes/no">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="realProject" class="col-sm-1 control-label dialog-feedback-label">Real project</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="realProject" placeholder="Is on real project..." title="Whether the student works at the real project. If isn't present, that is whether prospect of its work on the real project">
+                        </div>
+                    </div>
+
+                    <textarea class="text-dialog" id="additionalInfo" placeholder="Your additional information..."
+                              rows="3"></textarea>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button id='addFeedback' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-ok"></span>Ok
+                </button>
+            </div>
+        </div>
+
+    </section>
 </div>
 
-<script id="termMarkTemplate" type="text/x-handlebars-template">
-    <li>
-        <input type="number" class="term-mark" placeholder="10.00">
-    </li>
+<!--<script id="termMarkTemplate" type="text/x-handlebars-template">-->
+    <!--<li>-->
+        <!--<input type="number" class="term-mark" placeholder="10.00">-->
+    <!--</li>-->
+<!--</script>-->
+<!--<script id="feedbackTemplate" type="text/x-handlebars-template" >-->
+    <!--<li class="feedback">-->
+        <!--<h3 class="feedbacker">{{feedbacker}}</h3>-->
+        <!--<dl class="dl-horizontal">-->
+            <!--<dt class="item-feedback">Professional quality</dt>-->
+                <!--<dd>{{professionalQuality}}</dd>-->
+            <!--<dt class="item-feedback">Relevant to work</dt>-->
+                <!--<dd>{{relevantToWork}}</dd>-->
+            <!--<dt class="item-feedback">Relationship with staff</dt>-->
+                <!--<dd>{{relationshipWithStaff}}</dd>-->
+            <!--<dt class="item-feedback">Professional growth</dt>-->
+                <!--<dd>{{professionalGrowth}}</dd>-->
+            <!--<dt class="item-feedback">Need more hours</dt>-->
+                <!--<dd>{{needMoreHours}}</dd>-->
+            <!--<dt class="item-feedback">Real project</dt>-->
+                <!--<dd>{{realProject}}</dd>-->
+            <!--<dt class="item-feedback">Additional information</dt>-->
+                <!--<dd>{{additionalInfo}}</dd>-->
+            <!--<dt class="item-feedback"></dt>-->
+                <!--<dd>{{feedbackDate}}</dd>-->
+        <!--</dl>-->
+    <!--</li>-->
+<!--</script>-->
+
+<!--<script id="documentTemplate" type="text/x-handlebars-template">-->
+    <!--<tr data-id="{{id}}">-->
+
+        <!--<td class="documents-list-column">{{doctype}}</td>-->
+        <!--<td class="documents-list-column">{{issueDate}}</td>-->
+        <!--<td class="documents-list-column">{{expirationDate}}</td>-->
+        <!--<td class="documents-list-column">{{info}}</td>-->
+    <!--</tr>-->
+<!--</script>-->
+
+<script src="../js/lib/require.js"></script>
+<script>
+    require(["../js/main.js"], function () {
+        require(["jquery", "Accordion", "FillBasic", "Rest"], function ($, accordion, fillBasic, rest) {
+            $(document).ready( function () {
+                accordion.init();
+                fillBasic.init();
+                rest.init();
+            });
+        });
+
+    });
+
 </script>
 
-<script id="documentTemplate" type="text/x-handlebars-template">
-    <tr data-id="{{id}}">
 
-        <td class="documents-list-column">{{doctype}}</td>
-        <td class="documents-list-column">{{issueDate}}</td>
-        <td class="documents-list-column">{{expirationDate}}</td>
-        <td class="documents-list-column">{{info}}</td>
-    </tr>
-</script>
+<!--<script src="../js/lib/jquery-2.1.1.min.js"></script>-->
+<!--<script src="../js/lib/jquery.tablesorter.min.js"></script>-->
+<!--<script src="../js/lib/jquery.animate-colors-min.js"></script>-->
+<!--<script src="../js/lib/handlebars-v1.3.0.js"></script>-->
 
 
-<script src="../js/lib/jquery-2.1.1.min.js"></script>
-<script src="../js/lib/jquery.tablesorter.min.js"></script>
-<script src="../js/lib/jquery.animate-colors-min.js"></script>
-<script src="../js/lib/handlebars-v1.3.0.js"></script>
-
-
-<script src="../js/common.js"></script>
-<script src="../js/info/toogleContent.js"></script>
-<script src="../js/info/studentInfo.js"></script>
+<!--<script src="../js/common.js"></script>-->
+<!--<script src="../js/info/toogleContent.js"></script>-->
+<!--<script src="../js/info/studentInfo.js"></script>-->
 </body>
 </html>
