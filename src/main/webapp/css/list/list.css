@@ -120,6 +120,11 @@
     text-align: center;
 
     border-bottom: 1px solid transparent;
+
+    font-size: larger;
+
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .student-table > tbody > tr > td {
@@ -137,7 +142,7 @@
 }
 
 .student-column-1 {
-    width: 240px;
+    width: 210px;
 }
 
 .student-column-2 {
@@ -203,7 +208,7 @@
 
 /***************************** FILTER *******************************/
 #filter{
-    margin: 2px;
+    margin: 4px;
 }
 
 .filter-button {
@@ -290,4 +295,10 @@
     resize: none;
     height: 140px;
     padding: 5px;
+}
+
+.inaccessible-mails-list{
+    text-align: left;
+    height: 150px;
+    overflow-y: auto;
 }

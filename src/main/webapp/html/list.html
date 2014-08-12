@@ -86,14 +86,14 @@
             </div>
         </div>
         <div class='dialog-content' data-dialog-name='inaccessible-mail'>
-            <div class="dialog-content-central">
-                <label for="inaccessibleMailList"> Can't send to : </label>
+            <div class="dialog-content-central inaccessible-mails-list">
+                <label for="inaccessibleMailList" class="error-label"> Can't send to : </label>
                 <ul id="inaccessibleMailList">
                 </ul>
                 <script id="mailListTemplate" type="text/x-handlebars-template">
                     {{#each mails}}
                     <li>
-                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}},
+                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}}
                     </li>
                     {{/each}}
                 </script>
@@ -146,7 +146,7 @@
 
                         ListController.init();
                         Filter.init();
-                        Filter.loadDescription("/list/filterDescription");
+                        Filter.load("/list/filterDescription");
                         ListLoader.init();
                         ListUtil.init();
                     });

@@ -11,7 +11,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
 
     function init() {
         bindSearchLine();
-        $("body").on("searchOrFieldUpdate", onSearchOrFieldUpdate);
+        $("body").on("reload", onReload);
         $("#studTab").click(function () {
             tab(true);
             updateList();
@@ -24,7 +24,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
     }
     function bindSearchLine() {
         $("#startSearchButton").click(function () {
-            $("body").trigger("searchOrFieldUpdate", {type: "all"});
+            $("body").trigger("reload", {by: "button"});
             sessionStorage.setItem("search", $(this).val());
             tab(isStudents);
         });
@@ -34,7 +34,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
             $(this).animate({ width: "150pt"}, 500);
         });
         $('#searchLine').on('input', function () {
-            $("body").trigger("searchOrFieldUpdate", {type: "search"});
+            $("body").trigger("reload", {by: "search"});
             sessionStorage.setItem("search", $(this).val());
         });
     }
@@ -72,7 +72,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         return isStudents;
     }
 
-    function onSearchOrFieldUpdate(e) {
+    function onReload(e) {
         console.log("# search or filter update #");
         if (sendTimeout) {
             clearTimeout(sendTimeout);
@@ -126,7 +126,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         init: init,
         forseUpdate: updateList,
         update: function () {
-            $("body").trigger("searchOrFieldUpdate");
+            $("body").trigger("reload");
         },
         tab: tab
     };

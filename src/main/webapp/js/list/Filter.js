@@ -21,7 +21,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             removeValue(this);
         });
         $('#filter').on("change", ".filter-value", function () {
-            updateValue($(this).parent().attr("data-filter"));
+            updateValue($(this).parent().data("filter"));
         });
     }
     function initHandlebar() {
@@ -34,12 +34,14 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
     function initMenu() {
         var $menu = $("#filterMenu");
         $menu.mouseleave(function () {
-            $('#filterMenu').hide(400);
+            $menu.hide(400);
+        });
+        $menu.mouseenter(function () {
+            $menu.show();
         });
         $menu.on("click", "a", function () {
-            $("#filterMenu").hide();
-            var field = $(this).parent().attr("data-filter");
-            addValue(field);
+            $menu.hide();
+            addValue($(this).parent().data("filter"));
             checkValueCount();
         });
     }
@@ -63,7 +65,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
                     util.menuLocationRelativeTo($menu, $("#addFilterButton"));
                 }
             );
-            $menu.animate({ opacity: 'toggle', height: 'toggle'}, 300);
+            $menu.toggle(300);
         }
     }
 
@@ -104,7 +106,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
 
                     if (value) {
                         $editorElement = $filterElement.find(".filter-value");
-                        if ($editorElement.is("input[type='checkbox']")) {
+                        if ($editorElement.is(":checkbox")) {
                             $editorElement.attr('checked', value === "true");
                         }
                         else {
@@ -124,14 +126,14 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             return null;
         }
         else {
-            if (elements.is("[data-multi='true']")) {
+            if (elements.data("multi")) {
                 returnVal = [];
                 elements.each(function (id, element) {
                     returnVal.push($(element).val());
                 });
                 return returnVal;
             } else {
-                if (elements.is("input[type='checkbox']")) {
+                if (elements.is(":checkbox")) {
                     return String(elements.prop("checked"));
                 }
                 else {
@@ -149,13 +151,13 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             delete filterValue[field];
         }
         sessionStorage.setItem('filter', JSON.stringify(filterValue));
-        $("body").trigger("searchOrFieldUpdate", {type: "filter"});
+        $("body").trigger("reload", {by: "filter"});
     }
     function removeValue(ovner) {
-        var selfItem = $($(ovner).parent().get(0)),
+        var selfItem = $(ovner).parent().eq(0),
             prevItem = selfItem.prev(),
             nextItem = selfItem.next(),
-            field = selfItem.attr("data-filter");
+            field = selfItem.data("filter");
         if (prevItem.is('.filter-separator')) {
             prevItem.remove();
         } else if (nextItem.is('.filter-separator')) {
@@ -196,7 +198,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
 
     function clear() {
         values({});
-        sessionStorage.removeItem('filter');
+        $("body").trigger("reload", {by: "filter"});
     }
 
     function values(filterData) {
@@ -217,7 +219,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         }
     }
 
-    function loadDescription(url) {
+    function load(url) {
         $.ajax({
             url: url,
             data: {}
@@ -226,7 +228,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             description(JSON.parse(desc));
             values(filterStore);
         }).fail(function () {
-            console.log("Fail to load filter description!");
+            console.error("Fail to load filter description!");
         });
     }
     return {
@@ -234,6 +236,6 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         description: description,
         values: values,
 
-        loadDescription: loadDescription
+        load: load
     };
 });
