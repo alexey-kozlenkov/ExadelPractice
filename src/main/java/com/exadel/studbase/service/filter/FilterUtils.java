@@ -8,6 +8,7 @@ import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class FilterUtils {
@@ -71,8 +72,8 @@ public class FilterUtils {
                 Boolean isBillable = Boolean.valueOf((String) paramValue);
                 Filter filter = isBillable ?  new IsNotNullFilter(paramValue) : new IsNullFilter(paramValue);
                 filters.put("billable", filter);
-            } else if (paramName.equalsIgnoreCase("english")) {
-                Filter filter = new GreaterEqualsFilter(paramValue);
+            } else if (paramName.equalsIgnoreCase("englishLevel")) {
+                Filter filter = new GreaterEqualsFilter(Integer.valueOf((String)paramValue));
                 filters.put("englishLevel", filter);
             }
         }
