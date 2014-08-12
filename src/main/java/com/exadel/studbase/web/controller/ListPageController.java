@@ -227,13 +227,13 @@ public class ListPageController {
             String resultRole = "";
             for (String role : roles) {
                 if (role.equalsIgnoreCase("ROLE_CURATOR")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Curator" : ", Curator";
+                    resultRole += resultRole.equals("") ? "Curator" : ", Curator";
                 } else if (role.equalsIgnoreCase("ROLE_FEEDBACKER")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Feedbacker" : ", Feedbacker";
+                    resultRole += resultRole.equals("") ? "Feedbacker" : ", Feedbacker";
                 } else if (role.equalsIgnoreCase("ROLE_OFFICE")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "Personnel officer" : ", Personal officer";
+                    resultRole += resultRole.equals("") ? "Personnel officer" : ", Personal officer";
                 } else if (role.equalsIgnoreCase("ROLE_SUPERADMIN")) {
-                    resultRole += resultRole.equalsIgnoreCase("") ? "SUPERADMIN" : ", SUPERADMIN";
+                    resultRole += resultRole.equals("") ? "SUPERADMIN" : ", SUPERADMIN";
                 }
             }
             employeeView.setRole(resultRole);
