@@ -15,7 +15,7 @@
         <td class="student-column-7">{{#if billable}}{{billable}}{{else}}-{{/if}}</td>
         <td class="student-column-8">{{roleCurrentProject}}</td>
         <td class="student-column-9">{{techsCurrentProject}}</td>
-        <td class="student-column-10">{{englishLevel}}</td>
+        <td class="student-column-10">{{Eng englishLevel}}</td>
     </tr>
     {{/each}}
 {{else}}
@@ -27,8 +27,10 @@
         <td class="empl-column-1">
             <a href='/info?id={{id}}'>{{name}}</a>
         </td>
-        <td class="empl-column-2">{{email}}</td>
-        <td class="empl-column-3">{{skype}}</td>
+        <td class="empl-column-2">{{role}}</td>
+        <td class="empl-column-3">{{email}}</td>
+        <td class="empl-column-4">{{telephone}}</td>
+        <td class="empl-column-5">{{skype}}</td>
     </tr>
     {{/each}}
 {{/if}}

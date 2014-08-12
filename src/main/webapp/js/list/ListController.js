@@ -1,12 +1,21 @@
 /**
  * Created by ala'n on 31.07.2014.
  */
-define(["jquery"], function ($) {
+define(["jquery", "handlebars"], function ($, Handlebars) {
     "use strict";
 
-    var viewStudents;
+    var ENGLISH_LEVEL = [
+            "Beginner",
+            "Elementary",
+            "Pre-Intermediate",
+            "Intermediate",
+            "Upper-Intermediate",
+            "Advanced"
+        ],
+        viewStudents;
 
     function init() {
+        initHandlebar();
         var $table = $("#studTable");
 //        initHeader(true);
         $("#listHeader").on("click", "#checkAll", function () {//input[type=checkbox]
@@ -18,9 +27,17 @@ define(["jquery"], function ($) {
         updateInfoLabel();
     }
 
+    function initHandlebar() {
+        Handlebars.registerHelper('Eng',
+            function (level) {
+                return ENGLISH_LEVEL[level];
+            }
+        );
+    }
+
     function initHeader(isStudents) {
-        require(["handlebars", "text!templates/header-list-template.html", "ListHeader"],
-            function (Handlebars, template, header) {
+        require(["text!templates/header-list-template.html", "ListHeader"],
+            function (template, header) {
                 $("#listHeader").html(Handlebars.compile(template)(
                     {
                         isStudents: isStudents
@@ -36,8 +53,8 @@ define(["jquery"], function ($) {
             viewStudents = isStudents;
             initHeader(isStudents);
         }
-        require(["handlebars", "text!templates/user-list-template.html"],
-            function (Handlebars, template) {
+        require(["text!templates/user-list-template.html"],
+            function (template) {
                 $("#studTable > tbody").append(Handlebars.compile(template)(
                     {
                         isStudents: isStudents,
