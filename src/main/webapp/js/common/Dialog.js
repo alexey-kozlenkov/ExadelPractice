@@ -12,7 +12,7 @@ define(["jquery"], function ($) {
     /* Show dialog with content [data-dialog_number='content_name'] on current page */
     function showDialog(contentName, width) {
         if (!width) {
-            width = "200px";
+            width = "260px";
         }
         $(".dialog-area").css({
             width : width

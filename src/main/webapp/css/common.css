@@ -192,7 +192,7 @@ label,
 /**************************************************************************/
 .content-locker {
     display: none;
-    position: absolute;
+    position: fixed;
     z-index: 5;
 
     width: 100%;
