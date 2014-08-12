@@ -92,6 +92,9 @@ public class ListPageController {
 
             result = (result != null && search != null) ? CollectionUtils.intersection(result, search) :
                     (result != null) ? result : search;
+            if (desiredName.equals("")) {
+                Collections.sort((List) result);
+            }
             ListResponse response = new ListResponse(version, result);
             return gson.toJson(response, ListResponse.class);
         } else {
