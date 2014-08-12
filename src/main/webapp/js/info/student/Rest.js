@@ -3,7 +3,7 @@
  */
 
 
-define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/document-template.html", "text!templates/feedback-template.html"],
+define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/document-template.html", "text!templates/feedback-template.html", "jquery-tablesorter", "jquery-animate-colors"],
     function ($, Handlebars, fillBasic, util, dialog, templateDocumentContent, templateFeedbackContent) {
     "use strict";
     var MAX_NUMBER_TERMS = 10,
@@ -122,13 +122,20 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                         $("#documents").empty();
 
                         var documents = JSON.parse(data);
-                        jQuery.each(documents, function (index, value) {
-                            $("#documents").append(templateDocument(value));
-                            if (expiredSoon(value.expirationDate)) {
-                                $("#documents tr").last().addClass("expired-soon-document");
-                            }
-                            $("#documentTable").trigger("update");
-                        });
+                        $.each(documents, function (index, value) {
+                                $("#documents").append(templateDocument({
+                                    doctype: value.doctype,
+                                    issueDate: value.issueDate,
+                                    expirationDate: value.expirationDate,
+                                    info: value.info
+
+                                }));
+
+                                if (expiredSoon(value.expirationDate)) {
+                                    $("#documents tr").last().addClass("expired-soon-document");
+                                }
+                                $("#documentTable").trigger("update");
+                            });
                     },
                     error: function () {
                         alert("error");
@@ -158,10 +165,10 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     $(".feedback-list").empty();
 
                     var feedbacks = JSON.parse(data);
-                    jQuery.each(feedbacks, function (index, value) {
+                    $.each(feedbacks, function (index, value) {
                         var date = new Date(value.feedbackDate),
                             feedback = {
-                                feedbacker : value.feedbackerId,
+                                feedbacker : value.feedbacker.id,
                                 professionalQuality : value.professionalCompetence,
                                 relevantToWork : value.attitudeToWork,
                                 relationshipWithStaff : value.collectiveRelations,
@@ -203,8 +210,14 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     success: function (data) {
                         var documents = JSON.parse(data);
 
-                        jQuery.each(documents, function (index, value) {
-                            $("#documents").append(templateDocument(value));
+                        $.each(documents, function (index, value) {
+                            $("#documents").append(templateDocument({
+                                doctype: value.doctype,
+                                issueDate: value.issueDate,
+                                expirationDate: value.expirationDate,
+                                info: value.info
+
+                            }));
                             $("#documents tr").last().addClass("expired-document");
                             $("#documentTable").trigger("update");
                         });
@@ -248,14 +261,14 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
             $("#expirationDate").val("");
             $("#info").val("");
             dialog.closeDialog();
-            $("#documents").prepend(templateDocument({documents: [newDocument]}));
+            $("#documents").prepend(templateDocument(newDocument));
             $("#documents tr").first().addClass("new-document");
             $("#documentTable").trigger("update");
         });
 
         //write or edit feedback
         $("#writeFeedback").click(function () {
-            dialog.showDialog("add-feedback");
+            dialog.showDialog("add-feedback", "500px");
         });
         $("#addFeedback").click(function () {
             var date = new Date(Date.now()),
@@ -420,7 +433,6 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     'studentTermMarks': editedTermMarks
                 },
                 success: function () {
-                    $("#saveEducationInformation").text("Saved!");
                     $("#saveEducationInformation").animate({
                         backgroundColor: '#5cb85c',
                         borderColor: '#4cae4c'
@@ -437,7 +449,6 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     });
                 },
                 error: function () {
-                    $("#saveEducationInformation").text("Check out!");
                     $("#saveEducationInformation").animate({
                         backgroundColor: '#CD5C5C',
                         borderColor: '#C16868'

@@ -1,7 +1,7 @@
 /**
  * Created by ala'n on 08.08.2014.
  */
-define(["jquery"], function () {
+define(["jquery"], function ($) {
     "use strict";
 
     function logout() {
@@ -36,11 +36,11 @@ define(["jquery"], function () {
         }, 1000);
 
         switch (state) {
-            case 'good':
+            case 'success':
                 stateColors.backgroundColor = '#5cb85c';
                 stateColors.borderColor = '#4cae4c';
                 break;
-            case 'bad':
+            case 'fail':
                 stateColors.backgroundColor = '#CD5C5C';
                 stateColors.borderColor = '#C16868';
                 break;

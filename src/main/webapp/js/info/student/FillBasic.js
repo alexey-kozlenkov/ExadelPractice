@@ -3,9 +3,10 @@
  */
 
 
-define(["jquery", "handlebars"], function ($, Handlebars) {
+define(["jquery", "handlebars", "text!templates/term-mark-template.html"], function ($, Handlebars, templateTermMarkContent) {
     "use strict";
-    var studentId = null;
+    var studentId = null,
+        templateTermMark = Handlebars.compile(templateTermMarkContent);
     function init() {
         parseRequestForId(window.location.search);
         fillOptions();
@@ -61,6 +62,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
                 "studentId": studentId
             },
             success: function (data) {
+                alert(data);
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks;
@@ -100,18 +102,17 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
 
                 //termMarks
                 marks = gottenStudent.termMarks;
-                if (marks) {
+                if (marks !== "") {
                     marks = marks.split(";");
-                    require(["text!templates/term-mark-template.html"],
-                        function (template) {
-                            var content = Handlebars.compile(template)({
-                                values: marks
-                            });
-                            $("#termMarkList").append(content);
-                        }
-                    );
-
+                    $.each(marks, function (index, value) {
+                        $("#termMarkList").append(templateTermMark({
+                            value: value
+                        }));
+                    });
                 }
+            },
+            fail : function () {
+                alert("fuck require");
 
             }
         });
