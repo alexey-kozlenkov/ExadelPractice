@@ -5,7 +5,7 @@
 
 define(["jquery", "handlebars", "text!templates/term-mark-template.html"], function ($, Handlebars, templateTermMarkContent) {
     "use strict";
-    var studentId = null,
+    var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
     function init() {
         parseRequestForId(window.location.search);
@@ -119,7 +119,7 @@ define(["jquery", "handlebars", "text!templates/term-mark-template.html"], funct
     }
 
     return {
-        studentId: studentId,
+        studentId: function () { return studentId; },
         init: init,
         checkState: checkState
     };
