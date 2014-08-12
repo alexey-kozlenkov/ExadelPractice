@@ -38,10 +38,10 @@ public class Feedback implements IEntity<Long> {
     private String professionalProgress;
 
     @Column(name = "need_more_hours")
-    private boolean needMoreHours;
+    private Boolean needMoreHours;
 
     @Column(name = "is_on_project")
-    private boolean isOnProject;
+    private Boolean isOnProject;
 
     @Column(name = "feedback_date")
     private Date feedbackDate;

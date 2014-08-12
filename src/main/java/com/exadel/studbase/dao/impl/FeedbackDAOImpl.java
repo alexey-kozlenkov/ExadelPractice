@@ -13,13 +13,13 @@ public class FeedbackDAOImpl extends GenericDAOImpl<Feedback, StudentView, Long>
 
     @Override
     public Collection<Feedback> getAllAboutStudent(Long id) {
-        Query query = getSession().createQuery("FROM Feedback WHERE Student.id =" + id);
+        Query query = getSession().createQuery("FROM Feedback WHERE student.id =" + id);
         return query.list();
     }
 
     @Override
     public Collection<Feedback> getAllByEmployee(Long id) {
-        Query query = getSession().createQuery("FROM Feedback  WHERE Employee .id = " + id);
+        Query query = getSession().createQuery("FROM Feedback  WHERE feedbacker.id = " + id);
         return query.list();
     }
 }
