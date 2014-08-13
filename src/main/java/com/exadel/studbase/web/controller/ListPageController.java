@@ -40,6 +40,10 @@ public class ListPageController {
     IMailService mailService;
     @Autowired
     ICuratoringService curatoringService;
+    @Autowired
+    IUniversityService universityService;
+    @Autowired
+    IFacultyService facultyService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
@@ -136,10 +140,22 @@ public class ListPageController {
             skills.put(st.getId(), st.getName());
         }
 
-        // get all universities and faculties
+        Collection<University> universities = universityService.getAll();
+        String[] university = new String[universities.size()];
+        Iterator<University> universityIterator = universities.iterator();
+        for (int i = 0; i < universities.size(); i++) {
+            university[i]  = universityIterator.next().getName();
+        }
+
+        Collection<Faculty> faculties = facultyService.getAll();
+        String[] faculty = new String[faculties.size()];
+        Iterator<Faculty> facultyIterator = faculties.iterator();
+        for (int i = 0; i < faculties.size(); i++) {
+            faculty[i] = facultyIterator.next().getName();
+        }
 
         List<FilterDescription.FilterDescriptor> description
-                = FilterDescription.createFilterDescription(isCurator, curators, skills/*, university, faculty*/);
+                = FilterDescription.createFilterDescription(isCurator, curators, skills,university, faculty);
 
         Gson gson = new Gson();
 

@@ -43,50 +43,7 @@ public class TestController {
     @Autowired
     IStudentViewService studentViewService;
 
-    public static List<User> getTestList() {
-        if (testList == null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            testList = new ArrayList<User>();
-            User st;
-            Random rand = new Random();
-            for (int id_ = 1; id_ <= 1000; id_++) {
-                st = new User();
 
-                st.setId(Long.valueOf(id_));
-                st.setName("User_" + id_);
-                st.setLogin("Login_" + id_);
-                st.setPassword("");
-                st.setRole("user");
-                st.setEmail("email_" + id_ + "@mail.ru");
-                st.setStudentInfo(new Student());
-                st.getStudentInfo().setCourse((id_ % 10 < 5 ? 1 : 2));
-                st.getStudentInfo().setGroup(id_ % 10);
-                st.getStudentInfo().setUniversity((id_ < 10) ? "MSU" : "BSU");
-                st.getStudentInfo().setFaculty((id_ < 10) ? "IP" : "FPM");
-                st.getStudentInfo().setWorkingHours(4 + rand.nextInt(20));
-                try {
-                    st.getStudentInfo().setHireDate(new Date(sdf.parse("07.07.2014").getTime()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (rand.nextBoolean())
-                    try {
-                        st.getStudentInfo().setBillable(new Date(sdf.parse("02.09.2014").getTime()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                else
-                    st.getStudentInfo().setBillable(null);
-                st.getStudentInfo().setGraduationDate(2017);
-
-                st.getStudentInfo().setRoleCurrentProject(rand.nextBoolean() ? "developer" : "test");
-                st.getStudentInfo().setTechsCurrentProject(rand.nextBoolean() ? "java" : "php");
-                st.getStudentInfo().setEnglishLevel("advansed");
-                testList.add(st);
-            }
-        }
-        return testList;
-    }
 
 
     @RequestMapping(value = "/secured/index", method = RequestMethod.GET)
@@ -97,39 +54,7 @@ public class TestController {
         return "secured/index";
     }
 
-    @RequestMapping(value = "/addStudent")
-    public String addStudent() {
 
-        User user = new User();
-        user.setName("Alexey Kozlenkov");
-        user.setEmail("alexey@gmail.com");
-        user.setLogin("al.ov");
-        user.setPassword("122345");
-        user.setRole("student");
-
-        System.out.println("Trying to student me as user...");
-        userService.save(user);
-        System.out.println("Saved success!");
-
-        Student student = new Student();
-        student.setId(user.getId());
-        student.setState("training");
-        student.setUniversity("BSU");
-        student.setFaculty("FAMCS");
-        student.setCourse(3);
-        student.setGroup(7);
-        student.setGraduationDate(2017);
-        student.setRoleCurrentProject("Junior developer");
-        student.setTechsCurrentProject("CSS, JS, JSON");
-
-        System.out.println("trying to save student as student...");
-        studentService.save(student);
-        System.out.println("Saved success!");
-
-        System.out.println("---------------------------------------------------------------------");
-
-        return "login";
-    }
 
     @RequestMapping(value = "/addEmployee")
     public String addEmployee() {
@@ -217,8 +142,6 @@ public class TestController {
        // Collection<StudentView> filterBySkills = studentViewService.filterBySkillTypeId(new String[] {"5"});
 
         //Collection<StudentView> result = CollectionUtils.intersection(mainFilter, filterBySkills);
-
-        System.out.println("ну нихуя себе");
     }
 
     @ResponseBody
@@ -229,20 +152,9 @@ public class TestController {
         return "Good";
     }
 
-    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
     public void feedback () {
-        Student student = studentService.getById(17L);
-        Feedback feedback = new Feedback();
-        feedback.setStudent(student);
-        feedback.setAttitudeToWork("test");
-        feedback.setCollectiveRelations("test test");
-
-        feedbackService.save(feedback);
-
-        Feedback getFed = feedbackService.getById(feedback.getId());
-
-        Collection<Feedback> feedbacks = feedbackService.getAllAboutStudent(17L);
-        System.out.println(getFed);
+        Collection<StudentView> view = studentViewService.getAll();
     }
 
 }
