@@ -6,33 +6,45 @@ define(["jquery", "Dialog", "Util", "ListController"],
     function ($, Dlg, Util, List) {
         "use strict";
         var selectedStudentsId,
-            curators = [
-                {id: 101, name: "First Curator"},
-                {id: 201, name: "Second Curator"}
-            ];
+            curators;
 
         function init() {
             load();
-
             $("#appointCurators").click(
                 function () {
-                    clearList();
-                    fillSelect();
-                    Dlg.showDialog("appointer");
+                    selectedStudentsId = List.getCheckedRowsId();
+                    if (selectedStudentsId.length  > 0) {
+                        clearList();
+                        fillSelect();
+                        Dlg.showDialog("appointer");
+                    }
+                    else {
+                        Util.stateAnimate($(this), "fail");
+                    }
                 }
             );
             $("#appointButton").click(
                 function () {
-                    sendAppoint();
-                    Dlg.closeDialog();
+                    var selectedCuratorIds = pick();
+                    if (selectedCuratorIds.length > 0) {
+                        Dlg.closeDialog();
+                        sendAppoint(selectedStudentsId, selectedCuratorIds);
+                    }
+                    else {
+                        Util.stateAnimate($(this), "fail", "No one selected");
+                    }
                 }
             );
 
             $("#addCuratorToApplied").click(
                 function () {
-                    var i = $("#appointCuratorSelector").val();
-                    if (!curators[i].selected) {
-                        addCurator(i);
+                    var index = $("#appointCuratorSelector").val(),
+                        $exist = $("#appointCuratorsList > li[data-id = " + index + "]");
+                    if ($exist.length === 0) {
+                        addCurator(index);
+                    }
+                    else {
+                        Util.stateAnimate($(this), "fail");
                     }
                 }
             );
@@ -52,7 +64,7 @@ define(["jquery", "Dialog", "Util", "ListController"],
                 }
             ).fail(
                 function () {
-                    console.error("curators not loaded!");
+                    alert("Curators list not loaded!");
                 }
             );
         }
@@ -89,23 +101,22 @@ define(["jquery", "Dialog", "Util", "ListController"],
             return result;
         }
 
-        function sendAppoint() {
-            var studId = JSON.stringify(List.getCheckedRowsId()),
-                emplId = JSON.stringify(pick());
+        function sendAppoint(studentIds, curatorIds) {
             $.ajax({
                 url: "/list/appoint",
-                method: "POST",
+                type: "POST",
                 data: {
-                    studentsId : studId,
-                    curatorsId : emplId
+                    studentsId : JSON.stringify(studentIds),
+                    curatorsId : JSON.stringify(curatorIds)
                 }
             }).done(
                 function (data) {
                     curators = JSON.parse(data);
+                    Util.stateAnimate($("#appointCurators"), "success");
                 }
             ).fail(
                 function () {
-                    console.error("curators not loaded!");
+                    alert("Appoint curators request not executed !");
                 }
             );
         }

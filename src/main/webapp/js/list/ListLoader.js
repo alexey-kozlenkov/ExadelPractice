@@ -65,10 +65,12 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         $("#emplTab").attr("disabled", !isStudentTab);
         if (isStudentTab) {
             $("#exportMenuButton").fadeIn(100);
+            $("#appointCurators").fadeIn(100);
             $("#filter").fadeIn(100, ListHeader.check);
         }
         else {
             $("#exportMenuButton").fadeOut(100);
+            $("#appointCurators").fadeOut(100);
             $("#filter").fadeOut(100, ListHeader.check);
         }
     }
