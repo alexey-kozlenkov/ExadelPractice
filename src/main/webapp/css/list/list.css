@@ -322,6 +322,7 @@
 
     border: 1px solid gray;
     border-radius: 3pt;
+    margin-top: 3px;
 }
 
 #appointCuratorsList > li{

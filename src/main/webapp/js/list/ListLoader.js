@@ -43,7 +43,8 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
     function storageRevision() {
         var isStudTab = sessionStorage.getItem("isStudentTab"),
             search = sessionStorage.getItem("search");
-        tab(isStudTab == "true");
+
+        tab(isStudTab ? (isStudTab === "true") : true);
         if (search) {
             $("#searchLine").val(search);
         }

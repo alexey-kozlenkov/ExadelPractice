@@ -9,11 +9,11 @@ define(["jquery", "Dialog", "Util", "ListController"],
             curators;
 
         function init() {
-            load();
             $("#appointCurators").click(
                 function () {
                     selectedStudentsId = List.getCheckedRowsId();
                     if (selectedStudentsId.length  > 0) {
+                        loadCurators();
                         clearList();
                         fillSelect();
                         Dlg.showDialog("appointer");
@@ -54,7 +54,7 @@ define(["jquery", "Dialog", "Util", "ListController"],
             });
         }
 
-        function load() {
+        function loadCurators() {
             $.ajax({
                 url: "/list/curatorList",
                 data: {}
