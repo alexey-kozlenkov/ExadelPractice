@@ -158,6 +158,8 @@ public class Feedback implements IEntity<Long> {
     public String toString() {
         return "Feedback{" +
                 "id=" + id +
+                ", student='" + student.getId() + '\'' +
+                ", feedbacker='" + feedbacker.getName() + '\'' +
                 ", content='" + content + '\'' +
                 ", professionalCompetence='" + professionalCompetence + '\'' +
                 ", attitudeToWork='" + attitudeToWork + '\'' +

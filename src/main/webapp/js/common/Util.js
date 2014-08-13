@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery", "jquery-animate-colors"], function ($) {
     "use strict";
     /*
      roles : 0 - student  1 - student_employee
@@ -12,9 +12,9 @@ define(["jquery"], function ($) {
             dataType: 'json'
         });
         loginGet.done(function (data) {
-            var loginInfo = JSON.parse(data);
-            sessionStorage.setItem("username", loginInfo.username);
-            sessionStorage.setItem("role", loginInfo.role);
+            sessionStorage.setItem("username", data.username);
+            sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("id", data.id);
         });
         loginGet.fail(function (data) {
             alert("Server has failed");

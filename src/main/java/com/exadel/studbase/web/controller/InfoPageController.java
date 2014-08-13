@@ -102,6 +102,15 @@ public class InfoPageController {
         return gson.toJson(userFeedbacks);
     }
 
+    @RequestMapping(value = "/getFeedbacker", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String feedbacker(@RequestParam("feedbackerId") Long feedbackerId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User feedbacker = userService.getById(feedbackerId);
+        return gson.toJson(feedbacker, User.class);
+    }
+
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
     @RequestMapping(value = "/postManualInformation", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
@@ -224,7 +233,8 @@ public class InfoPageController {
         Feedback[] newFeeds = gson.fromJson(newFeedbacks, Feedback[].class);
 
         for(Feedback feedback : newFeeds){
-            feedbackService.save(feedback);
+            System.out.println(feedback.toString());
+           // feedbackService.save(feedback);
         }
 
         return ("{\"post\":\"ok\"}");

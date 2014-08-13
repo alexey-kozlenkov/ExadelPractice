@@ -112,15 +112,16 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         });
 
         $("#saveFeedbacksInformation").click(function () {
-            var fields = ['professionalQuality', 'relevantToWork', 'relationshipWithStaff', 'professionalGrowth', 'needMoreHours', 'realProject', 'additionalInfo', 'feedbackDate'],
+            var fields = ['professionalCompetence', 'attitudeToWork', 'collectiveRelations', 'professionalProgress', 'needMoreHours', 'isOnProject', 'content', 'feedbackDate'],
                 newFeedbacks = [];
             $(".new-feedback").each(function () {
                 var $this = $(this),
                     $thisFields = $this.find("dd"),
-                    feedback = {};
-                //TODO local storage
-                feedback.feedbacker = "Me";
-                feedback.studentId = fillBasic.studentId();
+                    feedback = {},
+                    feedbacker = getFeedbacker();
+
+                feedback.feedbacker = feedbacker;
+                //feedback.studentId = fillBasic.studentId();
                 $thisFields.each(function (index, value) {
                     if (index === 4) {
                         var needMoreHoursBoolean;
@@ -133,10 +134,9 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 });
                 newFeedbacks.push(feedback);
                 $this.removeClass("new-feedback");
-
             });
             newFeedbacks = JSON.stringify(newFeedbacks);
-
+            console.log(newFeedbacks);
             saveFeedbacksInformation(newFeedbacks);
         });
 
@@ -304,8 +304,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         });
         $("#addFeedback").click(function () {
             var date = new Date(Date.now()),
-                //TODO local storage
-                feedbacker = "Me",
+
+                feedbacker = sessionStorage.getItem("username"),
                 professionalQuality = $("#professionalQuality").val(),
                 relevantToWork = $("#relevantToWork").val(),
                 relationshipWithStaff = $("#relationshipWithStaff").val(),
@@ -327,7 +327,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 newFeedback;
 
             $(".feedback-list").prepend(templateFeedback(data));
-            //TODO class new-feedback
+
             newFeedback = $(".feedback-list li").first();
             newFeedback.addClass("new-feedback");
 
@@ -398,6 +398,21 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 return false;
             }
         }
+
+    function getFeedbacker() {
+        var feedbackerId = sessionStorage.getItem("id"),
+            get = $.ajax({
+            type: "GET",
+            url: "/info/getFeedbacker",
+            dataType: 'json', // from the server!
+            data: {
+                'feedbackerId': feedbackerId
+            }
+        });
+        get.done(function (data) {
+            return data;
+        });
+    }
 
     function exportStudentExcel() {
             window.open("/info/exportExcel?studentId=" + fillBasic.studentId(), "Export file");
