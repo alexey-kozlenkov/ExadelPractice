@@ -214,6 +214,22 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/postFeedbacks", method = RequestMethod.POST)
+    public String editFeedbacks(@RequestParam("feedbacks") String newFeedbacks) {
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Feedback[] newFeeds = gson.fromJson(newFeedbacks, Feedback[].class);
+
+        for(Feedback feedback : newFeeds){
+            feedbackService.save(feedback);
+        }
+
+        return ("{\"post\":\"ok\"}");
+    }
+
 
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
