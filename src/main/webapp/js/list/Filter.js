@@ -36,9 +36,6 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         $menu.mouseleave(function () {
             $menu.hide(400);
         });
-        $menu.mouseenter(function () {
-            $menu.show();
-        });
         $menu.on("click", "a", function () {
             $menu.hide();
             addValue($(this).parent().data("filter"));
@@ -150,8 +147,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         else {
             delete filterValue[field];
         }
-        sessionStorage.setItem('filter', JSON.stringify(filterValue));
-        $("body").trigger("reload", {by: "filter"});
+        updateStorage(true);
     }
     function removeValue(ovner) {
         var selfItem = $(ovner).parent().eq(0),
@@ -198,7 +194,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
 
     function clear() {
         values({});
-        $("body").trigger("reload", {by: "filter"});
+        updateStorage(true);
     }
 
     function values(filterData) {
@@ -214,9 +210,20 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         if (param) {
             filterDescriptions = param;
             updateMenu();
+            updateFromStorage();
         } else {
             return filterDescriptions;
         }
+    }
+
+    function updateStorage(triggerEvent) {
+        sessionStorage.setItem('filter', JSON.stringify(filterValue));
+        if (triggerEvent) {
+            $("body").trigger("listRequestChanged", {by: "filter"});
+        }
+    }
+    function updateFromStorage() {
+        values(JSON.parse(sessionStorage.getItem('filter')));
     }
 
     function load(url) {
@@ -224,18 +231,21 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
             url: url,
             data: {}
         }).done(function (desc) {
-            var filterStore = JSON.parse(sessionStorage.getItem('filter'));
             description(JSON.parse(desc));
-            values(filterStore);
         }).fail(function () {
-            console.error("Fail to load filter description!");
+            console.error("Server error: fail to load filter description!");
         });
     }
     return {
         init: init,
+
         description: description,
+
         values: values,
 
-        load: load
+        load: load,
+
+        update: updateFromStorage,
+        forseRevision: updateStorage
     };
 });

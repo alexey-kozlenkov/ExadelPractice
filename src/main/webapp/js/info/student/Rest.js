@@ -100,7 +100,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     }
                     value[fields[i]] = cellValue;
                 }
-                value.studentId = fillBasic.studentId;
+                value.studentId = fillBasic.studentId();
 
                 console.log(value);
                 newDocuments.push(value);

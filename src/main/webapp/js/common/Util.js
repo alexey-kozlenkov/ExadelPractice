@@ -7,7 +7,7 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
     function logout() {
         sessionStorage.removeItem("filter");
         sessionStorage.removeItem("search");
-        sessionStorage.removeItem("isStudent");
+        sessionStorage.removeItem("lastTab");
     }
     function btnStateAnimate(btn, state, stateText) {
         var text = btn.text(),

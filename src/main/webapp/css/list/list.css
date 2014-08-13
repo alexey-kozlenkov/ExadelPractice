@@ -70,9 +70,12 @@
     opacity: 1;
 }
 
-.tab-btn:active,
-.tab-btn:focus{
-    color: #ffff00;
+.tab-btn[data-selected='true']{
+    outline: 0;
+    border-color: #66afe9;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+    opacity: 1;
 }
 
 #toggleNav{
