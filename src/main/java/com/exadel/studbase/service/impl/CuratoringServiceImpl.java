@@ -46,4 +46,10 @@ public class CuratoringServiceImpl implements ICuratoringService {
     public Collection<Employee> getAllMastersForStudent(Long studentId) {
         return curatoringDAO.getAllMastersForStudent(studentId);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void appointCuratorsToStudents(Long[] studentsIds, Long[] curatorsIds) {
+        curatoringDAO.appointCuratorsToStudents(studentsIds, curatorsIds);
+    }
 }

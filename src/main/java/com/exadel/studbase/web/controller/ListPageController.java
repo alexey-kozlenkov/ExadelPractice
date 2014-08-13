@@ -207,6 +207,17 @@ public class ListPageController {
         userService.save(newUser);
     }
 
+    @Secured("ROLE_SUPERADMIN")
+    @RequestMapping(value = "/appoint", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void appointCurators(@RequestParam("curatorsId") String curators,
+                                @RequestParam("studentsId") String students) {
+        Gson gson = new Gson();
+        Long[] studentsIds = gson.fromJson(students, Long[].class);
+        Long[] curatorsIds = gson.fromJson(curators, Long[].class);
+        curatoringService.appointCuratorsToStudents(studentsIds, curatorsIds);
+    }
+
     public class ListResponse {
         private Long version;
         private Collection views;

@@ -11,4 +11,6 @@ public interface ICuratoringDAO extends GenericDAO<Curatoring, StudentView,  Lon
     Collection<StudentView> getAllStudentsForEmployee(Long employeeId);
 
     Collection<Employee> getAllMastersForStudent(Long studentId);
+
+    void appointCuratorsToStudents(Long[] studentIds, Long[] curatorIds);
 }
