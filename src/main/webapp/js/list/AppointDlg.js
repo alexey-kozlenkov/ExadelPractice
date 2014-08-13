@@ -94,6 +94,7 @@ define(["jquery", "Dialog", "Util", "ListController"],
                 emplId = JSON.stringify(pick());
             $.ajax({
                 url: "/list/appoint",
+                method: "POST",
                 data: {
                     studentsId : studId,
                     curatorsId : emplId
