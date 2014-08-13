@@ -14,9 +14,8 @@ public class Feedback implements IEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @Column(name = "student_id")
+    private Long studentId;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
@@ -41,7 +40,7 @@ public class Feedback implements IEntity<Long> {
     private Boolean needMoreHours;
 
     @Column(name = "is_on_project")
-    private Boolean isOnProject;
+    private String isOnProject;
 
     @Column(name = "feedback_date")
     private Date feedbackDate;
@@ -59,12 +58,12 @@ public class Feedback implements IEntity<Long> {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public Long getStudent() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudent(Long student) {
+        this.studentId = student;
     }
 
     public User getFeedbacker() {
@@ -115,19 +114,19 @@ public class Feedback implements IEntity<Long> {
         this.professionalProgress = professionalProgress;
     }
 
-    public boolean isNeedMoreHours() {
+    public Boolean isNeedMoreHours() {
         return needMoreHours;
     }
 
-    public void setNeedMoreHours(boolean needMoreHours) {
+    public void setNeedMoreHours(Boolean needMoreHours) {
         this.needMoreHours = needMoreHours;
     }
 
-    public boolean isOnProject() {
+    public String isOnProject() {
         return isOnProject;
     }
 
-    public void setOnProject(boolean isOnProject) {
+    public void setOnProject(String isOnProject) {
         this.isOnProject = isOnProject;
     }
 

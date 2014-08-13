@@ -45,8 +45,13 @@ public class ExcelView extends AbstractExcelView {
         HSSFRow header = sheet.createRow(0);
         CellStyle styleHeader = workbook.createCellStyle();
         Font font = workbook.createFont();
+
+        String fileNameBeginning = "Student list report - ";
+        if(listOfUsers.size() == 1) {
+            fileNameBeginning = listOfUsers.get(0).getName() + " report - ";
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
-        String fileName = "Student list report - " + simpleDateFormat.format(new Date()) + ".xls";
+        String fileName = fileNameBeginning + simpleDateFormat.format(new Date()) + ".xls";
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=" + fileName);

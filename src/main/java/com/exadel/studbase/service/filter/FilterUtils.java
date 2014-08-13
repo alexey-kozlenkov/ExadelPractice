@@ -66,7 +66,7 @@ public class FilterUtils {
                 Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("graduationDate", filter);
             } else if (paramName.equalsIgnoreCase("workingHours")) {
-                Filter filter = new EqualsFilter(Integer.valueOf((String) paramValue));
+                Filter filter = new GreaterEqualsFilter(Integer.valueOf((String) paramValue));
                 filters.put("workingHours", filter);
             } else if (paramName.equalsIgnoreCase("billable")) {
                 Boolean isBillable = Boolean.valueOf((String) paramValue);
