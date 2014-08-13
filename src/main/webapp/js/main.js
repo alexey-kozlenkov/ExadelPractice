@@ -24,7 +24,8 @@ require.config({
         "ListController":   "js/list/ListController",
         "ListLoader":       "js/list/ListLoader",
         "Filter"   :        "js/list/Filter",
-        "ListUtil" :        "js/list/ListUtil"
+        "ListUtil" :        "js/list/ListUtil",
+        "AppointDlg" :    "js/list/AppointDlg"
     },
     shim: {
         'handlebars': {

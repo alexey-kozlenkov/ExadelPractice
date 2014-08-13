@@ -279,7 +279,12 @@ label,
     padding-left: 4px;
 }
 
+.scrolled-area {
+    overflow: auto;
+}
+
 .error-label{
     color: red;
     font-weight: bold;
 }
+

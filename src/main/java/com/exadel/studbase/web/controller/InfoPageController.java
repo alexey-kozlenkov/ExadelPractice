@@ -1,6 +1,5 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.ICuratoringDAO;
 import com.exadel.studbase.domain.impl.Document;
 import com.exadel.studbase.domain.impl.Feedback;
 import com.exadel.studbase.domain.impl.Student;
@@ -46,7 +45,7 @@ public class InfoPageController {
     @Autowired
     ISkillSetService skillSetService;
     @Autowired
-    ICuratoringDAO curatoringService;
+    ICuratoringService curatoringService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String infoPage(@RequestParam("id") Long id) {

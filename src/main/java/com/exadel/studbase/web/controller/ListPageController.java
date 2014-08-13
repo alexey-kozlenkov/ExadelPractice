@@ -146,6 +146,19 @@ public class ListPageController {
         return gson.toJson(description);
     }
 
+    @Secured("ROLE_SUPERADMIN")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/curatorList", method = RequestMethod.GET)
+    public String getAllCurators(){
+        Gson gson = new Gson();
+        Map<Long, String> curators = new HashMap<Long, String>();
+        Collection<User> listOfUsers = employeeService.getAllCurators();
+        for (User u : listOfUsers) {
+                curators.put(u.getId(), u.getName());
+        }
+        return gson.toJson(curators);
+    }
 
     @Secured("ROLE_SUPERADMIN")
     @ResponseStatus(HttpStatus.OK)

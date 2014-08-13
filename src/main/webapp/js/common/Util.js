@@ -11,8 +11,7 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
             url: "/login/info",
             dataType: 'json'
         });
-        loginGet.done(function (data) {
-            var loginInfo = JSON.parse(data);
+        loginGet.done(function (loginInfo) {
             sessionStorage.setItem("username", loginInfo.username);
             sessionStorage.setItem("role", loginInfo.role);
         });

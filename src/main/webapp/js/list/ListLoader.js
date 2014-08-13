@@ -61,8 +61,8 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         return isStudentTab;
     }
     function updateButtons() {
-        $("#studTab").attr("enabled", isStudentTab);
-        $("#emplTab").attr("enabled", !isStudentTab);
+        $("#studTab").attr("disabled", isStudentTab);
+        $("#emplTab").attr("disabled", !isStudentTab);
         if (isStudentTab) {
             $("#exportMenuButton").fadeIn(100);
             $("#filter").fadeIn(100, ListHeader.check);
