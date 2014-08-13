@@ -63,7 +63,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 "studentId": studentId
             },
             success: function (data) {
-                alert(data);
+               // alert(data);
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks;
