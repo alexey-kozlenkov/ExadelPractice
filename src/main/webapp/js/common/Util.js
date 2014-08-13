@@ -8,7 +8,7 @@ define(["jquery"], function ($) {
     function login() {
         var loginGet = $.ajax({
             type: "GET",
-            url: "/login",
+            url: "/login/info",
             dataType: 'json'
         });
         loginGet.done(function (data) {

@@ -8,7 +8,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
     var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
     function init() {
-        //util.login();
+        util.login();
         parseRequestForId(window.location.search);
         fillOptions();
         fillCommonInfo();
@@ -114,7 +114,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 }
             },
             fail : function () {
-                alert("fuck require");
+                alert("error");
 
             }
         });
