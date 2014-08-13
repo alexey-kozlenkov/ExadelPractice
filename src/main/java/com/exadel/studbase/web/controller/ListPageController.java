@@ -136,8 +136,10 @@ public class ListPageController {
             skills.put(st.getId(), st.getName());
         }
 
+        // get all universities and faculties
+
         List<FilterDescription.FilterDescriptor> description
-                = FilterDescription.createFilterDescription(isCurator, curators, skills);
+                = FilterDescription.createFilterDescription(isCurator, curators, skills/*, university, faculty*/);
 
         Gson gson = new Gson();
 
