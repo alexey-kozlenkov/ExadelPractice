@@ -1,29 +1,42 @@
 h1 {
     margin: 0;
     padding: 20px;
+    padding-left : 5px;
 
     font-weight: 300;
     font-size: 30px;
 }
 
 .info-header {
+    position: fixed;
+    z-index: 2;
     box-sizing: border-box;
     margin-bottom: 10px;
+    width: 100%;
     border-bottom: 1px solid #616161;
+    vertical-align: middle;
     text-transform: uppercase;
 }
 
 .info-header-nav {
     display: inline-block;
     float: right;
+    margin-right: 30px;
     padding-top: 10px;
 }
 
 .info-header-nav-link {
-    margin: 5px 0 5px;
+    margin: 15px 0 5px;
     list-style-type: none;
     text-transform: none;
 
+}
+
+.back-link {
+    margin: 0 auto;
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 23px;
 }
 
 #headerName {
@@ -32,6 +45,8 @@ h1 {
 
 .wrapper {
     margin: 0 auto;
+    margin-top: 90px;
+    margin-bottom: 30px;
     width: 90%;
 }
 
@@ -83,8 +98,8 @@ h1 {
 }
 
 .form-control {
-    color: black;
     width: auto;
+    color: black;
 }
 
 .form-control input[type="date"] {
@@ -115,7 +130,8 @@ h1 {
 
 .export {
     position: fixed;
-    right: 0%;
+    top: 100px;
+    right: 30px;
 }
 
 .export-icon {
@@ -130,19 +146,19 @@ h1 {
 }
 
 .export-btn {
-    float : right;
+    float: right;
     padding: 0;
     width: 35px;
     height: 35px;
-    border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 
     -webkit-transition: width 0.3s;
     transition: width 0.3s;
 }
 
-.export-btn:hover{
-    width  : 45px;
+.export-btn:hover {
+    width: 45px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

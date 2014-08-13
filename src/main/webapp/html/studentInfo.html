@@ -17,18 +17,19 @@
 
 <body>
 <div class="prj-header info-header">
+    <a href="/list" class="prj-link back-link">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </a>
     <h1 id="headerName">some student name</h1>
     <ul class="info-header-nav">
+        <li class="info-header-nav-link">
+            <a href="#" class="prj-link" id="sessionUsername">
+            </a>
+        </li>
         <li class="info-header-nav-link">
             <a href="/logout" class="prj-link logout-link">
                 Logout
                 <span class="glyphicon glyphicon-log-out"></span>
-            </a>
-        </li>
-        <li class="info-header-nav-link">
-            <a href="/list" class="prj-link">
-                Back to list
-                <span class="glyphicon glyphicon-circle-arrow-left"></span>
             </a>
         </li>
     </ul>
@@ -95,8 +96,8 @@
         </div>
         <div class="form-group">
             <div class="category-header inner-category-header">
-                <label class="col-sm-2 control-label"></label>
-                <a href="#">Contacts</a>
+                <label class="col-sm-2 control-label"> <a href="#">Contacts</a></label>
+
             </div>
             <div class="category-content">
                 <div class="form-group">
@@ -264,8 +265,7 @@
 
         <div class="form-group">
             <div class="category-header inner-category-header">
-                <label class="col-sm-2 control-label"></label>
-                <a href="#">Current project</a>
+                <label class="col-sm-2 control-label"><a href="#">Current project</a></label>
             </div>
             <div class="category-content">
                 <div class="form-group">
@@ -373,6 +373,10 @@
             </button>
         </div>
         <ul class="feedback-list"></ul>
+        <div class="form-group">
+            <button id="saveFeedbacksInformation" type="button" class="category-content-button  prj-btn">Save
+            </button>
+        </div>
     </div>
 </div>
 
@@ -426,46 +430,49 @@
             <div class="dialog-content-central">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <label for="professionalQuality" class="col-sm-1 control-label dialog-feedback-label">Professional quality</label>
+                        <label for="professionalQuality" class="col-sm-2 control-label dialog-feedback-label">Professional quality</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="professionalQuality"
-                                   placeholder="Professional quality">
+                            <textarea class="form-control feedback-textarea" id="professionalQuality"
+                                   placeholder="Professional quality"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="relevantToWork" class="col-sm-1 control-label dialog-feedback-label">Relevant to work</label>
+                        <label for="relevantToWork" class="col-sm-2 control-label dialog-feedback-label">Relevant to work</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="relevantToWork" placeholder="Relevant to work">
+                            <textarea class="form-control feedback-textarea" id="relevantToWork" placeholder="Relevant to work"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="relationshipWithStaff" class="col-sm-1 control-label dialog-feedback-label">Relationship with staff</label>
+                        <label for="relationshipWithStaff" class="col-sm-2 control-label dialog-feedback-label">Relationship with staff</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="relationshipWithStaff" placeholder="Relationship with staff">
+                            <textarea class="form-control feedback-textarea" id="relationshipWithStaff" placeholder="Relationship with staff"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="professionalGrowth" class="col-sm-1 control-label dialog-feedback-label">Professional growth</label>
+                        <label for="professionalGrowth" class="col-sm-2 control-label dialog-feedback-label">Professional growth</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="professionalGrowth" placeholder="Professional growth">
+                            <textarea class="form-control feedback-textarea" id="professionalGrowth" placeholder="Professional growth"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="needMoreHours" class="col-sm-1 control-label dialog-feedback-label">Need more hours</label>
+                        <label for="needMoreHours" class="col-sm-2 control-label dialog-feedback-label">Need more hours</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="needMoreHours" placeholder="yes/no">
+                            <select class="form-control feedback-textarea" id="needMoreHours">
+                                <option value="1">Yes</option>
+                                <option value="">No</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="realProject" class="col-sm-1 control-label dialog-feedback-label">Real project</label>
+                        <label for="realProject" class="col-sm-2 control-label dialog-feedback-label">Real project</label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="realProject" placeholder="Is on real project..." title="Whether the student works at the real project. If isn't present, that is whether prospect of its work on the real project">
+                            <textarea class="form-control feedback-textarea" id="realProject" placeholder="Is on real project..." title="Whether the student works at the real project. If isn't present, that is whether prospect of its work on the real project"></textarea>
                         </div>
                     </div>
 

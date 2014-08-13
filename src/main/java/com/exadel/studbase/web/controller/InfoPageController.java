@@ -108,7 +108,7 @@ public class InfoPageController {
     @ResponseBody
     public String editManualInformation(@RequestParam("studentId") Long id,
                                         @RequestParam("studentName") String name,
-                                        @RequestParam("studentBirthDate") Date birthDate,
+                                        @RequestParam("studentBirthDate") String birthDate,
                                         @RequestParam("studentLogin") String login,
                                         @RequestParam("studentPassword") String password,
                                         @RequestParam("studentEmail") String email,
@@ -117,7 +117,7 @@ public class InfoPageController {
                                         @RequestParam("studentState") String state) {
         User editedUser = userService.getById(id);
         editedUser.setName(name);
-        editedUser.setBirthdate(birthDate);
+        editedUser.setBirthdate(formatField(birthDate, Date.class));
         editedUser.setLogin(login);
         editedUser.setPassword(password);
         editedUser.setEmail(email);
@@ -210,6 +210,22 @@ public class InfoPageController {
             for(Document document : newDocs){
                 documentService.save(document);
             }
+
+        return ("{\"post\":\"ok\"}");
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "/postFeedbacks", method = RequestMethod.POST)
+    public String editFeedbacks(@RequestParam("feedbacks") String newFeedbacks) {
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Feedback[] newFeeds = gson.fromJson(newFeedbacks, Feedback[].class);
+
+        for(Feedback feedback : newFeeds){
+            feedbackService.save(feedback);
+        }
 
         return ("{\"post\":\"ok\"}");
     }

@@ -1,14 +1,29 @@
-/**
- * Created by ala'n on 08.08.2014.
- */
 define(['jquery', 'jquery-animate-colors'], function ($) {
     "use strict";
-
-    function logout() {
-        sessionStorage.removeItem("filter");
-        sessionStorage.removeItem("search");
-        sessionStorage.removeItem("lastTab");
+    /*
+     roles : 0 - student  1 - student_employee
+      2 - feedbacker  3 - curator
+      4 - admin  5 - super_admin
+     */
+    function login() {
+        var loginGet = $.ajax({
+            type: "GET",
+            url: "/login/info",
+            dataType: 'json'
+        });
+        loginGet.done(function (data) {
+            var loginInfo = JSON.parse(data);
+            sessionStorage.setItem("username", loginInfo.username);
+            sessionStorage.setItem("role", loginInfo.role);
+        });
+        loginGet.fail(function (data) {
+            alert("Server has failed");
+        });
     }
+    function logout() {
+        sessionStorage.clear();
+    }
+
     function btnStateAnimate(btn, state, stateText) {
         var text = btn.text(),
             backgroundColor = btn.css('backgroundColor'),
@@ -77,6 +92,7 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
         return YYYY + "-" + MM + "-" + DD;
     }
     return {
+        login : login,
         logout: logout,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
         formatDate : formatDate,

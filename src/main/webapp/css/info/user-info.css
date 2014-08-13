@@ -71,20 +71,20 @@
 
 .expired-document {
     background-color: #ffffff;
-    color : gray;
+    color: gray;
 }
 
 .prj-table-striped > tbody > .expired-document:nth-child(even) > td {
     background-color: #f5f5f5;
-    color : gray;
+    color: gray;
 }
 
 .expired-soon-document {
-    color : red;
+    color: red;
 }
 
 .employee-link {
-    padding-top: 10px;
+    padding-top: 7px;
 }
 
 .inner-category-header {
@@ -115,7 +115,7 @@
 }
 
 .dialog-feedback-label {
-    margin-right : 20px;
+    margin-right: 20px;
 }
 
 .big-textarea {
@@ -129,7 +129,7 @@
 }
 
 .feedback-list > .feedback:nth-child(even) {
-    background-color : #ffffff;
+    background-color: #ffffff;
 }
 
 .feedbacker {
@@ -141,10 +141,18 @@
     margin: 0 4px 3px;
     color: black;
 }
+.feedback-textarea{
+    width : 350px;
+}
 
 .dl-horizontal > dd {
     max-width: 350px;
 }
-.dl-horizontal > dd:last-child{
-    margin-top : 10px;
+
+.dl-horizontal > dd:last-child {
+    margin-top: 10px;
+}
+
+.new-feedback {
+    background-color: red;
 }
