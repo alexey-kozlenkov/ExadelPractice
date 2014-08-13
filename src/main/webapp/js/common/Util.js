@@ -1,18 +1,27 @@
-/**
- * Created by ala'n on 08.08.2014.
- */
 define(["jquery"], function ($) {
     "use strict";
-
-    function logout() {
-        sessionStorage.removeItem("filter");
-        sessionStorage.removeItem("search");
-        sessionStorage.removeItem("isStudent");
-    }
-    function logoutBind() {
-        $(document).ready(function () {
-            $(".logout-link").click(logout);
+    /*
+     roles : 0 - student  1 - student_employee
+      2 - feedbacker  3 - curator
+      4 - admin  5 - super_admin
+     */
+    function login() {
+        var loginGet = $.ajax({
+            type: "GET",
+            url: "/login",
+            dataType: 'json'
         });
+        loginGet.done(function (data) {
+            var loginInfo = JSON.parse(data);
+            sessionStorage.setItem("username", loginInfo.username);
+            sessionStorage.setItem("role", loginInfo.role);
+        });
+        loginGet.fail(function (data) {
+            alert("Server has failed");
+        });
+    }
+    function logout() {
+        sessionStorage.clear();
     }
 
     function btnStateAnimate(btn, state, stateText) {
@@ -83,6 +92,7 @@ define(["jquery"], function ($) {
         return YYYY + "-" + MM + "-" + DD;
     }
     return {
+        login : login,
         logout: logout,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
         formatDate : formatDate,

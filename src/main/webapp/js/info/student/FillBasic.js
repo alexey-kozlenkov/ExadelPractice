@@ -3,11 +3,12 @@
  */
 
 
-define(["jquery", "handlebars", "text!templates/term-mark-template.html"], function ($, Handlebars, templateTermMarkContent) {
+define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"], function ($, Handlebars, util, templateTermMarkContent) {
     "use strict";
     var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
     function init() {
+        //util.login();
         parseRequestForId(window.location.search);
         fillOptions();
         fillCommonInfo();
@@ -66,6 +67,7 @@ define(["jquery", "handlebars", "text!templates/term-mark-template.html"], funct
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks;
+                $("#sesssionUsername").text(sessionStorage.getItem("username"));
 
                 $("#headerName").text(gottenUser.name);
                 $("#name").val(gottenUser.name);
@@ -116,6 +118,9 @@ define(["jquery", "handlebars", "text!templates/term-mark-template.html"], funct
 
             }
         });
+    }
+    function rights() {
+
     }
 
     return {

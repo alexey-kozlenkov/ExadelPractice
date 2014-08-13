@@ -100,9 +100,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     }
                     value[fields[i]] = cellValue;
                 }
-                value.studentId = fillBasic.studentId;
+                value.studentId = fillBasic.studentId();
 
-                console.log(value);
                 newDocuments.push(value);
                 $this.removeClass("new-document");
             });
@@ -110,6 +109,35 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
             newDocuments = JSON.stringify(newDocuments);
 
             saveDocumentsInformation(newDocuments);
+        });
+
+        $("#saveFeedbacksInformation").click(function () {
+            var fields = ['professionalQuality', 'relevantToWork', 'relationshipWithStaff', 'professionalGrowth', 'needMoreHours', 'realProject', 'additionalInfo', 'feedbackDate'],
+                newFeedbacks = [];
+            $(".new-feedback").each(function () {
+                var $this = $(this),
+                    $thisFields = $this.find("dd"),
+                    feedback = {};
+                //TODO local storage
+                feedback.feedbacker = "Me";
+                feedback.studentId = fillBasic.studentId();
+                $thisFields.each(function (index, value) {
+                    if (index === 4) {
+                        var needMoreHoursBoolean;
+                        needMoreHoursBoolean = $(value).text() === 'Yes';
+                        feedback[fields[index]] = needMoreHoursBoolean + "";
+                    }
+                    else {
+                        feedback[fields[index]] = $(value).text();
+                    }
+                });
+                newFeedbacks.push(feedback);
+                $this.removeClass("new-feedback");
+
+            });
+            newFeedbacks = JSON.stringify(newFeedbacks);
+
+            saveFeedbacksInformation(newFeedbacks);
         });
 
         //load documents
@@ -120,7 +148,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getActualDocuments",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     },
                     success: function (data) {
                         $("#documents").empty();
@@ -162,7 +190,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getFeedbacks",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     }
                 });
                 getFeedbacks.done(function (data) {
@@ -209,7 +237,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getExpiredDocuments",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     },
                     success: function (data) {
                         var documents = JSON.parse(data);
@@ -276,18 +304,33 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         });
         $("#addFeedback").click(function () {
             var date = new Date(Date.now()),
+                //TODO local storage
+                feedbacker = "Me",
+                professionalQuality = $("#professionalQuality").val(),
+                relevantToWork = $("#relevantToWork").val(),
+                relationshipWithStaff = $("#relationshipWithStaff").val(),
+                professionalGrowth = $("#professionalGrowth").val(),
+                realProject = $("#realProject").val(),
+                additionalInfo = $("#additionalInfo").val(),
+                needMoreHours = $("#needMoreHours option:selected").text(),
                 data = {
-                    feedbacker : "John White",
-                    professionalQuality : "ok quality",
-                    relevantToWork : "ok relevant",
-                    relationshipWithStaff : "ok relationship",
-                    professionalGrowth : "ok progress",
-                    needMoreHours : "yes need",
-                    realProject : "no project",
-                    additionalInfo : "comment",
+                    feedbacker : feedbacker,
+                    professionalQuality : professionalQuality,
+                    relevantToWork : relevantToWork,
+                    relationshipWithStaff : relationshipWithStaff,
+                    professionalGrowth : professionalGrowth,
+                    needMoreHours : needMoreHours,
+                    realProject : realProject,
+                    additionalInfo : additionalInfo,
                     feedbackDate : util.formatDate(date)
-                };
+                },
+                newFeedback;
+
             $(".feedback-list").prepend(templateFeedback(data));
+            //TODO class new-feedback
+            newFeedback = $(".feedback-list li").first();
+            newFeedback.addClass("new-feedback");
+
             dialog.closeDialog();
         });
         // close any dialog
@@ -357,11 +400,11 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         }
 
     function exportStudentExcel() {
-            window.open("/info/exportExcel?studentId=" + fillBasic.studentId, "Export file");
+            window.open("/info/exportExcel?studentId=" + fillBasic.studentId(), "Export file");
         }
 
     function exportStudentPDF() {
-            window.open("/info/exportPDF?studentId=" + fillBasic.studentId, "Export file");
+            window.open("/info/exportPDF?studentId=" + fillBasic.studentId(), "Export file");
         }
 
     function saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState) {
@@ -371,7 +414,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postManualInformation",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentName': editedName,
                     'studentBirthDate': editedBirthDate,
                     'studentLogin': editedLogin,
@@ -427,7 +470,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postEducation",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentUniversity': editedUniversity,
                     'studentFaculty': editedFaculty,
                     'studentSpeciality': editedSpeciality,
@@ -437,6 +480,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     'studentTermMarks': editedTermMarks
                 },
                 success: function () {
+                    $("#saveEducationInformation").text("Saved!");
                     $("#saveEducationInformation").animate({
                         backgroundColor: '#5cb85c',
                         borderColor: '#4cae4c'
@@ -444,6 +488,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                         duration: 500,
                         easing: "swing",
                         complete: setTimeout(function () {
+                            $("#saveEducationInformation").text("Saved!");
                             $("#saveEducationInformation").animate({
                                 backgroundColor: '#4A5D80',
                                 borderColor: '#2D3E5C'
@@ -453,6 +498,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     });
                 },
                 error: function () {
+                    $("#saveEducationInformation").text("Check out!");
                     $("#saveEducationInformation").animate({
                         backgroundColor: '#CD5C5C',
                         borderColor: '#C16868'
@@ -478,7 +524,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postExadel",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentWorkingHours': editedWorkingHours,
                     'studentHireDate': editedHireDate,
                     'studentBillable': editedBillable,
@@ -575,6 +621,49 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
             });
 
         }
+    function  saveFeedbacksInformation(newFeedbacks) {
+        var postFeedbacks = $.ajax({
+            type: "POST",
+            url: "/info/postFeedbacks",
+            dataType: 'json',
+            data: {'feedbacks': newFeedbacks}
+        });
+        postFeedbacks.done(function () {
+            $("#saveDocumentsInformation").text("Saved!");
+            $("#saveDocumentsInformation").animate({
+                backgroundColor: '#5cb85c',
+                borderColor: '#4cae4c'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveDocumentsInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor: '#2D3E5C'
+                    }, 500);
+                    $("#saveDocumentsInformation").text("Save");
+                }, 1000)
+            });
+        });
+        postFeedbacks.fail(function () {
+            $("#saveDocumentsInformation").text("Check out!");
+            $("#saveDocumentsInformation").animate({
+                backgroundColor: '#CD5C5C',
+                borderColor: '#C16868'
+            }, {
+                duration: 500,
+                easing: "swing",
+                complete: setTimeout(function () {
+                    $("#saveDocumentsInformation").animate({
+                        backgroundColor: '#4A5D80',
+                        borderColor: '#2D3E5C'
+                    }, 500);
+                    $("#saveDocumentsInformation").text("Save");
+                }, 1000)
+            });
+        });
+
+    }
 
     return {
         init : init
