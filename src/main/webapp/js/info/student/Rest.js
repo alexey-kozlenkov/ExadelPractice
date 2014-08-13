@@ -100,7 +100,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     }
                     value[fields[i]] = cellValue;
                 }
-                value.studentId = fillBasic.studentId;
+                value.studentId = fillBasic.studentId();
 
                 console.log(value);
                 newDocuments.push(value);
@@ -120,7 +120,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getActualDocuments",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     },
                     success: function (data) {
                         $("#documents").empty();
@@ -162,7 +162,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getFeedbacks",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     }
                 });
                 getFeedbacks.done(function (data) {
@@ -209,7 +209,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                     url: "/info/getExpiredDocuments",
                     cashe: false,
                     data: {
-                        "studentId": fillBasic.studentId
+                        "studentId": fillBasic.studentId()
                     },
                     success: function (data) {
                         var documents = JSON.parse(data);
@@ -357,11 +357,11 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         }
 
     function exportStudentExcel() {
-            window.open("/info/exportExcel?studentId=" + fillBasic.studentId, "Export file");
+            window.open("/info/exportExcel?studentId=" + fillBasic.studentId(), "Export file");
         }
 
     function exportStudentPDF() {
-            window.open("/info/exportPDF?studentId=" + fillBasic.studentId, "Export file");
+            window.open("/info/exportPDF?studentId=" + fillBasic.studentId(), "Export file");
         }
 
     function saveManualInfoChanges(editedName, editedBirthDate, editedLogin, editedEmail, editedSkype, editedPhone, editedPassword, editedState) {
@@ -371,7 +371,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postManualInformation",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentName': editedName,
                     'studentBirthDate': editedBirthDate,
                     'studentLogin': editedLogin,
@@ -427,7 +427,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postEducation",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentUniversity': editedUniversity,
                     'studentFaculty': editedFaculty,
                     'studentSpeciality': editedSpeciality,
@@ -478,7 +478,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 url: "/info/postExadel",
                 dataType: 'json', // from the server!
                 data: {
-                    'studentId': fillBasic.studentId,
+                    'studentId': fillBasic.studentId(),
                     'studentWorkingHours': editedWorkingHours,
                     'studentHireDate': editedHireDate,
                     'studentBillable': editedBillable,

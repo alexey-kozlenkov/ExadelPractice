@@ -146,9 +146,7 @@ public class Feedback implements IEntity<Long> {
 
         Feedback feedback = (Feedback) o;
 
-        if (!id.equals(feedback.id)) return false;
-
-        return true;
+        return id.equals(feedback.id);
     }
 
     @Override
