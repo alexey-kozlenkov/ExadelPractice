@@ -25,7 +25,7 @@ define(["jquery"], function ($) {
     }
 
     function btnStateAnimate(btn, state, stateText) {
-        var text = btn.val(),
+        var text = btn.text(),
             backgroundColor = btn.css('backgroundColor'),
             borderColor = btn.css('borderColor'),
             stateColors = {},
@@ -40,7 +40,7 @@ define(["jquery"], function ($) {
                 borderColor: borderColor
             }, 500);
             if (stateText) {
-                btn.val(text);
+                btn.text(text);
             }
         }, 1000);
 
@@ -57,7 +57,7 @@ define(["jquery"], function ($) {
                 return;
         }
         if (stateText) {
-            btn.val(stateText);
+            btn.text(stateText);
         }
         btn.animate(stateColors, options);
     }

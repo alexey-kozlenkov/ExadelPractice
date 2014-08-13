@@ -16,13 +16,13 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
                     exportExcel(students);
                 }
                 else {
-                    Util.stateAnimate($("#exportMenuButton"), 'bad');
+                    Util.stateAnimate($("#exportMenuButton"), 'fail');
                 }
             });
             $("#distributionMenuButton").click(function () {
                 var students = ListController.getCheckedRowsId();
                 if (students.length <= 0) {
-                    Util.stateAnimate($(this), 'bad', 'empty');
+                    Util.stateAnimate($(this), 'fail');
                     return;
                 }
                 Dialog.showDialog('send-message');
@@ -100,6 +100,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             createStudPromise.done(
                 function () {
                     console.log("Good!");
+                    $("body").trigger("searchOrFieldUpdate", {type: "all"});
                 }
             );
             createStudPromise.fail(
