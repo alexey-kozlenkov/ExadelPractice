@@ -6,12 +6,12 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
     "use strict";
     var TIME_DELAY = 300,
         actualVersion = 0,
-        isStudents = true,
+        isStudentTab = true,
         sendTimeout;
 
     function init() {
         bindSearchLine();
-        $("body").on("searchOrFieldUpdate", onSearchOrFieldUpdate);
+        $("body").on("listRequestChanged", onRequestChange);
         $("#studTab").click(function () {
             tab(true);
             updateList();
@@ -22,11 +22,12 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         });
         storageRevision();
     }
+
     function bindSearchLine() {
         $("#startSearchButton").click(function () {
-            $("body").trigger("searchOrFieldUpdate", {type: "all"});
             sessionStorage.setItem("search", $(this).val());
-            tab(isStudents);
+            tab(isStudentTab);
+            $("body").trigger("listRequestChanged", {by: "button"});
         });
         $("#searchLine").focus(function () {
             $(this).animate({ width: "250pt"}, 1000);
@@ -34,26 +35,35 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
             $(this).animate({ width: "150pt"}, 500);
         });
         $('#searchLine').on('input', function () {
-            $("body").trigger("searchOrFieldUpdate", {type: "search"});
             sessionStorage.setItem("search", $(this).val());
+            $("body").trigger("listRequestChanged", {by: "search"});
         });
     }
+
     function storageRevision() {
-        var isStud = sessionStorage.getItem("isStudent"),
+        var isStudTab = sessionStorage.getItem("isStudentTab"),
             search = sessionStorage.getItem("search");
-        if (isStud) {
-            tab(isStud === "true");
-        }
+        tab(isStudTab == "true");
         if (search) {
             $("#searchLine").val(search);
         }
-        if (isStud || search) {
+        if (isStudTab || search) {
             updateList();
         }
     }
 
+    function tab(isStudTab) {
+        if (isStudTab !== null && isStudTab !== undefined) {
+            isStudentTab = isStudTab;
+            sessionStorage.setItem("isStudentTab", isStudentTab);
+            updateButtons();
+        }
+        return isStudentTab;
+    }
     function updateButtons() {
-        if (isStudents) {
+        $("#studTab").attr("disabled", isStudentTab);
+        $("#emplTab").attr("disabled", !isStudentTab);
+        if (isStudentTab) {
             $("#exportMenuButton").fadeIn(100);
             $("#filter").fadeIn(100, ListHeader.check);
         }
@@ -63,16 +73,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         }
     }
 
-    function tab(isStud) {
-        if (isStud !== undefined && isStud !== null) {
-            isStudents = isStud;
-            sessionStorage.setItem("isStudent", isStud);
-            updateButtons();
-        }
-        return isStudents;
-    }
-
-    function onSearchOrFieldUpdate(e) {
+    function onRequestChange(e) {
         console.log("# search or filter update #");
         if (sendTimeout) {
             clearTimeout(sendTimeout);
@@ -83,6 +84,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
     function updateList() {
         console.log('------- update list -------');
         var version = Date.now(),
+            isStud = sessionStorage.getItem("isStudentTab"),
             search = sessionStorage.getItem("search"),
             filter = sessionStorage.getItem("filter"),
             promise;
@@ -95,13 +97,12 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
                 'version': version,
                 'searchName': search,
                 'filter': filter,
-                'isStudent': isStudents
+                'isStudent': isStud
             }
         });
 
         promise.done(function (data) {
-            var resp = JSON.parse(data),
-                state = updateListByResponse(resp);
+            updateListByResponse(JSON.parse(data));
             ListController.setTableLoadingState(false);
         });
         promise.fail(function () {
@@ -109,12 +110,13 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
             ListController.setTableLoadingState(false);
         });
     }
+
     function updateListByResponse(response) {
         if (actualVersion === response.version) {
             console.log("Get actual response (", actualVersion, ")");
             ListController.clearList();
 
-            ListController.addAll(response.views, isStudents);
+            ListController.addAll(response.views, tab());
 
             ListController.setTableLoadingState(false);
         } else {
@@ -126,7 +128,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         init: init,
         forseUpdate: updateList,
         update: function () {
-            $("body").trigger("searchOrFieldUpdate");
+            $("body").trigger("listRequestChanged");
         },
         tab: tab
     };
