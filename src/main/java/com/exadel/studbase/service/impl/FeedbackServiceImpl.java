@@ -45,4 +45,10 @@ public class FeedbackServiceImpl implements IFeedbackService {
     public Collection<Feedback> getAllByEmployee(Long employeeId) {
         return feedbackDAO.getAllByEmployee(employeeId);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addFeedbacksWhenAppointingCurators(Long[] studentsIds, Long[] curatorsIds) {
+        feedbackDAO.addFeedbacksWhenAppointingCurators(studentsIds, curatorsIds);
+    }
 }

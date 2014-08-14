@@ -9,4 +9,6 @@ public interface IFeedbackDAO extends GenericDAO<Feedback, StudentView, Long> {
     Collection<Feedback> getAllAboutStudent(Long studentId);
 
     Collection<Feedback> getAllByEmployee(Long employeeId);
+
+    void addFeedbacksWhenAppointingCurators(Long[] studentsIds, Long[] curatorsIds);
 }
