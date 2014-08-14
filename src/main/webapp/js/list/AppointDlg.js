@@ -2,21 +2,25 @@
  * Created by ala'n on 13.08.2014.
  */
 
-define(["jquery", "Dialog", "Util", "ListController"],
-    function ($, Dlg, Util, List) {
+define(["jquery", "Dialog", "Util", "ListController", "handlebars"],
+    function ($, Dlg, Util, List, Handlebars) {
         "use strict";
         var selectedStudentsId,
-            curators;
+            curators,
+            loadPromise;
 
         function init() {
             $("#appointCurators").click(
                 function () {
                     selectedStudentsId = List.getCheckedRowsId();
-                    if (selectedStudentsId.length  > 0) {
+                    if (selectedStudentsId.length > 0) {
                         loadCurators();
                         clearList();
-                        fillSelect();
-                        Dlg.showDialog("appointer");
+                        loadPromise.done(function (data) {
+                            curators = JSON.parse(data);
+                            fillSelect();
+                            Dlg.showDialog("appointer");
+                        });
                     }
                     else {
                         Util.stateAnimate($(this), "fail");
@@ -55,14 +59,11 @@ define(["jquery", "Dialog", "Util", "ListController"],
         }
 
         function loadCurators() {
-            $.ajax({
+            loadPromise = $.ajax({
                 url: "/list/curatorList",
                 data: {}
-            }).done(
-                function (data) {
-                    curators = JSON.parse(data);
-                }
-            ).fail(
+            });
+            loadPromise.fail(
                 function () {
                     alert("Curators list not loaded!");
                 }
@@ -70,18 +71,16 @@ define(["jquery", "Dialog", "Util", "ListController"],
         }
 
         function fillSelect() {
-            require(["handlebars", "text!templates/curators-list-template.html"],
-                function (Handlebars, template) {
-                    var $select = $("#appointCuratorSelector");
-                    $select.empty();
-                    $select.append(Handlebars.compile(template)(curators));
-                }
-            );
+            require(["text!templates/curators-list-template.html"], function (template) {
+                var $select = $("#appointCuratorSelector");
+                $select.empty();
+                $select.append(Handlebars.compile(template)(curators));
+            });
         }
 
         function addCurator(index) {
-            require(["handlebars", "text!templates/appoint-curators-template.html"],
-                function (Handlebars, template) {
+            require(["text!templates/appoint-curators-template.html"],
+                function (template) {
                     $("#appointCuratorsList").append(Handlebars.compile(template)({name: curators[index], index: index}));
                 }
             );
@@ -95,7 +94,7 @@ define(["jquery", "Dialog", "Util", "ListController"],
             var i,
                 result = [],
                 $items = $("#appointCuratorsList > li");
-            for (i = 0 ; i < $items.length ; i++) {
+            for (i = 0; i < $items.length; i++) {
                 result.push($items.eq(i).data("id"));
             }
             return result;
@@ -106,8 +105,8 @@ define(["jquery", "Dialog", "Util", "ListController"],
                 url: "/list/appoint",
                 type: "POST",
                 data: {
-                    studentsId : JSON.stringify(studentIds),
-                    curatorsId : JSON.stringify(curatorIds)
+                    studentsId: JSON.stringify(studentIds),
+                    curatorsId: JSON.stringify(curatorIds)
                 }
             }).done(
                 function (data) {
