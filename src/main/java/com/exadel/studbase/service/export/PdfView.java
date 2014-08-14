@@ -72,9 +72,9 @@ public class PdfView extends AbstractPdfView {
         table = new PdfPTable(2);
         table.setWidths(width);
         table.addCell(createCell("Educational institution", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getUniversity().getName(), contentFont));
+        table.addCell(createCell(user.getStudentInfo().getUniversity(), contentFont));
         table.addCell(createCell("Faculty", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getFaculty().getName(), contentFont));
+        table.addCell(createCell(user.getStudentInfo().getFaculty(), contentFont));
         table.addCell(createCell("Speciality", headerFont));
         table.addCell(createCell(user.getStudentInfo().getSpeciality(), contentFont));
         table.addCell(createCell("Course", headerFont));
