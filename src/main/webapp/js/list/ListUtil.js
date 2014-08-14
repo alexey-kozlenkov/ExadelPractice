@@ -9,14 +9,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
 
         function bindMenuBtn() {
             $("#addMenuButton").click(function () {
-                isStudentTab = (sessionStorage.getItem("isStudentTab") == "true");
-                var stateBlock = $("#stateField").parent().eq(0);
-                if (isStudentTab) {
-                    stateBlock.show();
-                }
-                else {
-                    stateBlock.hide();
-                }
+                checkCreateUserDialog();
                 Dialog.showDialog("add-student");
             });
             $("#exportMenuButton").click(function () {
@@ -56,7 +49,9 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
         }
 
         function sendMessage() {
-            var subject = $("#subjectField").val(),
+            var usermail = $("#mailField").val(),
+                password = $("#passField").val(),
+                subject = $("#subjectField").val(),
                 messageText = $("#sentMessage").val(),
                 studIds = JSON.stringify(ListController.getCheckedRowsId());
 
@@ -64,6 +59,8 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
                 type: "POST",
                 url: "/list/sendMail",
                 data: {
+                    usermail: usermail,
+                    password: password,
                     message: messageText,
                     subject: subject,
                     students: studIds
@@ -91,11 +88,23 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             window.open("/list/export?students=" + studIds, "exportFile");
         }
 
+
+        function checkCreateUserDialog() {
+            isStudentTab = (sessionStorage.getItem("isStudentTab") === "true");
+            if (isStudentTab) {
+                $("#roleBlock").hide();
+                $("#stateBlock").show();
+            }
+            else {
+                $("#roleBlock").show();
+                $("#stateBlock").hide();
+            }
+        }
         function createUser(isStudent) {
-            var login = $("#loginField").val(),
+            var createStudPromise,
+                login = $("#loginField").val(),
                 name = $("#nameField").val(),
-                state = $("#stateField").val(),
-                createStudPromise;
+                state = (isStudent ? $("#stateField").val():$("#roleField").val());
             createStudPromise = $.ajax({
                 type: "POST",
                 url: "list/quickAdd",

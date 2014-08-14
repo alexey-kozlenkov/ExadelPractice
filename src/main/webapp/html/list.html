@@ -39,10 +39,10 @@
         </span>
 
         <span class="btn-group tab">
-            <button id="studTab" class="btn prj-btn menu-button tab-btn" title="Students Tab"><img
+            <button id="studTab" class="btn menu-button tab-btn" title="Students Tab"><img
                     src="../images/ico-students.png" class="menu-icon">
             </button>
-            <button id="emplTab" class="btn prj-btn menu-button tab-btn" title="Employees Tab"><span
+            <button id="emplTab" class="btn menu-button tab-btn" title="Employees Tab"><span
                     class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
@@ -82,6 +82,8 @@
 
         <div class='dialog-content' data-dialog-name='send-message'>
             <div class="dialog-content-central">
+                <input type="email" id="mailField" placeholder="Email" class="dialog-input">
+                <input type="password" id="passField" placeholder="Password" class="dialog-input">
                 <input type="text" id="subjectField" placeholder="Subject" class="dialog-input">
                 <textarea id="sentMessage" class="message-area dialog-input" placeholder="Message"></textarea>
             </div>
@@ -120,11 +122,19 @@
                     <label for="nameField" class="col-sm-2 control-label">Login: </label>
                     <input type="text" id="loginField" placeholder="login">
                 </div>
-                <div class="form-group">
+                <div id="stateBlock" class="form-group">
                     <label for="stateField" class="col-sm-2 control-label">State: </label>
                     <select id="stateField" title="role">
-                        <option>working</option>
                         <option>training</option>
+                        <option>working</option>
+                    </select>
+                </div>
+                <div id="roleBlock"class="form-group">
+                    <label for="roleField" class="col-sm-2 control-label">Role: </label>
+                    <select id="roleField" title="role">
+                        <option value="ROLE_FEEDBACKER">Feedbacker</option>
+                        <option value="ROLE_CURATOR">Curator</option>
+                        <option value="ROLE_OFFICE">Office</option>
                     </select>
                 </div>
             </div>
