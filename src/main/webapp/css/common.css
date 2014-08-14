@@ -129,8 +129,46 @@ label,
 .prj-btn.disabled:active,
 .prj-btn[disabled]:active {
     color: gray;
+    border-color: #000000;
 }
 
+.tab{
+    float: right;
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    opacity: 0.7;
+
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(45, 62, 92, .6);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(45, 62, 92, .6);
+}
+.tab:hover{
+    opacity: 1;
+}
+
+.tab-btn{
+    background: #677da3;
+    color: #fff;
+}
+
+.tab-btn:hover{
+    opacity: 1;
+    color: #fff;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .175), 0 0 8px rgba(95, 233, 80, 0.90);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .175), 0 0 8px rgba(95, 233, 80, 0.90);
+
+}
+.tab-btn:disabled{
+    color: #fff;
+    opacity: 0.95;
+
+    background-color: #4A5D80;
+    border: solid 1px rgba(45, 62, 92, 0.90);
+}
 
 .static-green {
     border-color: #4b954b;
@@ -275,6 +313,7 @@ label,
 
 .dialog-input {
     width: 98%;
+    margin-bottom: 5px;
     padding-right: 4px;
     padding-left: 4px;
 }
