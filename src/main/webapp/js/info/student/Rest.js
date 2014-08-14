@@ -43,8 +43,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         $("#saveEducationInformation").click(function () {
             //collect data entered by users
             var $termMark = $(".term-mark"),
-                editedUniversity = $("#institution").val(),
-                editedFaculty = $("#faculty").val(),
+                editedUniversity = $("#institution :selected").val(),
+                editedFaculty = $("#faculty :selected").val(),
                 editedSpeciality = $("#speciality").val(),
                 editedCourse = $("#course").val(),
                 editedGroup = $("#group").val(),
@@ -198,7 +198,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                         url: "/info/getMyFeedbacks",
                         cashe: false,
                         data: {
-                            "employeeId": sessionStorage.getItem("id")
+                            "employeeId": sessionStorage.getItem("id"),
+                            "studentId" : fillBasic.studentId()
                         }
                     });
                     getFeedbacks.done(function (data) {
@@ -421,6 +422,11 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
             fillBasic.checkState
         );
 
+        //handler for institution select
+        $("#institution").change(
+            syncInstitutionAndFaculties
+        );
+
         //handler termMark changed
         $(".term-mark-list").on("change", 'input', function () {
             var $this = $(this);
@@ -476,6 +482,11 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 return false;
             }
         }
+
+    function syncInstitutionAndFaculties() {
+        var universityId = $("#institution :selected").val();
+        fillBasic.getFaculties(universityId);
+    }
 
     function getFeedbacker() {
         var feedbacker,

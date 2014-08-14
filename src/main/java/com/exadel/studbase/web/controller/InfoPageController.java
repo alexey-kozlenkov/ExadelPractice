@@ -63,10 +63,28 @@ public class InfoPageController {
     @RequestMapping(value = "/getOptions", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String studentData() {
+    public String stateData() {
         Gson gson = new Gson();
         Options options = new Options();
         return gson.toJson(options, Options.class);
+    }
+
+    @RequestMapping(value = "/getUniversities", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String universitiesData() {
+        Gson gson = new Gson();
+        Collection<University> universities = universityService.getAll();
+        return gson.toJson(universities);
+    }
+
+    @RequestMapping(value = "/getFacultiesForUniversity", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String universitiesData(@RequestParam("universityId") Long universityId) {
+        Gson gson = new Gson();
+        Collection<Faculty> faculties = facultyService.getAllForUniversity(universityId);
+        return gson.toJson(faculties);
     }
 
     @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
