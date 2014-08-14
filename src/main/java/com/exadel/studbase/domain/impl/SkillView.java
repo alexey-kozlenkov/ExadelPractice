@@ -17,8 +17,8 @@ public class SkillView implements IEntity<Long>{
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "skill_name")
-    private String skillName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "level")
     private Integer level;
@@ -27,7 +27,6 @@ public class SkillView implements IEntity<Long>{
     public SkillView() {
     }
 
-    @Id
     public Long getId() {
         return id;
     }
@@ -44,12 +43,12 @@ public class SkillView implements IEntity<Long>{
         this.userId = userId;
     }
 
-    public String getSkillName() {
-        return skillName;
+    public String getName() {
+        return name;
     }
 
-    public void setSkillName(String skillName) {
-        this.skillName = skillName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getLevel() {
@@ -82,7 +81,7 @@ public class SkillView implements IEntity<Long>{
         return "SkillView{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", skillName='" + skillName + '\'' +
+                ", skillName='" + name + '\'' +
                 ", level=" + level +
                 '}';
     }

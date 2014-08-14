@@ -199,17 +199,17 @@
     </div>
 </div>
 
-<div class="category-header" id="skillsHeader">
+<div class="category-header" id="skillsHeader" data-visible="false">
     <a href="#">Skills<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
 <div class="category-content outer-category-content info-edit" id="skillsContent">
     <div class="form-horizontal">
         <div id="skillList" class="form-group">
-            <div id="endlishLevelItem" class="english-skill-itm">
-                <label for="endlishLevel" class="col-sm-2 control-label">English:</label>
+            <div id="englishLevelItem" class="english-skill-itm">
+                <label for="englishLevel" class="col-sm-2 control-label">English:</label>
 
                 <div class="col-sm-10">
-                    <select id="endlishLevel" class="form-control">
+                    <select id="englishLevel" class="form-control">
                         <option value="0">Beginner</option>
                         <option value="1">Elementary</option>
                         <option value="2">Pre-Intermediate</option>
@@ -572,6 +572,7 @@
                 fillBasicStudent.init();
                 restStudent.init();
                 skills.init();
+                skills.initTabControl();
             });
         });
 

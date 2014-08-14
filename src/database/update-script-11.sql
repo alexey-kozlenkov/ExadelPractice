@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW "SKILL_VIEW" AS
   SELECT
     "SKILL_TYPE".id as id,
-    "SKILL_TYPE".name as skill_name,
+    "SKILL_TYPE".name,
     "SKILL_SET".user_id,
     level
   FROM "SKILL_SET"

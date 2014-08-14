@@ -59,4 +59,10 @@ public class SkillSetServiceImpl implements ISkillSetService {
     public void addNewSkillToUser(Long userId, Long[] skillTypeIds, Long[] levels) {
         skillSetDAO.addNewSkillToUser(userId, skillTypeIds, levels);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteAllSkillsForUser(Long userId) {
+        skillSetDAO.deleteAllSkillsForUser(userId);
+    }
 }

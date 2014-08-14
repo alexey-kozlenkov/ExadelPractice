@@ -12,7 +12,7 @@ public class SkillViewDAOImpl extends GenericDAOImpl<SkillView, SkillView, Long>
     @Override
     public Collection<SkillView> getSkillsForUser(Long userId) {
         Query query = getSession().createQuery("FROM SkillView WHERE userId=:userId");
-        query.setParameter("userId",userId);
+        query.setParameter("userId", userId);
         return query.list();
     }
 }

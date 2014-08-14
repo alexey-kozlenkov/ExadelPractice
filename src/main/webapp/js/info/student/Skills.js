@@ -1,8 +1,8 @@
 /**
  * Created by ala'n on 14.08.2014.
  */
-define(["jquery", "handlebars", "Util", "text!templates/skill-template.html", "text!templates/skill-menu-template.html"],
-    function ($, Handlebars, util, templateContent, templateMenuContent) {
+define(["jquery", "handlebars", "Util", "FillBasicStudent", "text!templates/skill-template.html", "text!templates/skill-menu-template.html"],
+    function ($, Handlebars, util, fillBasic, templateContent, templateMenuContent) {
         "use strict";
 
         var skillTemplate,
@@ -42,18 +42,18 @@ define(["jquery", "handlebars", "Util", "text!templates/skill-template.html", "t
         }
 
         function save() {
-            var studentId = sessionStorage.getItem("id"),
-                englishLevel = $("#endlishLevel").val(),
+            var studentId = fillBasic.studentId(),
+                englishLevel = $("#englishLevel").val(),
                 skillEntries = pickSkills(),
                 promise;
             promise = $.ajax({
-                url: "",
+                url: "/info/postStudentSkills",
                 type: "POST",
                 data: {
                     studentId: studentId,
                     englishLevel: englishLevel,
-                    skillIds: JSON.stringify(skillEntries[0]),
-                    skillLevels: JSON.stringify(skillEntries[1])
+                    skills: JSON.stringify(skillEntries[0]),
+                    skillsLevels: JSON.stringify(skillEntries[1])
                 }
             });
 
@@ -83,9 +83,9 @@ define(["jquery", "handlebars", "Util", "text!templates/skill-template.html", "t
         }
 
         function load() {
-            var studentId = sessionStorage.getItem("id");
+            var studentId = fillBasic.studentId();
             loadPromise = $.ajax({
-                url: "",
+                url: "/info/getSkills",
                 data: {
                     studentId: studentId
                 }
@@ -97,15 +97,28 @@ define(["jquery", "handlebars", "Util", "text!templates/skill-template.html", "t
             loadPromise.done(function (data) {
                 var setEntity = JSON.parse(data);
 
-                skillList = setEntity.skillList;
-                $("#endlishLevel").val(setEntity.englishLevel);
+                skillList = setEntity.skillTypes;
+                $("#englishLevel").val(setEntity.englishLevel);
                 fillSelect();
                 fillList(setEntity.skills);
             });
         }
 
+        function initTabControl() {
+            var $header = $("#skillsHeader");
+            $header.click(function () {
+                if ($header.attr("data-visible") === "false") {
+                    load();
+                    $header.attr("data-visible", "true");
+                }
+                else {
+                    $header.attr("data-visible", "false");
+                }
+            });
+        }
+
         return {
             init: init,
-            load: load
+            initTabControl: initTabControl
         };
     });

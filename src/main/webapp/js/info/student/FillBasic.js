@@ -5,116 +5,121 @@
 
 define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"],
     function ($, Handlebars, util, templateTermMarkContent) {
-    "use strict";
-    var studentId,
-        templateTermMark = Handlebars.compile(templateTermMarkContent);
+        "use strict";
+        var studentId,
+            templateTermMark = Handlebars.compile(templateTermMarkContent);
 
-    function init() {
-        util.initAccessRoleForInfo();
-        studentId = util.parseRequestForId(window.location.search);
-        fillOptions();
-        fillEducationOptions();
-        fillCommonInfo();
-    }
-
-    function fillOptions() {
-        $.ajax({
-            type: "GET",
-            url: "/info/getOptions",
-            success: function (data) {
-                //filling
-                var $stateSelect = $("#state"),
-                    options = JSON.parse(data),
-                    stateOptions = options.states;
-
-                $stateSelect.empty();
-
-                stateOptions.forEach(function (element) {
-                    $stateSelect.append($("<option value=" + element + ">" + element + "</option>"));
-                });
-            }
-        });
-    }
-    function fillEducationOptions() {
-        var  $institutionSelect = $("#institution"),
-            universities = getUniversities(),
-            universityId;
-
-        $institutionSelect.empty();
-
-        require(["text!templates/university-or-faculty-option-template.html"], function (template) {
-            $institutionSelect.append(Handlebars.compile(template) ({
-                    values : universities
-                })
-            );
-            //selected first
-            $("#institution :first").attr("selected", "selected");
-            universityId = $("#institution :selected").val();
-            getFaculties(universityId);
-        });
-    }
-    function checkState() {
-        var state = $("#state :selected").text();
-        if (state === 'working') {
-            $("#exadelHeader").show();
-
+        function init() {
+            util.initAccessRoleForInfo();
+            studentId = util.parseRequestForId(window.location.search);
+            fillOptions();
+            fillEducationOptions();
+            fillCommonInfo();
         }
-        else {
-            if ($("#exadelContent").is(":visible")) {
-                $("#exadelContent").slideToggle(100);
-            }
-            $("#exadelHeader").hide(200);
-        }
-    }
-    function getUniversities() {
-        var universities,
-            getAllUniversities = $.ajax({
-            type: "GET",
-            url: "/info/getUniversities",
-            dataType: 'json',
-            async : false
-        });
-        getAllUniversities.done(function (data) {
-            universities = data;
-        });
-        getAllUniversities.fail(function () {
-            alert("failed loading");
-        });
-        return universities;
-    }
-    function getFaculties(universityId) {
-        var $facultySelect = $("#faculty"),
-         getFacultiesForUniversity = $.ajax({
+
+        function fillOptions() {
+            $.ajax({
                 type: "GET",
-                url: "/info/getFacultiesForUniversity",
-                dataType: 'json',
-                data : {
-                    universityId : universityId
+                url: "/info/getOptions",
+                success: function (data) {
+                    //filling
+                    var $stateSelect = $("#state"),
+                        options = JSON.parse(data),
+                        stateOptions = options.states;
+
+                    $stateSelect.empty();
+
+                    stateOptions.forEach(function (element) {
+                        $stateSelect.append($("<option value=" + element + ">" + element + "</option>"));
+                    });
                 }
             });
-        getFacultiesForUniversity.done(function (data) {
-            $facultySelect.empty();
+        }
+
+        function fillEducationOptions() {
+            var $institutionSelect = $("#institution"),
+                universities = getUniversities(),
+                universityId;
+
+            $institutionSelect.empty();
+
             require(["text!templates/university-or-faculty-option-template.html"], function (template) {
-                $facultySelect.append(Handlebars.compile(template) ({
-                        values : data
+                $institutionSelect.append(Handlebars.compile(template)({
+                        values: universities
                     })
                 );
+                //selected first
+                $("#institution :first").attr("selected", "selected");
+                universityId = $("#institution :selected").val();
+                getFaculties(universityId);
             });
-        });
-        getFacultiesForUniversity.fail(function () {
-            alert("failed loading");
-        });
-    }
-    function fillCommonInfo() {
-        var getStudent = $.ajax({
-            type: "GET",
-            url: "/info/getCommonInformation",
-            cashe: false,
-            data: {
-                "id": studentId
+        }
+
+        function checkState() {
+            var state = $("#state :selected").text();
+            if (state === 'working') {
+                $("#exadelHeader").show();
+
             }
-        });
-        getStudent.done(function (data) {
+            else {
+                if ($("#exadelContent").is(":visible")) {
+                    $("#exadelContent").slideToggle(100);
+                }
+                $("#exadelHeader").hide(200);
+            }
+        }
+
+        function getUniversities() {
+            var universities,
+                getAllUniversities = $.ajax({
+                    type: "GET",
+                    url: "/info/getUniversities",
+                    dataType: 'json',
+                    async: false
+                });
+            getAllUniversities.done(function (data) {
+                universities = data;
+            });
+            getAllUniversities.fail(function () {
+                alert("failed loading");
+            });
+            return universities;
+        }
+
+        function getFaculties(universityId) {
+            var $facultySelect = $("#faculty"),
+                getFacultiesForUniversity = $.ajax({
+                    type: "GET",
+                    url: "/info/getFacultiesForUniversity",
+                    dataType: 'json',
+                    data: {
+                        universityId: universityId
+                    }
+                });
+            getFacultiesForUniversity.done(function (data) {
+                $facultySelect.empty();
+                require(["text!templates/university-or-faculty-option-template.html"], function (template) {
+                    $facultySelect.append(Handlebars.compile(template)({
+                            values: data
+                        })
+                    );
+                });
+            });
+            getFacultiesForUniversity.fail(function () {
+                alert("failed loading");
+            });
+        }
+
+        function fillCommonInfo() {
+            var getStudent = $.ajax({
+                type: "GET",
+                url: "/info/getCommonInformation",
+                cashe: false,
+                data: {
+                    "id": studentId
+                }
+            });
+            getStudent.done(function (data) {
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks,
@@ -187,58 +192,73 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                     });
                 }
             });
-        getStudent.fail(function () {
-            alert("error");
-
-        });
-
-    }
-
-    function getTeamLeadName(teamLeadId) {
-        var teamLeadName,
-            getTeamLead =  $.ajax({
-            type: "GET",
-            url: "/info/getTeamLead",
-            async : false,
-            dataType: 'json',
-            data : {
-                teamLeadId : teamLeadId
-            }
-        });
-        getTeamLead.done(function (data) {
-            teamLeadName = data.name;
-        });
-        getTeamLead.fail(function () {
-            alert("error");
-        });
-        return teamLeadName;
-    }
-
-    function getProjectManagerName(projectManagerId) {
-            var projectManagerName,
-                getProjectManager = $.ajax({
-                type: "GET",
-                url: "/info/getProjectManager",
-                async : false,
-                dataType: 'json',
-                data: {
-                    projectManagerId: projectManagerId
-                }
-            });
-            getProjectManager.done(function (data) {
-                projectManagerName =  data.name;
-            });
-            getProjectManager.fail(function () {
+            getStudent.fail(function () {
                 alert("error");
+
             });
+
+        }
+
+        function getTeamLeadName(teamLeadId) {
+            var teamLeadName,
+                getTeamLead;
+            if (teamLeadId) {
+                getTeamLead = $.ajax({
+                    type: "GET",
+                    url: "/info/getTeamLead",
+                    async: false,
+                    dataType: 'json',
+                    data: {
+                        teamLeadId: teamLeadId
+                    }
+                });
+                getTeamLead.done(function (data) {
+                    teamLeadName = data.name;
+                });
+                getTeamLead.fail(function () {
+                    alert("error");
+                });
+            }
+            else {
+                teamLeadName = "Not set";
+            }
+            return teamLeadName;
+        }
+
+        function getProjectManagerName(projectManagerId) {
+            var projectManagerName,
+                getProjectManager;
+            if (projectManagerId) {
+                getProjectManager = $.ajax({
+                    type: "GET",
+                    url: "/info/getProjectManager",
+                    async: false,
+                    dataType: 'json',
+                    data: {
+                        projectManagerId: projectManagerId
+                    }
+                });
+                getProjectManager.done(function (data) {
+                    projectManagerName = data.name;
+                });
+                getProjectManager.fail(function () {
+                    alert("error");
+                });
+            }
+            else {
+                projectManagerName = "Not set";
+            }
             return projectManagerName;
         }
-    return {
-        studentId: function () { return studentId; },
-        init: init,
-        checkState: checkState,
-        getFaculties : getFaculties,
-        getTeamLeadName : getTeamLeadName,
-        getProjectManagerName : getProjectManagerName
-    };
-});
+
+        return {
+            studentId: function () {
+                return studentId;
+            },
+            init: init,
+            checkState: checkState,
+            getFaculties: getFaculties,
+            getTeamLeadName: getTeamLeadName,
+            getProjectManagerName: getProjectManagerName
+        };
+    });

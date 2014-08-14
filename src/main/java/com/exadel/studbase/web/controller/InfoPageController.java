@@ -327,6 +327,7 @@ public class InfoPageController {
         Gson gson = new Gson();
         Long[] skillsIds = gson.fromJson(skills, Long[].class);
         Long[] levels = gson.fromJson(skillsLevels, Long[].class);
+        skillSetService.deleteAllSkillsForUser(studentId);
         skillSetService.addNewSkillToUser(studentId, skillsIds, levels);
         Student student = studentService.getById(studentId);
         student.setEnglishLevel(englishLevel);
