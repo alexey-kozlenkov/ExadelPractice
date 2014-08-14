@@ -12,8 +12,6 @@ public class FilterDescription {
                                                                  String[] university,
                                                                  String[] faculty) {
         List<FilterDescriptor> filterDescriptor = new ArrayList();
-//        filterDescriptor.add(new TextFilter("university", "University", "..."));
-//        filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
         filterDescriptor.add(new EnumFilter("university", "University", university, false));
         filterDescriptor.add(new EnumFilter("faculty", "Faculty", faculty, false));
         filterDescriptor.add(new EnumFilter("course", "Course", new Integer[]{1, 2, 3, 4, 5}));

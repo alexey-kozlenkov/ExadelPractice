@@ -1,32 +1,22 @@
-.category-content-select {
-    margin-top: 7px;
-    border-radius: 4px;
-
-    color: #333;
-    font-size: 15px;
-}
 
 .list-inline {
     display: inline-block;
 }
 
 .term-mark {
+    margin-bottom: 5px;
     width: 43px;
 }
-
+/* TODO marks position small screen*/
 .term-mark-list {
     display: inline;
-    margin: 0;
-    padding: 0;
-    padding-left: 0;
     list-style-position: inside;
     list-style-type: upper-roman counter-reset : termNumber;
 }
 
 .term-mark-list > li {
     display: inline;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding: 0 5px 0;
     counter-increment: termNumber;
 }
 

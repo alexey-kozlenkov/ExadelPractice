@@ -31,6 +31,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         switch (role) {
             case '0' :
             case '1' :
+                $(".back-link").prop("hidden", true);
                 $(".select-state").prop("disabled", true);
                 $(".current-project-content input, .current-project-content textarea").prop("disabled", true);
                 $("#feedbacksHeader").prop("hidden", true);
@@ -50,6 +51,8 @@ define(["jquery", "jquery-animate-colors"], function ($) {
 
                 $(".select-state").prop("disabled", false);
                 $("#saveManualInformation").prop("hidden", false);
+
+                $("#educationContent select").prop("disabled", true);
 
                 $(".exadel-content input, .exadel-content textarea").prop("disabled", false);
                 $(".exadel-content button").prop("hidden", false);

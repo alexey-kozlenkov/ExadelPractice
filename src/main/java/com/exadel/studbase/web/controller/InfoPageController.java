@@ -1,9 +1,6 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.impl.Document;
-import com.exadel.studbase.domain.impl.Feedback;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.security.MySecurityUser;
 import com.exadel.studbase.service.*;
@@ -63,10 +60,28 @@ public class InfoPageController {
     @RequestMapping(value = "/getOptions", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String studentData() {
+    public String stateData() {
         Gson gson = new Gson();
         Options options = new Options();
         return gson.toJson(options, Options.class);
+    }
+
+    @RequestMapping(value = "/getUniversities", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String universitiesData() {
+        Gson gson = new Gson();
+        Collection<University> universities = universityService.getAll();
+        return gson.toJson(universities);
+    }
+
+    @RequestMapping(value = "/getFacultiesForUniversity", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String universitiesData(@RequestParam("universityId") Long universityId) {
+        Gson gson = new Gson();
+        Collection<Faculty> faculties = facultyService.getAllForUniversity(universityId);
+        return gson.toJson(faculties);
     }
 
     @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
@@ -110,9 +125,10 @@ public class InfoPageController {
     @RequestMapping(value = "/getMyFeedbacks", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String myFeedbacksData(@RequestParam("employeeId") Long employeeId) {
+    public String myFeedbacksData(@RequestParam("studentId") Long studentId,
+                                  @RequestParam("employeeId") Long employeeId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<Feedback> userFeedbacks = feedbackService.getAllByEmployee(employeeId);
+        Collection<Feedback> userFeedbacks = feedbackService.getAllAboutStudentByEmployee(studentId, employeeId);
         return gson.toJson(userFeedbacks);
     }
 
