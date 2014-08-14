@@ -38,4 +38,10 @@ public class FacultyServiceImpl  implements IFacultyService{
     public Collection<Faculty> getAll() {
         return facultyDAO.getAll();
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<Faculty> getAllForUniversity(Long universityId) {
+        return facultyDAO.getAllForUniversity(universityId);
+    }
 }

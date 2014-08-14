@@ -13,4 +13,6 @@ public interface IFacultyService {
     void delete(Faculty faculty);
 
     Collection<Faculty> getAll();
+
+    Collection<Faculty> getAllForUniversity(Long universityId);
 }
