@@ -32,4 +32,6 @@ public class StudentViewDAO extends GenericDAOImpl<StudentView, StudentView, Lon
                 .addEntity("STV", StudentView.class);
         return query.list();
     }
+
+
 }
