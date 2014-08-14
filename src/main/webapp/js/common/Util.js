@@ -107,7 +107,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
             top = position.top + owner.height(),
             space = position.left + menu.width() - winOffsetW + 4;
         if (space > 0) {
-            top -= space;
+            left -= space;
         }
         menu.css(
             {
