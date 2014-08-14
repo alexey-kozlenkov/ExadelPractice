@@ -11,22 +11,22 @@
 
 <header id="header" class="header-fixed-top">
     <div class="dividing-line">
-        <button id="toggleNav"><span class="glyphicon glyphicon-ok-sign"></span></button>
+        <!--<button id="toggleNav"><span class="glyphicon glyphicon-ok-sign"></span></button>-->
         <a href="/logout" class="logout-link prj-link">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     </div>
     <div class="form-inline header-line">
         <span id="utilityMenu" class="btn-menu">
-            <button id="addMenuButton" class="btn prj-btn menu-button" title="Add user">
+            <button id="addMenuButton" class="btn prj-btn menu-button super-admin-role" title="Add user">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
             <button id="exportMenuButton" class="btn prj-btn menu-button" title="Export to Excel Doc.">
                 <img src="../images/excel-icon.png" alt="Export" class="menu-icon">
             </button>
-            <button id="distributionMenuButton" class="btn prj-btn menu-button"
+            <button id="distributionMenuButton" class="btn prj-btn menu-button super-admin-role"
                     title="Send message to selected users">
                 <span class="glyphicon glyphicon-envelope"></span>
             </button>
-            <button id="appointCurators" class="btn prj-btn menu-button"
+            <button id="appointCurators" class="btn prj-btn menu-button super-admin-role"
                     title="Appoint curators to selected students">
                 <span class="glyphicon glyphicon-hand-up"></span>
             </button>
@@ -39,10 +39,10 @@
         </span>
 
         <span class="btn-group tab">
-            <button id="studTab" class="btn prj-btn menu-button tab-btn" title="Students Tab"><img
+            <button id="studTab" class="btn menu-button tab-btn" title="Students Tab"><img
                     src="../images/ico-students.png" class="menu-icon">
             </button>
-            <button id="emplTab" class="btn prj-btn menu-button tab-btn" title="Employees Tab"><span
+            <button id="emplTab" class="btn menu-button tab-btn" title="Employees Tab"><span
                     class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
@@ -82,6 +82,8 @@
 
         <div class='dialog-content' data-dialog-name='send-message'>
             <div class="dialog-content-central">
+                <input type="email" id="mailField" placeholder="Email" class="dialog-input">
+                <input type="password" id="passField" placeholder="Password" class="dialog-input">
                 <input type="text" id="subjectField" placeholder="Subject" class="dialog-input">
                 <textarea id="sentMessage" class="message-area dialog-input" placeholder="Message"></textarea>
             </div>
@@ -120,11 +122,19 @@
                     <label for="nameField" class="col-sm-2 control-label">Login: </label>
                     <input type="text" id="loginField" placeholder="login">
                 </div>
-                <div class="form-group">
+                <div id="stateBlock" class="form-group">
                     <label for="stateField" class="col-sm-2 control-label">State: </label>
                     <select id="stateField" title="role">
-                        <option>working</option>
                         <option>training</option>
+                        <option>working</option>
+                    </select>
+                </div>
+                <div id="roleBlock"class="form-group">
+                    <label for="roleField" class="col-sm-2 control-label">Role: </label>
+                    <select id="roleField" title="role">
+                        <option value="ROLE_FEEDBACKER">Feedbacker</option>
+                        <option value="ROLE_CURATOR">Curator</option>
+                        <option value="ROLE_OFFICE">Office</option>
                     </select>
                 </div>
             </div>
@@ -175,6 +185,8 @@
                         ListUtil.init();
 
                         appointerDlg.init();
+
+                        util.initAccessRoleForList();
                     });
                 }
         );

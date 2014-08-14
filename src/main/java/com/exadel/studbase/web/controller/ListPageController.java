@@ -144,7 +144,7 @@ public class ListPageController {
         String[] university = new String[universities.size()];
         Iterator<University> universityIterator = universities.iterator();
         for (int i = 0; i < universities.size(); i++) {
-            university[i]  = universityIterator.next().getName();
+            university[i] = universityIterator.next().getName();
         }
 
         Collection<Faculty> faculties = facultyService.getAll();
@@ -155,7 +155,7 @@ public class ListPageController {
         }
 
         List<FilterDescription.FilterDescriptor> description
-                = FilterDescription.createFilterDescription(isCurator, curators, skills,university, faculty);
+                = FilterDescription.createFilterDescription(isCurator, curators, skills, university, faculty);
 
         Gson gson = new Gson();
 
@@ -166,12 +166,12 @@ public class ListPageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/curatorList", method = RequestMethod.GET)
-    public String getAllCurators(){
+    public String getAllCurators() {
         Gson gson = new Gson();
         Map<Long, String> curators = new HashMap<Long, String>();
         Collection<User> listOfUsers = employeeService.getAllCurators();
         for (User u : listOfUsers) {
-                curators.put(u.getId(), u.getName());
+            curators.put(u.getId(), u.getName());
         }
         return gson.toJson(curators);
     }
@@ -180,7 +180,9 @@ public class ListPageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-    public String sendMail(@RequestParam("students") String students,
+    public String sendMail(@RequestParam("usermail") String from,
+                           @RequestParam("password") String password,
+                           @RequestParam("students") String students,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam("message") String body) {
         Gson gson = new Gson();
@@ -191,17 +193,13 @@ public class ListPageController {
             User user = userService.getById(id);
 
             if (user.getEmail() != null) {
-                if (!mailService.sendMail(user.getEmail(), subject, body)) {
+                if (!mailService.sendMail(from, password, user.getEmail(), subject, body)) {
                     inaccessibleEmail.add(user.getName() + " ( " + user.getEmail() + " )");
                 }
             } else {
                 inaccessibleEmail.add(user.getName() + "( haven't mail )");
             }
         }
-
-        /*User user = userService.getById(4L);
-        mailService.sendMail("vasia-94@tut.by", "xxxPASSWORD", user.getEmail(), "s", "b");*/
-
         return gson.toJson(inaccessibleEmail);
     }
 
