@@ -8,16 +8,14 @@ import java.util.Map;
 public class FilterDescription {
     public static List<FilterDescriptor> createFilterDescription(boolean isCurator,
                                                                  Map<Long, String> curator,
-                                                                 Map<Long, String> skill/*,
-                                                                 Map<Long, String> university,
-                                                                 Map<Long, String> faculty*/) {
+                                                                 Map<Long, String> skill,
+                                                                 String[] university,
+                                                                 String[] faculty) {
         List<FilterDescriptor> filterDescriptor = new ArrayList();
-        filterDescriptor.add(new TextFilter("university", "University", "..."));
-        filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
-
-        /*filterDescriptor.add(new ListFilter("university", "University", university, false));
-        filterDescriptor.add(new ListFilter("faculty", "Faculty", faculty, false));*/
-
+//        filterDescriptor.add(new TextFilter("university", "University", "..."));
+//        filterDescriptor.add(new TextFilter("faculty", "Faculty", "..."));
+        filterDescriptor.add(new EnumFilter("university", "University", university, false));
+        filterDescriptor.add(new EnumFilter("faculty", "Faculty", faculty, false));
         filterDescriptor.add(new EnumFilter("course", "Course", new Integer[]{1, 2, 3, 4, 5}));
         filterDescriptor.add(new NumberFilter("graduationYear", "Grad. year", 2000));
         filterDescriptor.add(new NumberFilter("workingHours", "Working hours", 0));

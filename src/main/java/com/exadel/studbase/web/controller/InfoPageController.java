@@ -46,6 +46,10 @@ public class InfoPageController {
     ISkillSetService skillSetService;
     @Autowired
     ICuratoringService curatoringService;
+    @Autowired
+    IUniversityService universityService;
+    @Autowired
+    IFacultyService facultyService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String infoPage(@RequestParam("id") Long id) {
@@ -134,8 +138,8 @@ public class InfoPageController {
     @ResponseBody
     @RequestMapping(value = "/postEducation", method = RequestMethod.POST)
     public String editEducation(@RequestParam("studentId") Long id,
-                                @RequestParam("studentUniversity") String university,
-                                @RequestParam("studentFaculty") String faculty,
+                                @RequestParam("studentUniversity") Long universityId,
+                                @RequestParam("studentFaculty") Long facultyId,
                                 @RequestParam("studentSpeciality") String speciality,
                                 @RequestParam("studentCourse") String course,
                                 @RequestParam("studentGroup") String group,
@@ -143,8 +147,8 @@ public class InfoPageController {
                                 @RequestParam("studentTermMarks") String termMarks) {
 
         Student editedStudent = studentService.getById(id);
-        editedStudent.setUniversity(university);
-        editedStudent.setFaculty(faculty);
+        editedStudent.setUniversity(universityService.getById(universityId));
+        editedStudent.setFaculty(facultyService.getById(facultyId));
         editedStudent.setCourse(formatField(course, Integer.class));
         editedStudent.setGroup(formatField(group, Integer.class));
         editedStudent.setSpeciality(speciality);

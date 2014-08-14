@@ -19,11 +19,13 @@ public class Student implements IEntity<Long> {
     @Column(name = "hire_date")
     private Date hireDate;
 
-    @Column(name = "university")
-    private String university;
+    @ManyToOne
+    @JoinColumn(name = "university")
+    private University university;
 
-    @Column(name = "faculty")
-    private String faculty;
+    @ManyToOne
+    @JoinColumn(name = "faculty")
+    private Faculty faculty;
 
     @Column(name = "course")
     private Integer course;
@@ -110,19 +112,19 @@ public class Student implements IEntity<Long> {
         this.hireDate = hireDate;
     }
 
-    public String getUniversity() {
+    public University getUniversity() {
         return university;
     }
 
-    public void setUniversity(String university) {
+    public void setUniversity(University university) {
         this.university = university;
     }
 
-    public String getFaculty() {
+    public Faculty getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(String faculty) {
+    public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
 
