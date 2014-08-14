@@ -112,14 +112,18 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         });
 
         $("#saveFeedbacksInformation").click(function () {
-            var fields = ['professionalQuality', 'relevantToWork', 'relationshipWithStaff', 'professionalGrowth', 'needMoreHours', 'realProject', 'additionalInfo', 'feedbackDate'],
+            var fields = ['professionalCompetence', 'attitudeToWork', 'collectiveRelations', 'professionalProgress', 'needMoreHours', 'isOnProject', 'content', 'feedbackDate'],
                 newFeedbacks = [];
             $(".new-feedback").each(function () {
                 var $this = $(this),
                     $thisFields = $this.find("dd"),
-                    feedback = {};
-                //TODO local storage
-                feedback.feedbacker = "Me";
+                    feedback = {},
+                    feedbacker = getFeedbacker(),
+                    feedbackId = $this.attr('data-id');
+                if (feedbackId) {
+                    feedback.id  = feedbackId;
+                }
+                feedback.feedbacker = feedbacker;
                 feedback.studentId = fillBasic.studentId();
                 $thisFields.each(function (index, value) {
                     if (index === 4) {
@@ -131,12 +135,12 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                         feedback[fields[index]] = $(value).text();
                     }
                 });
+                console.log(feedback);
                 newFeedbacks.push(feedback);
                 $this.removeClass("new-feedback");
-
             });
             newFeedbacks = JSON.stringify(newFeedbacks);
-
+            console.log(newFeedbacks);
             saveFeedbacksInformation(newFeedbacks);
         });
 
@@ -185,37 +189,84 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         $("#feedbacksHeader").click(function () {
             if ($("#feedbacksHeader").attr("data-visible") === "false") {
 
-                var getFeedbacks =  $.ajax({
-                    type: "GET",
-                    url: "/info/getFeedbacks",
-                    cashe: false,
-                    data: {
-                        "studentId": fillBasic.studentId()
-                    }
-                });
-                getFeedbacks.done(function (data) {
-                    $(".feedback-list").empty();
+                var role = sessionStorage.getItem("role"),
+                    getFeedbacks;
 
-                    var feedbacks = JSON.parse(data);
-                    $.each(feedbacks, function (index, value) {
-                        var date = new Date(value.feedbackDate),
-                            feedback = {
-                                feedbacker : value.feedbacker.id,
-                                professionalQuality : value.professionalCompetence,
-                                relevantToWork : value.attitudeToWork,
-                                relationshipWithStaff : value.collectiveRelations,
-                                professionalGrowth : value.professionalProgress,
-                                needMoreHours : value.needMoreHours,
-                                realProject : value.isOnProject,
-                                additionalInfo : value.content,
-                                feedbackDate : util.formatDate(date)
-                            };
-                        $(".feedback-list").prepend(templateFeedback(feedback));
+                if (role === '2' || role === '3') {
+                    getFeedbacks = $.ajax({
+                        type: "GET",
+                        url: "/info/getMyFeedbacks",
+                        cashe: false,
+                        data: {
+                            "employeeId": sessionStorage.getItem("id")
+                        }
                     });
-                });
-                getFeedbacks.fail(function () {
-                    alert("error");
-                });
+                    getFeedbacks.done(function (data) {
+                        $(".feedback-list").empty();
+
+                        var feedbacks = JSON.parse(data);
+                        $.each(feedbacks, function (index, value) {
+                            var role = sessionStorage.getItem("role"),
+                                date = new Date(value.feedbackDate),
+                                needMoreHours = (value.needMoreHours === true) ? 'Yes' : 'No',
+                                feedback = {
+                                    feedbackId : value.id,
+                                    feedbacker: value.feedbacker.name,
+                                    professionalQuality: value.professionalCompetence,
+                                    relevantToWork: value.attitudeToWork,
+                                    relationshipWithStaff: value.collectiveRelations,
+                                    professionalGrowth: value.professionalProgress,
+                                    needMoreHours: needMoreHours,
+                                    realProject: value.isOnProject,
+                                    additionalInfo: value.content,
+                                    feedbackDate: util.formatDate(date)
+                                };
+                            $(".feedback-list").prepend(templateFeedback(feedback));
+                        });
+                    });
+                    getFeedbacks.fail(function () {
+                        alert("error");
+                    });
+                }
+                else {
+                    getFeedbacks = $.ajax({
+                        type: "GET",
+                        url: "/info/getAllFeedbacks",
+                        cashe: false,
+                        data: {
+                            "studentId": fillBasic.studentId()
+                        }
+                    });
+                    getFeedbacks.done(function (data) {
+                        $(".feedback-list").empty();
+
+                        var feedbacks = JSON.parse(data);
+                        $.each(feedbacks, function (index, value) {
+                            var role = sessionStorage.getItem("role"),
+                                date = new Date(value.feedbackDate),
+                                needMoreHours = (value.needMoreHours === true) ? 'Yes' : 'No',
+                                feedback = {
+                                    feedbackId : value.id,
+                                    feedbacker: value.feedbacker.name,
+                                    professionalQuality: value.professionalCompetence,
+                                    relevantToWork: value.attitudeToWork,
+                                    relationshipWithStaff: value.collectiveRelations,
+                                    professionalGrowth: value.professionalProgress,
+                                    needMoreHours: needMoreHours,
+                                    realProject: value.isOnProject,
+                                    additionalInfo: value.content,
+                                    feedbackDate: util.formatDate(date)
+                                };
+                            $(".feedback-list").prepend(templateFeedback(feedback));
+
+                            $(".feedback-list button").prop("hidden", true);
+
+                        });
+                    });
+                    getFeedbacks.fail(function () {
+                        alert("error");
+                    });
+                }
 
 
                 $("#feedbacksHeader").attr("data-visible", "true");
@@ -302,10 +353,30 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         $("#writeFeedback").click(function () {
             dialog.showDialog("add-feedback", "500px");
         });
+
+        $(".feedback-list").on("click", 'button', function () {
+            var currentFeedback = $(this).parent().eq(0),
+                feedbackFields = currentFeedback.find("dd");
+            $("#feedbackId").text(currentFeedback.attr("data-id"));
+            $("#professionalQuality").val($(feedbackFields[0]).text());
+            $("#relevantToWork").val($(feedbackFields[1]).text());
+            $("#relationshipWithStaff").val($(feedbackFields[2]).text());
+            $("#professionalGrowth").val($(feedbackFields[3]).text());
+            $("#realProject").val($(feedbackFields[5]).text());
+            $("#additionalInfo").val($(feedbackFields[6]).text());
+            $("#needMoreHours :contains(" + "\'" + $(feedbackFields[4]).text() + "\'" + ")").attr("selected", "selected");
+            //TODO where
+            currentFeedback.addClass("insert-here");
+            // or simply delete it and prepend edited feedback
+            currentFeedback.remove();
+
+            dialog.showDialog("add-feedback", "500px");
+        });
+
         $("#addFeedback").click(function () {
             var date = new Date(Date.now()),
-                //TODO local storage
-                feedbacker = "Me",
+                feedbackId =  $("#feedbackId").text(),
+                feedbacker = sessionStorage.getItem("username"),
                 professionalQuality = $("#professionalQuality").val(),
                 relevantToWork = $("#relevantToWork").val(),
                 relationshipWithStaff = $("#relationshipWithStaff").val(),
@@ -314,6 +385,7 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 additionalInfo = $("#additionalInfo").val(),
                 needMoreHours = $("#needMoreHours option:selected").text(),
                 data = {
+                    feedbackId : feedbackId,
                     feedbacker : feedbacker,
                     professionalQuality : professionalQuality,
                     relevantToWork : relevantToWork,
@@ -327,9 +399,15 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 newFeedback;
 
             $(".feedback-list").prepend(templateFeedback(data));
-            //TODO class new-feedback
+
             newFeedback = $(".feedback-list li").first();
             newFeedback.addClass("new-feedback");
+
+            //clearFields
+            $("dialog-content").find("textarea").each(function () {
+                $(this).val("");
+            });
+
 
             dialog.closeDialog();
         });
@@ -398,6 +476,27 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                 return false;
             }
         }
+
+    function getFeedbacker() {
+        var feedbacker,
+            feedbackerId = sessionStorage.getItem("id"),
+            get = $.ajax({
+            type: "GET",
+            url: "/info/getFeedbacker",
+            dataType: 'json', // from the server!
+            async : false,
+            data: {
+                'feedbackerId': feedbackerId
+            }
+        });
+        get.done(function (data) {
+            feedbacker = data;
+        });
+        get.fail(function () {
+            alert("error get feedbacker");
+        });
+        return feedbacker;
+    }
 
     function exportStudentExcel() {
             window.open("/info/exportExcel?studentId=" + fillBasic.studentId(), "Export file");
@@ -629,36 +728,36 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
             data: {'feedbacks': newFeedbacks}
         });
         postFeedbacks.done(function () {
-            $("#saveDocumentsInformation").text("Saved!");
-            $("#saveDocumentsInformation").animate({
+            $("#saveFeedbacksInformation").text("Saved!");
+            $("#saveFeedbacksInformation").animate({
                 backgroundColor: '#5cb85c',
                 borderColor: '#4cae4c'
             }, {
                 duration: 500,
                 easing: "swing",
                 complete: setTimeout(function () {
-                    $("#saveDocumentsInformation").animate({
+                    $("#saveFeedbacksInformation").animate({
                         backgroundColor: '#4A5D80',
                         borderColor: '#2D3E5C'
                     }, 500);
-                    $("#saveDocumentsInformation").text("Save");
+                    $("#saveFeedbacksInformation").text("Save");
                 }, 1000)
             });
         });
         postFeedbacks.fail(function () {
-            $("#saveDocumentsInformation").text("Check out!");
-            $("#saveDocumentsInformation").animate({
+            $("#saveFeedbacksInformation").text("Check out!");
+            $("#saveFeedbacksInformation").animate({
                 backgroundColor: '#CD5C5C',
                 borderColor: '#C16868'
             }, {
                 duration: 500,
                 easing: "swing",
                 complete: setTimeout(function () {
-                    $("#saveDocumentsInformation").animate({
+                    $("#saveFeedbacksInformation").animate({
                         backgroundColor: '#4A5D80',
                         borderColor: '#2D3E5C'
                     }, 500);
-                    $("#saveDocumentsInformation").text("Save");
+                    $("#saveFeedbacksInformation").text("Save");
                 }, 1000)
             });
         });

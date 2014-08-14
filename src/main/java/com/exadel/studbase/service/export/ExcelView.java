@@ -46,10 +46,9 @@ public class ExcelView extends AbstractExcelView {
         CellStyle styleHeader = workbook.createCellStyle();
         Font font = workbook.createFont();
 
-        String fileNameBeginning = "Student list report - ";
-        if(listOfUsers.size() == 1) {
-            fileNameBeginning = listOfUsers.get(0).getName() + " report - ";
-        }
+        String fileNameBeginning = (listOfUsers.size() == 1)
+                ? listOfUsers.get(0).getName() + " report - "
+                : "Student list report - ";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
         String fileName = fileNameBeginning + simpleDateFormat.format(new Date()) + ".xls";
 

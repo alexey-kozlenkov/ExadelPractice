@@ -8,7 +8,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
     var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
     function init() {
-        util.login();
+        util.initAccessRoleForStudentInfo();
         parseRequestForId(window.location.search);
         fillOptions();
         fillCommonInfo();
@@ -26,9 +26,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
         $.ajax({
             type: "GET",
             url: "/info/getOptions",
-            async: true,
             success: function (data) {
-                // alert("" + data);
                 $("#state").empty();
                 //filling
                 var options = JSON.parse(data),
@@ -63,11 +61,10 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 "studentId": studentId
             },
             success: function (data) {
-               // alert(data);
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks;
-                $("#sesssionUsername").text(sessionStorage.getItem("username"));
+                $("#sessionUsername").text(sessionStorage.getItem("username"));
 
                 $("#headerName").text(gottenUser.name);
                 $("#name").val(gottenUser.name);
@@ -110,6 +107,10 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                         $("#termMarkList").append(templateTermMark({
                             value: value
                         }));
+                        var role = sessionStorage.getItem("role");
+                        if (role === '2' || role === '3' || role === '4') {
+                            $("#termMarkList input").prop("disabled", true);
+                        }
                     });
                 }
             },

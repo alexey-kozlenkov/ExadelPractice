@@ -20,6 +20,7 @@
     <a href="/list" class="prj-link back-link">
         <span class="glyphicon glyphicon-arrow-left"></span>
     </a>
+
     <h1 id="headerName">some student name</h1>
     <ul class="info-header-nav">
         <li class="info-header-nav-link">
@@ -55,7 +56,7 @@
 <div class="category-header">
     <a href="#">Manual information<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
-<div class="category-content outer-category-content" id="manualContent">
+<div class="category-content outer-category-content info-edit" id="manualContent">
     <div class="form-horizontal">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
@@ -91,7 +92,7 @@
             <label for="state" class="col-sm-2 control-label">State</label>
 
             <div class="col-sm-10">
-                <select class="category-content-select" id="state"></select>
+                <select class="category-content-select select-state" id="state"></select>
             </div>
         </div>
         <div class="form-group">
@@ -132,7 +133,7 @@
 <div class="category-header">
     <a href="#">Education<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
-<div class="category-content outer-category-content" id="educationContent">
+<div class="category-content outer-category-content info-edit" id="educationContent">
     <div class="form-horizontal">
         <div class="form-group">
             <label for="institution" class="col-sm-2 control-label">Educational institution</label>
@@ -200,10 +201,18 @@
     </div>
 </div>
 
+<div class="category-header" id="skillsHeader">
+    <a href="#">Skills<span class="st-arrow category-header-span">Open or Close</span></a>
+</div>
+<div class="category-content outer-category-content info-edit" id="skillsContent">
+    <div class="form-horizontal">
+    </div>
+</div>
+
 <div class="category-header" id="exadelHeader">
     <a href="#">Exadel<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
-<div class="category-content outer-category-content" id="exadelContent">
+<div class="category-content outer-category-content info-edit exadel-content" id="exadelContent">
     <div class="form-horizontal">
         <div class="form-group">
             <label for="workingHours" class="col-sm-2 control-label">Working hours</label>
@@ -267,7 +276,7 @@
             <div class="category-header inner-category-header">
                 <label class="col-sm-2 control-label"><a href="#">Current project</a></label>
             </div>
-            <div class="category-content">
+            <div class="category-content current-project-content">
                 <div class="form-group">
                     <label for="currentProject" class="col-sm-2 control-label">Current
                         project</label>
@@ -295,7 +304,8 @@
                     <label for="currentProjectManager" class="col-sm-2 control-label">Project manager</label>
 
                     <div class="col-sm-10 employee-link">
-                        <a href="../html/employeeInfo.html" target="_blank" id="currentProjectManager">Project Manager</a>
+                        <a href="../html/employeeInfo.html" target="_blank" id="currentProjectManager">Project
+                            Manager</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -316,10 +326,10 @@
     </div>
 </div>
 
-<div class="category-header" id="documentsHeader" data-visible = "false">
+<div class="category-header" id="documentsHeader" data-visible="false">
     <a href="#">Documents<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
-<div class="category-content outer-category-content" id="documentsContent">
+<div class="category-content outer-category-content info-edit" id="documentsContent">
     <div class="form-horizontal">
         <div class="col-md-offset-2">
             <div class="form-group">
@@ -361,12 +371,12 @@
     </div>
 </div>
 
-<div class="category-header" id="feedbacksHeader" data-visible = "false">
+<div class="category-header" id="feedbacksHeader" data-visible="false">
     <a href="#">Feedbacks<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
-<div class="category-content outer-category-content" id="feedbacksContent">
+<div class="category-content outer-category-content feedback-edit" id="feedbacksContent">
     <div class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group for-feedbackers" hidden>
             <label class="col-sm-2 control-label">Write your feedback</label>
             <button class="prj-btn" id="writeFeedback" title="Write feedback">
                 <span class="glyphicon glyphicon-pencil"></span>
@@ -429,37 +439,46 @@
         <div class='dialog-content' data-dialog-name='add-feedback'>
             <div class="dialog-content-central">
                 <div class="form-horizontal">
+                    <div id="feedbackId" hidden></div>
                     <div class="form-group">
-                        <label for="professionalQuality" class="col-sm-2 control-label dialog-feedback-label">Professional quality</label>
+                        <label for="professionalQuality" class="col-sm-2 control-label dialog-feedback-label">Professional
+                            quality</label>
 
                         <div class="col-sm-3">
                             <textarea class="form-control feedback-textarea" id="professionalQuality"
-                                   placeholder="Professional quality"></textarea>
+                                      placeholder="Professional quality"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="relevantToWork" class="col-sm-2 control-label dialog-feedback-label">Relevant to work</label>
+                        <label for="relevantToWork" class="col-sm-2 control-label dialog-feedback-label">Relevant to
+                            work</label>
 
                         <div class="col-sm-3">
-                            <textarea class="form-control feedback-textarea" id="relevantToWork" placeholder="Relevant to work"></textarea>
+                            <textarea class="form-control feedback-textarea" id="relevantToWork"
+                                      placeholder="Relevant to work"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="relationshipWithStaff" class="col-sm-2 control-label dialog-feedback-label">Relationship with staff</label>
+                        <label for="relationshipWithStaff" class="col-sm-2 control-label dialog-feedback-label">Relationship
+                            with staff</label>
 
                         <div class="col-sm-3">
-                            <textarea class="form-control feedback-textarea" id="relationshipWithStaff" placeholder="Relationship with staff"></textarea>
+                            <textarea class="form-control feedback-textarea" id="relationshipWithStaff"
+                                      placeholder="Relationship with staff"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="professionalGrowth" class="col-sm-2 control-label dialog-feedback-label">Professional growth</label>
+                        <label for="professionalGrowth" class="col-sm-2 control-label dialog-feedback-label">Professional
+                            growth</label>
 
                         <div class="col-sm-3">
-                            <textarea class="form-control feedback-textarea" id="professionalGrowth" placeholder="Professional growth"></textarea>
+                            <textarea class="form-control feedback-textarea" id="professionalGrowth"
+                                      placeholder="Professional growth"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="needMoreHours" class="col-sm-2 control-label dialog-feedback-label">Need more hours</label>
+                        <label for="needMoreHours" class="col-sm-2 control-label dialog-feedback-label">Need more
+                            hours</label>
 
                         <div class="col-sm-3">
                             <select class="form-control feedback-textarea" id="needMoreHours">
@@ -469,10 +488,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="realProject" class="col-sm-2 control-label dialog-feedback-label">Real project</label>
+                        <label for="realProject" class="col-sm-2 control-label dialog-feedback-label">Real
+                            project</label>
 
                         <div class="col-sm-3">
-                            <textarea class="form-control feedback-textarea" id="realProject" placeholder="Is on real project..." title="Whether the student works at the real project. If isn't present, that is whether prospect of its work on the real project"></textarea>
+                            <textarea class="form-control feedback-textarea" id="realProject"
+                                      placeholder="Is on real project..."
+                                      title="Whether the student works at the real project. If isn't present, that is whether prospect of its work on the real project"></textarea>
                         </div>
                     </div>
 
@@ -494,7 +516,7 @@
 <script>
     require(["../js/main.js"], function () {
         require(["jquery", "Accordion", "FillBasic", "Rest"], function ($, accordion, fillBasic, rest) {
-            $(document).ready( function () {
+            $(document).ready(function () {
                 accordion.init();
                 fillBasic.init();
                 rest.init();
