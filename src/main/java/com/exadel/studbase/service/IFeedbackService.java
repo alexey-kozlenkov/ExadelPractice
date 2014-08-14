@@ -14,4 +14,8 @@ public interface IFeedbackService {
     Collection<Feedback> getAllAboutStudent(Long studentId);
 
     Collection<Feedback> getAllByEmployee(Long employeeId);
+
+    void addFeedbacksWhenAppointingCurators(Long[] studentsIds, Long[] curatorsIds);
+
+    Collection<Feedback> getAllAboutStudentByEmployee(Long studentId, Long employeeId);
 }

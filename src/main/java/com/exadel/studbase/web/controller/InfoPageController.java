@@ -125,10 +125,10 @@ public class InfoPageController {
     @RequestMapping(value = "/getMyFeedbacks", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String myFeedbacksData(@RequestParam("employeeId") Long employeeId,
-                                  @RequestParam("studentId") Long studentId) {
+    public String myFeedbacksData(@RequestParam("studentId") Long studentId,
+                                  @RequestParam("employeeId") Long employeeId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Collection<Feedback> userFeedbacks = feedbackService.getAllByEmployee(employeeId);
+        Collection<Feedback> userFeedbacks = feedbackService.getAllAboutStudentByEmployee(studentId, employeeId);
         return gson.toJson(userFeedbacks);
     }
 

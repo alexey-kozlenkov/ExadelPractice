@@ -44,6 +44,8 @@ public class ListPageController {
     IUniversityService universityService;
     @Autowired
     IFacultyService facultyService;
+    @Autowired
+    IFeedbackService feedbackService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
@@ -220,18 +222,31 @@ public class ListPageController {
     @ResponseStatus(HttpStatus.OK)
     public void addUser(@RequestParam("name") String name,
                         @RequestParam("login") String login,
-                        @RequestParam("state") String state) {
+                        @RequestParam("state") String state,
+                        @RequestParam("isStudent") Boolean isStudent) {
 
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setLogin(login);
-        newUser.setRole("ROLE_STUDENT");
-        userService.save(newUser);
-        Student newStudent = new Student();
-        newStudent.setId(newUser.getId());
-        newStudent.setState(state);
-        newUser.setStudentInfo(newStudent);
-        userService.save(newUser);
+        if(isStudent) {
+            User newUser = new User();
+            newUser.setName(name);
+            newUser.setLogin(login);
+            newUser.setRole("ROLE_STUDENT");
+            userService.save(newUser);
+            Student newStudent = new Student();
+            newStudent.setId(newUser.getId());
+            newStudent.setState(state);
+            newUser.setStudentInfo(newStudent);
+            userService.save(newUser);
+        } else {
+            User newUser = new User();
+            newUser.setName(name);
+            newUser.setLogin(login);
+            newUser.setRole(state);
+            userService.save(newUser);
+            Employee newEmployee = new Employee();
+            newEmployee.setId(newUser.getId());
+            newUser.setEmployeeInfo(newEmployee);
+            userService.save(newUser);
+        }
     }
 
     @Secured("ROLE_SUPERADMIN")
@@ -243,6 +258,7 @@ public class ListPageController {
         Long[] studentsIds = gson.fromJson(students, Long[].class);
         Long[] curatorsIds = gson.fromJson(curators, Long[].class);
         curatoringService.appointCuratorsToStudents(studentsIds, curatorsIds);
+        feedbackService.addFeedbacksWhenAppointingCurators(studentsIds, curatorsIds);
     }
 
     public class ListResponse {

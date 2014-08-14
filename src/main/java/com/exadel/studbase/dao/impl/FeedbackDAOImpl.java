@@ -22,4 +22,25 @@ public class FeedbackDAOImpl extends GenericDAOImpl<Feedback, StudentView, Long>
         Query query = getSession().createQuery("FROM Feedback  WHERE feedbacker.id = " + id);
         return query.list();
     }
+
+    @Override
+    public void addFeedbacksWhenAppointingCurators(Long[] studentsIds, Long[] curatorsIds) {
+        Query query = getSession().createSQLQuery("" +
+                "INSERT INTO \"FEEDBACK\" (student_id, employee_id) VALUES (:studentIdParam, :curatorIdParam)");
+        for (Long studentId: studentsIds) {
+            for (Long curatorId: curatorsIds) {
+                query.setParameter("studentIdParam", studentId);
+                query.setParameter("curatorIdParam", curatorId);
+                query.executeUpdate();
+            }
+        }
+    }
+
+    @Override
+    public Collection<Feedback> getAllAboutStudentByEmployee(Long studentId, Long employeeId) {
+        Query query = getSession().createQuery("FROM Feedback WHERE studentId=:studentIdParam AND feedbacker.id=:employeeIdParam");
+        query.setParameter("studentIdParam", studentId);
+        query.setParameter("employeeIdParam", employeeId);
+        return query.list();
+    }
 }
