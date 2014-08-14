@@ -27,20 +27,6 @@
         </li>
     </ul>
 </div>
-<div class="export">
-    <ul>
-        <li class="export-btns">
-            <button class="prj-btn export-btn" id="exportInfoExcel" title="Export in Excel">
-                <img src="../images/excel-icon.png" alt="Export in Excel" class="export-icon">
-            </button>
-        </li>
-        <li class="export-btns">
-            <button class="prj-btn export-btn" id="exportInfoPDF" title="Export in PDF">
-                <img src="../images/pdf-icon.png" alt="Export in PDF" class="export-icon">
-            </button>
-        </li>
-    </ul>
-</div>
 <div class="container prj-content">
     <div class="wrapper">
         <div class="category-list">
@@ -48,36 +34,38 @@
             <div class="category-header">
                 <a href="#">Manual information<span class="st-arrow category-header-span">Open or Close</span></a>
             </div>
-            <div class="category-content outer-category-content">
+            <div class="category-content outer-category-content employee-info-edit">
                 <div class="form-horizontal">
+
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" placeholder="First & second name"
-                                   required>
+                            <input type="text" class="form-control" id="name" placeholder="First & second name">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="birthDate" class="col-sm-2 control-label">Birth date</label>
 
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="birthDate" placeholder="yyyy-mm-dd"
-                                   required>
+                            <input type="date" class="form-control" id="birthDate" placeholder="yyyy-mm-dd">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="login" class="col-sm-2 control-label">Login</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="login" placeholder="Login" required>
+                            <input type="text" class="form-control" id="login" placeholder="Login">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
                         </div>
                     </div>
 
@@ -111,9 +99,7 @@
                         </div>
                     </div>
 
-                    <button id="saveManualInformation" type="button"
-                            class="category-content-button prj-btn save-manual-info">Save
-                    </button>
+                    <button id="saveManualInformation" type="button" class="category-content-button prj-btn save-manual-info">Save</button>
                 </div>
             </div>
         </div>
@@ -129,8 +115,8 @@
         require(["jquery", "Accordion", "FillBasicEmployee", "RestEmployee"], function ($, accordion, fillBasicEmployee, restEmployee) {
             $(document).ready(function () {
                 accordion.init();
-//                fillBasic.init();
-//                rest.init();
+                fillBasicEmployee.init();
+                restEmployee.init();
             });
         });
 

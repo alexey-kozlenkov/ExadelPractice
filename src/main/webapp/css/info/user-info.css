@@ -76,6 +76,9 @@
 .employee-link {
     padding-top: 7px;
 }
+.employee-link a {
+    margin-right: 10px;
+}
 
 
 .inline-input {

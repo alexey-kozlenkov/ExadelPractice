@@ -462,6 +462,48 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
             }
         });
 
+        //handler go to employee
+        $("#currentTeamLead").click(function () {
+            var $this = $(this),
+                href = "/info/employee?id=" + $this.attr("data-id");
+            $this.attr("href", href);
+        });
+
+        $("#currentProjectManager").click(function () {
+            var $this = $(this),
+                href = "/info/employee?id=" + $this.attr("data-id");
+            $this.attr("href", href);
+        });
+
+       // change team lead or project manager
+        $("#changeTeamLead").click(function () {
+            loadAllEmployees();
+            dialog.showDialog('change-appointed-employee', '200px');
+            $("#employeeToSelect").attr("data-whom-change", "team-lead");
+
+        });
+
+        $("#changeProjectManager").click(function () {
+            loadAllEmployees();
+            dialog.showDialog('change-appointed-employee', '200px');
+            $("#employeeToSelect").attr("data-whom-change", "project-manager");
+        });
+
+        $("#changeAppointedEmployee").click(function () {
+            var $employeeSelected = $("#employeeToSelect :selected"),
+                whomChange =  $("#employeeToSelect").attr("data-whom-change");
+            if (whomChange === 'team-lead') {
+                $("#currentTeamLead").text($employeeSelected.text());
+                $("#currentTeamLead").attr("data-id", $employeeSelected.val());
+            }
+            else if (whomChange === 'project-manager') {
+                $("#currentProjectManager").text($employeeSelected.text());
+                $("#currentProjectManager").attr("data-id", $employeeSelected.val());
+            }
+            dialog.closeDialog();
+
+        });
+
     }
 
     function validInputTermMark(termMarkVal) {
@@ -486,6 +528,27 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
     function syncInstitutionAndFaculties() {
         var universityId = $("#institution :selected").val();
         fillBasic.getFaculties(universityId);
+    }
+
+    function loadAllEmployees() {
+        var $employeeSelect = $("#employeeToSelect"),
+            loadAllEmpl = $.ajax({
+                type: "GET",
+                url: "/info/getAllEmployees",
+                dataType: 'json'
+            });
+        loadAllEmpl.done(function (data) {
+            $employeeSelect.empty();
+            require(["text!templates/employee-option-template.html"], function (template) {
+                $employeeSelect.append(Handlebars.compile(template) ({
+                        values : data
+                    })
+                );
+            });
+        });
+        loadAllEmpl.fail(function () {
+            alert("failed loading");
+        });
     }
 
     function getFeedbacker() {
@@ -521,7 +584,7 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
             $.ajax({
                 type: "POST",
                 //SEND
-                url: "/info/postManualInformation",
+                url: "/info/postStudentManualInformation",
                 dataType: 'json', // from the server!
                 data: {
                     'studentId': fillBasic.studentId(),
@@ -731,6 +794,7 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
             });
 
         }
+
     function  saveFeedbacksInformation(newFeedbacks) {
         var postFeedbacks = $.ajax({
             type: "POST",
