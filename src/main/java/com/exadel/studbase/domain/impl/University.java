@@ -57,9 +57,6 @@ public class University implements IEntity<Long>{
 
     @Override
     public String toString() {
-        return "University{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

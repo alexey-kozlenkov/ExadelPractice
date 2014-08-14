@@ -192,6 +192,9 @@ public class InfoPageController {
         editedUser.setSkype(skype);
         editedUser.setTelephone(phone);
         editedUser.getStudentInfo().setState(state);
+        if(state.equals("training")) {
+            editedUser.getStudentInfo().clearExadelInfo();
+        }
 
         userService.save(editedUser);
 
