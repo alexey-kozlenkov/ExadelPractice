@@ -77,17 +77,6 @@
     padding-top: 7px;
 }
 
-.inner-category-header {
-    display: flex;
-    margin-bottom: 5px;
-}
-
-.inner-category-header a {
-    padding-left: 15px;
-
-    color: #333;
-    font-size: 17px;
-}
 
 .inline-input {
     width: auto;

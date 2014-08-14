@@ -9,21 +9,14 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
         templateTermMark = Handlebars.compile(templateTermMarkContent);
 
     function init() {
-        util.initAccessRoleForStudentInfo();
-        parseRequestForId(window.location.search);
+        util.initAccessRoleForInfo();
+        util.parseRequestForId(window.location.search, studentId);
         fillOptions();
         fillEducationOptions();
         fillCommonInfo();
     }
 
-    function parseRequestForId(string) {
-        var gottenId,
-            regExpForId = /id=[0-9]+/,
-            regExp = /[0-9]+/;
 
-        gottenId = string.match(regExpForId);
-        studentId = (gottenId[0].match(regExp))[0];
-    }
 
     function fillOptions() {
         $.ajax({

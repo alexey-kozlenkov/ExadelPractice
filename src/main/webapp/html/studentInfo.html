@@ -125,8 +125,7 @@
             </div>
         </div>
 
-        <button id="saveManualInformation" type="button" class="category-content-button prj-btn">Save
-        </button>
+        <button id="saveManualInformation" type="button" class="category-content-button prj-btn save-manual-info">Save</button>
     </div>
 </div>
 
@@ -370,7 +369,7 @@
     </div>
 </div>
 
-<div class="category-header" id="feedbacksHeader" data-visible="false">
+<div class="category-header feedbacks-header" id="feedbacksHeader" data-visible="false">
     <a href="#">Feedbacks<span class="st-arrow category-header-span">Open or Close</span></a>
 </div>
 <div class="category-content outer-category-content feedback-edit" id="feedbacksContent">
@@ -514,11 +513,11 @@
 <script src="../js/lib/require.js"></script>
 <script>
     require(["../js/main.js"], function () {
-        require(["jquery", "Accordion", "FillBasic", "Rest"], function ($, accordion, fillBasic, rest) {
+        require(["jquery", "Accordion", "FillBasicStudent", "RestStudent"], function ($, accordion, fillBasicStudent, restStudent) {
             $(document).ready(function () {
                 accordion.init();
-                fillBasic.init();
-                rest.init();
+                fillBasicStudent.init();
+                restStudent.init();
             });
         });
 

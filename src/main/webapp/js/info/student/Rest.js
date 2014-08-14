@@ -3,7 +3,7 @@
  */
 
 
-define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/document-template.html", "text!templates/feedback-template.html", "jquery-tablesorter", "jquery-animate-colors"],
+define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!templates/document-template.html", "text!templates/feedback-template.html", "jquery-tablesorter", "jquery-animate-colors"],
     function ($, Handlebars, fillBasic, util, dialog, templateDocumentContent, templateFeedbackContent) {
     "use strict";
     var MAX_NUMBER_TERMS = 10,

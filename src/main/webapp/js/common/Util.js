@@ -25,7 +25,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         sessionStorage.clear();
     }
 
-    function initAccessRoleForStudentInfo() {
+    function initAccessRoleForInfo() {
         login();
         var role = sessionStorage.getItem("role");
         switch (role) {
@@ -34,7 +34,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 $(".back-link").prop("hidden", true);
                 $(".select-state").prop("disabled", true);
                 $(".current-project-content input, .current-project-content textarea").prop("disabled", true);
-                $("#feedbacksHeader").prop("hidden", true);
+                $(".feedbacks-header").prop("hidden", true);
                 break;
             case '2' :
                 $(".info-edit input, .info-edit select, .info-edit textarea").prop("disabled", true);
@@ -50,7 +50,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 $(".info-edit button").prop("hidden", true);
 
                 $(".select-state").prop("disabled", false);
-                $("#saveManualInformation").prop("hidden", false);
+                $(".save-manual-info").prop("hidden", false);
 
                 $("#educationContent select").prop("disabled", true);
 
@@ -148,13 +148,24 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         }
         return YYYY + "-" + MM + "-" + DD;
     }
+
+    function parseRequestForId(string, id) {
+        var gottenId,
+            regExpForId = /id=[0-9]+/,
+            regExp = /[0-9]+/;
+
+        gottenId = string.match(regExpForId);
+        id = (gottenId[0].match(regExp))[0];
+    }
+
     return {
-        initAccessRoleForStudentInfo : initAccessRoleForStudentInfo,
+        initAccessRoleForInfo : initAccessRoleForInfo,
         initAccessRoleForList: initAccessRoleForList,
         logout: logout,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
         formatDate : formatDate,
-        stateAnimate: btnStateAnimate
+        stateAnimate: btnStateAnimate,
+        parseRequestForId : parseRequestForId
        
     };
 });
