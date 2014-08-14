@@ -61,7 +61,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         }
     }
 
-    function btnStateAnimate(btn, state, stateText) {
+    function btnStateAnimate(btn, state, stateContent) {
         var defContent = btn.html(),
             backgroundColor = btn.css('backgroundColor'),
             borderColor = btn.css('borderColor'),
