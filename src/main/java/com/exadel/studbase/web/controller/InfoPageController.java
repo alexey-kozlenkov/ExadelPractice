@@ -34,6 +34,8 @@ public class InfoPageController {
     @Autowired
     IEmployeeService employeeService;
     @Autowired
+    IEmployeeViewService employeeViewService;
+    @Autowired
     IFeedbackService feedbackService;
     @Autowired
     IDocumentService documentService;
@@ -48,8 +50,8 @@ public class InfoPageController {
     @Autowired
     IFacultyService facultyService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String infoPage(@RequestParam("id") Long id) {
+    @RequestMapping(value = "/student", method = RequestMethod.GET)
+    public String studentInfoPage(@RequestParam("id") Long id) {
         MySecurityUser principal = (MySecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STUDENT")) && !principal.getId().equals(id)) {
             throw new AccessDeniedException("Pfff");
@@ -87,12 +89,20 @@ public class InfoPageController {
     @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String manualData(@RequestParam("studentId") Long studentId) {
+    public String manualData(@RequestParam("id") Long id) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        User user = userService.getById(studentId);
+        User user = userService.getById(id);
         return gson.toJson(user, User.class);
     }
-
+//
+    @RequestMapping(value = "/getAllEmployees", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String allEmployees() {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<EmployeeView> employees = employeeViewService.getAll();
+        return gson.toJson(employees);
+    }
 
     @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -111,6 +121,7 @@ public class InfoPageController {
         Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
+
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE"})
     @RequestMapping(value = "/getAllFeedbacks", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -141,11 +152,29 @@ public class InfoPageController {
         return gson.toJson(feedbacker, User.class);
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
-    @RequestMapping(value = "/postManualInformation", method = RequestMethod.POST)
+    @RequestMapping(value = "/getTeamLead", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String editManualInformation(@RequestParam("studentId") Long id,
+    public String teamLead(@RequestParam("teamLeadId") Long teamLeadId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User teamLead = userService.getById(teamLeadId);
+        return gson.toJson(teamLead, User.class);
+    }
+
+    @RequestMapping(value = "/getProjectManager", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String projectManager(@RequestParam("projectManagerId") Long projectManagerId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User projectManager = userService.getById(projectManagerId);
+        return gson.toJson(projectManager, User.class);
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @RequestMapping(value = "/postStudentManualInformation", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String editStudentManualInformation(@RequestParam("studentId") Long id,
                                         @RequestParam("studentName") String name,
                                         @RequestParam("studentBirthDate") String birthDate,
                                         @RequestParam("studentLogin") String login,
@@ -171,6 +200,8 @@ public class InfoPageController {
 
         return "{\"post\":\"ok\"}"; //string in double quotes
     }
+
+
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
     @ResponseStatus(HttpStatus.OK)
@@ -276,7 +307,7 @@ public class InfoPageController {
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
-        return "redirect:/info?id=" + id;
+        return "redirect:/info/student?id=" + id;
     }
 
     @RequestMapping(value = "/exportPDF", method = RequestMethod.GET)

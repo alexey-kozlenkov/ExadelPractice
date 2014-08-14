@@ -76,18 +76,10 @@
 .employee-link {
     padding-top: 7px;
 }
-
-.inner-category-header {
-    display: flex;
-    margin-bottom: 5px;
+.employee-link a {
+    margin-right: 10px;
 }
 
-.inner-category-header a {
-    padding-left: 15px;
-
-    color: #333;
-    font-size: 17px;
-}
 
 .inline-input {
     width: auto;

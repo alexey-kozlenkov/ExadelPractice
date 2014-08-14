@@ -3,26 +3,18 @@
  */
 
 
-define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"], function ($, Handlebars, util, templateTermMarkContent) {
+define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"],
+    function ($, Handlebars, util, templateTermMarkContent) {
     "use strict";
     var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
 
     function init() {
-        util.initAccessRoleForStudentInfo();
-        parseRequestForId(window.location.search);
+        util.initAccessRoleForInfo();
+        studentId = util.parseRequestForId(window.location.search);
         fillOptions();
         fillEducationOptions();
         fillCommonInfo();
-    }
-
-    function parseRequestForId(string) {
-        var gottenId,
-            regExpForId = /id=[0-9]+/,
-            regExp = /[0-9]+/;
-
-        gottenId = string.match(regExpForId);
-        studentId = (gottenId[0].match(regExp))[0];
     }
 
     function fillOptions() {
@@ -74,7 +66,6 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             $("#exadelHeader").hide(200);
         }
     }
-
     function getUniversities() {
         var universities,
             getAllUniversities = $.ajax({
@@ -114,22 +105,23 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             alert("failed loading");
         });
     }
-
     function fillCommonInfo() {
-        $.ajax({
+        var getStudent = $.ajax({
             type: "GET",
-            //SEND TO CONTROLLER
             url: "/info/getCommonInformation",
             cashe: false,
             data: {
-                "studentId": studentId
-            },
-            success: function (data) {
+                "id": studentId
+            }
+        });
+        getStudent.done(function (data) {
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
                     marks,
                     universityId,
-                    facultyId;
+                    facultyId,
+                    teamLeadName,
+                    projectManagerName;
                 $("#sessionUsername").text(sessionStorage.getItem("username"));
 
                 $("#headerName").text(gottenUser.name);
@@ -167,8 +159,17 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 $("#trainingExadel").val(gottenStudent.trainingsInExadel);
                 $("#currentProject").val(gottenStudent.currentProject);
                 $("#roleCurrentProject").val(gottenStudent.roleCurrentProject);
-                $("#currentTeamLead").text(gottenStudent.teamLeadId);
-                $("#currentProjectManager").text(gottenStudent.projectManagerId);
+
+                teamLeadName = getTeamLeadName(gottenStudent.teamLeadId);
+                projectManagerName = getProjectManagerName(gottenStudent.projectManagerId);
+
+                $("#currentTeamLead").text(teamLeadName);
+                $("#currentTeamLead").attr("data-id", gottenStudent.teamLeadId);
+
+
+                $("#currentProjectManager").text(projectManagerName);
+                $("#currentProjectManager").attr("data-id", gottenStudent.projectManagerId);
+
                 $("#techsCurrentProject").val(gottenStudent.techsCurrentProject);
 
                 //termMarks
@@ -185,18 +186,59 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                         }
                     });
                 }
-            },
-            fail : function () {
-                alert("error");
+            });
+        getStudent.fail(function () {
+            alert("error");
 
-            }
         });
+
     }
 
+    function getTeamLeadName(teamLeadId) {
+        var teamLeadName,
+            getTeamLead =  $.ajax({
+            type: "GET",
+            url: "/info/getTeamLead",
+            async : false,
+            dataType: 'json',
+            data : {
+                teamLeadId : teamLeadId
+            }
+        });
+        getTeamLead.done(function (data) {
+            teamLeadName = data.name;
+        });
+        getTeamLead.fail(function () {
+            alert("error");
+        });
+        return teamLeadName;
+    }
+
+    function getProjectManagerName(projectManagerId) {
+            var projectManagerName,
+                getProjectManager = $.ajax({
+                type: "GET",
+                url: "/info/getProjectManager",
+                async : false,
+                dataType: 'json',
+                data: {
+                    projectManagerId: projectManagerId
+                }
+            });
+            getProjectManager.done(function (data) {
+                projectManagerName =  data.name;
+            });
+            getProjectManager.fail(function () {
+                alert("error");
+            });
+            return projectManagerName;
+        }
     return {
         studentId: function () { return studentId; },
         init: init,
         checkState: checkState,
-        getFaculties : getFaculties
+        getFaculties : getFaculties,
+        getTeamLeadName : getTeamLeadName,
+        getProjectManagerName : getProjectManagerName
     };
 });
