@@ -242,7 +242,7 @@ public class ListPageController {
             User newUser = new User();
             newUser.setName(name);
             newUser.setLogin(login);
-            newUser.setRole("ROLE_CURATOR");
+            newUser.setRole(state);
             userService.save(newUser);
             Employee newEmployee = new Employee();
             newEmployee.setId(newUser.getId());
