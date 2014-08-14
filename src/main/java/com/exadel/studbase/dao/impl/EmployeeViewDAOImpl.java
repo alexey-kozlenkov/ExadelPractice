@@ -14,7 +14,6 @@ public class EmployeeViewDAOImpl extends GenericDAOImpl<EmployeeView, EmployeeVi
         Query query = getSession()
                 .createSQLQuery("SELECT a.* FROM find_employee_by_name('" + desiredName + "') as a")
                 .addEntity("a", EmployeeView.class);
-        Collection<EmployeeView> c = query.list();
         return query.list();
     }
 }

@@ -17,8 +17,12 @@ require.config({
         "Util":             "js/common/Util",
 
         "Accordion":        "js/info/Accordion",
-        "Rest":             "js/info/student/Rest",
-        "FillBasic":        "js/info/student/FillBasic",
+        "RestStudent":             "js/info/student/Rest",
+        "FillBasicStudent":        "js/info/student/FillBasic",
+
+        "RestEmployee":             "js/info/employee/Rest",
+        "FillBasicEmployee":        "js/info/employee/FillBasic",
+
         "Skills":           "js/info/student/Skills",
 
         "ListHeader":       "js/list/ListHeader",

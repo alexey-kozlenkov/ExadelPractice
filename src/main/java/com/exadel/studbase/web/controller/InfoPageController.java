@@ -34,6 +34,8 @@ public class InfoPageController {
     @Autowired
     IEmployeeService employeeService;
     @Autowired
+    IEmployeeViewService employeeViewService;
+    @Autowired
     IFeedbackService feedbackService;
     @Autowired
     IDocumentService documentService;
@@ -47,9 +49,11 @@ public class InfoPageController {
     IUniversityService universityService;
     @Autowired
     IFacultyService facultyService;
+    @Autowired
+    ISkillViewService skillViewService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String infoPage(@RequestParam("id") Long id) {
+    @RequestMapping(value = "/student", method = RequestMethod.GET)
+    public String studentInfoPage(@RequestParam("id") Long id) {
         MySecurityUser principal = (MySecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STUDENT")) && !principal.getId().equals(id)) {
             throw new AccessDeniedException("Pfff");
@@ -87,12 +91,20 @@ public class InfoPageController {
     @RequestMapping(value = "/getCommonInformation", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String manualData(@RequestParam("studentId") Long studentId) {
+    public String manualData(@RequestParam("id") Long id) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        User user = userService.getById(studentId);
+        User user = userService.getById(id);
         return gson.toJson(user, User.class);
     }
-
+//
+    @RequestMapping(value = "/getAllEmployees", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String allEmployees() {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<EmployeeView> employees = employeeViewService.getAll();
+        return gson.toJson(employees);
+    }
 
     @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -111,6 +123,7 @@ public class InfoPageController {
         Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
+
     @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE"})
     @RequestMapping(value = "/getAllFeedbacks", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -141,11 +154,29 @@ public class InfoPageController {
         return gson.toJson(feedbacker, User.class);
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
-    @RequestMapping(value = "/postManualInformation", method = RequestMethod.POST)
+    @RequestMapping(value = "/getTeamLead", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String editManualInformation(@RequestParam("studentId") Long id,
+    public String teamLead(@RequestParam("teamLeadId") Long teamLeadId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User teamLead = userService.getById(teamLeadId);
+        return gson.toJson(teamLead, User.class);
+    }
+
+    @RequestMapping(value = "/getProjectManager", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String projectManager(@RequestParam("projectManagerId") Long projectManagerId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        User projectManager = userService.getById(projectManagerId);
+        return gson.toJson(projectManager, User.class);
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @RequestMapping(value = "/postStudentManualInformation", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String editStudentManualInformation(@RequestParam("studentId") Long id,
                                         @RequestParam("studentName") String name,
                                         @RequestParam("studentBirthDate") String birthDate,
                                         @RequestParam("studentLogin") String login,
@@ -163,11 +194,16 @@ public class InfoPageController {
         editedUser.setSkype(skype);
         editedUser.setTelephone(phone);
         editedUser.getStudentInfo().setState(state);
+        if(state.equals("training")) {
+            editedUser.getStudentInfo().clearExadelInfo();
+        }
 
         userService.save(editedUser);
 
         return "{\"post\":\"ok\"}"; //string in double quotes
     }
+
+
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
     @ResponseStatus(HttpStatus.OK)
@@ -269,11 +305,39 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
+    @RequestMapping(value = "/getSkills", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getSkillTypes(@RequestParam("studentId") Long studentId) {
+        Gson gson = new Gson();
+        Collection<SkillType> skillTypes = skillTypeService.getAll();
+        Collection<SkillView> skills = skillViewService.getSkillsForUser(studentId);
+        SkillObject skillObject = new SkillObject(skillTypes, skills, studentService.getById(studentId).getEnglishLevel());
+        return gson.toJson(skillObject, SkillObject.class);
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
+    @RequestMapping(value = "/postStudentSkills", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String postStudentSkills(@RequestParam("studentId") Long studentId,
+                                    @RequestParam("skills") String skills,
+                                    @RequestParam("skillsLevels") String skillsLevels,
+                                    @RequestParam("englishLevel") Integer englishLevel) {
+        Gson gson = new Gson();
+        Long[] skillsIds = gson.fromJson(skills, Long[].class);
+        Long[] levels = gson.fromJson(skillsLevels, Long[].class);
+        skillSetService.addNewSkillToUser(studentId, skillsIds, levels);
+        Student student = studentService.getById(studentId);
+        student.setEnglishLevel(englishLevel);
+        studentService.save(student);
+        return ("{\"post\":\"ok\"}");
+    }
 
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
         Long id = userService.getByLogin(login).getId();
-        return "redirect:/info?id=" + id;
+        return "redirect:/info/student?id=" + id;
     }
 
     @RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
@@ -297,5 +361,17 @@ public class InfoPageController {
             return value.equals("") ? null : (T) Date.valueOf(value);
         }
         return null;
+    }
+
+    private class SkillObject {
+        public Collection<SkillType> skillTypes;
+        public Collection<SkillView> skills;
+        public Integer englishLevel;
+
+        private SkillObject(Collection<SkillType> skillTypes, Collection<SkillView> skills, Integer englishLevel) {
+            this.skillTypes = skillTypes;
+            this.skills = skills;
+            this.englishLevel = englishLevel;
+        }
     }
 }

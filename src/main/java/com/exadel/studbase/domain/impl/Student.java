@@ -79,11 +79,6 @@ public class Student implements IEntity<Long> {
     private String trainingsInExadel;
 
     public Student() {
-        course = 0;
-        group = 0;
-        workingHours = 0;
-        graduationDate = 0;
-        englishLevel = 0;
     }
 
     @Override
@@ -184,46 +179,12 @@ public class Student implements IEntity<Long> {
         this.techsCurrentProject = techsCurrentProject;
     }
 
-    public String getEnglishLevel() {
-        if (englishLevel == null) {
-            return "undefined";
-        }
-        switch (englishLevel) {
-            case 0:
-                return "Beginner";
-            case 1:
-                return "Elementary";
-            case 2:
-                return "Pre-Intermediate";
-            case 3:
-                return "Intermediate";
-            case 4:
-                return "Upper-Intermediate";
-            case 5:
-                return "Advanced";
-            default:
-                return "undefined";
-        }
+    public Integer getEnglishLevel() {
+        return  englishLevel;
     }
 
-    public void setEnglishLevel(String englishLevel) {
-        englishLevel = englishLevel.toLowerCase();
-
-        if (englishLevel.equals("beginner")) {
-            this.englishLevel = 0;
-        } else if (englishLevel.equals("elementary")) {
-            this.englishLevel = 1;
-        } else if (englishLevel.equals("pre-intermediate")) {
-            this.englishLevel = 2;
-        } else if (englishLevel.equals("intermediate")) {
-            this.englishLevel = 3;
-        } else if (englishLevel.equals("upper-intermediate")) {
-            this.englishLevel = 4;
-        } else if (englishLevel.equals("advanced")) {
-            this.englishLevel = 5;
-        } else {
-            this.englishLevel = -1;
-        }
+    public void setEnglishLevel(Integer englishLevel) {
+        this.englishLevel = englishLevel;
     }
 
     public String getTermMarks() {
@@ -296,6 +257,21 @@ public class Student implements IEntity<Long> {
 
     public void setTrainingsInExadel(String trainingsInExadel) {
         this.trainingsInExadel = trainingsInExadel;
+    }
+
+    public void clearExadelInfo() {
+        this.hireDate = null;
+        this.workingHours = null;
+        this.billable = null;
+        this.roleCurrentProject = "";
+        this.techsCurrentProject = "";
+        this.currentProject = "";
+        this.teamLeadId = null;
+        this.projectManagerId = null;
+        this.trainingBeforeStartWorking = null;
+        this.courseWhenStartWorking = null;
+        this.wishesHoursNumber = null;
+        this.trainingsInExadel = "";
     }
 
     @Override

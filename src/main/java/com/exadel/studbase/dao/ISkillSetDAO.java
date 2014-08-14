@@ -10,4 +10,6 @@ public interface ISkillSetDAO extends GenericDAO<SkillSet, SkillSet, Long> {
     Collection<User> getAllWithSkill(Long skillTypeId);
 
     Collection<SkillType> getAllForUser(Long userId);
+
+    void addNewSkillToUser(Long userId, Long[] skillTypeIds, Long[] levels);
 }
