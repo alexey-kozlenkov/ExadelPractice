@@ -233,7 +233,6 @@ public class TestController {
     public void feedback () {
         Student student = studentService.getById(17L);
         Feedback feedback = new Feedback();
-        feedback.setStudent(student);
         feedback.setAttitudeToWork("test");
         feedback.setCollectiveRelations("test test");
 

@@ -1,6 +1,5 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.dao.ICuratoringDAO;
 import com.exadel.studbase.domain.impl.Document;
 import com.exadel.studbase.domain.impl.Feedback;
 import com.exadel.studbase.domain.impl.Student;
@@ -46,7 +45,7 @@ public class InfoPageController {
     @Autowired
     ISkillSetService skillSetService;
     @Autowired
-    ICuratoringDAO curatoringService;
+    ICuratoringService curatoringService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String infoPage(@RequestParam("id") Long id) {
@@ -75,6 +74,7 @@ public class InfoPageController {
         return gson.toJson(user, User.class);
     }
 
+
     @RequestMapping(value = "/getActualDocuments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -92,13 +92,23 @@ public class InfoPageController {
         Collection<Document> userDocuments = documentService.getNotActualForUser(studentId);
         return gson.toJson(userDocuments);
     }
-
-    @RequestMapping(value = "/getFeedbacks", method = RequestMethod.GET)
+    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE"})
+    @RequestMapping(value = "/getAllFeedbacks", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String feedbacksData(@RequestParam("studentId") Long studentId) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Collection<Feedback> userFeedbacks = feedbackService.getAllAboutStudent(studentId);
+        return gson.toJson(userFeedbacks);
+    }
+
+    @Secured({"ROLE_FEEDBACKER", "ROLE_CURATOR"})
+    @RequestMapping(value = "/getMyFeedbacks", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String myFeedbacksData(@RequestParam("employeeId") Long employeeId) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Collection<Feedback> userFeedbacks = feedbackService.getAllByEmployee(employeeId);
         return gson.toJson(userFeedbacks);
     }
 
@@ -139,7 +149,7 @@ public class InfoPageController {
         return "{\"post\":\"ok\"}"; //string in double quotes
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/postEducation", method = RequestMethod.POST)
@@ -165,7 +175,7 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT", "ROLE_OFFICE"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/postExadel", method = RequestMethod.POST)
@@ -207,7 +217,7 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/postDocuments", method = RequestMethod.POST)
@@ -223,7 +233,7 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_OFFICE", "ROLE_STUDENT"})
+    @Secured({"ROLE_SUPERADMIN", "ROLE_CURATOR", "ROLE_FEEDBACKER"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value = "/postFeedbacks", method = RequestMethod.POST)
@@ -233,8 +243,7 @@ public class InfoPageController {
         Feedback[] newFeeds = gson.fromJson(newFeedbacks, Feedback[].class);
 
         for(Feedback feedback : newFeeds){
-            System.out.println(feedback.toString());
-           // feedbackService.save(feedback);
+            feedbackService.save(feedback);
         }
 
         return ("{\"post\":\"ok\"}");
