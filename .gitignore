@@ -2,4 +2,4 @@
 .idea
 target/
 src/main/resources/config.properties
-/src/main/java/com/exadel/studbase/web/controller/TestController.java
+src/main/java/com/exadel/studbase/web/controller/TestController.java
