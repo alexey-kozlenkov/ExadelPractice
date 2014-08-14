@@ -329,6 +329,13 @@
     font-size: 15px;
 }
 
+.dialog-left-label {
+    width: 20%;
+}
+
+.addUserForm {
+    text-align: left;
+}
 
 .message-area {
     resize: none;

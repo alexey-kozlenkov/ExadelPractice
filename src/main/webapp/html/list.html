@@ -114,29 +114,31 @@
         </div>
         <div class='dialog-content' data-dialog-name='add-student'>
             <div class="dialog-content-central form-horizontal">
-                <div class="form-group">
-                    <label for="nameField" class="col-sm-2 control-label">Name: </label>
-                    <input type="text" id="nameField" placeholder="name">
-                </div>
-                <div class="form-group">
-                    <label for="nameField" class="col-sm-2 control-label">Login: </label>
-                    <input type="text" id="loginField" placeholder="login">
-                </div>
-                <div id="stateBlock" class="form-group">
-                    <label for="stateField" class="col-sm-2 control-label">State: </label>
-                    <select id="stateField" title="role">
-                        <option>training</option>
-                        <option>working</option>
-                    </select>
-                </div>
-                <div id="roleBlock"class="form-group">
-                    <label for="roleField" class="col-sm-2 control-label">Role: </label>
-                    <select id="roleField" title="role">
-                        <option value="ROLE_FEEDBACKER">Feedbacker</option>
-                        <option value="ROLE_CURATOR">Curator</option>
-                        <option value="ROLE_OFFICE">Office</option>
-                    </select>
-                </div>
+                <ul clsss="addUserForm">
+                    <li>
+                        <label for="nameField" class="control-label dialog-left-label">Name: </label>
+                        <input type="text" id="nameField" placeholder="name" class="dialog-right-input">
+                    </li>
+                    <li>
+                        <label for="nameField" class="control-label dialog-left-label">Login: </label>
+                        <input type="text" id="loginField" placeholder="login" class="dialog-right-input">
+                    </li>
+                    <li id = "stateBlock">
+                        <label for="stateField" class="control-label dialog-left-label">State: </label>
+                        <select id="stateField" title="role" class="dialog-right-input">
+                            <option>training</option>
+                            <option>working</option>
+                        </select>
+                    </li>
+                    <li id = "roleBlock">
+                        <label for="roleField" class="control-label dialog-left-label">Role: </label>
+                        <select id="roleField" title="role" class="dialog-right-input">
+                            <option value="ROLE_FEEDBACKER">Feedbacker</option>
+                            <option value="ROLE_CURATOR">Curator</option>
+                            <option value="ROLE_OFFICE">Office</option>
+                        </select>
+                    </li>
+                </ul>
             </div>
             <div class="dialog-footer">
                 <button id='createUser' class="btn prj-btn">
@@ -146,12 +148,12 @@
         </div>
         <div class='dialog-content' data-dialog-name='appointer'>
             <div class="dialog-content-central form-horizontal">
-                <div class = "dialog-content-top">
-                    <select id = "appointCuratorSelector" class="form-control">
+                <div class="dialog-content-top">
+                    <select id="appointCuratorSelector" class="form-control">
                     </select>
                     <span id="addCuratorToApplied" class="glyphicon glyphicon-ok btn-ok"></span>
                 </div>
-                <div class = "applied-list-container scrolled-area">
+                <div class="applied-list-container scrolled-area">
                     <ul id="appointCuratorsList" class="list-striped">
                     </ul>
                 </div>

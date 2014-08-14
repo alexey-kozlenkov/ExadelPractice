@@ -157,3 +157,18 @@
 .new-feedback {
     color: green;
 }
+
+.english-skill-itm {
+    padding-bottom: 10px;
+}
+
+.add-skill {
+    width: 100%;
+    background: transparent;
+    border: none;
+    /*font-weight: bold;*/
+    opacity: .7;
+}
+.add-skill:hover {
+    opacity: 1;
+}
