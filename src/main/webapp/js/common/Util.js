@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-animate-colors'], function ($) {
+define(["jquery", "jquery-animate-colors"], function ($) {
     "use strict";
     /*
      roles : 0 - student  1 - student_employee
@@ -11,9 +11,10 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
             url: "/login/info",
             dataType: 'json'
         });
-        loginGet.done(function (loginInfo) {
-            sessionStorage.setItem("username", loginInfo.username);
-            sessionStorage.setItem("role", loginInfo.role);
+        loginGet.done(function (data) {
+            sessionStorage.setItem("username", data.username);
+            sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("id", data.id);
         });
         loginGet.fail(function (data) {
             alert("Server has failed");
@@ -23,7 +24,44 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
         sessionStorage.clear();
     }
 
-    function btnStateAnimate(btn, state, stateContent) {
+    function initAccessRoleForStudentInfo() {
+        login();
+        var role = sessionStorage.getItem("role");
+        switch (role) {
+            case '0' :
+            case '1' :
+                $(".select-state").prop("disabled", true);
+                $(".current-project-content input, .current-project-content textarea").prop("disabled", true);
+                $("#feedbacksHeader").prop("hidden", true);
+                break;
+            case '2' :
+                $(".info-edit input, .info-edit select, .info-edit textarea").prop("disabled", true);
+                $(".info-edit button").prop("hidden", true);
+                $(".for-feedbackers").removeAttr('hidden');
+                break;
+            case '3' :
+                $(".info-edit input, .info-edit select, .info-edit textarea").prop("disabled", true);
+                $(".info-edit button").prop("hidden", true);
+                break;
+            case '4' :
+                $(".info-edit input, .info-edit textarea").prop("disabled", true);
+                $(".info-edit button").prop("hidden", true);
+
+                $(".select-state").prop("disabled", false);
+                $("#saveManualInformation").prop("hidden", false);
+
+                $(".exadel-content input, .exadel-content textarea").prop("disabled", false);
+                $(".exadel-content button").prop("hidden", false);
+
+                $(".feedback-edit button").prop("hidden", true);
+                break;
+            case '5' :
+                $(".feedback-edit button").prop("hidden", true);
+                break;
+        }
+    }
+
+    function btnStateAnimate(btn, state, stateText) {
         var defContent = btn.html(),
             backgroundColor = btn.css('backgroundColor'),
             borderColor = btn.css('borderColor'),
@@ -91,7 +129,7 @@ define(['jquery', 'jquery-animate-colors'], function ($) {
         return YYYY + "-" + MM + "-" + DD;
     }
     return {
-        login : login,
+        initAccessRoleForStudentInfo : initAccessRoleForStudentInfo,
         logout: logout,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
         formatDate : formatDate,
