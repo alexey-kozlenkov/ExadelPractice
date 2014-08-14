@@ -58,9 +58,9 @@
 .tab{
     float: right;
     position: absolute;
-    right: 5px;
+    right: 20px;
     top: 25px;
-    opacity: 0.3;
+    opacity: 0.7;
     
     -webkit-transition: opacity 0.3s ease-in-out;
     -moz-transition: opacity 0.3s ease-in-out;
@@ -70,9 +70,21 @@
     opacity: 1;
 }
 
-.tab-btn:active,
-.tab-btn:focus{
-    color: #ffff00;
+.tab-btn:hover{
+    opacity: 1;
+    border-color: #85e960;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(140, 233, 112, 0.60);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(140, 233, 112, 0.60);
+
+}
+
+.tab-btn:disabled{
+    color: #fff;
+    opacity: 0.95;
+    outline: 0;
+    border-color: #66afe9;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
 }
 
 #toggleNav{
@@ -84,7 +96,8 @@
 /*-------------------------------------*/
 
 .info-label {
-    margin: 3px;
+    background: #fff;
+    padding: 3px;
     text-align: center;
     font-weight: bold;
 }
@@ -120,6 +133,11 @@
     text-align: center;
 
     border-bottom: 1px solid transparent;
+
+    font-size: larger;
+
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .student-table > tbody > tr > td {
@@ -137,7 +155,7 @@
 }
 
 .student-column-1 {
-    width: 240px;
+    width: 210px;
 }
 
 .student-column-2 {
@@ -203,7 +221,7 @@
 
 /***************************** FILTER *******************************/
 #filter{
-    margin: 2px;
+    margin: 4px;
 }
 
 .filter-button {
@@ -286,8 +304,72 @@
 
 /****************************************************************************/
 
+#appointCuratorSelector {
+    display: inline-block;
+    width: 220px;
+    height: 26px;
+    padding: 2px;
+}
+.dialog-content-top{
+    padding: 1px;
+}
+.applied-list-container{
+    margin: 0 auto;
+    width: 250px;
+    height: 120px;
+
+    text-align: left;
+
+    border: 1px solid gray;
+    border-radius: 3pt;
+    margin-top: 3px;
+}
+
+#appointCuratorsList > li{
+    padding: 3px;
+    padding-left: 6px;
+}
+#appointCuratorsList > li:nth-child(even){
+    background-color: #f1f1f1;;
+}
+
+.remove-appointed {
+    font-size: 16px;
+    opacity: 0.1;
+    color:red;
+    float: right;
+}
+.remove-appointed:hover{
+    opacity: 1;
+}
+.remove-appointed:active{
+    font-size: 14px;
+}
+.btn-ok{
+    float: right;
+    font-size: 12px;
+    padding: 5px;
+    color: green;
+    width: 24px;
+    height: 24px;
+}
+.btn-ok:hover{
+    color: lightgreen;
+    font-size: 14px;
+}
+.btn-ok:active{
+    font-size: 15px;
+}
+
+
 .message-area {
     resize: none;
     height: 140px;
     padding: 5px;
+}
+
+.inaccessible-mails-list{
+    text-align: left;
+    height: 150px;
+    overflow-y: auto;
 }

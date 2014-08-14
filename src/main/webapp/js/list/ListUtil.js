@@ -5,9 +5,18 @@
 define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
     function ($, Handlebars, ListController, Dialog, Util) {
         "use strict";
+        var isStudentTab;
 
         function bindMenuBtn() {
             $("#addMenuButton").click(function () {
+                isStudentTab = (sessionStorage.getItem("isStudentTab") == "true");
+                var stateBlock = $("#stateField").parent().eq(0);
+                if (isStudentTab) {
+                    stateBlock.show();
+                }
+                else {
+                    stateBlock.hide();
+                }
                 Dialog.showDialog("add-student");
             });
             $("#exportMenuButton").click(function () {
@@ -41,7 +50,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
                 Dialog.closeDialog();
             });
             $("#createUser").click(function () {
-                createUser();
+                createUser(isStudentTab);
                 Dialog.closeDialog();
             });
         }
@@ -82,7 +91,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             window.open("/list/export?students=" + studIds, "exportFile");
         }
 
-        function createUser() {
+        function createUser(isStudent) {
             var login = $("#loginField").val(),
                 name = $("#nameField").val(),
                 state = $("#stateField").val(),
@@ -94,7 +103,8 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
                 data: {
                     'login': login,
                     'name': name,
-                    'state': state
+                    'state': state,
+                    'isStudent' : isStudent
                 }
             });
             createStudPromise.done(
@@ -105,7 +115,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             );
             createStudPromise.fail(
                 function () {
-                    alert("Error creating");
+                    window.confirm("Can't create user.\n Maybe it already exist.");
                 }
             );
         }

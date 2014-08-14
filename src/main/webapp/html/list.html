@@ -11,7 +11,7 @@
 
 <header id="header" class="header-fixed-top">
     <div class="dividing-line">
-        <button id="toggleNav" ><span class="glyphicon glyphicon-ok-sign"></span></button>
+        <button id="toggleNav"><span class="glyphicon glyphicon-ok-sign"></span></button>
         <a href="/logout" class="logout-link prj-link">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     </div>
     <div class="form-inline header-line">
@@ -26,6 +26,10 @@
                     title="Send message to selected users">
                 <span class="glyphicon glyphicon-envelope"></span>
             </button>
+            <button id="appointCurators" class="btn prj-btn menu-button"
+                    title="Appoint curators to selected students">
+                <span class="glyphicon glyphicon-hand-up"></span>
+            </button>
         </span>
 
         <span class="btn-group input-group search-block">
@@ -35,9 +39,11 @@
         </span>
 
         <span class="btn-group tab">
-            <button id="studTab" class="btn prj-btn menu-button tab-btn"><img src="../images/ico-students.png" class="menu-icon">
+            <button id="studTab" class="btn prj-btn menu-button tab-btn" title="Students Tab"><img
+                    src="../images/ico-students.png" class="menu-icon">
             </button>
-            <button id="emplTab" class="btn prj-btn menu-button tab-btn"><span class="glyphicon glyphicon-user"></span></button>
+            <button id="emplTab" class="btn prj-btn menu-button tab-btn" title="Employees Tab"><span
+                    class="glyphicon glyphicon-user"></span></button>
         </span>
     </div>
 
@@ -86,14 +92,14 @@
             </div>
         </div>
         <div class='dialog-content' data-dialog-name='inaccessible-mail'>
-            <div class="dialog-content-central">
-                <label for="inaccessibleMailList"> Can't send to : </label>
+            <div class="dialog-content-central inaccessible-mails-list">
+                <label for="inaccessibleMailList" class="error-label"> Can't send to : </label>
                 <ul id="inaccessibleMailList">
                 </ul>
                 <script id="mailListTemplate" type="text/x-handlebars-template">
                     {{#each mails}}
                     <li>
-                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}},
+                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}}
                     </li>
                     {{/each}}
                 </script>
@@ -128,6 +134,24 @@
                 </button>
             </div>
         </div>
+        <div class='dialog-content' data-dialog-name='appointer'>
+            <div class="dialog-content-central form-horizontal">
+                <div class = "dialog-content-top">
+                    <select id = "appointCuratorSelector" class="form-control">
+                    </select>
+                    <span id="addCuratorToApplied" class="glyphicon glyphicon-ok btn-ok"></span>
+                </div>
+                <div class = "applied-list-container scrolled-area">
+                    <ul id="appointCuratorsList" class="list-striped">
+                    </ul>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button id='appointButton' class="btn prj-btn">
+                    <span class="glyphicon glyphicon-ok"></span>Ok
+                </button>
+            </div>
+        </div>
     </section>
 </div>
 
@@ -135,8 +159,8 @@
 <script>
     require(["../js/main.js"], function () {
         require(["jquery", "ListHeader", "ListController", "Filter",
-                    "ListLoader", "ListUtil", "Util"],
-                function ($, ListHeader, ListController, Filter, ListLoader, ListUtil, util) {
+                    "ListLoader", "ListUtil", "Util", "AppointDlg"],
+                function ($, ListHeader, ListController, Filter, ListLoader, ListUtil, util, appointerDlg) {
                     "use strict";
                     $(window).ready(function () {
                         ListHeader.init();
@@ -146,9 +170,11 @@
 
                         ListController.init();
                         Filter.init();
-                        Filter.loadDescription("/list/filterDescription");
+                        Filter.load("/list/filterDescription");
                         ListLoader.init();
                         ListUtil.init();
+
+                        appointerDlg.init();
                     });
                 }
         );

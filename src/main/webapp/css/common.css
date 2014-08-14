@@ -251,7 +251,6 @@ label,
 .dialog-close:hover {
     color: #4A5D80;
 }
-
 .dialog-close:active {
     padding-top: 2px;
     padding-right: 0;
@@ -279,3 +278,13 @@ label,
     padding-right: 4px;
     padding-left: 4px;
 }
+
+.scrolled-area {
+    overflow: auto;
+}
+
+.error-label{
+    color: red;
+    font-weight: bold;
+}
+

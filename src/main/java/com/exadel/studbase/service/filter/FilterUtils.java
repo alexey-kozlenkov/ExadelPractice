@@ -1,14 +1,13 @@
 package com.exadel.studbase.service.filter;
 
+import com.exadel.studbase.domain.impl.StudentView;
 import com.exadel.studbase.service.filter.impl.EqualsFilter;
 import com.exadel.studbase.service.filter.impl.GreaterEqualsFilter;
 import com.exadel.studbase.service.filter.impl.IsNotNullFilter;
 import com.exadel.studbase.service.filter.impl.IsNullFilter;
-import com.exadel.studbase.domain.impl.StudentView;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class FilterUtils {

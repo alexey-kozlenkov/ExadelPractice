@@ -17,8 +17,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
     function init() {
         initHandlebar();
         var $table = $("#studTable");
-//        initHeader(true);
-        $("#listHeader").on("click", "#checkAll", function () {//input[type=checkbox]
+        $("#listHeader").on("click", "#checkAll", function () {
             setCheckedAll($(this).prop("checked"));
         });
         $table.click(function () {

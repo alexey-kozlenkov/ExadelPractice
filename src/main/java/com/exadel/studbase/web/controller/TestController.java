@@ -42,6 +42,8 @@ public class TestController {
     ISkillSetService skillSetService;
     @Autowired
     IStudentViewService studentViewService;
+    @Autowired
+    ICuratoringService curatoringService;
 
     public static List<User> getTestList() {
         if (testList == null) {
@@ -231,17 +233,8 @@ public class TestController {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public void feedback () {
-        Student student = studentService.getById(17L);
-        Feedback feedback = new Feedback();
-        feedback.setAttitudeToWork("test");
-        feedback.setCollectiveRelations("test test");
-
-        feedbackService.save(feedback);
-
-        Feedback getFed = feedbackService.getById(feedback.getId());
-
-        Collection<Feedback> feedbacks = feedbackService.getAllAboutStudent(17L);
-        System.out.println(getFed);
+        Long[] studentsIds = new Long[]{28L, 54L, 29L, 60L};
+        Long[] curatorsIds = new Long[]{24L, 27L};
+        curatoringService.appointCuratorsToStudents(studentsIds, curatorsIds);
     }
-
 }

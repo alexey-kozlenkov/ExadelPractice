@@ -17,4 +17,6 @@ public interface ICuratoringService {
     Collection<StudentView> getAllStudentsForEmployee(Long employeeId);
 
     Collection<Employee> getAllMastersForStudent(Long studentId);
+
+    void appointCuratorsToStudents(Long[] studentsIds, Long[] curatorsIds);
 }

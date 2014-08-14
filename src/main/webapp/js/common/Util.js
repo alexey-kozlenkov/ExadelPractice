@@ -62,7 +62,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
     }
 
     function btnStateAnimate(btn, state, stateText) {
-        var text = btn.text(),
+        var defContent = btn.html(),
             backgroundColor = btn.css('backgroundColor'),
             borderColor = btn.css('borderColor'),
             stateColors = {},
@@ -76,8 +76,8 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor
             }, 500);
-            if (stateText) {
-                btn.text(text);
+            if (stateContent) {
+                btn.html(defContent);
             }
         }, 1000);
 
@@ -93,8 +93,8 @@ define(["jquery", "jquery-animate-colors"], function ($) {
             default:
                 return;
         }
-        if (stateText) {
-            btn.text(stateText);
+        if (stateContent) {
+            btn.html(stateContent);
         }
         btn.animate(stateColors, options);
     }

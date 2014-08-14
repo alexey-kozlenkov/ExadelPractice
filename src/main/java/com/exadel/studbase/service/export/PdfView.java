@@ -10,12 +10,13 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Service
 public class PdfView extends AbstractPdfView {
-    private static int cellLeftPadding = 20;
-
+    private static int cellRightPadding = 20;
 
     private PdfPCell createCell(Object o, Font f) {
         PdfPCell cell = new PdfPCell();
@@ -23,7 +24,7 @@ public class PdfView extends AbstractPdfView {
             cell.addElement(new Chunk(o.toString(), f));
         }
         cell.setBorder(PdfPCell.NO_BORDER);
-        cell.setPaddingRight(cellLeftPadding);
+        cell.setPaddingRight(cellRightPadding);
         return cell;
     }
 
@@ -32,6 +33,11 @@ public class PdfView extends AbstractPdfView {
                                     PdfWriter writer, HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
         User user = (User) model.get("user");
+
+        String fileNameBeginning = user.getName() + " report - ";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH.mm");
+        String fileName = fileNameBeginning + simpleDateFormat.format(new Date()) + ".pdf";
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
         Paragraph header = new Paragraph(new Chunk(
                 user.getName(),
@@ -82,6 +88,7 @@ public class PdfView extends AbstractPdfView {
             table.addCell(createCell(user.getStudentInfo().getTermMarks().replaceAll(";", ";  "), contentFont));
         }
         document.add(table);
+
         document.add(new Paragraph(new Chunk("Exadel", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
 
         table = new PdfPTable(2);
@@ -98,7 +105,7 @@ public class PdfView extends AbstractPdfView {
             cell.addElement(new Chunk("false", contentFont));
         }
         cell.setBorder(PdfPCell.NO_BORDER);
-        cell.setPaddingRight(cellLeftPadding);
+        cell.setPaddingRight(cellRightPadding);
         table.addCell(cell);
         table.addCell(createCell("Working hours you want", headerFont));
         table.addCell(createCell(user.getStudentInfo().getWishesHoursNumber(), contentFont));
