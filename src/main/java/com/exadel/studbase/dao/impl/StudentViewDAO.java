@@ -25,8 +25,8 @@ public class StudentViewDAO extends GenericDAOImpl<StudentView, StudentView, Lon
             idsString += s + ",";
         }
         idsString += ids.get(ids.size() - 1);
-        Query query = getSession().createSQLQuery(
-                "SELECT * FROM \"STUDENT_VIEW\" AS STV INNER JOIN " +
+        Query query = getSession().
+                createSQLQuery("SELECT * FROM \"STUDENT_VIEW\" AS STV INNER JOIN " +
                         "(SELECT user_id FROM \"SKILL_SET\" WHERE skill_type_id IN (" + idsString + ") GROUP BY user_id " +
                         "HAVING COUNT(*)=" + ids.size() + ") AS skillFilter ON STV.id = skillFilter.user_id")
                 .addEntity("STV", StudentView.class);
