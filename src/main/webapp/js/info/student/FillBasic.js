@@ -76,9 +76,9 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 $("#phone").val(gottenUser.telephone);
                 $("#state").find("option:contains(" + "\'" + gottenStudent.state + "\')").attr("selected", "selected");
                 checkState();
-
-                $("#institution").val(gottenStudent.university);
-                $("#faculty").val(gottenStudent.faculty);
+//TODO university and fACULTY
+               // $("#institution").val(gottenStudent.university);
+              //  $("#faculty").val(gottenStudent.faculty);
                 $("#speciality").val(gottenStudent.speciality);
                 $("#course").val(gottenStudent.course);
                 $("#group").val(gottenStudent.group);

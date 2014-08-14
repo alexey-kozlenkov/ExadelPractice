@@ -43,8 +43,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
         $("#saveEducationInformation").click(function () {
             //collect data entered by users
             var $termMark = $(".term-mark"),
-                editedUniversity = $("#institution").val(),
-                editedFaculty = $("#faculty").val(),
+                editedUniversity = $("#institution :selected").val(),
+                editedFaculty = $("#faculty :selected").val(),
                 editedSpeciality = $("#speciality").val(),
                 editedCourse = $("#course").val(),
                 editedGroup = $("#group").val(),
