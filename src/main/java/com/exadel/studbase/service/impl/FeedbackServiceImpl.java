@@ -51,4 +51,9 @@ public class FeedbackServiceImpl implements IFeedbackService {
     public void addFeedbacksWhenAppointingCurators(Long[] studentsIds, Long[] curatorsIds) {
         feedbackDAO.addFeedbacksWhenAppointingCurators(studentsIds, curatorsIds);
     }
+
+    @Override
+    public Collection<Feedback> getAllAboutStudentByEmployee(Long studentId, Long employeeId) {
+        return feedbackDAO.getAllAboutStudentByEmployee(studentId, employeeId);
+    }
 }

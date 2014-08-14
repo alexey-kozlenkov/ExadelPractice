@@ -1,9 +1,6 @@
 package com.exadel.studbase.web.controller;
 
-import com.exadel.studbase.domain.impl.Document;
-import com.exadel.studbase.domain.impl.Feedback;
-import com.exadel.studbase.domain.impl.Student;
-import com.exadel.studbase.domain.impl.User;
+import com.exadel.studbase.domain.impl.*;
 import com.exadel.studbase.domain.init.Options;
 import com.exadel.studbase.security.MySecurityUser;
 import com.exadel.studbase.service.*;
