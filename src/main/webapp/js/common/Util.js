@@ -9,7 +9,8 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         var loginGet = $.ajax({
             type: "GET",
             url: "/login/info",
-            dataType: 'json'
+            dataType: 'json',
+            async: false
         });
         loginGet.done(function (data) {
             sessionStorage.setItem("username", data.username);
@@ -61,6 +62,23 @@ define(["jquery", "jquery-animate-colors"], function ($) {
         }
     }
 
+    function initAccessRoleForList() {
+        login();
+        var role = sessionStorage.getItem("role");
+        switch (role) {
+            case '0' :
+            case '1' :
+            case '2' :
+            case '3' :
+            case '4' :
+                $(".super-admin-role").prop("disabled", true);
+                break;
+            case '5' :
+                $(".super-admin-role").prop("disabled", false);
+                break;
+        }
+    }
+
     function btnStateAnimate(btn, state, stateContent) {
         var defContent = btn.html(),
             backgroundColor = btn.css('backgroundColor'),
@@ -100,7 +118,6 @@ define(["jquery", "jquery-animate-colors"], function ($) {
     }
 
     function setMenuLocationRelativeTo(menu, owner) {
-        //TODO optimize!
         var winOffsetW = $(window).width(),
             position = owner.offset(),
             left = position.left,
@@ -130,6 +147,7 @@ define(["jquery", "jquery-animate-colors"], function ($) {
     }
     return {
         initAccessRoleForStudentInfo : initAccessRoleForStudentInfo,
+        initAccessRoleForList: initAccessRoleForList,
         logout: logout,
         menuLocationRelativeTo : setMenuLocationRelativeTo,
         formatDate : formatDate,
