@@ -7,12 +7,15 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
     "use strict";
     var studentId,
         templateTermMark = Handlebars.compile(templateTermMarkContent);
+
     function init() {
         util.initAccessRoleForStudentInfo();
         parseRequestForId(window.location.search);
         fillOptions();
+        fillEducationOptions();
         fillCommonInfo();
     }
+
     function parseRequestForId(string) {
         var gottenId,
             regExpForId = /id=[0-9]+/,
@@ -27,14 +30,35 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             type: "GET",
             url: "/info/getOptions",
             success: function (data) {
-                $("#state").empty();
                 //filling
-                var options = JSON.parse(data),
+                var $stateSelect = $("#state"),
+                    options = JSON.parse(data),
                     stateOptions = options.states;
+
+                $stateSelect.empty();
+
                 stateOptions.forEach(function (element) {
-                    $("#state").append($("<option value=" + element + ">" + element + "</option>"));
+                    $stateSelect.append($("<option value=" + element + ">" + element + "</option>"));
                 });
             }
+        });
+    }
+    function fillEducationOptions() {
+        var  $institutionSelect = $("#institution"),
+            universities = getUniversities(),
+            universityId;
+
+        $institutionSelect.empty();
+
+        require(["text!templates/university-or-faculty-option-template.html"], function (template) {
+            $institutionSelect.append(Handlebars.compile(template) ({
+                    values : universities
+                })
+            );
+            //selected first
+            $("#institution :first").attr("selected", "selected");
+            universityId = $("#institution :selected").val();
+            getFaculties(universityId);
         });
     }
     function checkState() {
@@ -51,6 +75,46 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
         }
     }
 
+    function getUniversities() {
+        var universities,
+            getAllUniversities = $.ajax({
+            type: "GET",
+            url: "/info/getUniversities",
+            dataType: 'json',
+            async : false
+        });
+        getAllUniversities.done(function (data) {
+            universities = data;
+        });
+        getAllUniversities.fail(function () {
+            alert("failed loading");
+        });
+        return universities;
+    }
+    function getFaculties(universityId) {
+        var $facultySelect = $("#faculty"),
+         getFacultiesForUniversity = $.ajax({
+                type: "GET",
+                url: "/info/getFacultiesForUniversity",
+                dataType: 'json',
+                data : {
+                    universityId : universityId
+                }
+            });
+        getFacultiesForUniversity.done(function (data) {
+            $facultySelect.empty();
+            require(["text!templates/university-or-faculty-option-template.html"], function (template) {
+                $facultySelect.append(Handlebars.compile(template) ({
+                        values : data
+                    })
+                );
+            });
+        });
+        getFacultiesForUniversity.fail(function () {
+            alert("failed loading");
+        });
+    }
+
     function fillCommonInfo() {
         $.ajax({
             type: "GET",
@@ -63,7 +127,9 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             success: function (data) {
                 var gottenUser = JSON.parse(data),
                     gottenStudent = gottenUser.studentInfo,
-                    marks;
+                    marks,
+                    universityId,
+                    facultyId;
                 $("#sessionUsername").text(sessionStorage.getItem("username"));
 
                 $("#headerName").text(gottenUser.name);
@@ -76,9 +142,15 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 $("#phone").val(gottenUser.telephone);
                 $("#state").find("option:contains(" + "\'" + gottenStudent.state + "\')").attr("selected", "selected");
                 checkState();
-//TODO university and fACULTY
-               // $("#institution").val(gottenStudent.university);
-              //  $("#faculty").val(gottenStudent.faculty);
+
+                if (gottenStudent.university) {
+                    universityId = "\'" + gottenStudent.university.id + "\'";
+                    $("#institution [value =" + universityId + "]").attr("selected", "selected");
+                    if (gottenStudent.faculty) {
+                        facultyId = "\'" + gottenStudent.faculty.id + "\'";
+                        $("#faculty [value =" + facultyId + "]").attr("selected", "selected");
+                    }
+                }
                 $("#speciality").val(gottenStudent.speciality);
                 $("#course").val(gottenStudent.course);
                 $("#group").val(gottenStudent.group);
@@ -120,13 +192,11 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             }
         });
     }
-    function rights() {
-
-    }
 
     return {
         studentId: function () { return studentId; },
         init: init,
-        checkState: checkState
+        checkState: checkState,
+        getFaculties : getFaculties
     };
 });

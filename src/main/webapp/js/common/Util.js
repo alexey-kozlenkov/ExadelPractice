@@ -50,6 +50,8 @@ define(["jquery", "jquery-animate-colors"], function ($) {
                 $(".select-state").prop("disabled", false);
                 $("#saveManualInformation").prop("hidden", false);
 
+                $("#educationContent select").prop("disabled", true);
+
                 $(".exadel-content input, .exadel-content textarea").prop("disabled", false);
                 $(".exadel-content button").prop("hidden", false);
 
