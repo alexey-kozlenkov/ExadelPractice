@@ -25,13 +25,13 @@ public class SkillSetDAOImpl extends GenericDAOImpl<SkillSet, SkillSet, Long> im
     }
 
     @Override
-    public void addNewSkillToUser(Long userId, SkillView[] skillViews) {
+    public void addNewSkillToUser(Long userId, Long[] skillTypeIds, Long[] levels) {
         Query query = getSession().createSQLQuery(
                 "INSERT INTO \"SKILL_SET\" (skillTypeId, userId, level) VALUES (:skillTypeId, :userId, :level)");
-        for(SkillView skillView: skillViews) {
-            query.setParameter("skillTypeId", skillView.getId());
+        for (int i = 0; i < levels.length; i++) {
+            query.setParameter("skillTypeId", skillTypeIds[i]);
             query.setParameter("userId", userId);
-            query.setParameter("level", skillView.getLevel());
+            query.setParameter("level", levels[i]);
             query.executeUpdate();
         }
     }

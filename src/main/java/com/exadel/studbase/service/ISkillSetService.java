@@ -18,4 +18,6 @@ public interface ISkillSetService {
     Collection<User> getAllWithSkill(Long skillTypeId);
 
     Collection<SkillType> getAllForUser(Long userId);
+
+    void addNewSkillToUser(Long userId, Long[] skillTypeIds, Long[] levels);
 }

@@ -49,6 +49,8 @@ public class InfoPageController {
     IUniversityService universityService;
     @Autowired
     IFacultyService facultyService;
+    @Autowired
+    ISkillViewService skillViewService;
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public String studentInfoPage(@RequestParam("id") Long id) {
@@ -303,6 +305,34 @@ public class InfoPageController {
         return ("{\"post\":\"ok\"}");
     }
 
+    @RequestMapping(value = "/getSkills", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getSkillTypes(@RequestParam("studentId") Long studentId) {
+        Gson gson = new Gson();
+        Collection<SkillType> skillTypes = skillTypeService.getAll();
+        Collection<SkillView> skills = skillViewService.getSkillsForUser(studentId);
+        SkillObject skillObject = new SkillObject(skillTypes, skills, studentService.getById(studentId).getEnglishLevel());
+        return gson.toJson(skillObject, SkillObject.class);
+    }
+
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
+    @RequestMapping(value = "/postStudentSkills", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String postStudentSkills(@RequestParam("studentId") Long studentId,
+                                    @RequestParam("skills") String skills,
+                                    @RequestParam("skillsLevels") String skillsLevels,
+                                    @RequestParam("englishLevel") Integer englishLevel) {
+        Gson gson = new Gson();
+        Long[] skillsIds = gson.fromJson(skills, Long[].class);
+        Long[] levels = gson.fromJson(skillsLevels, Long[].class);
+        skillSetService.addNewSkillToUser(studentId, skillsIds, levels);
+        Student student = studentService.getById(studentId);
+        student.setEnglishLevel(englishLevel);
+        studentService.save(student);
+        return ("{\"post\":\"ok\"}");
+    }
 
     @RequestMapping(value = "/redirectInfo")
     public String loadInfo(@RequestParam("login") String login) {
@@ -331,5 +361,17 @@ public class InfoPageController {
             return value.equals("") ? null : (T) Date.valueOf(value);
         }
         return null;
+    }
+
+    private class SkillObject {
+        public Collection<SkillType> skillTypes;
+        public Collection<SkillView> skills;
+        public Integer englishLevel;
+
+        private SkillObject(Collection<SkillType> skillTypes, Collection<SkillView> skills, Integer englishLevel) {
+            this.skillTypes = skillTypes;
+            this.skills = skills;
+            this.englishLevel = englishLevel;
+        }
     }
 }
