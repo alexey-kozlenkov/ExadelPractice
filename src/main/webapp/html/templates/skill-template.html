@@ -1,0 +1,18 @@
+{{#each skills}}
+<div class="skill-list-item">
+    <label class="col-sm-2 control-label">{{name}}</label>
+    <div class="col-sm-10">
+        <select data-id = "{{id}}" class="form-control skill-level-select">
+            <option{{selected level 1}}>1</option>
+            <option{{selected level 2}}>2</option>
+            <option{{selected level 3}}>3</option>
+            <option{{selected level 4}}>4</option>
+            <option{{selected level 5}}>5</option>
+        </select>
+        <button class="btn remove-btn">
+            <span class="glyphicon glyphicon-remove ">
+            </span>
+        </button>
+    </div>
+</div>
+{{/each}}

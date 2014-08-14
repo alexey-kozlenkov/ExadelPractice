@@ -205,30 +205,29 @@
 </div>
 <div class="category-content outer-category-content info-edit" id="skillsContent">
     <div class="form-horizontal">
-        <div class="form-group">
-            <ul>
-                <li>
-                    <div class="english-skill-itm">
-                        <label for="endlishLevel" class="col-sm-2 control-label">English:</label>
-                        <div class="col-sm-10">
-                            <select id="endlishLevel" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-sm-10" style="text-align: center">
-                    <button class="add-skill">...<span class="hide-block"> add ...</span></button>
-                </li>
-            </ul>
-            <ul class="skill-menu">
+        <div id="skillList" class="form-group">
+            <div id="endlishLevelItem" class="english-skill-itm">
+                <label for="endlishLevel" class="col-sm-2 control-label">English:</label>
 
-            </ul>
+                <div class="col-sm-10">
+                    <select id="endlishLevel" class="form-control">
+                        <option value="0">Beginner</option>
+                        <option value="1">Elementary</option>
+                        <option value="2">Pre-Intermediate</option>
+                        <option value="3">Intermediate</option>
+                        <option value="4">Upper-Intermediate</option>
+                        <option value="5">Advanced</option>
+                    </select>
+                </div>
+            </div>
+            <div id="skillControlLine" class="col-sm-10" style="text-align: center">
+                <select id="skillSelector">
+                </select>
+                <button id="addToSkillList"><span class="glyphicon glyphicon-ok"></span></button>
+            </div>
         </div>
+        <button id="saveSkillInformation" class="category-content-button prj-btn">Save
+        </button>
     </div>
 </div>
 
@@ -538,11 +537,13 @@
 <script src="../js/lib/require.js"></script>
 <script>
     require(["../js/main.js"], function () {
-        require(["jquery", "Accordion", "FillBasic", "Rest"], function ($, accordion, fillBasic, rest) {
+        require(["jquery", "Accordion", "FillBasic", "Rest", "Skills"],
+                function ($, accordion, fillBasic, rest, skills) {
             $(document).ready(function () {
                 accordion.init();
                 fillBasic.init();
                 rest.init();
+                skills.init();
             });
         });
 

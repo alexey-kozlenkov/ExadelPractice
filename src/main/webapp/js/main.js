@@ -19,6 +19,7 @@ require.config({
         "Accordion":        "js/info/Accordion",
         "Rest":             "js/info/student/Rest",
         "FillBasic":        "js/info/student/FillBasic",
+        "Skills":           "js/info/student/Skills",
 
         "ListHeader":       "js/list/ListHeader",
         "ListController":   "js/list/ListController",

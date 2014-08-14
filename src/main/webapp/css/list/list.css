@@ -30,6 +30,9 @@
     width: 32px;
     height: 32px;
 }
+.hidden-disable:disabled {
+    display: none !important;
+}
 
 .search-block {
    display: inline-block;

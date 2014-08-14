@@ -129,7 +129,6 @@ label,
 .prj-btn.disabled:active,
 .prj-btn[disabled]:active {
     color: gray;
-    border-color: #000000;
 }
 
 .tab{
@@ -332,4 +331,6 @@ label,
     color: red;
     font-weight: bold;
 }
+
+
 

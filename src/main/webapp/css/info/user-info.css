@@ -150,6 +150,7 @@
 
 .english-skill-itm {
     padding-bottom: 10px;
+    height: 38px;
 }
 
 .add-skill {
@@ -161,4 +162,22 @@
 }
 .add-skill:hover {
     opacity: 1;
+}
+
+.remove-btn {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    padding: 2px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 8, 0, 0.59);
+}
+.skill-level-select {
+    display: inline-block;
+}
+.skill-list-item {
+    margin: 2px;
+    display: block;
+    height: 38px;
 }
