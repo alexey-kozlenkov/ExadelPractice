@@ -79,11 +79,6 @@ public class Student implements IEntity<Long> {
     private String trainingsInExadel;
 
     public Student() {
-        course = 0;
-        group = 0;
-        workingHours = 0;
-        graduationDate = 0;
-        englishLevel = 0;
     }
 
     @Override
@@ -296,6 +291,21 @@ public class Student implements IEntity<Long> {
 
     public void setTrainingsInExadel(String trainingsInExadel) {
         this.trainingsInExadel = trainingsInExadel;
+    }
+
+    public void clearExadelInfo() {
+        this.hireDate = null;
+        this.workingHours = null;
+        this.billable = null;
+        this.roleCurrentProject = "";
+        this.techsCurrentProject = "";
+        this.currentProject = "";
+        this.teamLeadId = null;
+        this.projectManagerId = null;
+        this.trainingBeforeStartWorking = null;
+        this.courseWhenStartWorking = null;
+        this.wishesHoursNumber = null;
+        this.trainingsInExadel = "";
     }
 
     @Override

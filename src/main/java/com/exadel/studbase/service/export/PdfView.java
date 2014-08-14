@@ -72,9 +72,9 @@ public class PdfView extends AbstractPdfView {
         table = new PdfPTable(2);
         table.setWidths(width);
         table.addCell(createCell("Educational institution", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getUniversity(), contentFont));
+        table.addCell(createCell(user.getStudentInfo().getUniversity().getName(), contentFont));
         table.addCell(createCell("Faculty", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getFaculty(), contentFont));
+        table.addCell(createCell(user.getStudentInfo().getFaculty().getName(), contentFont));
         table.addCell(createCell("Speciality", headerFont));
         table.addCell(createCell(user.getStudentInfo().getSpeciality(), contentFont));
         table.addCell(createCell("Course", headerFont));
@@ -89,38 +89,40 @@ public class PdfView extends AbstractPdfView {
         }
         document.add(table);
 
-        document.add(new Paragraph(new Chunk("Exadel", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
+        if(user.getStudentInfo().getState().equals("working")) {
+            document.add(new Paragraph(new Chunk("Exadel", FontFactory.getFont(FontFactory.TIMES_ITALIC, 16))));
 
-        table = new PdfPTable(2);
-        table.setWidths(width);
-        table.addCell(createCell("Working hours", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getWorkingHours(), contentFont));
-        table.addCell(createCell("Hire date", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getHireDate(), contentFont));
-        table.addCell(createCell("Billable from", headerFont));
-        PdfPCell cell = new PdfPCell();
-        if (user.getStudentInfo().getBillable() != null) {
-            cell.addElement(new Chunk(user.getStudentInfo().getBillable().toString(), contentFont));
-        } else {
-            cell.addElement(new Chunk("false", contentFont));
+            table = new PdfPTable(2);
+            table.setWidths(width);
+            table.addCell(createCell("Working hours", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getWorkingHours(), contentFont));
+            table.addCell(createCell("Hire date", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getHireDate(), contentFont));
+            table.addCell(createCell("Billable from", headerFont));
+            PdfPCell cell = new PdfPCell();
+            if (user.getStudentInfo().getBillable() != null) {
+                cell.addElement(new Chunk(user.getStudentInfo().getBillable().toString(), contentFont));
+            } else {
+                cell.addElement(new Chunk("false", contentFont));
+            }
+            cell.setBorder(PdfPCell.NO_BORDER);
+            cell.setPaddingRight(cellRightPadding);
+            table.addCell(cell);
+            table.addCell(createCell("Working hours you want", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getWishesHoursNumber(), contentFont));
+            table.addCell(createCell("Working from", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getCourseWhenStartWorking(), contentFont));
+            table.addCell(createCell("Training before working", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getTrainingBeforeStartWorking(), contentFont));
+            table.addCell(createCell("Training in Exadel", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getTrainingsInExadel(), contentFont));
+            table.addCell(createCell("Current project", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getCurrentProject(), contentFont));
+            table.addCell(createCell("Role in the project", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getRoleCurrentProject(), contentFont));
+            table.addCell(createCell("Technologies used", headerFont));
+            table.addCell(createCell(user.getStudentInfo().getTechsCurrentProject(), contentFont));
+            document.add(table);
         }
-        cell.setBorder(PdfPCell.NO_BORDER);
-        cell.setPaddingRight(cellRightPadding);
-        table.addCell(cell);
-        table.addCell(createCell("Working hours you want", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getWishesHoursNumber(), contentFont));
-        table.addCell(createCell("Working from", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getCourseWhenStartWorking(), contentFont));
-        table.addCell(createCell("Training before working", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getTrainingBeforeStartWorking(), contentFont));
-        table.addCell(createCell("Training in Exadel", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getTrainingsInExadel(), contentFont));
-        table.addCell(createCell("Current project", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getCurrentProject(), contentFont));
-        table.addCell(createCell("Role in the project", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getRoleCurrentProject(), contentFont));
-        table.addCell(createCell("Technologies used", headerFont));
-        table.addCell(createCell(user.getStudentInfo().getTechsCurrentProject(), contentFont));
-        document.add(table);
     }
 }
