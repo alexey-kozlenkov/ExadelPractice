@@ -10,18 +10,20 @@
 </head>
 <body>
 <div class="prj-header info-header">
-    <h1 id="headerName">some employee name</h1>
+    <a href="/list" class="prj-link back-link">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </a>
+
+    <h1 id="headerName">some student name</h1>
     <ul class="info-header-nav">
         <li class="info-header-nav-link">
-            <a href="/logout" class="prj-link">
-                Logout
-                <span class="glyphicon glyphicon-log-out"></span>
+            <a href="#" class="prj-link" id="sessionUsername">
             </a>
         </li>
         <li class="info-header-nav-link">
-            <a href="/list" class="prj-link">
-                Back to list
-                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <a href="/logout" class="prj-link logout-link">
+                Logout
+                <span class="glyphicon glyphicon-log-out"></span>
             </a>
         </li>
     </ul>

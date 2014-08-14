@@ -198,7 +198,8 @@ define(["jquery", "handlebars", "FillBasic", "Util", "Dialog", "text!templates/d
                         url: "/info/getMyFeedbacks",
                         cashe: false,
                         data: {
-                            "employeeId": sessionStorage.getItem("id")
+                            "employeeId": sessionStorage.getItem("id"),
+                            "studentId" : fillBasic.studentId()
                         }
                     });
                     getFeedbacks.done(function (data) {
