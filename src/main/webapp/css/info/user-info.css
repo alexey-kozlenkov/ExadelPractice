@@ -142,7 +142,8 @@
 
 .english-skill-itm {
     padding-bottom: 10px;
-    height: 38px;
+    height: 40px;
+    margin-bottom: 15px;
 }
 
 .add-skill {
@@ -169,7 +170,8 @@
     display: inline-block;
 }
 .skill-list-item {
-    margin: 2px;
+    margin: 0px;
+    margin-bottom: 15px;
     display: block;
-    height: 38px;
+    height: 40px;
 }

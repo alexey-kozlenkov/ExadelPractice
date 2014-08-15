@@ -135,8 +135,9 @@ h1 {
 .inner-category-header a {
     padding-left: 15px;
 
-    color: #333;
+    color: #4A5D80;
     font-size: 17px;
+    font-weight: bold;
 }
 
 .export {
