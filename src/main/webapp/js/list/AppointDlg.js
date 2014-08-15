@@ -61,6 +61,7 @@ define(["jquery", "Dialog", "Util", "ListController", "handlebars"],
         function loadCurators() {
             loadPromise = $.ajax({
                 url: "/list/curatorList",
+                cache: false,
                 data: {}
             });
             loadPromise.fail(

@@ -9,7 +9,8 @@ body {
 
 .first {
     margin-top: 10px;
-    height: 40pt;
+    margin-bottom: 5px;
+    height: 65px;
 }
 
 .form-control {
@@ -26,7 +27,8 @@ body {
 }
 
 .err{
+    margin: 0  auto;
     dialog: none;
-    width: 70%;
+    width: 100%;
 }
 

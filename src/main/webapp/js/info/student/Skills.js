@@ -86,6 +86,7 @@ define(["jquery", "handlebars", "Util", "FillBasicStudent", "text!templates/skil
             var studentId = fillBasic.studentId();
             loadPromise = $.ajax({
                 url: "/info/getSkills",
+                cache: false,
                 data: {
                     studentId: studentId
                 }

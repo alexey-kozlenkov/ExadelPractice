@@ -21,6 +21,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             $.ajax({
                 type: "GET",
                 url: "/info/getOptions",
+                cache: false,
                 success: function (data) {
                     //filling
                     var $stateSelect = $("#state"),
@@ -74,6 +75,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                 getAllUniversities = $.ajax({
                     type: "GET",
                     url: "/info/getUniversities",
+                    cache: false,
                     dataType: 'json',
                     async: false
                 });
@@ -92,6 +94,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                     type: "GET",
                     url: "/info/getFacultiesForUniversity",
                     dataType: 'json',
+                    cache: false,
                     data: {
                         universityId: universityId
                     }
@@ -114,7 +117,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             var getStudent = $.ajax({
                 type: "GET",
                 url: "/info/getCommonInformation",
-                cashe: false,
+                cache: false,
                 data: {
                     "id": studentId
                 }
@@ -207,6 +210,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                     type: "GET",
                     url: "/info/getTeamLead",
                     async: false,
+                    cache: false,
                     dataType: 'json',
                     data: {
                         teamLeadId: teamLeadId
@@ -233,6 +237,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
                     type: "GET",
                     url: "/info/getProjectManager",
                     async: false,
+                    cache: false,
                     dataType: 'json',
                     data: {
                         projectManagerId: projectManagerId
