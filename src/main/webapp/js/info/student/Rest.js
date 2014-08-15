@@ -325,7 +325,7 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
 
         //add document
         $("#addNewDocument").click(function () {
-            dialog.showDialog("add-document", "280px");
+            dialog.showDialog("add-document", "300px");
         });
 
         $("#addDocument").click(function () {
@@ -333,6 +333,8 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
                 issueDate = $("#issueDate").val(),
                 expirationDate = $("#expirationDate").val(),
                 info = $("#info").val(),
+                newDocument;
+            if (!(document === "" || issueDate === "")) {
                 newDocument = {
                     doctype: doctype,
                     issueDate: issueDate,
@@ -340,14 +342,23 @@ define(["jquery", "handlebars", "FillBasicStudent", "Util", "Dialog", "text!temp
                     info: info
                 };
 
-            $("#doctype").val("");
-            $("#issueDate").val("");
-            $("#expirationDate").val("");
-            $("#info").val("");
-            dialog.closeDialog();
-            $("#documents").prepend(templateDocument(newDocument));
-            $("#documents tr").first().addClass("new-document");
-            $("#documentTable").trigger("update");
+                $("#doctype").val("");
+                $("#issueDate").val("");
+                $("#expirationDate").val("");
+                $("#info").val("");
+                dialog.closeDialog();
+                $("#documents").prepend(templateDocument(newDocument));
+                $("#documents tr").first().addClass("new-document");
+                $("#documentTable").trigger("update");
+            }
+            else {
+                if (doctype === "") {
+                    $("#doctype").focus();
+                }
+                else if (issueDate === "") {
+                    $("#issueDate").focus();
+                }
+            }
         });
 
         //write or edit feedback

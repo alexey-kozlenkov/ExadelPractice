@@ -47,6 +47,9 @@ define(["jquery", "jquery-animate-colors"], function ($) {
             case '3' :
                 $(".info-edit input, .info-edit select, .info-edit textarea").prop("disabled", true);
                 $(".info-edit button").prop("hidden", true);
+
+                $(".skills-edit button").prop("hidden", false);
+                $(".skills-edit select, .skills-edit input").prop("disabled", false);
                 break;
             case '4' :
                 $(".employee-info-edit input, .employee-info-edit select").prop("disabled", true);

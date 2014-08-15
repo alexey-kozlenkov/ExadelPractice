@@ -316,7 +316,7 @@ public class InfoPageController {
         return gson.toJson(skillObject, SkillObject.class);
     }
 
-    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT"})
+    @Secured({"ROLE_SUPERADMIN", "ROLE_STUDENT", "ROLE_CURATOR"})
     @RequestMapping(value = "/postStudentSkills", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
