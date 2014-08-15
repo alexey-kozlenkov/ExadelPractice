@@ -1,6 +1,10 @@
 body {
-    margin-left: 20%;
     font-size: 20px;
+    margin: 15px;
+}
+.main-form {
+    width: 600px;
+    margin: 0 auto;
 }
 
 .first {
@@ -9,7 +13,16 @@ body {
 }
 
 .form-control {
-    width: 50%;
+    width: 440px;
+}
+@media (min-width: 500px) {
+    .form-control {
+        width: 90%;
+    }
+}
+
+.control-label {
+    padding-right: 1px;
 }
 
 .err{
