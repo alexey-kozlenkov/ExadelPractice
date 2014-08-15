@@ -119,7 +119,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             createStudPromise.done(
                 function () {
                     console.log("Good!");
-                    $("body").trigger("searchOrFieldUpdate", {type: "all"});
+                    $("body").trigger("listRequestChanged", {by: "all", halfTime: true});
                 }
             );
             createStudPromise.fail(

@@ -179,7 +179,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
 
                 //termMarks
                 marks = gottenStudent.termMarks;
-                if (marks !== "") {
+                if (marks && marks !== "") {
                     marks = marks.split(";");
                     $.each(marks, function (index, value) {
                         $("#termMarkList").append(templateTermMark({

@@ -4,7 +4,7 @@
 
 define(["jquery", "ListController", "ListHeader"], function ($, ListController, ListHeader) {
     "use strict";
-    var TIME_DELAY = 300,
+    var TIME_DELAY = 400,
         actualVersion = 0,
         isStudentTab = true,
         sendTimeout;
@@ -78,10 +78,14 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
 
     function onRequestChange(e) {
         console.log("# search or filter update #");
+        var time = TIME_DELAY;
+        if (e && e.halfTime) {
+            time = Number(time / 2).toFixed();
+        }
         if (sendTimeout) {
             clearTimeout(sendTimeout);
         }
-        sendTimeout = setTimeout(updateList, TIME_DELAY);
+        sendTimeout = setTimeout(updateList, time);
     }
 
     function updateList() {
