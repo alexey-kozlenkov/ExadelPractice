@@ -194,7 +194,7 @@ public class ListPageController {
         for (Long id : studentId) {
             User user = userService.getById(id);
 
-            if (user.getEmail() != null) {
+            if (user.getEmail() != null || user.getEmail().equals("")) {
                 if (!mailService.sendMail(from, password, user.getEmail(), subject, body)) {
                     inaccessibleEmail.add(user.getName() + " ( " + user.getEmail() + " )");
                 }
