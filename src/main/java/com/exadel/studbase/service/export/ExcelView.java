@@ -30,6 +30,7 @@ public class ExcelView extends AbstractExcelView {
     public Double fillCell(Number value) {
         if (value != null) {
             value.doubleValue();
+            return value.doubleValue();
         }
         return 0d;
     }

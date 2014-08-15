@@ -260,8 +260,8 @@ public class InfoPageController {
         editedStudent.setTrainingsInExadel(trainingInExadel);
         editedStudent.setCurrentProject(currentProject);
         editedStudent.setRoleCurrentProject(roleCurrentProject);
-        //team-lead
-        //project-manager
+        editedStudent.setTeamLeadId(formatField(currentProjectManager, Long.class));
+        editedStudent.setTeamLeadId(formatField(currentTeamLead, Long.class));
         editedStudent.setTechsCurrentProject(techsCurrentProject);
         studentService.save(editedStudent);
 
