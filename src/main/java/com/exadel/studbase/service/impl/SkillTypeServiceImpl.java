@@ -39,4 +39,10 @@ public class SkillTypeServiceImpl implements ISkillTypeService {
     public Collection<SkillType> getAll() {
         return skillTypeDAO.getAll();
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Collection<SkillType> getAllSorted() {
+        return skillTypeDAO.getAllSorted();
+    }
 }

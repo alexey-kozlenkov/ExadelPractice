@@ -12,4 +12,6 @@ public interface ISkillTypeService {
     void delete(SkillType skillType);
 
     Collection<SkillType> getAll();
+
+    Collection<SkillType> getAllSorted();
 }
