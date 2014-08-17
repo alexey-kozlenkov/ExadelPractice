@@ -88,6 +88,10 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             window.open("/list/export?students=" + studIds, "exportFile");
         }
 
+        function clearAddForm() {
+            $("#loginField").val("");
+            $("#nameField").val("");
+        }
 
         function checkCreateUserDialog() {
             isStudentTab = (sessionStorage.getItem("isStudentTab") === "true");
@@ -119,6 +123,7 @@ define(["jquery", "handlebars", "ListController", "Dialog", "Util"],
             createStudPromise.done(
                 function () {
                     console.log("Good!");
+                    clearAddForm();
                     $("body").trigger("listRequestChanged", {by: "all", halfTime: true});
                 }
             );

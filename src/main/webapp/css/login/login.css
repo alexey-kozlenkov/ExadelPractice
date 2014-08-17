@@ -9,15 +9,16 @@ body {
 
 .first {
     margin-top: 10px;
-    height: 40pt;
+    margin-bottom: 5px;
+    height: 65px;
 }
 
 .form-control {
     width: 440px;
 }
-@media (min-width: 500px) {
+@media (max-width: 500px) {
     .form-control {
-        width: 90%;
+        width: 70%;
     }
 }
 
@@ -26,7 +27,8 @@ body {
 }
 
 .err{
+    margin: 0  auto;
     dialog: none;
-    width: 70%;
+    width: 100%;
 }
 

@@ -27,7 +27,7 @@ define(["jquery", "ListController", "ListHeader"], function ($, ListController, 
         $("#startSearchButton").click(function () {
             sessionStorage.setItem("search", $(this).val());
             tab(isStudentTab);
-            $("body").trigger("listRequestChanged", {by: "button"});
+            $("body").trigger("listRequestChanged", {by: "button", halfTime: true});
         });
         $("#searchLine").focus(function () {
             $(this).animate({ width: "250pt"}, 1000);

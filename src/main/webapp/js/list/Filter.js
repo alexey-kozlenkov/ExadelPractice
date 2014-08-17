@@ -229,6 +229,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
     function load(url) {
         $.ajax({
             url: url,
+            cache: false,
             data: {}
         }).done(function (desc) {
             description(JSON.parse(desc));

@@ -15,7 +15,7 @@ define(["jquery", "handlebars", "Util", "text!templates/term-mark-template.html"
             var getEmployee =   $.ajax({
                 type: "GET",
                 url: "/info/getCommonInformation",
-                cashe: false,
+                cache: false,
                 data: {
                     "id": employeeId
                 }
