@@ -2,19 +2,19 @@
     <button class='btn prj-btn remove-btn filter-name-btn'>{{name}}</button>
 
     {{~#ifEqual type 'bool'~}}
-    <input class="filter-value boolean-filter-value" type='checkbox'>
+    <input class="filter-value boolean-filter-value" type='checkbox'/>
     {{/ifEqual}}
 
     {{~#ifEqual type 'text'~}}
-    <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}" data-multi='{{multiset}}'>
+    <input class="filter-value text-filter-value" type='text' placeholder="{{placeholder}}" data-multi='{{multiset}}'/>
     {{/ifEqual}}
 
     {{~#ifEqual type 'number'~}}
-    <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}">
+    <input class="filter-value number-filter-value" type='number' min='{{minVal}}' placeholder="{{placeholder}}"/>
     {{/ifEqual}}
 
     {{~#ifEqual type 'date'~}}
-    <input class="filter-value date-filter-value" type='date'>
+    <input class="filter-value date-filter-value" type='date'/>
     {{/ifEqual}}
 
     {{~#ifEqual type 'list'~}}

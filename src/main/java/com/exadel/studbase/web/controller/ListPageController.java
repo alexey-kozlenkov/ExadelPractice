@@ -50,7 +50,7 @@ public class ListPageController {
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
         System.out.println("List page redirect");
-        return "list";
+        return "list.xhtml";
     }
 
     @RequestMapping(value = "/data", method = RequestMethod.GET)

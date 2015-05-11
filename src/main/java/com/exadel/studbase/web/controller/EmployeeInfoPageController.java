@@ -26,7 +26,7 @@ public class EmployeeInfoPageController {
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
     public String employeeInfoPage(@RequestParam("id") Long id) {
-        return "employeeInfo";
+        return "employeeInfo.html";
     }
 
     @Secured({"ROLE_SUPERADMIN", "ROLE_CURATOR", "ROLE_FEEDBACKER"})

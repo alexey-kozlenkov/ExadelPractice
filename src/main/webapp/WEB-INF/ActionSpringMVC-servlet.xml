@@ -24,7 +24,6 @@
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/html/"/>
-        <property name="suffix" value=".html"/>
     </bean>
 
     <mvc:resources mapping="/css/**" location="/css/"/>

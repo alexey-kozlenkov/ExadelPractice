@@ -1,11 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="UTF-8"/>
     <title>Student list</title>
-    <link href="../css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/common.css" rel="stylesheet">
-    <link href="../css/list/list.css" rel="stylesheet">
+    <link href="../css/lib/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/common.css" rel="stylesheet"/>
+    <link href="../css/list/list.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -20,7 +20,7 @@
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
             <button id="exportMenuButton" class="btn prj-btn menu-button hidden-disable" title="Export to Excel Doc.">
-                <img src="../images/excel-icon.png" alt="Export" class="menu-icon">
+                <img src="../images/excel-icon.png" alt="Export" class="menu-icon"/>
             </button>
             <button id="distributionMenuButton" class="btn prj-btn menu-button super-admin-role hidden-disable"
                     title="Send message to selected users">
@@ -33,14 +33,14 @@
         </span>
 
         <span class="btn-group input-group search-block">
-            <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name">
+            <input type="text" id="searchLine" class="form-control search-query search-line" placeholder="Name" />
             <input type="image" id="startSearchButton" class="btn prj-btn search-button" src="../images/search-icon.png"
-                   alt="Find!" title="Search!">
+                   alt="Find!" title="Search!" />
         </span>
 
         <span class="btn-group tab">
             <button id="studTab" class="btn menu-button tab-btn" title="Students Tab"><img
-                    src="../images/ico-students.png" class="menu-icon">
+                    src="../images/ico-students.png" class="menu-icon" />
             </button>
             <button id="emplTab" class="btn menu-button tab-btn" title="Employees Tab"><span
                     class="glyphicon glyphicon-user"></span></button>
@@ -69,7 +69,7 @@
         <tbody>
         </tbody>
     </table>
-    <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading...">
+    <img src="../images/loading.gif" class="load-image-class" id="loading_image" alt="Loading..." />
 </div>
 
 <label id="infoLabel" class="info-label navbar-fixed-bottom"></label>
@@ -82,9 +82,9 @@
 
         <div class='dialog-content' data-dialog-name='send-message'>
             <div class="dialog-content-central">
-                <input type="email" id="mailField" placeholder="Email" class="dialog-input">
-                <input type="password" id="passField" placeholder="Password" class="dialog-input">
-                <input type="text" id="subjectField" placeholder="Subject" class="dialog-input">
+                <input type="email" id="mailField" placeholder="Email" class="dialog-input" />
+                <input type="password" id="passField" placeholder="Password" class="dialog-input" />
+                <input type="text" id="subjectField" placeholder="Subject" class="dialog-input" />
                 <textarea id="sentMessage" class="message-area dialog-input" placeholder="Message"></textarea>
             </div>
             <div class="dialog-footer">
@@ -98,13 +98,6 @@
                 <label for="inaccessibleMailList" class="error-label"> Can't send to : </label>
                 <ul id="inaccessibleMailList">
                 </ul>
-                <script id="mailListTemplate" type="text/x-handlebars-template">
-                    {{#each mails}}
-                    <li>
-                        <span class="glyphicon glyphicon-ban-circle"></span> {{this}}
-                    </li>
-                    {{/each}}
-                </script>
             </div>
             <div class="dialog-footer">
                 <button id='closeMessageButton' class="btn prj-btn">
@@ -114,14 +107,14 @@
         </div>
         <div class='dialog-content' data-dialog-name='add-student'>
             <div class="dialog-content-central form-horizontal">
-                <ul clsss="addUserForm">
+                <ul class="addUserForm">
                     <li>
                         <label for="nameField" class="control-label dialog-left-label">Name: </label>
-                        <input type="text" id="nameField" placeholder="name" class="dialog-right-input">
+                        <input type="text" id="nameField" placeholder="name" class="dialog-right-input"/>
                     </li>
                     <li>
                         <label for="nameField" class="control-label dialog-left-label">Login: </label>
-                        <input type="text" id="loginField" placeholder="login" class="dialog-right-input">
+                        <input type="text" id="loginField" placeholder="login" class="dialog-right-input"/>
                     </li>
                     <li id = "stateBlock">
                         <label for="stateField" class="control-label dialog-left-label">State: </label>

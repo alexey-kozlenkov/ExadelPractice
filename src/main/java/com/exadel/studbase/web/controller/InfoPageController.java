@@ -58,7 +58,7 @@ public class InfoPageController {
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STUDENT")) && !principal.getId().equals(id)) {
             throw new AccessDeniedException("Pfff");
         }
-        return "studentInfo";
+        return "studentInfo.html";
     }
 
     @RequestMapping(value = "/getOptions", method = RequestMethod.GET)

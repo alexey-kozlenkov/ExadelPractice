@@ -60,7 +60,7 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
                         list: data
                     }
                 ));
-                $("#checkAll").attr('checked', false);
+                $("#checkAll").attr('checked', null);
                 updateInfoLabel();
             }
         );
