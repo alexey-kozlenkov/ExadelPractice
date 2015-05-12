@@ -310,7 +310,7 @@ public class InfoPageController {
     @ResponseBody
     public String getSkillTypes(@RequestParam("studentId") Long studentId) {
         Gson gson = new Gson();
-        Collection<SkillType> skillTypes = skillTypeService.getAll();
+        Collection<SkillType> skillTypes = skillTypeService.getAllSorted();
         Collection<SkillView> skills = skillViewService.getSkillsForUser(studentId);
         SkillObject skillObject = new SkillObject(skillTypes, skills, studentService.getById(studentId).getEnglishLevel());
         return gson.toJson(skillObject, SkillObject.class);

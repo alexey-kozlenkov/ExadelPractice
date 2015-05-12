@@ -121,4 +121,3 @@ define(["jquery", "handlebars"], function ($, Handlebars) {
         setTableLoadingState: setTableLoadingState
     };
 });
-
