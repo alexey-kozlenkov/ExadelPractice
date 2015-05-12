@@ -1,3 +1,16 @@
+CREATE TABLE IF NOT EXISTS "UNIVERSITY"
+(
+	id   BIGSERIAL PRIMARY KEY,
+	name TEXT UNIQUE
+);
+CREATE TABLE IF NOT EXISTS "FACULTY"
+(
+	id            BIGSERIAL PRIMARY KEY,
+	university_id BIGINT,
+	name          TEXT UNIQUE,
+	FOREIGN KEY (university_id) REFERENCES "UNIVERSITY" (id)
+);
+
 CREATE TABLE IF NOT EXISTS "USER"
 (
 	id        BIGSERIAL PRIMARY KEY,
@@ -11,6 +24,12 @@ CREATE TABLE IF NOT EXISTS "USER"
 	birthdate DATE
 );
 CREATE INDEX id_index ON "USER" (id);
+
+CREATE TABLE IF NOT EXISTS "EMPLOYEE"
+(
+	id BIGINT PRIMARY KEY,
+	FOREIGN KEY (id) REFERENCES "USER" (id)
+);
 
 CREATE TABLE IF NOT EXISTS "STUDENT"
 (
@@ -38,15 +57,9 @@ CREATE TABLE IF NOT EXISTS "STUDENT"
 	trainings_exadel                TEXT,
 	FOREIGN KEY (id) REFERENCES "USER" (id),
 	FOREIGN KEY (team_lead_current_project) REFERENCES "EMPLOYEE" (id),
-	FOREIGN KEY (project_manager_current_project) REFERENCES "EMPLOYEE" (id)
-);
-ALTER TABLE "STUDENT" ADD CONSTRAINT "university_fk" FOREIGN KEY (university) REFERENCES "UNIVERSITY" (id);
-ALTER TABLE "STUDENT" ADD CONSTRAINT "faculty_fk" FOREIGN KEY (faculty) REFERENCES "FACULTY" (id);
-
-CREATE TABLE IF NOT EXISTS "EMPLOYEE"
-(
-	id BIGINT PRIMARY KEY,
-	FOREIGN KEY (id) REFERENCES "USER" (id)
+	FOREIGN KEY (project_manager_current_project) REFERENCES "EMPLOYEE" (id),
+	FOREIGN KEY (university) REFERENCES "UNIVERSITY" (id),
+	FOREIGN KEY (faculty) REFERENCES "FACULTY" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "CURATORING"
@@ -137,22 +150,6 @@ CREATE TABLE IF NOT EXISTS "FEEDBACK" (
 	FOREIGN KEY (student_id) REFERENCES "STUDENT" (id),
 	FOREIGN KEY (employee_id) REFERENCES "EMPLOYEE" (id)
 );
-
---///////////////////////////////////////////////////////////
-CREATE TABLE IF NOT EXISTS "UNIVERSITY"
-(
-	id   BIGSERIAL PRIMARY KEY,
-	name TEXT UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS "FACULTY"
-(
-	id            BIGSERIAL PRIMARY KEY,
-	university_id BIGINT,
-	name          TEXT UNIQUE,
-	FOREIGN KEY (university_id) REFERENCES "UNIVERSITY" (id)
-);
-
 
 --/////////////// Log //////////////////////////////////////
 
